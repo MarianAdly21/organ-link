@@ -38,7 +38,7 @@ void main() async {
 
   Bloc.observer = AppBlocObserver();
 
-  runApp(const MyApp());
+  runApp(const OrganLink());
 }
 
 void _failedToRefreshToken() {
@@ -50,14 +50,14 @@ void _failedToRefreshToken() {
   // );
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class OrganLink extends StatefulWidget {
+  const OrganLink({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<OrganLink> createState() => _OrganLinkState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _OrganLinkState extends State<OrganLink> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class _MyAppState extends State<MyApp> {
           return BlocBuilder<LocaleCubit, Locale>(
             builder: (context, state) {
               return ScreenUtilInit(
-                designSize: const Size(360, 800),
+                designSize: const Size(375, 812),
                 builder: (context, child) {
                   return MediaQuery.withClampedTextScaling(
                     minScaleFactor: 0.8,

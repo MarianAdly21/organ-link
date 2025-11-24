@@ -32,4 +32,6 @@ class LocalizationKeys {
   static const enterNumberlessThan = "enter_number_less_than";
   static const weAdviseYouToInstallTheNewVersionOfTheApplicationForABetterExperience =
       "we_advise_you_to_install_the_new_version_of_the_application_for_a_better_experience";
+  static const organDonationManagementSystem =
+      "organ_donation_management_system";
 }

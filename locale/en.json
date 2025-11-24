@@ -24,5 +24,6 @@
   "required": "Required",
   "wrong_format": "Wrong Format",
   "enter_number_less_than": "Enter number less than",
-  "we_advise_you_to_install_the_new_version_of_the_application_for_a_better_experience": "We advise you to install the new version of the application for a better experience"
+  "we_advise_you_to_install_the_new_version_of_the_application_for_a_better_experience": "We advise you to install the new version of the application for a better experience",
+  "organ_donation_management_system":"Organ Donation Management System"
 }
