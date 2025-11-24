@@ -16,6 +16,13 @@ class PreferencesManager {
   Future<String?> getLocale() async {
     return await PreferencesUtils.getString(PreferencesKeys.lang.name);
   }
+  Future<bool> setType(String data) async {
+    return await PreferencesUtils.setString(PreferencesKeys.type.name, data);
+  }
+
+  Future<String?> getType() async {
+    return await PreferencesUtils.getString(PreferencesKeys.type.name);
+  }
 
   Future<void> setLoggedIn() async {
     await PreferencesUtils.setBool(PreferencesKeys.isLoggedIn.name, true);

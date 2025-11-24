@@ -9,4 +9,5 @@ enum PreferencesKeys {
   userImageUrl,
   email,
   isAllowNotifications,
+  type,
 }

@@ -78,7 +78,7 @@ class LightAppTheme implements BaseAppTheme {
         bodyMedium: ThemeData.light(useMaterial3: false).textTheme.bodyMedium
             ?.copyWith(
               color: AppColors.bodyMedium,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w700,
               fontSize: 16,
               fontFamily: fontFamily,
             ),
@@ -86,8 +86,8 @@ class LightAppTheme implements BaseAppTheme {
         bodyLarge: ThemeData.light(useMaterial3: false).textTheme.bodyLarge
             ?.copyWith(
               color: AppColors.bodyLarge,
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              fontSize: 20,
               fontFamily: fontFamily,
             ),
 
@@ -169,5 +169,5 @@ class LightAppTheme implements BaseAppTheme {
   TextTheme get txtThemeDark => txtThemeLight;
 
   @override
-  String get fontFamily => "Cairo";
+  String get fontFamily => "Inter";
 }

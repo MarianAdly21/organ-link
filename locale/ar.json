@@ -24,5 +24,7 @@
   "required": "مطلوب",
   "wrong_format": "صيغة خاطئة",
   "enter_number_less_than": "أدخل رقمًا أقل من",
-  "we_advise_you_to_install_the_new_version_of_the_application_for_a_better_experience": "ننصحك بتثبيت الإصدار الجديد من التطبيق لتحسين تجربتك"
+  "we_advise_you_to_install_the_new_version_of_the_application_for_a_better_experience": "ننصحك بتثبيت الإصدار الجديد من التطبيق لتحسين تجربتك",
+    "organ_donation_management_system":"نظام إدارة التبرع بالأعضاء"
+
 }
