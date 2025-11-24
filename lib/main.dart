@@ -20,7 +20,8 @@ import 'package:organ_link/utils/status_bar/statusbar_controller.dart';
 import 'package:organ_link/utils/theme/app_theme.dart';
 import 'package:organ_link/utils/theme/theme_cubit.dart';
 
-void mainCommon() async {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   /// setup GetIt Instances ...

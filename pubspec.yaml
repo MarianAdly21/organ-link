@@ -70,7 +70,6 @@ flutter:
   assets:
     # Images And Icons
     - assets/images/
-    - assets/logo/
     - assets/icons/
 
     # Localization json files
