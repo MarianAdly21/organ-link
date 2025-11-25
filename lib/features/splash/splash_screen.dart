@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                   ],
                 ),
-                child: SvgPicture.asset(AppAssetPaths.splashLogo),
+                child: SvgPicture.asset(AppAssetPaths.logo),
               ),
               SizedBox(height: 38.h),
               Text(
@@ -71,7 +71,9 @@ class _SplashScreenState extends State<SplashScreen> {
               SizedBox(height: 24.h),
               Text(
                 textAlign: TextAlign.center,
-                context.translate(LocalizationKeys.organDonationManagementSystem),
+                context.translate(
+                  LocalizationKeys.organDonationManagementSystem,
+                ),
                 style: context.textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.grayText,
@@ -86,9 +88,9 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-///////////////////////////////////////////////////////////
-/////////////////// Helper methods ////////////////////////
-///////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper methods ////////////////////////
+  ///////////////////////////////////////////////////////////
   Future<Timer> _startTime() async {
     final duration = const Duration(seconds: 3);
     return Timer(duration, _navigationPage);

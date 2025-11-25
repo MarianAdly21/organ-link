@@ -87,7 +87,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             ? Text(
                 widget.title!,
                 style: const TextStyle(
-                  color: AppColors.formFieldTitle,
+                  color: AppColors.blackText,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
@@ -121,11 +121,9 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                 widget.hintTextStyle ??
                 context.textTheme.labelMedium!.copyWith(fontSize: 16),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
-                color:
-                    widget.enableBorderColor ??
-                    AppColors.enabledAppFormFieldBorder,
+                color: widget.enableBorderColor ?? AppColors.transparent,
                 width: 2,
               ),
             ),

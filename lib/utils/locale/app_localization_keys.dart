@@ -34,4 +34,8 @@ class LocalizationKeys {
       "we_advise_you_to_install_the_new_version_of_the_application_for_a_better_experience";
   static const organDonationManagementSystem =
       "organ_donation_management_system";
+  static const useYourIdentificationNumber = "use_your_identification_number";
+  static const identificationNumber = "identification_number";
+  static const password = "Password";
+  static const login = "login";
 }
