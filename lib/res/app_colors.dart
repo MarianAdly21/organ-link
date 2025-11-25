@@ -25,6 +25,9 @@ class AppColors {
   static const _stormGrayApprox = Color(0xff717182);
   static const _malachite = Color(0xff00C951);
   static const _dodgerBlueApprox = Color(0xff2B7FFF);
+  static const _athensGrayApprox = Color(0xffE2E2EE);
+  static const _trasparent = Colors.transparent;
+  
  
 
 
@@ -53,6 +56,7 @@ class AppColors {
   static const floatActionBtnBackground = appSecondButton;
   static const textColor = _jacksonsPurpleApprox;
   static const grayText = _stormGrayApprox;
+  static const blackText = _black;
   
 
   static const titleMedium = _bluish;
@@ -80,7 +84,7 @@ class AppColors {
   static const toastText = _white;
 
   /// app form field
-  static const appFormFieldFill = _white;
+  static const appFormFieldFill = _athensGrayApprox;
   static const enabledAppFormFieldBorder = _white;
   static const suffixIcon = _alto;
   static const focusIcon = _yellowOrange;
@@ -90,13 +94,14 @@ class AppColors {
   static const formFieldProfileErrorIBorder = _red;
   static const formFieldFocusIBorder = _cloudBurst;
   static const formFieldTitle = _cloudBurst;
+  static const transparent = _trasparent;
 
 
   /// dialogs ..
   static const closeDialogIcon = _nobel;
 
   /// app buttons
-  static const appButtonText = _white;
+  static const appButtonText = _aquaSpringApprox;
   static const appButtonBlueBackground = colorPrimary;
   static const appButtonBlueText = colorPrimary;
   static const appButtonWhiteBackground = _white;
