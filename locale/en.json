@@ -29,7 +29,21 @@
   "use_your_identification_number":"Use your identification number",
   "identification_number":"Identification Number",
   "Password":"Password",
-  "login":"Login"
+  "login":"Login",
+  "hospital_information":"Hospital Information",
+  "contact_and_location":"Contact & Location",
+  "medical_details":"Medical Details",
+  "view_health_information":"View Health Information",
+ "case_follow_up":"Case Follow Up",
+ "operation_stages_tracking":"Operation Stages Tracking",
+  "settings":"Settings",
+ "account_management":"Account Management",
+ "identification_number_with_column":"Identification Number: ",
+ "patient":"Patient",
+ "current_status":"Current Status",
+ "under_review":"Under Review",
+ "last_update":"Last update: "
+
 
 
 }

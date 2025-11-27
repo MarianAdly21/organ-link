@@ -26,10 +26,9 @@ class AppColors {
   static const _malachite = Color(0xff00C951);
   static const _dodgerBlueApprox = Color(0xff2B7FFF);
   static const _athensGrayApprox = Color(0xffE2E2EE);
-  static const _trasparent = Colors.transparent;
-  
- 
-
+  static const _transparent = Colors.transparent;
+  static const _linkWaterApprox = Color(0xffDDE8F9);
+  static const _curiousBlueApprox = Color(0xff2094CF);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -57,7 +56,6 @@ class AppColors {
   static const textColor = _jacksonsPurpleApprox;
   static const grayText = _stormGrayApprox;
   static const blackText = _black;
-  
 
   static const titleMedium = _bluish;
   static const headlineMedium = _blackCow;
@@ -94,8 +92,7 @@ class AppColors {
   static const formFieldProfileErrorIBorder = _red;
   static const formFieldFocusIBorder = _cloudBurst;
   static const formFieldTitle = _cloudBurst;
-  static const transparent = _trasparent;
-
+  static const transparent = _transparent;
 
   /// dialogs ..
   static const closeDialogIcon = _nobel;
@@ -115,7 +112,6 @@ class AppColors {
   static const changePasswordSuccessText = _bluish;
   static const changePasswordSuccessModalDivider = _geyser;
   static const changePasswordSuccessModalCloseIcon = _geyser;
-
 
   /// filter modal sheet
   static const filterTitles = _black;
@@ -141,7 +137,6 @@ class AppColors {
   static const multiDropDownFocusBorder = _cloudBurst;
   static const multiDropDownSelectedItemBackground = _bluish;
 
-  
   /// paging
   static const paginationLoadingBackground = _white;
 
@@ -153,4 +148,11 @@ class AppColors {
 
   /// Loader
   static const whiteLoader = _white;
+
+  /// Home User Screen
+  static const containerColor = _white;
+  static const displayFieldBGColor = _linkWaterApprox;
+  static const dividerColor = _alto;
+  static const shadowForContainerInfo = _curiousBlueApprox;
+  static const homeCardBG = _linkWaterApprox;
 }

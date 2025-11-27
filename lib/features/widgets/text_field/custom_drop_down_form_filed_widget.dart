@@ -78,9 +78,9 @@ class _CustomDropDownFormFiledWidgetState
         widget.title != null
             ? Text(
                 widget.title!,
-                style: const TextStyle(
+                style:  TextStyle(
                   color: AppColors.formFieldTitle,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                 ),
               )
@@ -147,9 +147,9 @@ class _CustomDropDownFormFiledWidgetState
             }
             setState(() {});
           },
-          style: const TextStyle(
+          style:  TextStyle(
             color: AppColors.formFieldText,
-            fontSize: 14,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w600,
           ),
           onSaved: widget.onSaved,

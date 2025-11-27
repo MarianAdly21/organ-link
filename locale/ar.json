@@ -29,8 +29,18 @@
   "use_your_identification_number":"استخدم رقم التعريف الخاص بك",
   "identification_number":"رقم التعريف",
   "password":"رقم التعريف",
-  "login":"تسجيل الدخول"
-
-
-
+  "login":"تسجيل الدخول",
+   "hospital_information":"معلومات المستشفى",
+  "contact_and_location":"التواصل والموقع",
+  "medical_details":"التفاصيل الطبية",
+  "view_health_information":"عرض المعلومات الصحية",
+ "case_follow_up":"متابعة الحالة",
+ "operation_stages_tracking":"تتبع مراحل العملية",
+  "settings":"الإعدادات",
+ "account_management":"إدارة الحساب",
+ "identification_number_with_column": "رقم التعريف: ",
+  "patient": "مريض",
+  "current_status": "الحالة الحالية",
+  "under_review": "تحت المتابعة",
+  "last_update": "آخر تحديث: "
 }
