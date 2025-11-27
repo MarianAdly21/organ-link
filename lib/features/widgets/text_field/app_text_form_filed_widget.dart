@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/empty/empty_widgets.dart';
@@ -86,9 +87,9 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         widget.title != null
             ? Text(
                 widget.title!,
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColors.blackText,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                 ),
               )
@@ -119,7 +120,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             filled: true,
             hintStyle:
                 widget.hintTextStyle ??
-                context.textTheme.labelMedium!.copyWith(fontSize: 16),
+                context.textTheme.labelMedium!.copyWith(fontSize: 16.sp),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(

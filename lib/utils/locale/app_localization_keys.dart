@@ -38,4 +38,17 @@ class LocalizationKeys {
   static const identificationNumber = "identification_number";
   static const password = "Password";
   static const login = "login";
+  static const hospitalInformation = "hospital_information";
+  static const contactAndLocation = "contact_and_location";
+  static const medicalDetails = "medical_details";
+  static const viewHealthInformation = "view_health_information";
+  static const caseFollowUp = "case_follow_up";
+  static const operationStagesTracking = "operation_stages_tracking";
+  static const settings = "settings";
+  static const accountManagement = "account_management";
+static const identificationNumberWithColumn= "identification_number_with_column";
+static const patient= "patient";
+static const currentStatus="current_status";
+static const underReview= "under_review";
+static const lastUpdate= "last_update";
 }
