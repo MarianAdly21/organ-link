@@ -42,8 +42,33 @@
  "patient":"Patient",
  "current_status":"Current Status",
  "under_review":"Under Review",
- "last_update":"Last update: "
-
-
+ "last_update":"Last update: ",
+ "contact_us": "Contact Us",
+  "location": "Location",
+  "open_in_maps": "Open in maps",
+  "contact_information": "Contact information",
+  "call_now": "Call now",
+  "main_phone": "Main phone",
+  "emergency": "Emergency",
+  "email": "Email",
+  "attending_physician": "Attending Physician",
+  "name": "Name",
+  "specialty": "Specialty",
+  "clinic_phone_number": "Clinic Phone Number",
+  "working_hours": "Working Hours",
+  "emergency_message": "In case of emergency, please call the emergency number directly or go to the hospital's emergency department.",
+ "medical_details_screen": "Medical Details",
+  "personal_information": "Personal Information",
+  "full_name": "Full Name",
+  "type": "Type",
+  "required_organ": "Required Organ",
+  "medical_file_number": "Medical File Number",
+  "age": "Age",
+  "blood_type": "Blood Type",
+  "chronic_diseases": "Chronic Diseases",
+  "medical_tests": "Medical Tests",
+  "upcoming_appointments": "Upcoming Appointments",
+  "visit_appointment": "Visit Appointment",
+  "hospital_data_note": "All information displayed here was entered by the hospital and cannot be modified."
 
 }

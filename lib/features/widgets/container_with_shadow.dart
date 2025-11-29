@@ -3,15 +3,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 class ContainerWithShadow extends StatelessWidget {
-  const ContainerWithShadow({super.key, required this.child});
- final Widget child;
+  const ContainerWithShadow({
+    super.key,
+    required this.child,
+    this.height,
+    this.width,
+  });
+  final Widget child;
+  final double? height;
+  final double? width;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 24.h),
       child: Container(
-        // height: 230.h,
-        //width: 343.w,
+        height: height,
+        width: width,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -22,8 +29,8 @@ class ContainerWithShadow extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           color: AppColors.containerColor,
         ),
-        child:child  ),
+        child: child,
+      ),
     );
-    
   }
 }
