@@ -39,6 +39,8 @@ class AppColors {
   static const _orangePeelSolid = Color(0xffFFA000);
   static const _colonialWhite = Color(0xffFFEDB8);
   static const _salomieApprox = Color(0xffFFE186);
+  static const _redSolid = Color(0xffFF0000);
+  static const _provincialPinkApprox = Color(0xffFEF2F2);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -66,6 +68,7 @@ class AppColors {
   static const textColor = _jacksonsPurpleApprox;
   static const grayText = _stormGrayApprox;
   static const blackText = _black;
+  static const importantText = _redSolid;
 
   static const titleMedium = _bluish;
   static const headlineMedium = _blackCow;
@@ -177,4 +180,6 @@ class AppColors {
   static const hospitalInfoShadow = _orangePeelSolid;
   static const hospitalInfoColorBG1 = _salomieApprox;
   static const hospitalInfoColorBG2 = _colonialWhite;
+
+  static const backgroundForImportantText= _provincialPinkApprox;
 }

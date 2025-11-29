@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/features/user_flow/home/widget/custom_app_bar_widget.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class MedicalDetailsScreen extends BaseStatefulScreenWidget {
   const MedicalDetailsScreen({super.key});
@@ -22,31 +25,34 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: buildBody(),
+      body: _buildBody(),
     );
   }
   ///////////////////////////////////////////////////////////
   /////////////////// Helper methods ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget buildBody() {
+  Widget _buildBody() {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 48.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildAppBar(),
+            CustomAppBarWidget(
+              onTap: () {},
+              title: context.translate(LocalizationKeys.medicalDetailsScreen),
+            ),
             SizedBox(height: 24.h),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    personalInfoCard(),
-                    chronicDiseasesCard(),
-                    medicalTestCard(),
-                    upcomingAppointmentCard(),
-                    infoNoticeCard(),
+                    _personalInfoCard(),
+                    _chronicDiseasesCard(),
+                    _medicalTestCard(),
+                    _upcomingAppointmentCard(),
+                    _infoNoticeCard(),
                   ],
                 ),
               ),
@@ -57,26 +63,7 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
     );
   }
 
-  Widget buildAppBar() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        GestureDetector(
-          onTap: () {},
-          child: SvgPicture.asset(AppAssetPaths.arrowBackIcon),
-        ),
-        SizedBox(width: 63),
-        Text(
-          "Medical Details",
-          style: context.textTheme.bodyLarge!.copyWith(
-            color: AppColors.blackText,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget baseOfCard({
+  Widget _baseOfCard({
     required String titleOfCard,
     required Widget body,
     EdgeInsetsGeometry? padding,
@@ -88,7 +75,10 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(titleOfCard, style: context.textTheme.bodyLarge),
+            Text(
+              context.translate(titleOfCard),
+              style: context.textTheme.bodyLarge,
+            ),
             Padding(
               padding: padding ?? EdgeInsets.all(0),
               child: CustomDividerWidget(
@@ -102,10 +92,10 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
     );
   }
 
-  Widget personalInfoCard() {
-    return baseOfCard(
+  Widget _personalInfoCard() {
+    return _baseOfCard(
       padding: EdgeInsets.only(bottom: 8.h, top: 16.h),
-      titleOfCard: "Personal information",
+      titleOfCard: LocalizationKeys.personalInformation,
       body: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -113,12 +103,18 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                personalInfoColumn(
-                  title: "full Name",
+                _personalInfoColumn(
+                  title: LocalizationKeys.fullName,
                   subTitle: "Mariana Adly Labib ",
                 ),
-                personalInfoColumn(title: "Type", subTitle: "female"),
-                personalInfoColumn(title: "Required Organ", subTitle: "Kidney"),
+                _personalInfoColumn(
+                  title: LocalizationKeys.type,
+                  subTitle: "female",
+                ),
+                _personalInfoColumn(
+                  title: LocalizationKeys.requiredOrgan,
+                  subTitle: "Kidney",
+                ),
               ],
             ),
           ),
@@ -126,12 +122,18 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                personalInfoColumn(
-                  title: "Medical File Number",
+                _personalInfoColumn(
+                  title: LocalizationKeys.medicalFileNumber,
                   subTitle: "MF-2025-1117",
                 ),
-                personalInfoColumn(title: "Age", subTitle: "21 year"),
-                personalInfoColumn(title: "Blood Type", subTitle: "A+"),
+                _personalInfoColumn(
+                  title: LocalizationKeys.age,
+                  subTitle: "21 year",
+                ),
+                _personalInfoColumn(
+                  title: LocalizationKeys.bloodType,
+                  subTitle: "A+",
+                ),
               ],
             ),
           ),
@@ -140,18 +142,18 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
     );
   }
 
-  Widget chronicDiseasesCard() {
-    return baseOfCard(
+  Widget _chronicDiseasesCard() {
+    return _baseOfCard(
       verticalPaddingOfDivider: 16.h,
-      titleOfCard: "Chronic Diseases",
-      body: buildBodyOfChronicDiseasesCard(),
+      titleOfCard: LocalizationKeys.chronicDiseases,
+      body: _buildBodyOfChronicDiseasesCard(),
     );
   }
 
-  Widget medicalTestCard() {
-    return baseOfCard(
+  Widget _medicalTestCard() {
+    return _baseOfCard(
       verticalPaddingOfDivider: 16.h,
-      titleOfCard: "Medical Tests",
+      titleOfCard: LocalizationKeys.medicalTests,
       body: Column(
         children: [
           Container(
@@ -228,10 +230,10 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
     );
   }
 
-  Widget upcomingAppointmentCard() {
-    return baseOfCard(
+  Widget _upcomingAppointmentCard() {
+    return _baseOfCard(
       verticalPaddingOfDivider: 16.h,
-      titleOfCard: "Upcoming Appointments",
+      titleOfCard: LocalizationKeys.upcomingAppointments,
       body: Container(
         decoration: BoxDecoration(
           color: AppColors.medicalTestContainerBG,
@@ -251,7 +253,7 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
               SvgPicture.asset(AppAssetPaths.calendarIcon),
               SizedBox(height: 16.h),
               Text(
-                "Visit Appointment",
+                context.translate(LocalizationKeys.visitAppointment),
                 style: context.textTheme.bodyMedium!.copyWith(
                   color: AppColors.grayText,
                   fontWeight: FontWeight.w600,
@@ -272,7 +274,7 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
     );
   }
 
-  Widget buildBodyOfChronicDiseasesCard() {
+  Widget _buildBodyOfChronicDiseasesCard() {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -285,7 +287,7 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
       padding: EdgeInsets.zero,
       itemCount: 4,
       itemBuilder: (ctx, index) {
-        return diseaseCard(
+        return _diseaseCard(
           diseases: "Diabetes",
           diseasesIcon: AppAssetPaths.dropOfBloodIcon,
         );
@@ -293,7 +295,10 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
     );
   }
 
-  Widget diseaseCard({required String diseases, required String diseasesIcon}) {
+  Widget _diseaseCard({
+    required String diseases,
+    required String diseasesIcon,
+  }) {
     return Container(
       // height: 98.h,
       // width: 147.w,
@@ -331,7 +336,10 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
     );
   }
 
-  Widget personalInfoColumn({required String title, required String subTitle}) {
+  Widget _personalInfoColumn({
+    required String title,
+    required String subTitle,
+  }) {
     return Padding(
       padding: EdgeInsets.only(top: 16.h),
       child: Column(
@@ -339,7 +347,7 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            context.translate(title),
             style: context.textTheme.labelMedium!.copyWith(
               color: AppColors.grayText,
               fontSize: 14.sp,
@@ -362,7 +370,7 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
     );
   }
 
-  Widget infoNoticeCard() {
+  Widget _infoNoticeCard() {
     return Padding(
       padding: const EdgeInsetsDirectional.only(end: 6),
       child: Container(
@@ -389,7 +397,7 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
         ),
         child: Center(
           child: Text(
-            "All information displayed here was entered by the hospital and cannot be modified.",
+            context.translate(LocalizationKeys.hospitalDataNote),
             style: context.textTheme.displayMedium!.copyWith(
               fontSize: 16,
               color: AppColors.hospitalInfoText,
