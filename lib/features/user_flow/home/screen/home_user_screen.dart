@@ -57,9 +57,9 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
   }
 
 
-///////////////////////////////////////////////////////////
-/////////////////// Helper methods ////////////////////////
-///////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper methods ////////////////////////
+  ///////////////////////////////////////////////////////////
   Widget _buildBody() {
     return SafeArea(
       child: Padding(
@@ -97,7 +97,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: 4,
+      itemCount: cards.length,
       itemBuilder: (ctx, index) {
         return CustomCardWidget(cardUiModel: cards[index]);
       },

@@ -29,6 +29,16 @@ class AppColors {
   static const _transparent = Colors.transparent;
   static const _linkWaterApprox = Color(0xffDDE8F9);
   static const _curiousBlueApprox = Color(0xff2094CF);
+  static const _titanWhite = Color(0xffF5F5FF);
+  static const _seaGreen = Color(0xff2E7D32);
+  static const _trinidad = Color(0xffE75809);
+  static const _papayaWhip = Color(0xffFFEFD7);
+  static const _zanah = Color(0xffD1EAD2);
+  static const _malachiteApprox = Color(0xff00C951);
+  static const _doveGrayApprox = Color(0xff656464);
+  static const _orangePeelSolid = Color(0xffFFA000);
+  static const _colonialWhite = Color(0xffFFEDB8);
+  static const _salomieApprox = Color(0xffFFE186);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -155,4 +165,16 @@ class AppColors {
   static const dividerColor = _alto;
   static const shadowForContainerInfo = _curiousBlueApprox;
   static const homeCardBG = _linkWaterApprox;
+
+  /// Medical Details Screen
+  static const medicalTestContainerBG = _titanWhite;
+  static const medicalTestDoneBG = _zanah;
+  static const medicalTestDoneText = _seaGreen;
+  static const medicalTestNotDoneText = _trinidad;
+  static const medicalTestNotDoneBG = _papayaWhip;
+  static const medicalTestDoneShadow = _malachiteApprox;
+  static const hospitalInfoText = _doveGrayApprox;
+  static const hospitalInfoShadow = _orangePeelSolid;
+  static const hospitalInfoColorBG1 = _salomieApprox;
+  static const hospitalInfoColorBG2 = _colonialWhite;
 }
