@@ -21,6 +21,7 @@ class BaseBodyScaffold extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             CustomAppBarWidget(title: title, onTap: onBackTap),
+            SizedBox(height: 24.h),
             Expanded(child: SingleChildScrollView(child: body)),
           ],
         ),

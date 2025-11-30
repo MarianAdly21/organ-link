@@ -54,7 +54,7 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
     required Widget body,
     EdgeInsetsGeometry? padding,
     double? verticalPaddingOfDivider,
-  }) {
+  }) {  
     return ContainerWithShadow(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),

@@ -71,4 +71,15 @@
   "visit_appointment": "موعد الزيارة",
   "hospital_data_note": "جميع المعلومات المعروضة هنا تم إدخالها من قبل المستشفى ولا يمكن تعديلها",
   "caseUpdateNote": "يتم تحديث الحالة تلقائياً من قبل المستشفى، في حال وجود أي استفسار، يرجى التواصل مع المستشفى."
-}
+, "schedule_procedure": "جدولة العملية",
+  "procedure_scheduled": "عملية الزراعة مجدولة!",
+  "all_set_we_are_with_you": "كل شيء جاهز، نحن معك في كل خطوة",
+  "duration": "المدة",
+  "time": "الوقت",
+  "date": "التاريخ",
+  "procedure_location": "المكان",
+  "operating_room": "غرفة العمليات",
+  "arrival_time": "موعد الحضور",
+  "medical_team": "الفريق الطبي",
+  "expert_team": "فريق متخصص ومتمرس"  
+}       

@@ -118,7 +118,7 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(
-                  AppAssetPaths.cloudDoneIcon,
+                  AppAssetPaths.inProgressIcon,
                   width: 28.w,
                   height: 28.w,
                 ),

@@ -18,4 +18,6 @@ class AppAssetPaths {
   static const String hourglassIcon = "assets/icons/hour_glass_icon.svg";
   static const String nextIconIcon = "assets/icons/next_icon.svg";
   static const String inProgressIcon = "assets/icons/in_progress_icon.svg";
+  static const String alarmClockIcon = "assets/icons/alarm_clock_icon.svg";
+  static const String stopSwitchIcon = "assets/icons/stop_swatch_icon.svg";
 }

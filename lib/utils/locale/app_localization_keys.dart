@@ -79,5 +79,17 @@ static const  upcomingAppointments="upcoming_appointments";
 static const  visitAppointment="visit_appointment";
 static const  hospitalDataNote="hospital_data_note";
 static const  caseUpdateNote ="case_up_date_note";
+static const scheduleProcedure= "schedule_procedure";
+static const procedureScheduled= "procedure_scheduled";
+static const allSetWeAreWithYou= "all_set_we_are_with_you";
+static const duration= "duration";
+static const time= "time";
+static const date= "date";
+static const procedureLocation ="location";
+static const operatingRoom="operating_room";
+static const arrivalTime= "arrival_time";
+static const medicalTeam= "medical_team";
+static const expertTeam = "medical_team";
+
 
 }
