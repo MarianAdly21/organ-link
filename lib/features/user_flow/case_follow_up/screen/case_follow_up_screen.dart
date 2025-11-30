@@ -7,6 +7,7 @@ import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/widget/gradient_progress_bar.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/user_flow/widget/notice_container.dart';
+import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
@@ -21,6 +22,7 @@ class CaseFollowUpScreen extends BaseStatefulScreenWidget {
 }
 
 class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
+  bool isScheduling = false;
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
@@ -62,8 +64,26 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
             doneHistory: "1 أكتوبر 2025",
             isDone: false,
           ),
+
+          _stepCard(
+            title: "جدولة العملية",
+            subTitle: "تحديد موعد العملية والتحضيرات اللازمة",
+            doneHistory: "1 أكتوبر 2025",
+            isDone: false,
+          ),
+          _stepCard(
+            title: "إجراء عملية الزراعة",
+            subTitle: "تنفيذ العملية الجراحية",
+            doneHistory: "1 أكتوبر 2025",
+            isDone: isScheduling = false,
+          ),
           _progressSummaryCard(),
-          _nextStepsSection(),
+          isScheduling
+              ? AppButtonWithGradientColors(
+                  text: "Procedure Scheduling",
+                  onTap: () {},
+                )
+              : SizedBox.shrink(),
           SizedBox(height: 32.h),
           NoticeContainer(
             height: 95.h,
@@ -233,67 +253,67 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
     );
   }
 
-  Widget _nextStepsSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Next Steps", style: context.textTheme.bodyLarge),
-        SizedBox(height: 8.h),
-        _nextStepContainer(
-          onTap: () {},
-          title: "جدولة العملية",
-          subTitle: "تحديد موعد العملية والتحضيرات اللازمة",
-        ),
-        _nextStepContainer(
-          onTap: () {},
-          title: "إجراء عملية الزراعة",
-          subTitle: "تنفيذ العملية الجراحية",
-        ),
-      ],
-    );
-  }
+  // Widget _nextStepsSection() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text("Next Steps", style: context.textTheme.bodyLarge),
+  //       SizedBox(height: 8.h),
+  //       _nextStepContainer(
+  //         onTap: () {},
+  //         title: "جدولة العملية",
+  //         subTitle: "تحديد موعد العملية والتحضيرات اللازمة",
+  //       ),
+  //       _nextStepContainer(
+  //         onTap: () {},
+  //         title: "إجراء عملية الزراعة",
+  //         subTitle: "تنفيذ العملية الجراحية",
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Widget _nextStepContainer({
-    required void Function()? onTap,
-    required String title,
-    required String subTitle,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2),
-      child: ContainerWithShadow(
-        padding: EdgeInsets.symmetric(vertical: 8.h),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: context.textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 13.h),
-                  Text(
-                    subTitle,
-                    style: context.textTheme.labelMedium!.copyWith(
-                      color: AppColors.grayText,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-              GestureDetector(
-                onTap: onTap,
-                child: SvgPicture.asset(AppAssetPaths.nextIconIcon),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _nextStepContainer({
+  //   required void Function()? onTap,
+  //   required String title,
+  //   required String subTitle,
+  // }) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 2),
+  //     child: ContainerWithShadow(
+  //       padding: EdgeInsets.symmetric(vertical: 8.h),
+  //       child: Padding(
+  //         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Text(
+  //                   title,
+  //                   style: context.textTheme.bodyMedium!.copyWith(
+  //                     fontWeight: FontWeight.w600,
+  //                   ),
+  //                 ),
+  //                 SizedBox(height: 13.h),
+  //                 Text(
+  //                   subTitle,
+  //                   style: context.textTheme.labelMedium!.copyWith(
+  //                     color: AppColors.grayText,
+  //                     fontWeight: FontWeight.w400,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //             GestureDetector(
+  //               onTap: onTap,
+  //               child: SvgPicture.asset(AppAssetPaths.nextIconIcon),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
