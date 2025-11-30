@@ -8,14 +8,16 @@ class ContainerWithShadow extends StatelessWidget {
     required this.child,
     this.height,
     this.width,
+    this.padding,
   });
   final Widget child;
   final double? height;
   final double? width;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 24.h),
+      padding:padding?? EdgeInsets.symmetric(vertical: 24.h),
       child: Container(
         height: height,
         width: width,
