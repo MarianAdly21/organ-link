@@ -70,5 +70,16 @@
   "upcoming_appointments": "Upcoming Appointments",
   "visit_appointment": "Visit Appointment",
   "hospital_data_note": "All information displayed here was entered by the hospital and cannot be modified.",
- "case_up_date_note":"The case status is updated automatically by the hospital. If you have any inquiries, please contact the hospital."
+ "case_up_date_note":"The case status is updated automatically by the hospital. If you have any inquiries, please contact the hospital.",
+  "schedule_procedure": "Schedule Procedure",
+  "procedure_scheduled": "Procedure Scheduled",
+  "all_set_we_are_with_you": "All set, we are with you every step",
+  "duration": "Duration",
+  "time": "Time",
+  "date": "Date",
+  "procedure_location": "Location",
+  "operating_room": "Operating Room",
+  "arrival_time": "Arrival Time",
+  "medical_team": "Medical Team",
+  "expert_team": "Expert and Experienced Team"
 }
