@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
-import 'package:organ_link/features/user_flow/home/widget/custom_app_bar_widget.dart';
+import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
@@ -33,35 +33,21 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
   ///////////////////////////////////////////////////////////
 
   Widget _buildBody() {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 48.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomAppBarWidget(
-              onTap: () {},
-              title: context.translate(LocalizationKeys.medicalDetailsScreen),
-            ),
-            SizedBox(height: 24.h),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _personalInfoCard(),
-                    _chronicDiseasesCard(),
-                    _medicalTestCard(),
-                    _upcomingAppointmentCard(),
-                    _infoNoticeCard(),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+    return BaseBodyScaffold(
+      title: context.translate(LocalizationKeys.medicalDetailsScreen),
+      onBackTap: () {},
+      body: Column(
+        children: [
+          _personalInfoCard(),
+          _chronicDiseasesCard(),
+          _medicalTestCard(),
+          _upcomingAppointmentCard(),
+          _infoNoticeCard(),
+        ],
       ),
     );
-  }
+
+     }
 
   Widget _baseOfCard({
     required String titleOfCard,

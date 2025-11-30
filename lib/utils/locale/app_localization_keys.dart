@@ -78,5 +78,6 @@ static const  medicalTests="medical_tests";
 static const  upcomingAppointments="upcoming_appointments";
 static const  visitAppointment="visit_appointment";
 static const  hospitalDataNote="hospital_data_note";
+static const  caseUpdateNote ="case_up_date_note";
 
 }

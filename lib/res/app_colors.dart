@@ -41,6 +41,8 @@ class AppColors {
   static const _salomieApprox = Color(0xffFFE186);
   static const _redSolid = Color(0xffFF0000);
   static const _provincialPinkApprox = Color(0xffFEF2F2);
+  static const _scienceBlueApprox = Color(0xff0861D7);
+  static const _botticelliApprox = Color(0xffD9E2ED);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -181,5 +183,9 @@ class AppColors {
   static const hospitalInfoColorBG1 = _salomieApprox;
   static const hospitalInfoColorBG2 = _colonialWhite;
 
-  static const backgroundForImportantText= _provincialPinkApprox;
+  static const backgroundForImportantText = _provincialPinkApprox;
+
+  /// Progress Summery card
+  static const progressContainerBG = _scienceBlueApprox;
+  static const progressBarBG = _botticelliApprox;
 }

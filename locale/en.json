@@ -69,6 +69,6 @@
   "medical_tests": "Medical Tests",
   "upcoming_appointments": "Upcoming Appointments",
   "visit_appointment": "Visit Appointment",
-  "hospital_data_note": "All information displayed here was entered by the hospital and cannot be modified."
-
+  "hospital_data_note": "All information displayed here was entered by the hospital and cannot be modified.",
+ "case_up_date_note":"The case status is updated automatically by the hospital. If you have any inquiries, please contact the hospital."
 }
