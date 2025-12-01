@@ -15,7 +15,7 @@ import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class CaseFollowUpScreen extends BaseStatefulScreenWidget {
   const CaseFollowUpScreen({super.key});
-
+  static const routeName = "/case-follow-up-screen";
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
       _CaseFollowUpScreenState();
@@ -37,7 +37,9 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
   Widget _buildBody() {
     return BaseBodyScaffold(
       title: "Case Follow-up",
-      onBackTap: () {},
+      onBackTap: () {
+        Navigator.pop(context);
+      },
       body: Column(
         children: [
           _stepCard(

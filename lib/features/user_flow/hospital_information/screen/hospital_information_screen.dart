@@ -12,6 +12,7 @@ import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class HospitalInformationScreen extends BaseStatefulScreenWidget {
   const HospitalInformationScreen({super.key});
+  static const routeName = "/hospital-information-screen";
 
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
@@ -33,114 +34,105 @@ class _HospitalInformationScreenState
   ///////////////////////////////////////////////////////////
 
   Widget _buildBody() {
-    return BaseBodyScaffold(title: context.translate(LocalizationKeys.contactUs), onBackTap: (){}, body:  Padding(
-                  padding: EdgeInsets.only(bottom: 24.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _hospitalName(),
-                      _sections(
-                        //height: 170.h,
-                        title: context.translate(LocalizationKeys.location),
-                        titleOfButton: context.translate(
-                          LocalizationKeys.openInMaps,
-                        ),
-                        onTap: () {},
-                        body: Text(
-                          "Nile Corniche, El Aini, Sayeda Zeinab, Cairo",
-                          style: context.textTheme.labelMedium!.copyWith(
-                            color: AppColors.grayText,
-                          ),
-                        ),
-                      ),
-                      _sections(
-                        // height: 350.h,
-                        title: context.translate(
-                          LocalizationKeys.contactInformation,
-                        ),
-                        titleOfButton: context.translate(
-                          LocalizationKeys.callNow,
-                        ),
-                        body: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CustomDividerWidget(verticalPadding: 8),
-                            SizedBox(height: 16.h),
-                            _rowInfoCard(
-                              divider: true,
-                              title: context.translate(
-                                LocalizationKeys.mainPhone,
-                              ),
-                              subTitle: "+20 1012345678",
-                            ),
-                            _rowInfoCard(
-                              isImportant: true,
-                              divider: true,
-                              title: context.translate(
-                                LocalizationKeys.emergency,
-                              ),
-                              subTitle: "+20 1012345678",
-                            ),
-                            _rowInfoCard(
-                              title: context.translate(LocalizationKeys.email),
-                              subTitle: "email@gmail.com",
-                            ),
-                          ],
-                        ),
-                      ),
-                      _sections(
-                        //height: 310.h,
-                        title: context.translate(
-                          LocalizationKeys.attendingPhysician,
-                        ),
-                        body: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CustomDividerWidget(verticalPadding: 8),
-                            SizedBox(height: 16.h),
-                            _rowInfoCard(
-                              divider: true,
-                              title: context.translate(LocalizationKeys.name),
-                              subTitle: "د. خالد عبدالله سالم",
-                            ),
-                            _rowInfoCard(
-                              divider: true,
-                              title: context.translate(
-                                LocalizationKeys.specialty,
-                              ),
-                              subTitle: "استشاري جراحة الكلي والمسالك البولية",
-                            ),
-                            _rowInfoCard(
-                              title: context.translate(
-                                LocalizationKeys.clinicPhoneNumber,
-                              ),
-                              subTitle: "1012345678",
-                            ),
-                          ],
-                        ),
-                      ),
-                      _sections(
-                        title: context.translate(LocalizationKeys.workingHours),
-                        body: Column(
-                          children: [
-                            CustomDividerWidget(verticalPadding: 8.h),
-                            Center(
-                              child: Text(
-                                "السبت - الخميس | من 8:00 ص - 4:00 م",
-                                style: context.textTheme.bodyMedium!.copyWith(
-                                  color: AppColors.blackText,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      _infoNoticeCard(),
-                    ],
-                  ),
+    return BaseBodyScaffold(
+      title: context.translate(LocalizationKeys.contactUs),
+      onBackTap: () {
+        Navigator.pop(context);
+      },
+      body: Padding(
+        padding: EdgeInsets.only(bottom: 24.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _hospitalName(),
+            _sections(
+              //height: 170.h,
+              title: context.translate(LocalizationKeys.location),
+              titleOfButton: context.translate(LocalizationKeys.openInMaps),
+              onTap: () {},
+              body: Text(
+                "Nile Corniche, El Aini, Sayeda Zeinab, Cairo",
+                style: context.textTheme.labelMedium!.copyWith(
+                  color: AppColors.grayText,
                 ),
-             );
+              ),
+            ),
+            _sections(
+              // height: 350.h,
+              title: context.translate(LocalizationKeys.contactInformation),
+              titleOfButton: context.translate(LocalizationKeys.callNow),
+              body: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomDividerWidget(verticalPadding: 8),
+                  SizedBox(height: 16.h),
+                  _rowInfoCard(
+                    divider: true,
+                    title: context.translate(LocalizationKeys.mainPhone),
+                    subTitle: "+20 1012345678",
+                  ),
+                  _rowInfoCard(
+                    isImportant: true,
+                    divider: true,
+                    title: context.translate(LocalizationKeys.emergency),
+                    subTitle: "+20 1012345678",
+                  ),
+                  _rowInfoCard(
+                    title: context.translate(LocalizationKeys.email),
+                    subTitle: "email@gmail.com",
+                  ),
+                ],
+              ),
+            ),
+            _sections(
+              //height: 310.h,
+              title: context.translate(LocalizationKeys.attendingPhysician),
+              body: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomDividerWidget(verticalPadding: 8),
+                  SizedBox(height: 16.h),
+                  _rowInfoCard(
+                    divider: true,
+                    title: context.translate(LocalizationKeys.name),
+                    subTitle: "د. خالد عبدالله سالم",
+                  ),
+                  _rowInfoCard(
+                    divider: true,
+                    title: context.translate(LocalizationKeys.specialty),
+                    subTitle: "استشاري جراحة الكلي والمسالك البولية",
+                  ),
+                  _rowInfoCard(
+                    title: context.translate(
+                      LocalizationKeys.clinicPhoneNumber,
+                    ),
+                    subTitle: "1012345678",
+                  ),
+                ],
+              ),
+            ),
+            _sections(
+              title: context.translate(LocalizationKeys.workingHours),
+              body: Column(
+                children: [
+                  CustomDividerWidget(verticalPadding: 8.h),
+                  Center(
+                    child: Text(
+                      "السبت - الخميس | من 8:00 ص - 4:00 م",
+                      style: context.textTheme.bodyMedium!.copyWith(
+                        color: AppColors.blackText,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            _infoNoticeCard(),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _infoNoticeCard() {
