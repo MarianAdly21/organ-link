@@ -90,6 +90,19 @@ static const operatingRoom="operating_room";
 static const arrivalTime= "arrival_time";
 static const medicalTeam= "medical_team";
 static const expertTeam = "medical_team";
+static const appAbout=  "about_app";
+static const appNameTitle=  "app_name_title";
+static const appVersion=  "app_version";
+static const appDescription=  "app_description";
+static const appFullDescription= "app_full_description";
+static const support=  "support";
+static const hotline= "hotline";
+static const logout ="logout";
+static const language ="language";
+static const confirmLogoutTitle="logout_confirmation_title";
+static const areYouSureYouWantToLogOutOfTheApplication= "logout_confirmation_message";
+static const cancel="cancel";
+static const confirmLogout="confirm_logout";
 
 
 }

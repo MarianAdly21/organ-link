@@ -40,6 +40,7 @@ class AppColors {
   static const _colonialWhite = Color(0xffFFEDB8);
   static const _salomieApprox = Color(0xffFFE186);
   static const _redSolid = Color(0xffFF0000);
+  static const _guardsmanRed = Color(0xffC60000);
   static const _provincialPinkApprox = Color(0xffFEF2F2);
   static const _scienceBlueApprox = Color(0xff0861D7);
   static const _botticelliApprox = Color(0xffD9E2ED);
@@ -188,4 +189,9 @@ class AppColors {
   /// Progress Summery card
   static const progressContainerBG = _scienceBlueApprox;
   static const progressBarBG = _botticelliApprox;
+
+  static const backgroundForLogoutContainer = _provincialPinkApprox;
+  static const backgroundForLogoutButton = _guardsmanRed;
+  static const shadowForLogoutContainer = _redSolid;
+  static const cancelBtnBG = _titanWhite;
 }

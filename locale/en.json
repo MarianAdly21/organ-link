@@ -81,5 +81,18 @@
   "operating_room": "Operating Room",
   "arrival_time": "Arrival Time",
   "medical_team": "Medical Team",
-  "expert_team": "Expert and Experienced Team"
+  "expert_team": "Expert and Experienced Team",
+  "about_app": "About the Application",
+"app_name_title": "Application Name",
+"app_version": "Version",
+"app_description": "Description",
+"app_full_description": "An integrated system for managing organ donation and transplantation processes, in collaboration with the Ministry of Health.",
+"support": "Support",
+"hotline": "Hotline",
+"log_out": "Logout",
+"language": "Language",
+"logout_confirmation_title": "Confirm Logout",
+"logout_confirmation_message": "Are you sure you want to log out of the application?",
+"cancel": "Cancel",
+"confirm_logout": "Logout"
 }
