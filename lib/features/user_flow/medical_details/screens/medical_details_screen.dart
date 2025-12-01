@@ -35,7 +35,9 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
   Widget _buildBody() {
     return BaseBodyScaffold(
       title: context.translate(LocalizationKeys.medicalDetailsScreen),
-      onBackTap: () {},
+      onBackTap: () {
+        Navigator.pop(context);
+      },
       body: Column(
         children: [
           _personalInfoCard(),
@@ -46,15 +48,14 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
         ],
       ),
     );
-
-     }
+  }
 
   Widget _baseOfCard({
     required String titleOfCard,
     required Widget body,
     EdgeInsetsGeometry? padding,
     double? verticalPaddingOfDivider,
-  }) {  
+  }) {
     return ContainerWithShadow(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),

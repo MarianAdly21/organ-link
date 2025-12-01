@@ -4,8 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
-import 'package:organ_link/features/user_flow/home/model/card_ui_model.dart';
-import 'package:organ_link/features/user_flow/home/widget/custom_card_widget.dart';
+import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_up_screen.dart';
+import 'package:organ_link/features/user_flow/hospital_information/screen/hospital_information_screen.dart';
+import 'package:organ_link/features/user_flow/medical_details/screens/medical_details_screen.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
@@ -21,32 +22,32 @@ class HomeUserScreen extends BaseStatefulScreenWidget {
 }
 
 class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
-  final List<CardUiModel> cards = [
-    CardUiModel(
-      icon: AppAssetPaths.personalIcon,
-      title: LocalizationKeys.medicalDetails,
-      subTitle: LocalizationKeys.viewHealthInformation,
-      onTap: () {},
-    ),
-    CardUiModel(
-      icon: AppAssetPaths.hospitalIcon,
-      title: LocalizationKeys.hospitalInformation,
-      subTitle: LocalizationKeys.contactAndLocation,
-      onTap: () {},
-    ),
-    CardUiModel(
-      icon: AppAssetPaths.stockChartIcon,
-      title: LocalizationKeys.caseFollowUp,
-      subTitle: LocalizationKeys.operationStagesTracking,
-      onTap: () {},
-    ),
-    CardUiModel(
-      icon: AppAssetPaths.settingIcon,
-      title: LocalizationKeys.settings,
-      subTitle: LocalizationKeys.accountManagement,
-      onTap: () {},
-    ),
-  ];
+  // final List<CardUiModel> cards = [
+  //   CardUiModel(
+  //     icon: AppAssetPaths.personalIcon,
+  //     title: LocalizationKeys.medicalDetails,
+  //     subTitle: LocalizationKeys.viewHealthInformation,
+  //     onTap: () {},
+  //   ),
+  //   CardUiModel(
+  //     icon: AppAssetPaths.hospitalIcon,
+  //     title: LocalizationKeys.hospitalInformation,
+  //     subTitle: LocalizationKeys.contactAndLocation,
+  //     onTap: () {},
+  //   ),
+  //   CardUiModel(
+  //     icon: AppAssetPaths.stockChartIcon,
+  //     title: LocalizationKeys.caseFollowUp,
+  //     subTitle: LocalizationKeys.operationStagesTracking,
+  //     onTap: () {},
+  //   ),
+  //   CardUiModel(
+  //     icon: AppAssetPaths.settingIcon,
+  //     title: LocalizationKeys.settings,
+  //     subTitle: LocalizationKeys.accountManagement,
+  //     onTap: () {},
+  //   ),
+  // ];
 
   @override
   Widget baseScreenBuild(BuildContext context) {
@@ -55,7 +56,6 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
       body: _buildBody(),
     );
   }
-
 
   ///////////////////////////////////////////////////////////
   /////////////////// Helper methods ////////////////////////
@@ -75,7 +75,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
                     SizedBox(height: 48.h),
                     _cardDetails(),
                     SizedBox(height: 24.h),
-                    buildBodyList(),
+                    _buildBodyList(),
                   ],
                 ),
               ),
@@ -86,21 +86,137 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
     );
   }
 
-  Widget buildBodyList() {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1.4,
-        crossAxisSpacing: 16.w,
-        mainAxisSpacing: 16.h,
+  Widget _buildBodyList() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Flexible(
+              child: _mainCard(
+                onTap: () {
+                  Navigator.of(
+                    context,
+                  ).pushNamed(MedicalDetailsScreen.routeName);
+                },
+                icon: AppAssetPaths.personalIcon,
+                title: LocalizationKeys.medicalDetails,
+                subTitle: LocalizationKeys.viewHealthInformation,
+              ),
+            ),
+            SizedBox(width: 16.w),
+            Flexible(
+              child: _mainCard(
+                onTap: () {
+                  Navigator.of(context).pushNamed(CaseFollowUpScreen.routeName);
+                },
+                icon: AppAssetPaths.stockChartIcon,
+                title: LocalizationKeys.caseFollowUp,
+                subTitle: LocalizationKeys.operationStagesTracking,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 16.h),
+        Row(
+          children: [
+            Flexible(
+              child: _mainCard(
+                onTap: () {
+                  Navigator.of(
+                    context,
+                  ).pushNamed(HospitalInformationScreen.routeName);
+                },
+                icon: AppAssetPaths.hospitalIcon,
+                title: LocalizationKeys.hospitalInformation,
+                subTitle: LocalizationKeys.contactAndLocation,
+              ),
+            ),
+            SizedBox(width: 16.w),
+            Flexible(
+              child: _mainCard(
+                onTap: () {},
+                icon: AppAssetPaths.settingIcon,
+                title: LocalizationKeys.settings,
+                subTitle: LocalizationKeys.accountManagement,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+
+    // GridView.builder(
+    //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    //     crossAxisCount: 2,
+    //     childAspectRatio: 1.4,
+    //     crossAxisSpacing: 16.w,
+    //     mainAxisSpacing: 16.h,
+    //   ),
+    //   shrinkWrap: true,
+    //   physics: const NeverScrollableScrollPhysics(),
+    //   padding: EdgeInsets.zero,
+    //   itemCount: cards.length,
+    //   itemBuilder: (ctx, index) {
+    //     return CustomCardWidget(cardUiModel: cards[index]);
+    //   },
+    // );
+  }
+
+  Widget _mainCard({
+    required String icon,
+    required String title,
+    required String subTitle,
+    required void Function() onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 116.h,
+        width: 164.w,
+        padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 14.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              blurStyle: BlurStyle.outer,
+              blurRadius: 8,
+              color: Colors.black.withValues(alpha: 0.15),
+            ),
+          ],
+          color: AppColors.homeCardBG.withValues(alpha: 0.45),
+        ),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset(width: 32.w, height: 32.h, icon),
+              SizedBox(height: 16.h),
+              Text(
+                context.translate(title),
+                style: context.textTheme.labelMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.blackText,
+                  fontSize: 14.sp,
+                ),
+              ),
+              SizedBox(height: 4.h),
+              Text(
+                // maxLines: 1,
+                // overflow: TextOverflow.visible,
+                textAlign: TextAlign.center,
+                context.translate(subTitle),
+                style: context.textTheme.labelMedium!.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 13.sp,
+                  color: AppColors.grayText,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
-      itemCount: cards.length,
-      itemBuilder: (ctx, index) {
-        return CustomCardWidget(cardUiModel: cards[index]);
-      },
     );
   }
 
@@ -179,6 +295,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
                       fit: BoxFit.scaleDown,
                       child: Text(
                         context.translate(LocalizationKeys.patient),
+
                         /// change based on condition
                         style: context.textTheme.labelMedium!.copyWith(
                           color: AppColors.textColor,
@@ -209,6 +326,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
               child: Center(
                 child: Text(
                   context.translate(LocalizationKeys.underReview),
+
                   /// change based on condition
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: AppColors.textColor,
@@ -230,5 +348,9 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
         ),
       ),
     );
+  }
+
+  void _navToMedicalDetailsScreen() {
+    Navigator.of(context).pushNamed(MedicalDetailsScreen.routeName);
   }
 }

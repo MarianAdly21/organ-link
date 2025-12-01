@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/features/user_flow/home/screen/home_user_screen.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/text_field/app_text_form_filed_widget.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
@@ -78,7 +79,9 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> with AppValidate {
   Widget _loginButton() {
     return Flexible(
       child: AppButtonWithGradientColors(
-        onTap: () {},
+        onTap: () {
+          _navigatorToHomeScreen();
+        },
         text: context.translate(LocalizationKeys.login),
       ),
     );
@@ -106,6 +109,9 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> with AppValidate {
       ),
     );
   }
+  ///////////////////////////////////////////////////////////
+  //////////////////// Helper methods ///////////////////////
+  ///////////////////////////////////////////////////////////
 
   void _idNumberSaved(String? value) {
     _idNumber = value!;
@@ -113,5 +119,9 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> with AppValidate {
 
   void _passwordSaved(String? value) {
     _password = value!;
+  }
+
+  void _navigatorToHomeScreen() {
+    Navigator.of(context).pushNamed(HomeUserScreen.routeName);
   }
 }
