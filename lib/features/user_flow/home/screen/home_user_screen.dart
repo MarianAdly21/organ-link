@@ -7,6 +7,7 @@ import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_up_screen.dart';
 import 'package:organ_link/features/user_flow/hospital_information/screen/hospital_information_screen.dart';
 import 'package:organ_link/features/user_flow/medical_details/screens/medical_details_screen.dart';
+import 'package:organ_link/features/user_flow/settings/screen/settings_screen.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
@@ -134,7 +135,9 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
             SizedBox(width: 16.w),
             Flexible(
               child: _mainCard(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(SettingsScreen.routeName);
+                },
                 icon: AppAssetPaths.settingIcon,
                 title: LocalizationKeys.settings,
                 subTitle: LocalizationKeys.accountManagement,

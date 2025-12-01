@@ -81,5 +81,21 @@
   "operating_room": "غرفة العمليات",
   "arrival_time": "موعد الحضور",
   "medical_team": "الفريق الطبي",
-  "expert_team": "فريق متخصص ومتمرس"  
+  "expert_team": "فريق متخصص ومتمرس"  ,
+  "about_app": "حول التطبيق",
+  "app_name_title": "اسم التطبيق",
+  "app_version": "الإصدار",
+  "app_description": "الوصف",
+  "app_full_description": "نظام متكامل لإدارة عمليات التبرع بالأعضاء وزراعتها، بالتعاون مع وزارة الصحة.",
+  "support": "الدعم الفني",
+  "hotline": "الخط الساخن",
+  "logout": "تسجيل الخروج",
+  "language": "اللغة",
+  "logout_confirmation_title": "تأكيد تسجيل الخروج",
+  "logout_confirmation_message": "هل أنت متأكد من رغبتك في تسجيل الخروج من التطبيق؟",
+  "cancel": "إلغاء",
+  "confirm_logout": "تسجيل الخروج"
+
+
+
 }       
