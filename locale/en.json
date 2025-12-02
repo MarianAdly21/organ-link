@@ -94,5 +94,9 @@
 "logout_confirmation_title": "Confirm Logout",
 "logout_confirmation_message": "Are you sure you want to log out of the application?",
 "cancel": "Cancel",
-"confirm_logout": "Logout"
+"confirm_logout": "Logout",
+"error_occurred": "An error occurred, please try again",
+  "retry": "Retry",
+  "go_back": "Go Back",
+  "empty_page_message": "The page is empty, see you again soon"
 }

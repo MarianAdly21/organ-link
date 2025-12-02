@@ -25,6 +25,7 @@ class AppElevatedButton extends StatelessWidget {
     EdgeInsets? padding,
     Color? textColor,
     Color? color,
+    OutlinedBorder? shape,
     required String title,
   }) {
     return AppElevatedButton(
@@ -33,6 +34,7 @@ class AppElevatedButton extends StatelessWidget {
       color: color,
       label: labelTextWidget(title, textColor),
       onPressed: onPressed,
+      shape: shape,
     );
   }
   factory AppElevatedButton.whiteWithTitle({
@@ -56,8 +58,10 @@ class AppElevatedButton extends StatelessWidget {
         padding: padding ?? commonPadding,
         shape:
             shape ??
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+            RoundedRectangleBorder( 
+              borderRadius: BorderRadius.circular(16.r)),
         backgroundColor: color,
+        
       ),
       onPressed: onPressed,
       child: label,

@@ -20,4 +20,7 @@ class AppAssetPaths {
   static const String inProgressIcon = "assets/icons/in_progress_icon.svg";
   static const String alarmClockIcon = "assets/icons/alarm_clock_icon.svg";
   static const String stopSwitchIcon = "assets/icons/stop_swatch_icon.svg";
+
+  static const String noNotificationImage = "assets/images/no_notification.svg";
+  static const String errorNotificationImage = "assets/images/error.png";
 }

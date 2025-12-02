@@ -44,6 +44,10 @@ class AppColors {
   static const _provincialPinkApprox = Color(0xffFEF2F2);
   static const _scienceBlueApprox = Color(0xff0861D7);
   static const _botticelliApprox = Color(0xffD9E2ED);
+  static const _yourPink = Color(0xffFFC0C0);
+  static const _maroonApprox = Color(0xff830000);
+  static const _scorpionApprox = Color(0xff5F5F5F);
+  static const _fogApprox = Color(0xffDEDEFF);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -194,4 +198,14 @@ class AppColors {
   static const backgroundForLogoutButton = _guardsmanRed;
   static const shadowForLogoutContainer = _redSolid;
   static const cancelBtnBG = _titanWhite;
+
+  /// Notification Screen
+  static const notificationItemBG = _titanWhite;
+  static const notificationImportantItemBG = _yourPink;
+  static const notificationMainTitle = _maroonApprox;
+  static const notificationContentAndDate = _scorpionApprox;
+  static const errorText = _redSolid;
+  static const backButtonBG = _titanWhite;
+  static const backButtonBorder = _fogApprox;
+  
 }
