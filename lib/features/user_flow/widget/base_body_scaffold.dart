@@ -16,7 +16,12 @@ class BaseBodyScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 48.h),
+        padding: EdgeInsets.only(
+          left: 16.w,
+          right: 16.w,
+          bottom: 48.h,
+          top: 24.h,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

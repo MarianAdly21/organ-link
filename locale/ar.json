@@ -94,7 +94,11 @@
   "logout_confirmation_title": "تأكيد تسجيل الخروج",
   "logout_confirmation_message": "هل أنت متأكد من رغبتك في تسجيل الخروج من التطبيق؟",
   "cancel": "إلغاء",
-  "confirm_logout": "تسجيل الخروج"
+  "confirm_logout": "تسجيل الخروج",
+  "error_occurred": "حدث خطأ ما يرجى إعادة المحاولة",
+  "retry": "إعادة المحاولة",
+  "go_back": "العودة للخلف",
+  "empty_page_message": "الصفحة فارغة، دعنا نراك مجدداً"
 
 
 

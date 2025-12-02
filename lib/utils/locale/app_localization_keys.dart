@@ -103,6 +103,10 @@ static const confirmLogoutTitle="logout_confirmation_title";
 static const areYouSureYouWantToLogOutOfTheApplication= "logout_confirmation_message";
 static const cancel="cancel";
 static const confirmLogout="confirm_logout";
+ static const errorOccurred= "error_occurred";
+  static const retry="retry";
+ static const goBack= "go_back";
+ static const emptyPageMessage= "empty_page_message";
 
 
 }
