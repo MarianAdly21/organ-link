@@ -6,6 +6,7 @@ import 'package:organ_link/res/app_colors.dart';
 
 class NotificationScreen extends BaseStatefulScreenWidget {
   const NotificationScreen({super.key});
+  static const routeName = "/notification-screen";
 
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
@@ -19,7 +20,9 @@ class _NotificationScreenState extends BaseScreenState<NotificationScreen> {
       backgroundColor: AppColors.scaffoldBackground,
       body: BaseBodyScaffold(
         title: "Notification",
-        onBackTap: () {},
+        onBackTap: () {
+          Navigator.pop(context);
+        },
         body: Column(
           children: [
             NotificationItem(

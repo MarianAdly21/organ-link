@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/app_router.dart';
 import 'package:organ_link/features/splash/splash_screen.dart';
-import 'package:organ_link/features/user_flow/notification/screens/notification_screen.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:get_it/get_it.dart';
 import 'package:organ_link/utils/bloc_observer/app_bloc_observer.dart';
@@ -120,8 +119,7 @@ class _OrganLinkState extends State<OrganLink> {
                       navigatorKey: AppRouter.mainNavigatorKey,
 
                       routes: AppRouter.routes,
-                      home: const NotificationScreen(),
-                      //const SplashScreen(),
+                      home: const SplashScreen(),
                     ),
                   );
                 },

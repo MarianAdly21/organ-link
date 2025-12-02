@@ -5,7 +5,8 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateless_widget.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
-import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
+import 'package:organ_link/features/user_flow/widget/data_row_with_divider.dart';
+import 'package:organ_link/features/user_flow/widget/data_section.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
@@ -24,7 +25,7 @@ class ProcedureSchedulingScreen extends BaseStatelessWidget {
   }
 
   ///////////////////////////////////////////////////////////
-  /////////////////// Helper methods ////////////////////////
+  /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
   Widget _buildBody(BuildContext context) {
@@ -36,7 +37,7 @@ class ProcedureSchedulingScreen extends BaseStatelessWidget {
         children: [
           _transplantStatusMessage(context),
           _procedureInfo(context),
-          _sectionWithName(
+          _dataSectionWithName(
             context,
             padding: EdgeInsets.only(top: 24.h),
             title: LocalizationKeys.procedureLocation,
@@ -44,47 +45,41 @@ class ProcedureSchedulingScreen extends BaseStatelessWidget {
             body: Column(
               children: [
                 CustomDividerWidget(verticalPadding: 8.h),
-
                 SizedBox(height: 16.h),
-                _rowInfoCard(
-                  context,
+                DataRowWithDivider(
                   divider: true,
                   title: context.translate(LocalizationKeys.operatingRoom),
                   subTitle: "رقم 3- الطابق الثاني",
                 ),
-                _rowInfoCard(
-                  context,
+                DataRowWithDivider(
                   title: context.translate(LocalizationKeys.arrivalTime),
                   subTitle: "قبل الموعد المحدد بساعتين (8 ص)",
                 ),
               ],
             ),
           ),
-          _sectionWithName(
+          _dataSectionWithName(
             context,
-            padding: EdgeInsets.symmetric(vertical: 24.h),
+            padding: EdgeInsets.symmetric(vertical: 0),
             title: LocalizationKeys.medicalTeam,
             subTitle: context.translate(LocalizationKeys.expertTeam),
             body: Column(
               children: [
                 CustomDividerWidget(verticalPadding: 8.h),
                 SizedBox(height: 16.h),
-                _rowInfoCard(
-                  context,
+                DataRowWithDivider(
                   divider: true,
                   title: "د. أحمد سالم",
                   titleStyle: context.textTheme.bodyMedium!.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textColor,
                   ),
-
                   subTitle: "جراح رئيسي",
                   subTitleStyle: context.textTheme.labelMedium!.copyWith(
                     color: AppColors.grayText,
                   ),
                 ),
-                _rowInfoCard(
-                  context,
+                DataRowWithDivider(
                   divider: true,
                   title: "د. سارة محمد",
                   titleStyle: context.textTheme.bodyMedium!.copyWith(
@@ -96,8 +91,7 @@ class ProcedureSchedulingScreen extends BaseStatelessWidget {
                     color: AppColors.grayText,
                   ),
                 ),
-                _rowInfoCard(
-                  context,
+                DataRowWithDivider(
                   title: "د. سارة محمد",
                   titleStyle: context.textTheme.bodyMedium!.copyWith(
                     fontWeight: FontWeight.w600,
@@ -116,7 +110,7 @@ class ProcedureSchedulingScreen extends BaseStatelessWidget {
     );
   }
 
-  Widget _sectionWithName(
+  Widget _dataSectionWithName(
     BuildContext context, {
     EdgeInsetsGeometry? padding,
     required String title,
@@ -129,7 +123,7 @@ class ProcedureSchedulingScreen extends BaseStatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(context.translate(title), style: context.textTheme.bodyLarge),
-          _sections(context, title: subTitle, body: body),
+          DataSection(title: subTitle, body: body),
         ],
       ),
     );
@@ -159,85 +153,6 @@ class ProcedureSchedulingScreen extends BaseStatelessWidget {
           title: context.translate(LocalizationKeys.date),
           subTile: "25 نوفمبر",
         ),
-      ],
-    );
-  }
-
-  Widget _sections(
-    BuildContext context, {
-    double? height,
-    required String title,
-    required Widget body,
-    String? titleOfButton,
-    void Function()? onTap,
-  }) {
-    return ContainerWithShadow(
-      padding: EdgeInsets.only(top: 16),
-      height: height,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: context.textTheme.bodyLarge),
-            SizedBox(height: 16.h),
-            body,
-            if (titleOfButton != null) ...[
-              SizedBox(height: 24.h),
-              AppButtonWithGradientColors(text: titleOfButton, onTap: onTap),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _rowInfoCard(
-    BuildContext context, {
-    required String title,
-    bool divider = false,
-    bool isImportant = false,
-    required String subTitle,
-    TextStyle? titleStyle,
-    TextStyle? subTitleStyle,
-  }) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                style:
-                    titleStyle ??
-                    context.textTheme.labelMedium!.copyWith(
-                      color: AppColors.grayText,
-                    ),
-              ),
-            ),
-            //Spacer(flex: 1),
-            Expanded(
-              child: Text(
-                subTitle,
-                textAlign: TextAlign.end,
-                softWrap: true,
-                overflow: TextOverflow.visible,
-                style:
-                    subTitleStyle ??
-                    context.textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: isImportant
-                          ? AppColors.importantText
-                          : AppColors.textColor,
-                    ),
-              ),
-            ),
-          ],
-        ),
-        divider
-            ? CustomDividerWidget(indent: 24.w, endIndent: 24.w)
-            : SizedBox.shrink(),
       ],
     );
   }

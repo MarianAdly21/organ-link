@@ -5,6 +5,7 @@ import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_
 import 'package:organ_link/features/user_flow/home/screen/home_user_screen.dart';
 import 'package:organ_link/features/user_flow/hospital_information/screen/hospital_information_screen.dart';
 import 'package:organ_link/features/user_flow/medical_details/screens/medical_details_screen.dart';
+import 'package:organ_link/features/user_flow/notification/screens/notification_screen.dart';
 import 'package:organ_link/features/user_flow/settings/screen/settings_screen.dart';
 
 class AppRouter {
@@ -19,5 +20,6 @@ class AppRouter {
   CaseFollowUpScreen.routeName:(ctx)=>const CaseFollowUpScreen(),
   HospitalInformationScreen.routeName:(ctx)=>const HospitalInformationScreen(),
   SettingsScreen.routeName:(ctx)=>const SettingsScreen(),
+  NotificationScreen.routeName:(ctx)=>NotificationScreen(),
     };
 }

@@ -4,7 +4,8 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
-import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
+import 'package:organ_link/features/user_flow/widget/data_row_with_divider.dart';
+import 'package:organ_link/features/user_flow/widget/data_section.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/res/app_colors.dart';
@@ -30,7 +31,7 @@ class _HospitalInformationScreenState
   }
 
   ///////////////////////////////////////////////////////////
-  /////////////////// Helper methods ////////////////////////
+  /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
   Widget _buildBody() {
@@ -45,8 +46,8 @@ class _HospitalInformationScreenState
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _hospitalName(),
-            _sections(
-              //height: 170.h,
+            DataSection(
+              paddingAroundContainer: EdgeInsets.symmetric(vertical: 0),
               title: context.translate(LocalizationKeys.location),
               titleOfButton: context.translate(LocalizationKeys.openInMaps),
               onTap: () {},
@@ -57,8 +58,7 @@ class _HospitalInformationScreenState
                 ),
               ),
             ),
-            _sections(
-              // height: 350.h,
+            DataSection(
               title: context.translate(LocalizationKeys.contactInformation),
               titleOfButton: context.translate(LocalizationKeys.callNow),
               body: Column(
@@ -66,43 +66,43 @@ class _HospitalInformationScreenState
                 children: [
                   CustomDividerWidget(verticalPadding: 8),
                   SizedBox(height: 16.h),
-                  _rowInfoCard(
+                  DataRowWithDivider(
                     divider: true,
                     title: context.translate(LocalizationKeys.mainPhone),
                     subTitle: "+20 1012345678",
                   ),
-                  _rowInfoCard(
+                  DataRowWithDivider(
                     isImportant: true,
                     divider: true,
                     title: context.translate(LocalizationKeys.emergency),
                     subTitle: "+20 1012345678",
                   ),
-                  _rowInfoCard(
+                  DataRowWithDivider(
                     title: context.translate(LocalizationKeys.email),
                     subTitle: "email@gmail.com",
                   ),
                 ],
               ),
             ),
-            _sections(
-              //height: 310.h,
+            DataSection(
+              paddingAroundContainer: EdgeInsets.symmetric(vertical: 0),
               title: context.translate(LocalizationKeys.attendingPhysician),
               body: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomDividerWidget(verticalPadding: 8),
                   SizedBox(height: 16.h),
-                  _rowInfoCard(
+                  DataRowWithDivider(
                     divider: true,
                     title: context.translate(LocalizationKeys.name),
                     subTitle: "د. خالد عبدالله سالم",
                   ),
-                  _rowInfoCard(
+                  DataRowWithDivider(
                     divider: true,
                     title: context.translate(LocalizationKeys.specialty),
                     subTitle: "استشاري جراحة الكلي والمسالك البولية",
                   ),
-                  _rowInfoCard(
+                  DataRowWithDivider(
                     title: context.translate(
                       LocalizationKeys.clinicPhoneNumber,
                     ),
@@ -111,7 +111,7 @@ class _HospitalInformationScreenState
                 ],
               ),
             ),
-            _sections(
+            DataSection(
               title: context.translate(LocalizationKeys.workingHours),
               body: Column(
                 children: [
@@ -154,84 +154,6 @@ class _HospitalInformationScreenState
               fontSize: 16,
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _rowInfoCard({
-    required String title,
-    bool divider = false,
-    bool isImportant = false,
-    required String subTitle,
-  }) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: context.textTheme.labelMedium!.copyWith(
-                color: AppColors.grayText,
-              ),
-            ),
-            Spacer(flex: 1),
-            Expanded(
-              child: Text(
-                subTitle,
-                textAlign: TextAlign.center,
-                softWrap: true,
-                overflow: TextOverflow.visible,
-                style: context.textTheme.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: isImportant
-                      ? AppColors.importantText
-                      : AppColors.textColor,
-                ),
-              ),
-            ),
-
-            // Text(
-            //   subTitle,
-            //   style: context.textTheme.bodyMedium!.copyWith(
-            //     fontWeight: FontWeight.w600,
-            //     color: isImportant
-            //         ? AppColors.importantText
-            //         : AppColors.textColor,
-            //   ),
-            // ),
-          ],
-        ),
-        divider
-            ? CustomDividerWidget(indent: 24.w, endIndent: 24.w)
-            : SizedBox.shrink(),
-      ],
-    );
-  }
-
-  Widget _sections({
-    double? height,
-    required String title,
-    required Widget body,
-    String? titleOfButton,
-    void Function()? onTap,
-  }) {
-    return ContainerWithShadow(
-      height: height,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: context.textTheme.bodyLarge),
-            SizedBox(height: 16.h),
-            body,
-            if (titleOfButton != null) ...[
-              SizedBox(height: 24.h),
-              AppButtonWithGradientColors(text: titleOfButton, onTap: onTap),
-            ],
-          ],
         ),
       ),
     );

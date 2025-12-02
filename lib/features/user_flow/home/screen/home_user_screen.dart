@@ -7,6 +7,7 @@ import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_up_screen.dart';
 import 'package:organ_link/features/user_flow/hospital_information/screen/hospital_information_screen.dart';
 import 'package:organ_link/features/user_flow/medical_details/screens/medical_details_screen.dart';
+import 'package:organ_link/features/user_flow/notification/screens/notification_screen.dart';
 import 'package:organ_link/features/user_flow/settings/screen/settings_screen.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
@@ -23,33 +24,6 @@ class HomeUserScreen extends BaseStatefulScreenWidget {
 }
 
 class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
-  // final List<CardUiModel> cards = [
-  //   CardUiModel(
-  //     icon: AppAssetPaths.personalIcon,
-  //     title: LocalizationKeys.medicalDetails,
-  //     subTitle: LocalizationKeys.viewHealthInformation,
-  //     onTap: () {},
-  //   ),
-  //   CardUiModel(
-  //     icon: AppAssetPaths.hospitalIcon,
-  //     title: LocalizationKeys.hospitalInformation,
-  //     subTitle: LocalizationKeys.contactAndLocation,
-  //     onTap: () {},
-  //   ),
-  //   CardUiModel(
-  //     icon: AppAssetPaths.stockChartIcon,
-  //     title: LocalizationKeys.caseFollowUp,
-  //     subTitle: LocalizationKeys.operationStagesTracking,
-  //     onTap: () {},
-  //   ),
-  //   CardUiModel(
-  //     icon: AppAssetPaths.settingIcon,
-  //     title: LocalizationKeys.settings,
-  //     subTitle: LocalizationKeys.accountManagement,
-  //     onTap: () {},
-  //   ),
-  // ];
-
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
@@ -59,8 +33,9 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
   }
 
   ///////////////////////////////////////////////////////////
-  /////////////////// Helper methods ////////////////////////
+  /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
+ 
   Widget _buildBody() {
     return SafeArea(
       child: Padding(
@@ -95,9 +70,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
             Flexible(
               child: _mainCard(
                 onTap: () {
-                  Navigator.of(
-                    context,
-                  ).pushNamed(MedicalDetailsScreen.routeName);
+                  _navToMedicalDetailsScreen();
                 },
                 icon: AppAssetPaths.personalIcon,
                 title: LocalizationKeys.medicalDetails,
@@ -108,7 +81,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
             Flexible(
               child: _mainCard(
                 onTap: () {
-                  Navigator.of(context).pushNamed(CaseFollowUpScreen.routeName);
+                  _navToCaseFollowUpScreen();
                 },
                 icon: AppAssetPaths.stockChartIcon,
                 title: LocalizationKeys.caseFollowUp,
@@ -123,9 +96,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
             Flexible(
               child: _mainCard(
                 onTap: () {
-                  Navigator.of(
-                    context,
-                  ).pushNamed(HospitalInformationScreen.routeName);
+                  _navToHospitalInfoScreen();
                 },
                 icon: AppAssetPaths.hospitalIcon,
                 title: LocalizationKeys.hospitalInformation,
@@ -136,7 +107,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
             Flexible(
               child: _mainCard(
                 onTap: () {
-                  Navigator.of(context).pushNamed(SettingsScreen.routeName);
+                  _navToSettingsScreen();
                 },
                 icon: AppAssetPaths.settingIcon,
                 title: LocalizationKeys.settings,
@@ -147,22 +118,6 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
         ),
       ],
     );
-
-    // GridView.builder(
-    //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-    //     crossAxisCount: 2,
-    //     childAspectRatio: 1.4,
-    //     crossAxisSpacing: 16.w,
-    //     mainAxisSpacing: 16.h,
-    //   ),
-    //   shrinkWrap: true,
-    //   physics: const NeverScrollableScrollPhysics(),
-    //   padding: EdgeInsets.zero,
-    //   itemCount: cards.length,
-    //   itemBuilder: (ctx, index) {
-    //     return CustomCardWidget(cardUiModel: cards[index]);
-    //   },
-    // );
   }
 
   Widget _mainCard({
@@ -227,22 +182,25 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SvgPicture.asset(
-          height: 32.h,
-          width: 32.w,
-          AppAssetPaths.notificationIcon,
-        ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            _navToNotificationScreen();
+          },
           child: SvgPicture.asset(
             height: 32.h,
-            width: 109.w,
-            AppAssetPaths.organLinkTextWithIcon,
+            width: 32.w,
+            AppAssetPaths.notificationIcon,
           ),
+        ),
+        SvgPicture.asset(
+          height: 32.h,
+          width: 109.w,
+          AppAssetPaths.organLinkTextWithIcon,
         ),
       ],
     );
   }
+
 
   Widget _cardDetails() {
     return Container(
@@ -351,6 +309,24 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
         ),
       ),
     );
+  }
+
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper methods ////////////////////////
+  ///////////////////////////////////////////////////////////
+   void _navToNotificationScreen() {
+    Navigator.of(context).pushNamed(NotificationScreen.routeName);
+  }
+   void _navToSettingsScreen() {
+    Navigator.of(context).pushNamed(SettingsScreen.routeName);
+  }
+
+  void _navToHospitalInfoScreen() {
+    Navigator.of(context).pushNamed(HospitalInformationScreen.routeName);
+  }
+
+  void _navToCaseFollowUpScreen() {
+    Navigator.of(context).pushNamed(CaseFollowUpScreen.routeName);
   }
 
   void _navToMedicalDetailsScreen() {
