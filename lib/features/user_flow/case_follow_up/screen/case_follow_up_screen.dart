@@ -22,7 +22,7 @@ class CaseFollowUpScreen extends BaseStatefulScreenWidget {
 }
 
 class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
-  bool isScheduling = false;
+  bool isScheduling = true;
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
@@ -31,7 +31,7 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
     );
   }
   ///////////////////////////////////////////////////////////
-  /////////////////// Helper methods ////////////////////////
+  /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
   Widget _buildBody() {
@@ -66,7 +66,6 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
             doneHistory: "1 أكتوبر 2025",
             isDone: false,
           ),
-
           _stepCard(
             title: "جدولة العملية",
             subTitle: "تحديد موعد العملية والتحضيرات اللازمة",
@@ -77,7 +76,7 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
             title: "إجراء عملية الزراعة",
             subTitle: "تنفيذ العملية الجراحية",
             doneHistory: "1 أكتوبر 2025",
-            isDone: isScheduling = false,
+            isDone: isScheduling,
           ),
           _progressSummaryCard(),
           isScheduling
@@ -254,68 +253,4 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
       ),
     );
   }
-
-  // Widget _nextStepsSection() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Text("Next Steps", style: context.textTheme.bodyLarge),
-  //       SizedBox(height: 8.h),
-  //       _nextStepContainer(
-  //         onTap: () {},
-  //         title: "جدولة العملية",
-  //         subTitle: "تحديد موعد العملية والتحضيرات اللازمة",
-  //       ),
-  //       _nextStepContainer(
-  //         onTap: () {},
-  //         title: "إجراء عملية الزراعة",
-  //         subTitle: "تنفيذ العملية الجراحية",
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // Widget _nextStepContainer({
-  //   required void Function()? onTap,
-  //   required String title,
-  //   required String subTitle,
-  // }) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 2),
-  //     child: ContainerWithShadow(
-  //       padding: EdgeInsets.symmetric(vertical: 8.h),
-  //       child: Padding(
-  //         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: [
-  //             Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 Text(
-  //                   title,
-  //                   style: context.textTheme.bodyMedium!.copyWith(
-  //                     fontWeight: FontWeight.w600,
-  //                   ),
-  //                 ),
-  //                 SizedBox(height: 13.h),
-  //                 Text(
-  //                   subTitle,
-  //                   style: context.textTheme.labelMedium!.copyWith(
-  //                     color: AppColors.grayText,
-  //                     fontWeight: FontWeight.w400,
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //             GestureDetector(
-  //               onTap: onTap,
-  //               child: SvgPicture.asset(AppAssetPaths.nextIconIcon),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }
