@@ -98,7 +98,24 @@
   "error_occurred": "حدث خطأ ما يرجى إعادة المحاولة",
   "retry": "إعادة المحاولة",
   "go_back": "العودة للخلف",
-  "empty_page_message": "الصفحة فارغة، دعنا نراك مجدداً"
+  "empty_page_message": "الصفحة فارغة، دعنا نراك مجدداً",
+  
+  "registered_donor": "متبرع مسجل",
+  "patient_waiting_for_transplant": "مريض بانتظار الزراعة",
+  "matching_requests": "طلبات المطابقة",
+  "ongoing_operations": "العمليات الجارية",
+  "dashboard": "لوحة التحكم",
+  "welcome_message": "مرحباً بك في مستشفى القصر العيني",
+  "ongoing_operations_count": "عملية تتم الآن ",
+   "under_analysis_count": " قيد التحليل",
+   "this_month_count": " هذا الشهر",
+    "quick_actions":  "الإجراءات السريعة",
+  "view_donors":  "عرض المتبرعين",
+  "view_patients": "عرض المرضى",
+  "operations": "العمليات",
+  "compatibility_requests":  "طلبات المطابقة"
+
+
 
 
 

@@ -107,6 +107,20 @@ static const confirmLogout="confirm_logout";
   static const retry="retry";
  static const goBack= "go_back";
  static const emptyPageMessage= "empty_page_message";
+ static const registeredDonor="registered_donor";
+ static const patientWaitingForTransplant= "patient_waiting_for_transplant";
+ static const matchingRequests= "matching_requests";
+static const  ongoingOperations= "ongoing_operations";
+static const dashboard=  "dashboard";
+static const  welcomeMessage= "welcome_message";
+static const  ongoingOperationsCount = "ongoing_operations_count";
+static const  thisMonthCount = "this_month_count";
+static const  underAnalysisCount = "under_analysis_count";
+static const quickActions= "quick_actions";
+static const viewDonors=  "view_donors";
+static const  viewPatients="view_patients";
+static const  operations= "operations";
+static const  compatibilityRequests= "compatibility_requests";
 
 
 }

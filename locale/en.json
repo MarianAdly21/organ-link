@@ -98,5 +98,22 @@
 "error_occurred": "An error occurred, please try again",
   "retry": "Retry",
   "go_back": "Go Back",
-  "empty_page_message": "The page is empty, see you again soon"
+  "empty_page_message": "The page is empty, see you again soon",
+  
+  "registered_donor": "Registered Donor",
+  "patient_waiting_for_transplant": "Patient Waiting for Transplant",
+  "matching_requests": "Matching Requests",
+  "ongoing_operations": "Ongoing Operations",
+  "dashboard": "Dashboard",
+  "welcome_message": "Welcome to ",
+ "ongoing_operations_count": " operations in progress",
+  "under_analysis_count": " under analysis",
+  "this_month_count": " this month",
+  "quick_actions": "Quick Actions",
+  "view_donors": "View Donors",
+  "view_patients": "View Patients",
+  "operations": "Surgical Procedures",
+  "compatibility_requests": "Compatibility Requests"
+
+
 }

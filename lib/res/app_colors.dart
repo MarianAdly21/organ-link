@@ -207,5 +207,9 @@ class AppColors {
   static const errorText = _redSolid;
   static const backButtonBG = _titanWhite;
   static const backButtonBorder = _fogApprox;
-  
+
+  /// Hospital Dashboard
+  static const hospitalAppBarBG = _aquaSpringApprox;
+  static const hospitalBtnText = _aquaSpringApprox;
+
 }
