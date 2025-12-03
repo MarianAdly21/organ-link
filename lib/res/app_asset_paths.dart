@@ -23,4 +23,10 @@ class AppAssetPaths {
 
   static const String noNotificationImage = "assets/images/no_notification.svg";
   static const String errorNotificationImage = "assets/images/error.png";
+
+  /// hospital flow
+  static const String heartIcon = "assets/icons/heart_icon.svg";
+  static const String notesBookIcon = "assets/icons/notes_book.svg";
+  static const String peopleIcon = "assets/icons/people_icon.svg";
+  static const String voltageIcon = "assets/icons/voltage_icon.svg";
 }

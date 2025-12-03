@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:organ_link/features/login/screen/login_screen.dart';
-import 'package:organ_link/features/splash/splash_screen.dart';
+import 'package:organ_link/features/shared_screens/login/screen/login_screen.dart';
+import 'package:organ_link/features/shared_screens/splash/splash_screen.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_up_screen.dart';
 import 'package:organ_link/features/user_flow/home/screen/home_user_screen.dart';
 import 'package:organ_link/features/user_flow/hospital_information/screen/hospital_information_screen.dart';
