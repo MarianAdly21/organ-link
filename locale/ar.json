@@ -113,7 +113,13 @@
   "view_donors":  "عرض المتبرعين",
   "view_patients": "عرض المرضى",
   "operations": "العمليات",
-  "compatibility_requests":  "طلبات المطابقة"
+  "compatibility_requests":  "طلبات المطابقة",
+  "patient_list": "قائمة المرضى",
+  "transplant_patients_management": "إدارة المرضى المسجلين لزراعة الأعضاء",
+  "search_by_name_or_mrn": "البحث بالاسم أو رقم الملف",
+  "all_organs": "جميع الأعضاء",
+  "all_cases": "جميع الحالات",
+  "patient_title":"المرضي"
 
 
 

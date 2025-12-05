@@ -9,11 +9,13 @@ class ContainerWithShadow extends StatelessWidget {
     this.height,
     this.width,
     this.padding,
+    this.contentPadding
   });
   final Widget child;
   final double? height;
   final double? width;
   final EdgeInsetsGeometry? padding;
+ final EdgeInsetsGeometry? contentPadding;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,6 +23,7 @@ class ContainerWithShadow extends StatelessWidget {
       child: Container(
         height: height,
         width: width,
+        padding:contentPadding ,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(

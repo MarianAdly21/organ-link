@@ -48,6 +48,14 @@ class AppColors {
   static const _maroonApprox = Color(0xff830000);
   static const _scorpionApprox = Color(0xff5F5F5F);
   static const _fogApprox = Color(0xffDEDEFF);
+  static const _concreteSolid = Color(0xffF2F2F2);
+  static const _snowyMintApprox = Color(0xffC9FFCB);
+  static const _funGreenApprox= Color(0xff008736);
+  static const _periwinkleApprox= Color(0xffC1DAFF);
+  static const _cosmosApprox= Color(0xffFFDADE);
+  static const _brightRedApprox= Color(0xffAD0000);
+  static const _buttermilkApprox= Color(0xffFFF4B6);
+  static const _goldDropApprox= Color(0xffF57C00);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -79,7 +87,7 @@ class AppColors {
 
   static const titleMedium = _bluish;
   static const headlineMedium = _blackCow;
-  static const bodyMedium = _cloudBurst;
+  static const bodyMedium = _jacksonsPurpleApprox;
   static const bodyLarge = _jacksonsPurpleApprox;
   static const labelLarge = _blackCow;
   static const labelMedium = _alto;
@@ -211,5 +219,17 @@ class AppColors {
   /// Hospital Dashboard
   static const hospitalAppBarBG = _aquaSpringApprox;
   static const hospitalBtnText = _aquaSpringApprox;
+  static const idContainerBG = _concreteSolid;
+
+
+  /// status Model
+    static const readyTextBG = _snowyMintApprox;
+    static const underMatchingTextBG = _periwinkleApprox;
+    static const readyText = _funGreenApprox;
+    static const underMatchingText = _jacksonsPurpleApprox;
+    static const highPriorityTextBG = _cosmosApprox;
+    static const highPriorityText = _brightRedApprox;
+        static const midPriorityTextBG = _buttermilkApprox;
+  static const midPriorityText = _goldDropApprox;
 
 }

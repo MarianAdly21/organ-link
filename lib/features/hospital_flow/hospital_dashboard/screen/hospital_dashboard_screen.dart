@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
-import 'package:organ_link/features/hospital_flow/widget/app_bar_with_shadow.dart';
+import 'package:organ_link/features/hospital_flow/widget/hospital_app_bar_base.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
@@ -33,11 +33,41 @@ class _HospitalDashboardScreenState
   ///////////////////////////////////////////////////////////
 
   Widget _buildBody() {
-    return SafeArea(
-      child: Column(
+    return SafeArea(child: Column(children: [_appBar(), _bodyContent()]));
+  }
+
+  Widget _appBar() {
+    return HospitalAppBarBase(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          AppBarWithShadow(child: _appBarBody()),
-          _bodyContent(),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FittedBox(
+                  child: Text(
+                    "مستشفى القصر العيني",
+                    style: context.textTheme.bodyLarge!.copyWith(
+                      color: AppColors.blackText,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 9.h),
+                Text(
+                  "القاهرة",
+                  style: context.textTheme.labelMedium!.copyWith(
+                    color: AppColors.blackText,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 24),
+            child: SvgPicture.asset(AppAssetPaths.notificationIcon),
+          ),
         ],
       ),
     );
@@ -105,32 +135,32 @@ class _HospitalDashboardScreenState
 
   Widget _settingBtn() {
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.h),
-        child: Container(
-          height: 48.h,
-          //padding: EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            color: Color(0xffD9D9D9),
-            borderRadius: BorderRadius.circular(8.r),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.15),
-                blurRadius: 2,
-              ),
-            ],
-          ),
-          child: Center(
-            child: FittedBox(
-              child: Text(
-                context.translate(LocalizationKeys.settings),
-                style: context.textTheme.bodyMedium!.copyWith(
-                  color: Color(0xff4F4F4F),
-                ),
+      padding: EdgeInsets.symmetric(vertical: 16.h),
+      child: Container(
+        height: 48.h,
+        //padding: EdgeInsets.symmetric(vertical: 16),
+        decoration: BoxDecoration(
+          color: Color(0xffD9D9D9),
+          borderRadius: BorderRadius.circular(8.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.15),
+              blurRadius: 2,
+            ),
+          ],
+        ),
+        child: Center(
+          child: FittedBox(
+            child: Text(
+              context.translate(LocalizationKeys.settings),
+              style: context.textTheme.bodyMedium!.copyWith(
+                color: Color(0xff4F4F4F),
               ),
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 
   Widget _quickActionsBtn({
@@ -222,10 +252,8 @@ class _HospitalDashboardScreenState
     required String title,
     required String subTitle1,
     required String subTitle2,
-    void Function()? onTap,
   }) {
     return GestureDetector(
-      onTap: onTap,
       child: Container(
         height: 132.h,
         // width: 164.w,
@@ -305,45 +333,45 @@ class _HospitalDashboardScreenState
     );
   }
 
-  Widget _appBarBody() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsetsDirectional.only(
-              start: 16,
-              top: 24,
-              bottom: 24,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(
-                  child: Text(
-                    // maxLines: 1,
-                    // overflow: TextOverflow.visible,
-                    "مستشفى القصر العيني",
-                    style: context.textTheme.bodyLarge!.copyWith(
-                      color: AppColors.blackText,
-                    ),
-                  ),
-                ),
-                Text(
-                  "القاهرة",
-                  style: context.textTheme.labelMedium!.copyWith(
-                    color: AppColors.blackText,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.only(end: 16, start: 24),
-          child: SvgPicture.asset(AppAssetPaths.notificationIcon),
-        ),
-      ],
-    );
-  }
+  // Widget _appBarBody() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     children: [
+  //       Expanded(
+  //         child: Padding(
+  //           padding: const EdgeInsetsDirectional.only(
+  //             start: 16,
+  //             top: 24,
+  //             bottom: 24,
+  //           ),
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               FittedBox(
+  //                 child: Text(
+  //                   // maxLines: 1,
+  //                   // overflow: TextOverflow.visible,
+  //                   "مستشفى القصر العيني",
+  //                   style: context.textTheme.bodyLarge!.copyWith(
+  //                     color: AppColors.blackText,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Text(
+  //                 "القاهرة",
+  //                 style: context.textTheme.labelMedium!.copyWith(
+  //                   color: AppColors.blackText,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //       Padding(
+  //         padding: const EdgeInsetsDirectional.only(end: 16, start: 24),
+  //         child: SvgPicture.asset(AppAssetPaths.notificationIcon),
+  //       ),
+  //     ],
+  //   );
+  // }
 }

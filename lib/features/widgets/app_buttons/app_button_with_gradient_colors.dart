@@ -33,7 +33,7 @@ class AppButtonWithGradientColors extends BaseStatelessWidget {
             style: context.textTheme.labelLarge!.copyWith(
               color: AppColors.appButtonText,
               fontWeight: FontWeight.w700,
-              fontSize: 16.sp,
+              fontSize: 16,
             ),
           ),
         ),
