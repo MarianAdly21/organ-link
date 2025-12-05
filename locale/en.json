@@ -113,7 +113,13 @@
   "view_donors": "View Donors",
   "view_patients": "View Patients",
   "operations": "Surgical Procedures",
-  "compatibility_requests": "Compatibility Requests"
+  "compatibility_requests": "Compatibility Requests",
+  "patient_list": "Patient List",
+  "transplant_patients_management": "Management of Registered Transplant Patients",
+  "search_by_name_or_mrn": "Search by Name or Medical Number",
+  "all_organs": "All Organs",
+  "all_cases": "All Cases",
+  "patient_title":"Patient"
 
 
 }

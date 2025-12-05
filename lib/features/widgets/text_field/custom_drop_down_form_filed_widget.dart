@@ -75,31 +75,44 @@ class _CustomDropDownFormFiledWidgetState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        widget.title != null
-            ? Text(
-                widget.title!,
-                style:  TextStyle(
-                  color: AppColors.formFieldTitle,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
-            : const EmptyWidget(),
-        const SizedBox(height: 10),
+        if (widget.title != null) ...[
+          Text(
+            widget.title!,
+            style: TextStyle(
+              color: AppColors.formFieldTitle,
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 10),
+        ],
+        // widget.title != null
+        //     ? Text(
+        //         widget.title!,
+        //         style: TextStyle(
+        //           color: AppColors.formFieldTitle,
+        //           fontSize: 14.sp,
+        //           fontWeight: FontWeight.w500,
+        //         ),
+        //       )
+        //  const EmptyWidget(),
+        // const SizedBox(height: 10),
         DropdownButtonFormField2<CustomDropDownItem>(
           decoration: InputDecoration(
-            hintStyle: widget.hintTextStyle ?? context.textTheme.labelMedium,
+            hintStyle:
+                widget.hintTextStyle ??
+                context.textTheme.labelMedium!.copyWith(
+                  color: AppColors.grayText,
+                ),
             isDense: true,
-            fillColor: AppColors.appFormFieldFill,
+            fillColor: Colors.white,
             filled: true,
-            contentPadding: EdgeInsetsDirectional.only(
-              start: 1.w,
-              end: 10.h,
-              top: 15.h,
-              bottom: 15.h,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 12.w,
+              vertical: 9.h,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 color:
                     widget.enableBorderColor ??
@@ -107,12 +120,10 @@ class _CustomDropDownFormFiledWidgetState
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: AppColors.formFieldFocusIBorder,
-              ),
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: AppColors.transparent),
             ),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
           ),
           focusNode: widget.focusNode,
           isExpanded: true,
@@ -120,11 +131,20 @@ class _CustomDropDownFormFiledWidgetState
               ? Text(currentValue!.value)
               : Text(
                   widget.hintText ?? '',
-                  style: widget.hintTextStyle ?? context.textTheme.labelMedium,
+                  style:
+                      widget.hintTextStyle ??
+                      context.textTheme.labelMedium!.copyWith(
+                        color: AppColors.grayText,
+                      ),
                 ),
           buttonStyleData: const ButtonStyleData(padding: EdgeInsets.zero),
           dropdownStyleData: DropdownStyleData(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+            elevation: 2,
+            offset: Offset(0, -6),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
           iconStyleData: IconStyleData(
             icon: currentValue != null && widget.enableClearSelection
@@ -147,7 +167,7 @@ class _CustomDropDownFormFiledWidgetState
             }
             setState(() {});
           },
-          style:  TextStyle(
+          style: TextStyle(
             color: AppColors.formFieldText,
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
@@ -183,7 +203,7 @@ class KeyboardArrowDownIcon extends StatelessWidget {
       icon: Icon(
         Icons.keyboard_arrow_down,
         size: 25,
-        color: AppColors.suffixIcon,
+        color: AppColors.grayText,
       ),
     );
   }

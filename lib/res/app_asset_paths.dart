@@ -29,4 +29,5 @@ class AppAssetPaths {
   static const String notesBookIcon = "assets/icons/notes_book.svg";
   static const String peopleIcon = "assets/icons/people_icon.svg";
   static const String voltageIcon = "assets/icons/voltage_icon.svg";
+  static const String searchIcon = "assets/icons/search_icon.svg";
 }
