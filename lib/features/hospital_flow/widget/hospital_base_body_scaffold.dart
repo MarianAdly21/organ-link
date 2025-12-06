@@ -25,7 +25,7 @@ class HospitalBaseBodyScaffold extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 38.h, horizontal: 16.w),
+              padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
               child: body,
             ),
           ),

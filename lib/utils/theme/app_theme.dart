@@ -121,7 +121,7 @@ class LightAppTheme implements BaseAppTheme {
         // alto color
         labelMedium: ThemeData.light(useMaterial3: false).textTheme.labelMedium
             ?.copyWith(
-              color: AppColors.labelMedium,
+              color: AppColors.grayText,
               fontWeight: FontWeight.w500,
               fontSize: 14,
               fontFamily: fontFamily,

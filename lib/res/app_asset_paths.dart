@@ -30,4 +30,11 @@ class AppAssetPaths {
   static const String peopleIcon = "assets/icons/people_icon.svg";
   static const String voltageIcon = "assets/icons/voltage_icon.svg";
   static const String searchIcon = "assets/icons/search_icon.svg";
+
+  /// Vital Signs icons
+    static const String injectionIcon = "assets/icons/injection_icon.svg";
+    static const String temperatureIcon = "assets/icons/temperature_icon.svg";
+    static const String scaleWeightIcon = "assets/icons/scale_weight.svg";
+    static const String fitToHeightIcon = "assets/icons/fit_to_height.svg";
+
 }

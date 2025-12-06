@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/app_router.dart';
 import 'package:organ_link/features/hospital_flow/hospital_dashboard/screen/hospital_dashboard_screen.dart';
+import 'package:organ_link/features/hospital_flow/patient_details/screen/patient_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/view_patient/screen/view_patient_screen.dart';
 import 'package:organ_link/features/shared_screens/splash/splash_screen.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
@@ -121,7 +122,7 @@ class _OrganLinkState extends State<OrganLink> {
                       navigatorKey: AppRouter.mainNavigatorKey,
 
                       routes: AppRouter.routes,
-                      home: const ViewPatientScreen(),
+                      home: const PatientDetailsScreen(),
                     ),
                   );
                 },

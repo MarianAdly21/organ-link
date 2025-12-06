@@ -119,7 +119,25 @@
   "search_by_name_or_mrn": "البحث بالاسم أو رقم الملف",
   "all_organs": "جميع الأعضاء",
   "all_cases": "جميع الحالات",
-  "patient_title":"المرضي"
+  "patient_title":"المرضي",
+    "patient_details":"تفاصيل المريض",
+  "donor_details":"تفاصيل المتبرع",
+   "file_number": "رقم الملف: ",
+  "city": "المدينة",
+  "medical_information": "المعلومات الطبية",
+  "medical_history": "التاريخ المرضي",
+   "phone_number": "رقم الهاتف",
+   "allergies":"الحساسية",
+   "current_medications":"الأدوية الحالية",
+   "vital_signs":"العلامات الحيوية",
+  "respiratory_rate":"معدل التنفس",
+  "blood_pressure":"ضغط الدم",
+  "temperature":"درجة الحرارة",
+  "heart_rate":"دقات القلب",
+  "oxygen_saturation":"نسبة الأكسجين",
+  "reports_and_investigations":"التقارير والفحوصات",
+  "add_new_report":"إضافة تقرير جديد",
+  "case_record":"سجل الحالة"
 
 
 

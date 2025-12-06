@@ -129,4 +129,22 @@ class LocalizationKeys {
   static const allOrgans = "all_organs";
   static const allCases = "all_cases";
   static const  patientTitle ="patient_title";
+   static const patientDetails= "patient_details";
+  static const donorDetails ="donor_details";
+  static const fileNumber= "file_number";
+  static const city= "city";
+  static const  medicalInformation="medical_information";
+  static const medicalHistory= "medical_history";
+  static const phoneNumber= "phone_number";
+  static const allergies = "allergies";
+  static const currentMedications = "current_medications";
+  static const vitalSigns = "vital_signs";
+  static const  respiratoryRate  =  "respiratory_rate";
+  static const  bloodPressure  ="blood_pressure";
+ static const  temperature  = "temperature";
+ static const  heartRate  = "heart_rate";
+ static const  oxygenSaturation  = "oxygen_saturation";
+ static const  reportAndInvestigations  = "reports_and_investigations";
+ static const  addNewReport  = "add_new_report";
+ static const  caseRecord  = "case_record";
 }

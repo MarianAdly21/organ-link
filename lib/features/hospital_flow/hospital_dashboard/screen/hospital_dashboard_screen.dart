@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/features/hospital_flow/view_patient/screen/view_patient_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_app_bar_base.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
@@ -100,7 +101,9 @@ class _HospitalDashboardScreenState
           child: Row(
             children: [
               _quickActionsBtn(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(ViewPatientScreen.routeName);
+                },
                 text: LocalizationKeys.viewDonors,
                 backgroundColor: AppColors.seconderColor,
               ),
