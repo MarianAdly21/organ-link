@@ -119,7 +119,27 @@
   "search_by_name_or_mrn": "Search by Name or Medical Number",
   "all_organs": "All Organs",
   "all_cases": "All Cases",
-  "patient_title":"Patient"
+  "patient_title":"Patient",
+  "patient_details":"Patient Details",
+  "donor_details":"Donor Details",
+  "file_number": "File number: ",
+  "city": "City",
+  "medical_information": "Medical Information",
+  "medical_history": "Medical History",
+  "phone_number": "Phone Number",
+  "allergies":"Allergies",
+  "current_medications":"Current Medications",
+  "vital_signs":"Vital Signs",
+  "respiratory_rate":"Respiratory Rate",
+  "blood_pressure":"Blood Pressure",
+  "temperature":"Temperature",
+  "heart_rate":"Heart Rate",
+  "oxygen_saturation":"Oxygen Saturation",
+  "reports_and_investigations":"Reports & Investigations",
+  "add_new_report":"Add New Report",
+  "case_record":"Case Record"
+
+
 
 
 }

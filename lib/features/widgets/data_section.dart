@@ -12,35 +12,35 @@ class DataSection extends StatelessWidget {
     required this.body,
     this.titleOfButton,
     this.onTap,
-    this.paddingAroundContainer
+    this.paddingAroundContainer,
+    this.style,
   });
 
   final double? height;
   final String title;
+  final TextStyle? style;
   final Widget body;
   final String? titleOfButton;
   final void Function()? onTap;
- final EdgeInsetsGeometry? paddingAroundContainer;
+  final EdgeInsetsGeometry? paddingAroundContainer;
 
   @override
   Widget build(BuildContext context) {
     return ContainerWithShadow(
       height: height,
       padding: paddingAroundContainer,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: context.textTheme.bodyLarge),
-            SizedBox(height: 16.h),
-            body,
-            if (titleOfButton != null) ...[
-              SizedBox(height: 24.h),
-              AppButtonWithGradientColors(text: titleOfButton!, onTap: onTap),
-            ],
+      contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: style ?? context.textTheme.bodyLarge),
+          SizedBox(height: 16.h),
+          body,
+          if (titleOfButton != null) ...[
+            SizedBox(height: 24.h),
+            AppButtonWithGradientColors(text: titleOfButton!, onTap: onTap),
           ],
-        ),
+        ],
       ),
     );
   }

@@ -56,6 +56,9 @@ class AppColors {
   static const _brightRedApprox= Color(0xffAD0000);
   static const _buttermilkApprox= Color(0xffFFF4B6);
   static const _goldDropApprox= Color(0xffF57C00);
+  static const _mineShaftApprox= Color(0xff222222);
+  static const _dewApprox= Color(0xffF8FFFE);
+  static const _nobelApprox= Color(0xffB6B6B6);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -231,5 +234,9 @@ class AppColors {
     static const highPriorityText = _brightRedApprox;
         static const midPriorityTextBG = _buttermilkApprox;
   static const midPriorityText = _goldDropApprox;
+  static const personalInfoText = _mineShaftApprox;
+  static const reportContainerBG = _dewApprox;
+  static const timelineNode = _snowyMintApprox;
+  static const lineConnector = _nobelApprox;
 
 }

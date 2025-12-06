@@ -5,8 +5,10 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/view_patient/helper_method/get_priority.dart';
 import 'package:organ_link/features/hospital_flow/view_patient/helper_method/get_status.dart';
+import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_search_custom_widget.dart';
+import 'package:organ_link/features/hospital_flow/widget/status_row_widget.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/text_field/custom_drop_down_form_filed_widget.dart';
@@ -37,7 +39,9 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
   Widget _buildBody() {
     return HospitalBaseBodyScaffold(
       titleOfScreen: LocalizationKeys.patientTitle,
-      backTap: () {},
+      backTap: () {
+        Navigator.pop(context);
+      },
       body: Column(
         children: [
           _searchSection(),
@@ -70,7 +74,9 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
                         children: [
                           _nameAndId(),
                           _infoRow(),
-                          _statusRow(),
+                         // _statusRow(),
+                         StatusRowWidget(priority: "أولوية عالية", status: "جاهز",
+                          ),
                           SizedBox(height: 16.h),
                           AppButtonWithGradientColors(
                             text: "التفاصيل",
@@ -89,24 +95,24 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
     );
   }
 
-  Widget _statusRow() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _containerWithBG(
-          backgroundColor: getPriority("أولوية عالية").backgroundColor,
-          textColor: getPriority("أولوية عالية").textColor,
-          text: getPriority("أولوية عالية").priority,
-        ),
-        SizedBox(width: 16.w),
-        _containerWithBG(
-          backgroundColor: getStatus("جاهز").backgroundColor,
-          textColor: getStatus("جاهز").textColor,
-          text: getStatus("جاهز").status,
-        ),
-      ],
-    );
-  }
+  // Widget _statusRow() {
+  //   return Row(
+  //     mainAxisSize: MainAxisSize.min,
+  //     children: [
+  //       _containerWithBG(
+  //         backgroundColor: getPriority("أولوية عالية").backgroundColor,
+  //         textColor: getPriority("أولوية عالية").textColor,
+  //         text: getPriority("أولوية عالية").priority,
+  //       ),
+  //       SizedBox(width: 16.w),
+  //       _containerWithBG(
+  //         backgroundColor: getStatus("جاهز").backgroundColor,
+  //         textColor: getStatus("جاهز").textColor,
+  //         text: getStatus("جاهز").status,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _infoRow() {
     return Padding(
@@ -141,35 +147,34 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
           ),
         ),
         SizedBox(width: 16.w),
-        _containerWithBG(
-          backgroundColor: AppColors.idContainerBG,
-          text: "100p",
-        ),
+        ContainerWithBackground(backgroundColor: AppColors.idContainerBG,
+          text: "100p",)
+       
       ],
     );
   }
 
-  Widget _containerWithBG({
-    Color? textColor,
-    required Color backgroundColor,
-    required String text,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: backgroundColor,
-      ),
-      child: Text(
-        text,
-        style: context.textTheme.labelMedium!.copyWith(
-          color: textColor ?? AppColors.grayText,
-          fontSize: 13,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    );
-  }
+  // Widget _containerWithBG({
+  //   Color? textColor,
+  //   required Color backgroundColor,
+  //   required String text,
+  // }) {
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(12),
+  //       color: backgroundColor,
+  //     ),
+  //     child: Text(
+  //       text,
+  //       style: context.textTheme.labelMedium!.copyWith(
+  //         color: textColor ?? AppColors.grayText,
+  //         fontSize: 13,
+  //         fontWeight: FontWeight.w400,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _searchSection() {
     return Column(
