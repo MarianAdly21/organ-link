@@ -2,7 +2,9 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
+import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/empty/empty_widgets.dart';
 
@@ -79,8 +81,8 @@ class _CustomDropDownFormFiledWidgetState
           Text(
             widget.title!,
             style: TextStyle(
-              color: AppColors.formFieldTitle,
-              fontSize: 14.sp,
+              color: AppColors.blackText,
+              fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -169,7 +171,7 @@ class _CustomDropDownFormFiledWidgetState
           },
           style: TextStyle(
             color: AppColors.formFieldText,
-            fontSize: 14.sp,
+            fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
           onSaved: widget.onSaved,
@@ -218,7 +220,7 @@ class ClearSelectedItemIconButton extends StatelessWidget {
     return IconButton(
       onPressed: onPressed,
       padding: const EdgeInsets.all(0),
-      icon: const Icon(Icons.clear, size: 25, color: AppColors.suffixIcon),
+      icon: SvgPicture.asset(AppAssetPaths.arrowIcon),
     );
   }
 }

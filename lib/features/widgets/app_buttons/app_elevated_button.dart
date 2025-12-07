@@ -9,6 +9,7 @@ class AppElevatedButton extends StatelessWidget {
   final Color? color;
   final EdgeInsets? padding;
   final OutlinedBorder? shape;
+  final double? borderRadius;
 
   const AppElevatedButton({
     super.key,
@@ -17,6 +18,7 @@ class AppElevatedButton extends StatelessWidget {
     this.color,
     this.padding,
     this.shape,
+    this.borderRadius,
   });
 
   factory AppElevatedButton.withTitle({
@@ -54,14 +56,14 @@ class AppElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        overlayColor: AppColors.transparent,
+        shadowColor: AppColors.transparent,
         elevation: 0,
         padding: padding ?? commonPadding,
         shape:
             shape ??
-            RoundedRectangleBorder( 
-              borderRadius: BorderRadius.circular(16.r)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
         backgroundColor: color,
-        
       ),
       onPressed: onPressed,
       child: label,

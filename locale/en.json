@@ -137,7 +137,22 @@
   "oxygen_saturation":"Oxygen Saturation",
   "reports_and_investigations":"Reports & Investigations",
   "add_new_report":"Add New Report",
-  "case_record":"Case Record"
+  "case_record":"Case Record",
+  "report_new_title": "Upload new report",
+"report_details": "Report details",
+"report_type": "Report type",
+"choose_report_type": "Choose report type",
+"exam_date": "Examination date",
+"day_month_year": "Day / Month / Year",
+"file_label": "File",
+"pick_file": "Tap to choose file",
+"additional_notes_label": "Additional notes",
+"additional_notes_placeholder": "Add any notes or extra information",
+"important_info_title": "Important information",
+"important_info_text": "This report will be automatically sent to the AI system for analysis and matching. Please ensure images and reports are clear before uploading.",
+"upload_button": "Upload report",
+"cancel_button": "Cancel"
+
 
 
 

@@ -59,6 +59,8 @@ class AppColors {
   static const _mineShaftApprox= Color(0xff222222);
   static const _dewApprox= Color(0xffF8FFFE);
   static const _nobelApprox= Color(0xffB6B6B6);
+  static const _galleryApprox= Color(0xffF0F0F0);
+
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -238,5 +240,7 @@ class AppColors {
   static const reportContainerBG = _dewApprox;
   static const timelineNode = _snowyMintApprox;
   static const lineConnector = _nobelApprox;
+  static const notesBG = _galleryApprox;
+  static const importantInfContainerBG = _periwinkleApprox;
 
 }

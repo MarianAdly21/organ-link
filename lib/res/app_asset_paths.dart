@@ -32,9 +32,12 @@ class AppAssetPaths {
   static const String searchIcon = "assets/icons/search_icon.svg";
 
   /// Vital Signs icons
-    static const String injectionIcon = "assets/icons/injection_icon.svg";
-    static const String temperatureIcon = "assets/icons/temperature_icon.svg";
-    static const String scaleWeightIcon = "assets/icons/scale_weight.svg";
-    static const String fitToHeightIcon = "assets/icons/fit_to_height.svg";
+  static const String injectionIcon = "assets/icons/injection_icon.svg";
+  static const String temperatureIcon = "assets/icons/temperature_icon.svg";
+  static const String scaleWeightIcon = "assets/icons/scale_weight.svg";
+  static const String fitToHeightIcon = "assets/icons/fit_to_height.svg";
 
+  /// Upload Icon
+  static const uploadIcon = "assets/icons/upload_icon.svg";
+  static const arrowIcon = "assets/icons/assets/icons/arrow_icon.svg";
 }
