@@ -7,7 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
+import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/features/hospital_flow/upload_files/screen/upload_report_confarmation_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
@@ -63,22 +65,22 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
       children: [
         Expanded(
           child: AppButtonWithGradientColors(
-            onTap: () {},
+            onTap: () {
+              _uploadReportConfirmation();
+            },
             borderRadius: 8,
             text: context.translate(LocalizationKeys.uploadButton),
           ),
         ),
         SizedBox(width: 16.w),
         Expanded(
-          child: Expanded(
-            child: AppButtonWithGradientColors(
-              onTap: () {},
-              borderRadius: 8,
-              border: Border.all(color: AppColors.backButtonBorder),
-              text: context.translate(LocalizationKeys.cancelButton),
-              textColor: AppColors.blackText,
-              colors: [AppColors.backButtonBG, AppColors.backButtonBG],
-            ),
+          child: AppButtonWithGradientColors(
+            onTap: () {},
+            borderRadius: 8,
+            border: Border.all(color: AppColors.backButtonBorder),
+            text: context.translate(LocalizationKeys.cancelButton),
+            textColor: AppColors.blackText,
+            colors: [AppColors.backButtonBG, AppColors.backButtonBG],
           ),
         ),
       ],
@@ -389,5 +391,16 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
       dateController.text =
           "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
     }
+  }
+
+  Future<void> _uploadReportConfirmation() {
+    return showAppDialog(
+      context: context,
+      contentPadding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 16.w),
+      dialogWidget: UploadReportConfirmationDialogScreen(),
+      shouldPopCallback: () {
+        return true;
+      },
+    );
   }
 }

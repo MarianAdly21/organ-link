@@ -151,7 +151,9 @@
 "important_info_title": "Important information",
 "important_info_text": "This report will be automatically sent to the AI system for analysis and matching. Please ensure images and reports are clear before uploading.",
 "upload_button": "Upload report",
-"cancel_button": "Cancel"
+"cancel_button": "Cancel",
+"report_uploaded_success": "Report uploaded successfully",
+"go_home": "Return to home"
 
 
 

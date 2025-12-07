@@ -40,4 +40,6 @@ class AppAssetPaths {
   /// Upload Icon
   static const uploadIcon = "assets/icons/upload_icon.svg";
   static const arrowIcon = "assets/icons/assets/icons/arrow_icon.svg";
+  static const doneImage = "assets/images/done_image.svg";
+
 }
