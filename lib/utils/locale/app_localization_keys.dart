@@ -161,4 +161,6 @@ class LocalizationKeys {
   static const importantInfoText = "important_info_text";
   static const uploadButton = "upload_button";
   static const cancelButton = "cancel_button";
+ static const reportUploadedSuccess="report_uploaded_success";
+  static const goHome="go_home";
 }

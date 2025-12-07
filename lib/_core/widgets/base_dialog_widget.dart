@@ -8,6 +8,7 @@ Future<void> showAppDialog({
   required BuildContext context,
   required BaseDialogWidget dialogWidget,
   required bool Function() shouldPopCallback,
+  EdgeInsetsGeometry? contentPadding,
 }) async {
   await showDialog(
     context: context,
@@ -21,7 +22,7 @@ Future<void> showAppDialog({
             borderRadius: BorderRadius.circular(16),
           ),
           insetPadding:  EdgeInsets.all(16.w),
-          contentPadding: const EdgeInsets.symmetric(
+          contentPadding:contentPadding?? const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 24,
           ),
