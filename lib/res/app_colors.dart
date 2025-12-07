@@ -62,6 +62,7 @@ class AppColors {
   static const _galleryApprox= Color(0xffF0F0F0);
 
 
+
   /// app main theme ...
   static const mainColor = _malachite;
   static const seconderColor = _dodgerBlueApprox;
@@ -228,13 +229,13 @@ class AppColors {
 
 
   /// status Model
-    static const readyTextBG = _snowyMintApprox;
-    static const underMatchingTextBG = _periwinkleApprox;
-    static const readyText = _funGreenApprox;
-    static const underMatchingText = _jacksonsPurpleApprox;
-    static const highPriorityTextBG = _cosmosApprox;
-    static const highPriorityText = _brightRedApprox;
-        static const midPriorityTextBG = _buttermilkApprox;
+  static const readyTextBG = _snowyMintApprox;
+  static const underMatchingTextBG = _periwinkleApprox;
+  static const readyText = _funGreenApprox;
+  static const underMatchingText = _jacksonsPurpleApprox;
+  static const highPriorityTextBG = _cosmosApprox;
+  static const highPriorityText = _brightRedApprox;
+  static const midPriorityTextBG = _buttermilkApprox;
   static const midPriorityText = _goldDropApprox;
   static const personalInfoText = _mineShaftApprox;
   static const reportContainerBG = _dewApprox;
@@ -242,5 +243,9 @@ class AppColors {
   static const lineConnector = _nobelApprox;
   static const notesBG = _galleryApprox;
   static const importantInfContainerBG = _periwinkleApprox;
+
+  /// Matching Screen 
+  static const overViewContainerBG =_galleryApprox;
+  
 
 }
