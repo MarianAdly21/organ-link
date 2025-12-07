@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +9,7 @@ import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/app_router.dart';
 import 'package:organ_link/features/hospital_flow/hospital_dashboard/screen/hospital_dashboard_screen.dart';
 import 'package:organ_link/features/hospital_flow/patient_details/screen/patient_details_screen.dart';
+import 'package:organ_link/features/hospital_flow/upload_files/screen/upload_files_screen.dart';
 import 'package:organ_link/features/hospital_flow/view_patient/screen/view_patient_screen.dart';
 import 'package:organ_link/features/shared_screens/splash/splash_screen.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
@@ -26,6 +28,8 @@ import 'package:organ_link/utils/theme/theme_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  WidgetsFlutterBinding.ensureInitialized();
+  //await FilePicker.platform.clearTemporaryFiles();
 
   /// setup GetIt Instances ...
   GetIt.I.registerLazySingleton<PreferencesManager>(() => PreferencesManager());
@@ -122,7 +126,7 @@ class _OrganLinkState extends State<OrganLink> {
                       navigatorKey: AppRouter.mainNavigatorKey,
 
                       routes: AppRouter.routes,
-                      home: const PatientDetailsScreen(),
+                      home: UploadFilesScreen(),
                     ),
                   );
                 },

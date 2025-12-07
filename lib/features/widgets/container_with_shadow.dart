@@ -10,11 +10,13 @@ class ContainerWithShadow extends StatelessWidget {
     this.width,
     this.padding,
     this.contentPadding,
-    this.background
+    this.background,
+    this.borderRadius
   });
   final Widget child;
   final double? height;
   final double? width;
+  final double? borderRadius;
   final Color? background;
   final EdgeInsetsGeometry? padding;
  final EdgeInsetsGeometry? contentPadding;
@@ -33,7 +35,7 @@ class ContainerWithShadow extends StatelessWidget {
               blurRadius: 4,
             ),
           ],
-          borderRadius: BorderRadius.circular(16.r),
+          borderRadius: BorderRadius.circular(borderRadius?? 16.r),
           color:background?? AppColors.containerColor,
         ),
         child: child,

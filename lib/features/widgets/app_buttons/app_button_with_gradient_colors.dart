@@ -9,9 +9,17 @@ class AppButtonWithGradientColors extends BaseStatelessWidget {
     super.key,
     required this.text,
     required this.onTap,
+    this.borderRadius,
+    this.colors,
+    this.textColor,
+    this.border,
   });
   final String text;
   final void Function()? onTap;
+  final double? borderRadius;
+  final List<Color>? colors;
+  final Color? textColor;
+  final BoxBorder? border;
 
   @override
   Widget baseBuild(BuildContext context) {
@@ -20,18 +28,19 @@ class AppButtonWithGradientColors extends BaseStatelessWidget {
       child: Container(
         height: 48.h,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          border:border ,
+          borderRadius: BorderRadius.circular(borderRadius ?? 16),
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
-            colors: [AppColors.seconderColor, AppColors.mainColor],
+            colors:colors?? [AppColors.seconderColor, AppColors.mainColor],
           ),
         ),
         child: Center(
           child: Text(
             text,
             style: context.textTheme.labelLarge!.copyWith(
-              color: AppColors.appButtonText,
+              color:textColor?? AppColors.appButtonText,
               fontWeight: FontWeight.w700,
               fontSize: 16,
             ),

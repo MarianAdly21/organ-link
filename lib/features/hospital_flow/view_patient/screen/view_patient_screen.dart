@@ -74,8 +74,10 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
                         children: [
                           _nameAndId(),
                           _infoRow(),
-                         // _statusRow(),
-                         StatusRowWidget(priority: "أولوية عالية", status: "جاهز",
+                          // _statusRow(),
+                          StatusRowWidget(
+                            priority: "أولوية عالية",
+                            status: "جاهز",
                           ),
                           SizedBox(height: 16.h),
                           AppButtonWithGradientColors(
@@ -147,9 +149,10 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
           ),
         ),
         SizedBox(width: 16.w),
-        ContainerWithBackground(backgroundColor: AppColors.idContainerBG,
-          text: "100p",)
-       
+        ContainerWithBackground(
+          backgroundColor: AppColors.idContainerBG,
+          text: "100p",
+        ),
       ],
     );
   }

@@ -137,7 +137,22 @@
   "oxygen_saturation":"نسبة الأكسجين",
   "reports_and_investigations":"التقارير والفحوصات",
   "add_new_report":"إضافة تقرير جديد",
-  "case_record":"سجل الحالة"
+  "case_record":"سجل الحالة",
+  "report_new_title": "رفع تقرير جديد",
+"report_details": "تفاصيل التقرير",
+"report_type": "نوع التقرير",
+"choose_report_type": "اختر نوع التقرير",
+"exam_date": "تاريخ الفحص",
+"day_month_year": "يوم / شهر / سنة",
+"file_label": "الملف",
+"pick_file": "اضغط لاختيار الملف",
+"additional_notes_label": "ملاحظات إضافية",
+"additional_notes_placeholder": "أضف أي ملاحظات أو معلومات إضافية",
+"important_info_title": "معلومات مهمة",
+"important_info_text": "سيتم إرسال هذا التقرير تلقائياً إلى نظام الذكاء الاصطناعي للتحليل والمطابقة. تأكد من وضوح الصور والتقارير قبل الرفع.",
+"upload_button": "رفع التقرير",
+"cancel_button": "إلغاء"
+
 
 
 
