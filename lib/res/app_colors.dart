@@ -60,6 +60,9 @@ class AppColors {
   static const _dewApprox= Color(0xffF8FFFE);
   static const _nobelApprox= Color(0xffB6B6B6);
   static const _galleryApprox= Color(0xffF0F0F0);
+  static const _aeroBlueApprox= Color(0xffC4FFD6);
+  static const _silverApprox= Color(0xffC4C4C4);
+  static const _zumthorApprox= Color(0xffEFF6FF);
 
 
 
@@ -246,6 +249,10 @@ class AppColors {
 
   /// Matching Screen 
   static const overViewContainerBG =_galleryApprox;
+  static const matchingDataUserContainerBG = _aeroBlueApprox;
+  static const matchingDataUserDivider = _silverApprox;
+  static const matchingParentage= _funGreenApprox;
+  static const waitingAiResultBG= _zumthorApprox;
   
 
 }
