@@ -13,6 +13,8 @@ class DataRowWithDivider extends StatelessWidget {
     this.isImportant = false,
     this.subTitleStyle,
     this.titleStyle,
+    this.dividerColor,
+    this.importantTextColor,
   });
 
   final String title;
@@ -21,6 +23,8 @@ class DataRowWithDivider extends StatelessWidget {
   final String subTitle;
   final TextStyle? titleStyle;
   final TextStyle? subTitleStyle;
+  final Color? dividerColor;
+  final Color? importantTextColor;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,7 +52,7 @@ class DataRowWithDivider extends StatelessWidget {
                     context.textTheme.bodyMedium!.copyWith(
                       fontWeight: FontWeight.w600,
                       color: isImportant
-                          ? AppColors.importantText
+                          ?importantTextColor?? AppColors.importantText
                           : AppColors.textColor,
                     ),
               ),
@@ -56,43 +60,9 @@ class DataRowWithDivider extends StatelessWidget {
           ],
         ),
         divider
-            ? CustomDividerWidget(indent: 24.w, endIndent: 24.w)
+            ? CustomDividerWidget(indent: 24.w, endIndent: 24.w ,color: dividerColor,)
             : SizedBox.shrink(),
       ],
     );
-
-    // Column(
-    //   children: [
-    //     Row(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       children: [
-    //         Text(
-    //           title,
-    //           style: context.textTheme.labelMedium!.copyWith(
-    //             color: AppColors.grayText,
-    //           ),
-    //         ),
-    //         Spacer(flex: 1),
-    //         Expanded(
-    //           child: Text(
-    //             subTitle,
-    //             textAlign: TextAlign.center,
-    //             softWrap: true,
-    //             overflow: TextOverflow.visible,
-    //             style: context.textTheme.bodyMedium!.copyWith(
-    //               fontWeight: FontWeight.w600,
-    //               color: isImportant
-    //                   ? AppColors.importantText
-    //                   : AppColors.textColor,
-    //             ),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //     divider
-    //         ? CustomDividerWidget(indent: 24.w, endIndent: 24.w)
-    //         : SizedBox.shrink(),
-    //   ],
-    // );
   }
 }

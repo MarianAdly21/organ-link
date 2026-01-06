@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/features/hospital_flow/matching_details/screen/matching_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
@@ -157,11 +158,19 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
                     title: context.translate("نسبة التطابق"),
                     subTitle: "%95",
                   ),
-                /// notes: the divider and container appears based on condition
+
+                  /// notes: the divider and container appears based on condition
                   CustomDividerWidget(indent: 24.w, endIndent: 24.w),
                   _resultMatching(),
                   SizedBox(height: 16.h),
-                  AppButtonWithGradientColors(text: "التفاصيل", onTap: () {}),
+                  AppButtonWithGradientColors(
+                    text: "التفاصيل",
+                    onTap: () {
+                      Navigator.of(
+                        context,
+                      ).pushNamed(MatchingDetailsScreen.routName);
+                    },
+                  ),
                 ],
               ),
             );
@@ -173,88 +182,86 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
 
   Widget _resultMatching() {
     return Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 16.h,
-                    horizontal: 16.w,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: AppColors.readyTextBG,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "تم العثور علي متبرع متطابق", ///message from back
-                        style: context.textTheme.bodyMedium!.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.readyText,
-                        ),
-                      ),
+      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: AppColors.readyTextBG,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "تم العثور علي متبرع متطابق",
 
-                      Text(
-                        "المتبرع: سارة أحمد",
-                        style: context.textTheme.labelMedium!.copyWith(
-                          color: AppColors.readyText,
-                        ),
-                      ),
-                      SizedBox(height: 16.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "فصيلة الدم: +A",
-                            style: context.textTheme.labelMedium!.copyWith(
-                              color: AppColors.readyText,
-                            ),
-                          ),
-                          ContainerWithBackground(
-                            backgroundColor:
-                                AppColors.importantInfContainerBG,
-                            text: "تمت المطابقة",
-                            textColor: AppColors.textColor,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
+            ///message from back
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: AppColors.readyText,
+            ),
+          ),
+
+          Text(
+            "المتبرع: سارة أحمد",
+            style: context.textTheme.labelMedium!.copyWith(
+              color: AppColors.readyText,
+            ),
+          ),
+          SizedBox(height: 16.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "فصيلة الدم: +A",
+                style: context.textTheme.labelMedium!.copyWith(
+                  color: AppColors.readyText,
+                ),
+              ),
+              ContainerWithBackground(
+                backgroundColor: AppColors.importantInfContainerBG,
+                text: "تمت المطابقة",
+                textColor: AppColors.textColor,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _nameAndIdAndStatusRow() {
     return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "أحمد محمد العلي",
-                          style: context.textTheme.bodyMedium!.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.blackText,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 8.h),
-                          child: Text(
-                            "${context.translate(LocalizationKeys.fileNumber)} 12345",
-                            style: context.textTheme.labelMedium!.copyWith(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    ContainerWithBackground(
-                      backgroundColor: AppColors.readyTextBG,
-                      text: "جاهز",
-                    ),
-                  ],
-                );
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "أحمد محمد العلي",
+              style: context.textTheme.bodyMedium!.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.blackText,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 8.h),
+              child: Text(
+                "${context.translate(LocalizationKeys.fileNumber)} 12345",
+                style: context.textTheme.labelMedium!.copyWith(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ],
+        ),
+        ContainerWithBackground(
+          backgroundColor: AppColors.readyTextBG,
+          text: "جاهز",
+        ),
+      ],
+    );
   }
 }

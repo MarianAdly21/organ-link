@@ -11,7 +11,7 @@ class ContainerWithShadow extends StatelessWidget {
     this.padding,
     this.contentPadding,
     this.background,
-    this.borderRadius
+    this.borderRadius,
   });
   final Widget child;
   final double? height;
@@ -19,15 +19,15 @@ class ContainerWithShadow extends StatelessWidget {
   final double? borderRadius;
   final Color? background;
   final EdgeInsetsGeometry? padding;
- final EdgeInsetsGeometry? contentPadding;
+  final EdgeInsetsGeometry? contentPadding;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:padding?? EdgeInsets.symmetric(vertical: 24.h),
+      padding: padding ?? EdgeInsets.symmetric(vertical: 24.h, horizontal: 2.w),
       child: Container(
         height: height,
         width: width,
-        padding:contentPadding ,
+        padding: contentPadding,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -35,8 +35,8 @@ class ContainerWithShadow extends StatelessWidget {
               blurRadius: 4,
             ),
           ],
-          borderRadius: BorderRadius.circular(borderRadius?? 16.r),
-          color:background?? AppColors.containerColor,
+          borderRadius: BorderRadius.circular(borderRadius ?? 16.r),
+          color: background ?? AppColors.containerColor,
         ),
         child: child,
       ),
