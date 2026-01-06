@@ -1,15 +1,13 @@
-import 'package:dio/dio.dart';
-
 class LoginSendModelApi {
-  final String email;
+  final String identificationNumber;
   final String password;
 
-  LoginSendModelApi(this.email, this.password);
+  LoginSendModelApi({required this.identificationNumber,required this.password});
 
-  FormData toMap() {
-    return FormData.fromMap({
-      "email": email,
+  Map toMap() {
+    return{
+      "identificationNumber": identificationNumber,
       "password": password,
-    });
+    };
   }
 }

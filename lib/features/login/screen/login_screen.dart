@@ -1,26 +1,48 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/auth_api_manager.dart';
+import 'package:organ_link/features/login/bloc/login_bloc.dart';
+import 'package:organ_link/features/login/bloc/login_repository.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/text_field/app_text_form_filed_widget.dart';
+import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 import 'package:organ_link/utils/validations/app_validate.dart';
 
-class LoginScreen extends BaseStatefulScreenWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
   static const routName = "/login-screen";
 
   @override
-  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _LoginScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LoginBloc(LoginRepository(preferencesManager: GetIt.I<PreferencesManager>(), authApiManager: AuthApiManager(GetIt.I<DioApiManager>()))),
+      child: LoginScreenWithBloc(),
+    );
+  }
 }
 
-class _LoginScreenState extends BaseScreenState<LoginScreen> with AppValidate {
+class LoginScreenWithBloc extends BaseStatefulScreenWidget {
+  const LoginScreenWithBloc({super.key});
+
+  @override
+  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
+      _LoginScreenWithBlocState();
+}
+
+class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
+    with AppValidate {
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   late String _idNumber;
@@ -29,10 +51,28 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> with AppValidate {
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: buildLoginWidget(context),
+      body: BlocListener<LoginBloc, LoginState>(
+        listener: (context, state) {
+         if(state is LoginLoadingState){
+          showLoading();
+         }
+         else{
+          hideLoading();
+         }
+         if(state is PasswordAndIdNumberValidatedState){
+          _loginWithPasswordAndIdNumberEvent();
+         }else if(state is PasswordAndIdNumberNotValidatedState ){
+          autovalidateMode=AutovalidateMode.always;
+         }else if(state is LoginSuccessfullyState ){
+          log("Login Successfully");
+         }
+        },
+        child: buildLoginWidget(context),
+      ),
     );
   }
 
+  
   ///////////////////////////////////////////////////////////
   //////////////////// Widget methods ///////////////////////
   ///////////////////////////////////////////////////////////
@@ -78,11 +118,13 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> with AppValidate {
   Widget _loginButton() {
     return Flexible(
       child: AppButtonWithGradientColors(
-        onTap: () {},
+        onTap: _validatePasswordAndIdNumberEvent,
         text: context.translate(LocalizationKeys.login),
       ),
     );
   }
+
+
 
   Widget _loginFormWidget() {
     return Form(
@@ -94,7 +136,6 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> with AppValidate {
             title: context.translate(LocalizationKeys.identificationNumber),
             onSaved: _idNumberSaved,
             validator: (value) => textValidator(context, value),
-            //textInputAction: TextInputAction.next,
           ),
           SizedBox(height: 8.h),
           AppTextFormField(
@@ -107,6 +148,13 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> with AppValidate {
     );
   }
 
+
+
+  ///////////////////////////////////////////////////////////
+  //////////////////// Helper methods ///////////////////////
+  ///////////////////////////////////////////////////////////
+
+  LoginBloc get currentBloc=> context.read<LoginBloc>();
   void _idNumberSaved(String? value) {
     _idNumber = value!;
   }
@@ -114,4 +162,11 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> with AppValidate {
   void _passwordSaved(String? value) {
     _password = value!;
   }
+  void _validatePasswordAndIdNumberEvent() {
+        currentBloc.add(ValidatePasswordAndIdNumberEvent(formKey: loginFormKey));
+      }
+  void _loginWithPasswordAndIdNumberEvent() {
+     currentBloc.add(LoginWithPasswordAndIdNumberEvent(identificationNumber: _idNumber, password: _password));
+  }
+
 }
