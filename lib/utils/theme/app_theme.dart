@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 abstract class BaseAppTheme {
@@ -120,7 +121,7 @@ class LightAppTheme implements BaseAppTheme {
         // alto color
         labelMedium: ThemeData.light(useMaterial3: false).textTheme.labelMedium
             ?.copyWith(
-              color: AppColors.labelMedium,
+              color: AppColors.grayText,
               fontWeight: FontWeight.w500,
               fontSize: 14,
               fontFamily: fontFamily,

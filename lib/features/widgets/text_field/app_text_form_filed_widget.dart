@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/empty/empty_widgets.dart';
@@ -32,6 +33,7 @@ class AppTextFormField extends StatefulWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final BoxConstraints? prefixIconConstraints;
+  final Color? fillColor;
 
   final List<TextInputFormatter>? inputFormatters;
 
@@ -64,6 +66,7 @@ class AppTextFormField extends StatefulWidget {
     this.autovalidateMode,
     this.textAlign = TextAlign.start,
     this.prefixIconConstraints,
+    this.fillColor,
   }) : assert(initialValue == null || controller == null);
 
   @override
@@ -86,7 +89,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         widget.title != null
             ? Text(
                 widget.title!,
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColors.blackText,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -114,12 +117,10 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             helperText: widget.helperText,
             counterText: widget.customCounterText,
             hintText: widget.hintText,
-            fillColor: AppColors.appFormFieldFill,
+            fillColor: widget.fillColor ?? AppColors.appFormFieldFill,
             errorMaxLines: 3,
             filled: true,
-            hintStyle:
-                widget.hintTextStyle ??
-                context.textTheme.labelMedium!.copyWith(fontSize: 16),
+            hintStyle: widget.hintTextStyle ?? context.textTheme.labelMedium,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(

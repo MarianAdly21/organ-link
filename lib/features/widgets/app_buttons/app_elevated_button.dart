@@ -9,6 +9,7 @@ class AppElevatedButton extends StatelessWidget {
   final Color? color;
   final EdgeInsets? padding;
   final OutlinedBorder? shape;
+  final double? borderRadius;
 
   const AppElevatedButton({
     super.key,
@@ -17,6 +18,7 @@ class AppElevatedButton extends StatelessWidget {
     this.color,
     this.padding,
     this.shape,
+    this.borderRadius,
   });
 
   factory AppElevatedButton.withTitle({
@@ -25,6 +27,7 @@ class AppElevatedButton extends StatelessWidget {
     EdgeInsets? padding,
     Color? textColor,
     Color? color,
+    OutlinedBorder? shape,
     required String title,
   }) {
     return AppElevatedButton(
@@ -33,6 +36,7 @@ class AppElevatedButton extends StatelessWidget {
       color: color,
       label: labelTextWidget(title, textColor),
       onPressed: onPressed,
+      shape: shape,
     );
   }
   factory AppElevatedButton.whiteWithTitle({
@@ -52,6 +56,8 @@ class AppElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        overlayColor: AppColors.transparent,
+        shadowColor: AppColors.transparent,
         elevation: 0,
         padding: padding ?? commonPadding,
         shape:

@@ -26,9 +26,44 @@ class AppColors {
   static const _malachite = Color(0xff00C951);
   static const _dodgerBlueApprox = Color(0xff2B7FFF);
   static const _athensGrayApprox = Color(0xffE2E2EE);
-  static const _trasparent = Colors.transparent;
-  
- 
+  static const _transparent = Colors.transparent;
+  static const _linkWaterApprox = Color(0xffDDE8F9);
+  static const _curiousBlueApprox = Color(0xff2094CF);
+  static const _titanWhite = Color(0xffF5F5FF);
+  static const _seaGreen = Color(0xff2E7D32);
+  static const _trinidad = Color(0xffE75809);
+  static const _papayaWhip = Color(0xffFFEFD7);
+  static const _zanah = Color(0xffD1EAD2);
+  static const _malachiteApprox = Color(0xff00C951);
+  static const _doveGrayApprox = Color(0xff656464);
+  static const _orangePeelSolid = Color(0xffFFA000);
+  static const _colonialWhite = Color(0xffFFEDB8);
+  static const _salomieApprox = Color(0xffFFE186);
+  static const _redSolid = Color(0xffFF0000);
+  static const _guardsmanRed = Color(0xffC60000);
+  static const _provincialPinkApprox = Color(0xffFEF2F2);
+  static const _scienceBlueApprox = Color(0xff0861D7);
+  static const _botticelliApprox = Color(0xffD9E2ED);
+  static const _yourPink = Color(0xffFFC0C0);
+  static const _maroonApprox = Color(0xff830000);
+  static const _scorpionApprox = Color(0xff5F5F5F);
+  static const _fogApprox = Color(0xffDEDEFF);
+  static const _concreteSolid = Color(0xffF2F2F2);
+  static const _snowyMintApprox = Color(0xffC9FFCB);
+  static const _funGreenApprox= Color(0xff008736);
+  static const _periwinkleApprox= Color(0xffC1DAFF);
+  static const _cosmosApprox= Color(0xffFFDADE);
+  static const _brightRedApprox= Color(0xffAD0000);
+  static const _buttermilkApprox= Color(0xffFFF4B6);
+  static const _goldDropApprox= Color(0xffF57C00);
+  static const _mineShaftApprox= Color(0xff222222);
+  static const _dewApprox= Color(0xffF8FFFE);
+  static const _nobelApprox= Color(0xffB6B6B6);
+  static const _galleryApprox= Color(0xffF0F0F0);
+  static const _aeroBlueApprox= Color(0xffC4FFD6);
+  static const _silverApprox= Color(0xffC4C4C4);
+  static const _zumthorApprox= Color(0xffEFF6FF);
+
 
 
   /// app main theme ...
@@ -57,11 +92,11 @@ class AppColors {
   static const textColor = _jacksonsPurpleApprox;
   static const grayText = _stormGrayApprox;
   static const blackText = _black;
-  
+  static const importantText = _redSolid;
 
   static const titleMedium = _bluish;
   static const headlineMedium = _blackCow;
-  static const bodyMedium = _cloudBurst;
+  static const bodyMedium = _jacksonsPurpleApprox;
   static const bodyLarge = _jacksonsPurpleApprox;
   static const labelLarge = _blackCow;
   static const labelMedium = _alto;
@@ -94,8 +129,7 @@ class AppColors {
   static const formFieldProfileErrorIBorder = _red;
   static const formFieldFocusIBorder = _cloudBurst;
   static const formFieldTitle = _cloudBurst;
-  static const transparent = _trasparent;
-
+  static const transparent = _transparent;
 
   /// dialogs ..
   static const closeDialogIcon = _nobel;
@@ -115,7 +149,6 @@ class AppColors {
   static const changePasswordSuccessText = _bluish;
   static const changePasswordSuccessModalDivider = _geyser;
   static const changePasswordSuccessModalCloseIcon = _geyser;
-
 
   /// filter modal sheet
   static const filterTitles = _black;
@@ -141,7 +174,6 @@ class AppColors {
   static const multiDropDownFocusBorder = _cloudBurst;
   static const multiDropDownSelectedItemBackground = _bluish;
 
-  
   /// paging
   static const paginationLoadingBackground = _white;
 
@@ -153,4 +185,74 @@ class AppColors {
 
   /// Loader
   static const whiteLoader = _white;
+
+  /// Home User Screen
+  static const containerColor = _white;
+  static const displayFieldBGColor = _linkWaterApprox;
+  static const dividerColor = _alto;
+  static const shadowForContainerInfo = _curiousBlueApprox;
+  static const homeCardBG = _linkWaterApprox;
+
+  /// Medical Details Screen
+  static const medicalTestContainerBG = _titanWhite;
+  static const medicalTestDoneBG = _zanah;
+  static const medicalTestDoneText = _seaGreen;
+  static const medicalTestNotDoneText = _trinidad;
+  static const medicalTestNotDoneBG = _papayaWhip;
+  static const medicalTestDoneShadow = _malachiteApprox;
+  static const hospitalInfoText = _doveGrayApprox;
+  static const hospitalInfoShadow = _orangePeelSolid;
+  static const hospitalInfoColorBG1 = _salomieApprox;
+  static const hospitalInfoColorBG2 = _colonialWhite;
+
+  static const backgroundForImportantText = _provincialPinkApprox;
+
+  /// Progress Summery card
+  static const progressContainerBG = _scienceBlueApprox;
+  static const progressBarBG = _botticelliApprox;
+
+  static const backgroundForLogoutContainer = _provincialPinkApprox;
+  static const backgroundForLogoutButton = _guardsmanRed;
+  static const shadowForLogoutContainer = _redSolid;
+  static const cancelBtnBG = _titanWhite;
+
+  /// Notification Screen
+  static const notificationItemBG = _titanWhite;
+  static const notificationImportantItemBG = _yourPink;
+  static const notificationMainTitle = _maroonApprox;
+  static const notificationContentAndDate = _scorpionApprox;
+  static const errorText = _redSolid;
+  static const backButtonBG = _titanWhite;
+  static const backButtonBorder = _fogApprox;
+
+  /// Hospital Dashboard
+  static const hospitalAppBarBG = _aquaSpringApprox;
+  static const hospitalBtnText = _aquaSpringApprox;
+  static const idContainerBG = _concreteSolid;
+
+
+  /// status Model
+  static const readyTextBG = _snowyMintApprox;
+  static const underMatchingTextBG = _periwinkleApprox;
+  static const readyText = _funGreenApprox;
+  static const underMatchingText = _jacksonsPurpleApprox;
+  static const highPriorityTextBG = _cosmosApprox;
+  static const highPriorityText = _brightRedApprox;
+  static const midPriorityTextBG = _buttermilkApprox;
+  static const midPriorityText = _goldDropApprox;
+  static const personalInfoText = _mineShaftApprox;
+  static const reportContainerBG = _dewApprox;
+  static const timelineNode = _snowyMintApprox;
+  static const lineConnector = _nobelApprox;
+  static const notesBG = _galleryApprox;
+  static const importantInfContainerBG = _periwinkleApprox;
+
+  /// Matching Screen 
+  static const overViewContainerBG =_galleryApprox;
+  static const matchingDataUserContainerBG = _aeroBlueApprox;
+  static const matchingDataUserDivider = _silverApprox;
+  static const matchingParentage= _funGreenApprox;
+  static const waitingAiResultBG= _zumthorApprox;
+  
+
 }
