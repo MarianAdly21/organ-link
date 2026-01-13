@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
-import 'package:organ_link/utils/empty/empty_widgets.dart';
 
 class CustomDropDownItem extends Equatable {
   final String value;

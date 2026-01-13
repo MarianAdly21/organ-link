@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/empty/empty_widgets.dart';
