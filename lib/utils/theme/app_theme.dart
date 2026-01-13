@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 abstract class BaseAppTheme {
