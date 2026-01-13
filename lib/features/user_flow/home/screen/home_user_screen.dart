@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/user_manager/user_home_api_manager.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_up_screen.dart';
+import 'package:organ_link/features/user_flow/home/bloc/user_home_bloc.dart';
+import 'package:organ_link/features/user_flow/home/bloc/user_home_repository.dart';
+import 'package:organ_link/features/user_flow/home/model/user_home_data_ui_model.dart';
 import 'package:organ_link/features/user_flow/hospital_information/screen/hospital_information_screen.dart';
 import 'package:organ_link/features/user_flow/medical_details/screens/medical_details_screen.dart';
 import 'package:organ_link/features/user_flow/notification/screens/notification_screen.dart';
@@ -14,28 +21,78 @@ import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
-class HomeUserScreen extends BaseStatefulScreenWidget {
+class HomeUserScreen extends StatelessWidget {
   const HomeUserScreen({super.key});
   static const routeName = "/home-user-screen";
 
   @override
-  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _HomeUserScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => UserHomeBloc(UserHomeRepository(userHomeApiManager:UserHomeApiManager(GetIt.I<DioApiManager>()) )),
+      child: const HomeUserScreenWithBloc(),
+    );
+  }
 }
 
-class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
+class HomeUserScreenWithBloc extends BaseStatefulScreenWidget {
+  const HomeUserScreenWithBloc({super.key});
+
+  @override
+  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
+      _HomeUserScreenWithBlocState();
+}
+
+class _HomeUserScreenWithBlocState
+    extends BaseScreenState<HomeUserScreenWithBloc> {
+  //     @override
+  // void initState() {
+  //   _currentBloc.add(GetHomeUserDateEvent(id: 1));
+  //   super.initState();
+  // }
+  late UserHomeDataUiModel userHomeDataUiModel;
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: _buildBody(),
+      body: BlocListener<UserHomeBloc, UserHomeState>(
+        listener: (context, state) {
+          if(state is UserHomeLoadingState)
+          {
+              showLoading();
+          }else{
+              hideLoading();
+          }if(state is UserHomeDataLoadedSuccessfullyState)
+          {
+            userHomeDataUiModel=state.userHomeDataUiModel;
+          }else if(state is NavToNotificationScreenState)
+          {
+                Navigator.of(context).pushNamed(NotificationScreen.routeName);
+          }else if(state is NavToSettingScreenState)
+          {    Navigator.of(context).pushNamed(SettingsScreen.routeName);
+
+          }else if(state is NavToHospitalInfoScreenState)
+          {
+    Navigator.of(context).pushNamed(HospitalInformationScreen.routeName);
+
+          }else if(state is NavToCaseFollowUpScreenState)
+          {
+    Navigator.of(context).pushNamed(CaseFollowUpScreen.routeName);
+
+          }
+          else if(state is NavToMedicalDetailsScreenState)
+          {
+                Navigator.of(context).pushNamed(MedicalDetailsScreen.routeName);
+          }
+        },
+        child: _buildBody(),
+      ),
     );
   }
 
   ///////////////////////////////////////////////////////////
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
- 
+
   Widget _buildBody() {
     return SafeArea(
       child: Padding(
@@ -70,7 +127,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
             Flexible(
               child: _mainCard(
                 onTap: () {
-                  _navToMedicalDetailsScreen();
+                  _navToMedicalDetailsScreenEvent();
                 },
                 icon: AppAssetPaths.personalIcon,
                 title: LocalizationKeys.medicalDetails,
@@ -81,7 +138,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
             Flexible(
               child: _mainCard(
                 onTap: () {
-                  _navToCaseFollowUpScreen();
+                  _navToCaseFollowUpScreenEvent();
                 },
                 icon: AppAssetPaths.stockChartIcon,
                 title: LocalizationKeys.caseFollowUp,
@@ -96,7 +153,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
             Flexible(
               child: _mainCard(
                 onTap: () {
-                  _navToHospitalInfoScreen();
+                  _navToHospitalInfoScreenEvent();
                 },
                 icon: AppAssetPaths.hospitalIcon,
                 title: LocalizationKeys.hospitalInformation,
@@ -107,7 +164,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
             Flexible(
               child: _mainCard(
                 onTap: () {
-                  _navToSettingsScreen();
+                  _navToSettingsScreenEvent();
                 },
                 icon: AppAssetPaths.settingIcon,
                 title: LocalizationKeys.settings,
@@ -184,7 +241,7 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
       children: [
         GestureDetector(
           onTap: () {
-            _navToNotificationScreen();
+            _navToNotificationScreenEvent();
           },
           child: SvgPicture.asset(
             height: 32.h,
@@ -200,7 +257,6 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
       ],
     );
   }
-
 
   Widget _cardDetails() {
     return Container(
@@ -314,22 +370,27 @@ class _HomeUserScreenState extends BaseScreenState<HomeUserScreen> {
   ///////////////////////////////////////////////////////////
   /////////////////// Helper methods ////////////////////////
   ///////////////////////////////////////////////////////////
-   void _navToNotificationScreen() {
-    Navigator.of(context).pushNamed(NotificationScreen.routeName);
-  }
-   void _navToSettingsScreen() {
-    Navigator.of(context).pushNamed(SettingsScreen.routeName);
-  }
-
-  void _navToHospitalInfoScreen() {
-    Navigator.of(context).pushNamed(HospitalInformationScreen.routeName);
+  
+  UserHomeBloc get _currentBloc=> context.read<UserHomeBloc>();
+  void _navToNotificationScreenEvent() {
+     _currentBloc.add(NavToNotificationScreenEvent());
   }
 
-  void _navToCaseFollowUpScreen() {
-    Navigator.of(context).pushNamed(CaseFollowUpScreen.routeName);
+  void _navToSettingsScreenEvent() {
+         _currentBloc.add(NavToSettingScreenEvent());
   }
 
-  void _navToMedicalDetailsScreen() {
-    Navigator.of(context).pushNamed(MedicalDetailsScreen.routeName);
+  void _navToHospitalInfoScreenEvent() {
+             _currentBloc.add(NavToHospitalInfoScreenEvent());
+  }
+
+  void _navToCaseFollowUpScreenEvent() {
+                 _currentBloc.add(NavToCaseFollowUpScreenEvent());
+
+  }
+
+  void _navToMedicalDetailsScreenEvent() {
+                 _currentBloc.add(NavToMedicalDetailsScreenEvent());
+
   }
 }
