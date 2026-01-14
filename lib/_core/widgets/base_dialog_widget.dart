@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/screen_sizer_extension.dart';
 import 'package:organ_link/_core/widgets/base_stateful_widget.dart';
-import 'package:organ_link/res/app_colors.dart';
 
 Future<void> showAppDialog({
   required BuildContext context,
@@ -72,21 +71,21 @@ abstract class BaseDialogState<W extends BaseDialogWidget>
   //////////////////// Widget methods ///////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget _closeIconWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: InkWell(
-        onTap: () {
-          closeDialog();
-        },
-        child: const Icon(
-          Icons.close,
-          size: 25,
-          color: AppColors.closeDialogIcon,
-        ),
-      ),
-    );
-  }
+  // Widget _closeIconWidget() {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(12),
+  //     child: InkWell(
+  //       onTap: () {
+  //         closeDialog();
+  //       },
+  //       child: const Icon(
+  //         Icons.close,
+  //         size: 25,
+  //         color: AppColors.closeDialogIcon,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   ///////////////////////////////////////////////////////////
   /////////////////// Helper methods ////////////////////////
