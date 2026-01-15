@@ -9,7 +9,7 @@ import 'package:organ_link/res/app_colors.dart';
 
 class MatchingDetailsScreen extends BaseStatefulScreenWidget {
   const MatchingDetailsScreen({super.key});
-  static const routName = "/matching-details-screen";
+  static const routeName = "/matching-details-screen";
 
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>

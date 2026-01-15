@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
-import 'package:organ_link/features/hospital_flow/matching_details/screen/matching_details_screen.dart';
+import 'package:organ_link/features/hospital_flow/surgeries/extension/opertion_status_ui.dart';
+import 'package:organ_link/features/hospital_flow/surgeries/models/surgeries_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
@@ -11,29 +12,32 @@ import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/res/app_colors.dart';
-import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
-class MatchingScreen extends BaseStatefulScreenWidget {
-  const MatchingScreen({super.key});
-  static const routeName = "/matching-screen";
+class SurgeriesScreen extends BaseStatefulScreenWidget {
+  const SurgeriesScreen({super.key});
+  static const routeName = "/surgeries-screen";
+
   @override
-  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _MatchingScreenState();
+  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() => _SurgeriesScreenState();
 }
 
-class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
+class _SurgeriesScreenState extends BaseScreenState<SurgeriesScreen> {
+ /// demo data
+  List<SurgeryUiModel> surgeriesList=[SurgeryUiModel(surgeryName:"عملية زراعة كلي" , surgeryNumber: "OP002", surgeryState: OperationStatus.completed, patientName:"عمر الزهراني" , donorName:"سارة أحمد", hospitalName: "الجراحة - عيادة الكلي", date:"15-02-2025"),
+];
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: HospitalBaseBodyScaffold(
-        titleOfScreen: "Matching",
-        backTap: () {},
-        body: _buildBody(),
-      ),
-    );
+        titleOfScreen: "Surgeries",
+         backTap: (){},
+         body:_buildBody(),)
+      
+      );
   }
 
+  
   ///////////////////////////////////////////////////////////
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
@@ -42,7 +46,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [_headerWidget(), _requestList()],
+        children: [_headerWidget(), _surgeriesList()],
       ),
     );
   }
@@ -51,9 +55,9 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text("طلبات المطابقة", style: context.textTheme.bodyMedium),
+        Text("سجل العمليات", style: context.textTheme.bodyMedium),
         Text(
-          "متابعة طلبات المطابقة من نظام الذكاء الاصطناعي",
+          "متابعة عمليات زراعة الأعضاء",
           style: context.textTheme.labelMedium,
         ),
         Padding(
@@ -62,13 +66,17 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _overViewContainer(
-                isGradient: true,
-                text: "إجمالي الطلبات",
-                count: "1000",
+                backgroundColor: Color(0xffFFF2DC),
+                text: "تحت المتابعة",
+                count: "10",
               ),
-              _overViewContainer(text: "تحت المطابقة", count: "5"),
-              _overViewContainer(text: "قيد التحليل", count: "100"),
-              _overViewContainer(text: "تحت المراجعة", count: "100"),
+              _overViewContainer( backgroundColor: Color(0xffDEFFDF),
+                text: "مكتملة", count: "5"),
+              _overViewContainer( backgroundColor: Color(0xffE6F4FF),
+                text: "جارية", count: "1"),
+              _overViewContainer(
+                 backgroundColor: Color(0xffFCE4FF),
+                text: "مدجولة", count: "5"),
             ],
           ),
         ),
@@ -79,6 +87,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
   Widget _overViewContainer({
     required String text,
     required String count,
+    Color? backgroundColor,
     bool isGradient = false,
   }) {
     return Container(
@@ -95,7 +104,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
                 ],
               )
             : null,
-        color: isGradient ? null : AppColors.overViewContainerBG,
+        color: isGradient ? null : backgroundColor?? AppColors.overViewContainerBG,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -117,12 +126,13 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
     );
   }
 
-  Widget _requestList() {
+
+  Widget _surgeriesList() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          "قائمة الطلبات",
+          "قائمة العمليات",
           style: context.textTheme.bodyMedium!.copyWith(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -132,9 +142,10 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: 5,
+          itemCount: surgeriesList.length,
           itemBuilder: (context, index) {
             return ContainerWithShadow(
+              borderSideColor:surgeriesList[index].surgeryState.sideColor,
               padding: EdgeInsets.symmetric(vertical: 12.h),
               contentPadding: EdgeInsets.symmetric(
                 vertical: 24.h,
@@ -142,34 +153,32 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
               ),
               child: Column(
                 children: [
-                  _nameAndIdAndStatusRow(),
+                  _surgeryNameAndIdAndStatusRow(index),
                   CustomDividerWidget(),
                   DataRowWithDivider(
                     divider: true,
-                    title: context.translate("العضو"),
-                    subTitle: "كلى",
+                    title: context.translate("المريض"),
+                    subTitle:surgeriesList[index].patientName,
                   ),
                   DataRowWithDivider(
                     divider: true,
-                    title: context.translate("تاريخ الطلب"),
-                    subTitle: "2025-10-15",
+                    title: context.translate("المتبرع"),
+                    subTitle: surgeriesList[index].donorName,
                   ),
                   DataRowWithDivider(
-                    title: context.translate("نسبة التطابق"),
-                    subTitle: "%95",
+                    divider: true,
+                    title: context.translate("القسم"),
+                    subTitle:surgeriesList[index].hospitalName,
                   ),
-
-                  /// notes: the divider and container appears based on condition
+                   DataRowWithDivider(
+                    title: context.translate("التاريخ"),
+                    subTitle:surgeriesList[index].date,
+                  ),
                   CustomDividerWidget(indent: 24.w, endIndent: 24.w),
-                  _resultMatching(),
                   SizedBox(height: 16.h),
                   AppButtonWithGradientColors(
                     text: "التفاصيل",
-                    onTap: () {
-                      Navigator.of(
-                        context,
-                      ).pushNamed(MatchingDetailsScreen.routeName);
-                    },
+                    onTap: () {},
                   ),
                 ],
               ),
@@ -179,57 +188,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
       ],
     );
   }
-
-  Widget _resultMatching() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: AppColors.readyTextBG,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "تم العثور علي متبرع متطابق",
-
-            ///message from back
-            style: context.textTheme.bodyMedium!.copyWith(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.readyText,
-            ),
-          ),
-
-          Text(
-            "المتبرع: سارة أحمد",
-            style: context.textTheme.labelMedium!.copyWith(
-              color: AppColors.readyText,
-            ),
-          ),
-          SizedBox(height: 16.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "فصيلة الدم: +A",
-                style: context.textTheme.labelMedium!.copyWith(
-                  color: AppColors.readyText,
-                ),
-              ),
-              ContainerWithBackground(
-                backgroundColor: AppColors.importantInfContainerBG,
-                text: "تمت المطابقة",
-                textColor: AppColors.textColor,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _nameAndIdAndStatusRow() {
+  Widget _surgeryNameAndIdAndStatusRow(int index) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -238,7 +197,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "أحمد محمد العلي",
+             surgeriesList[index].surgeryName,
               style: context.textTheme.bodyMedium!.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -248,7 +207,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
             Padding(
               padding: EdgeInsets.only(top: 8.h),
               child: Text(
-                "${context.translate(LocalizationKeys.fileNumber)} 12345",
+                "رقم العملية:${surgeriesList[index].surgeryNumber}",
                 style: context.textTheme.labelMedium!.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
@@ -258,10 +217,11 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
           ],
         ),
         ContainerWithBackground(
-          backgroundColor: AppColors.readyTextBG,
-          text: "جاهز",
+          backgroundColor: surgeriesList[index].surgeryState.badgeBackground,
+          text: surgeriesList[index].surgeryState.label,
         ),
       ],
     );
   }
+
 }

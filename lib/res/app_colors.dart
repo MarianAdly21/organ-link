@@ -65,7 +65,6 @@ class AppColors {
   static const _zumthorApprox= Color(0xffEFF6FF);
 
 
-
   /// app main theme ...
   static const mainColor = _malachite;
   static const seconderColor = _dodgerBlueApprox;
