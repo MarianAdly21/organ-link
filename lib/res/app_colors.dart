@@ -63,6 +63,7 @@ class AppColors {
   static const _aeroBlueApprox= Color(0xffC4FFD6);
   static const _silverApprox= Color(0xffC4C4C4);
   static const _zumthorApprox= Color(0xffEFF6FF);
+  static const _periwinkle= Color(0xffBCD7FF);
 
 
   /// app main theme ...
@@ -253,5 +254,9 @@ class AppColors {
   static const matchingParentage= _funGreenApprox;
   static const waitingAiResultBG= _zumthorApprox;
   
+ /// Surgery details screen
+    static const notCardBG = _linkWaterApprox;
+    static const notCardBorder = _periwinkle;
+
 
 }

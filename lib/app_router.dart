@@ -4,6 +4,7 @@ import 'package:organ_link/features/hospital_flow/matching/screen/matching_scree
 import 'package:organ_link/features/hospital_flow/matching_details/screen/matching_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/patient_details/screen/patient_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/screen/surgeries_screen.dart';
+import 'package:organ_link/features/hospital_flow/surgery_details/screen/surgery_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/view_patient/screen/view_patient_screen.dart';
 import 'package:organ_link/features/shared_screens/login/screen/login_screen.dart';
 import 'package:organ_link/features/shared_screens/splash/splash_screen.dart';
@@ -34,5 +35,6 @@ class AppRouter {
     MatchingScreen.routeName: (ctx) => const MatchingScreen(),
     MatchingDetailsScreen.routeName:(ctx)=> const MatchingDetailsScreen(),
     SurgeriesScreen.routeName:(ctx)=> const SurgeriesScreen(),
+    SurgeryDetailsScreen.routeName:(ctx)=> const SurgeryDetailsScreen(),
   };
 }
