@@ -145,7 +145,7 @@ class LocalizationKeys {
   static const heartRate = "heart_rate";
   static const oxygenSaturation = "oxygen_saturation";
   static const reportAndInvestigations = "reports_and_investigations";
-   static const reportNewTitle="report_new_title";
+  static const reportNewTitle = "report_new_title";
   static const addNewReport = "add_new_report";
   static const caseRecord = "case_record";
   static const reportDetails = "report_details";
@@ -161,6 +161,19 @@ class LocalizationKeys {
   static const importantInfoText = "important_info_text";
   static const uploadButton = "upload_button";
   static const cancelButton = "cancel_button";
- static const reportUploadedSuccess="report_uploaded_success";
-  static const goHome="go_home";
+  static const reportUploadedSuccess = "report_uploaded_success";
+  static const goHome = "go_home";
+  static const surgeryDetails = "surgery_details";
+  static const surgeryNumber = "surgery_number";
+  static const surgeryInformation = "surgery_information";
+  static const organ = "organ";
+  static const responsibleSurgeon = "responsible_surgeon";
+  static const department = "department";
+  static const surgeryStatus = "surgery_status";
+  static const patientInformation = "patient_information";
+  static const donorInformation = "donor_information";
+  static const patientName = "patient_name";
+  static const fileNumberWithoutColumn = "file_number_without_column";
+  static const donorName = "donor_name";
+  static const goToPatientFile = "Go to Patient File";
 }
