@@ -66,6 +66,8 @@ class AppColors {
   static const _periwinkle = Color(0xffBCD7FF);
   static const _athensGray = Color(0xffECECF0);
   static const _mineShaft = Color(0xff3D3D3D);
+  static const _periwinkleA = Color(0xffCDCDFF);
+  static const _AliceBlue = Color(0xffF5FBFF);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -263,4 +265,7 @@ class AppColors {
   static final notificationFilterContianerShadow = _mineShaft.withValues(
     alpha: 0.25,
   );
+
+  static const enableBorderColorStting = _periwinkleA;
+  static const filledColorenable = _AliceBlue;
 }

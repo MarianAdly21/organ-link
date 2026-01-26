@@ -5,6 +5,7 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/app_router.dart';
+import 'package:organ_link/features/hospital_flow/hospital_setting/screen/hospital_setting.dart';
 import 'package:organ_link/features/hospital_flow/notification_screen/screen/hospital_notification_screen.dart';
 import 'package:organ_link/features/hospital_flow/view_patient/screen/view_patient_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_app_bar_base.dart';
@@ -146,27 +147,32 @@ class _HospitalDashboardScreenState
   }
 
   Widget _settingBtn() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.h),
-      child: Container(
-        height: 48.h,
-        //padding: EdgeInsets.symmetric(vertical: 16),
-        decoration: BoxDecoration(
-          color: Color(0xffD9D9D9),
-          borderRadius: BorderRadius.circular(8.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.15),
-              blurRadius: 2,
-            ),
-          ],
-        ),
-        child: Center(
-          child: FittedBox(
-            child: Text(
-              context.translate(LocalizationKeys.settings),
-              style: context.textTheme.bodyMedium!.copyWith(
-                color: Color(0xff4F4F4F),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(HospitalSetting.routeName);
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.h),
+        child: Container(
+          height: 48.h,
+          //padding: EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+            color: Color(0xffD9D9D9),
+            borderRadius: BorderRadius.circular(8.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.15),
+                blurRadius: 2,
+              ),
+            ],
+          ),
+          child: Center(
+            child: FittedBox(
+              child: Text(
+                context.translate(LocalizationKeys.settings),
+                style: context.textTheme.bodyMedium!.copyWith(
+                  color: Color(0xff4F4F4F),
+                ),
               ),
             ),
           ),

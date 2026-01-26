@@ -33,6 +33,7 @@ class AppTextFormField extends StatefulWidget {
   final Widget? suffixIcon;
   final BoxConstraints? prefixIconConstraints;
   final Color? fillColor;
+  final Color? titleColor;
 
   final List<TextInputFormatter>? inputFormatters;
 
@@ -66,6 +67,7 @@ class AppTextFormField extends StatefulWidget {
     this.textAlign = TextAlign.start,
     this.prefixIconConstraints,
     this.fillColor,
+    this.titleColor,
   }) : assert(initialValue == null || controller == null);
 
   @override
@@ -89,7 +91,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             ? Text(
                 widget.title!,
                 style: TextStyle(
-                  color: AppColors.blackText,
+                  color: widget.titleColor ?? AppColors.blackText,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
@@ -120,6 +122,10 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             errorMaxLines: 3,
             filled: true,
             hintStyle: widget.hintTextStyle ?? context.textTheme.labelMedium,
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: AppColors.transparent, width: 2),
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
