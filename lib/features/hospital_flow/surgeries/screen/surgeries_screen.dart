@@ -10,6 +10,7 @@ import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaf
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
+import 'package:organ_link/features/widgets/custom_over_view_container.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/res/app_colors.dart';
 
@@ -18,26 +19,35 @@ class SurgeriesScreen extends BaseStatefulScreenWidget {
   static const routeName = "/surgeries-screen";
 
   @override
-  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() => _SurgeriesScreenState();
+  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
+      _SurgeriesScreenState();
 }
 
 class _SurgeriesScreenState extends BaseScreenState<SurgeriesScreen> {
- /// demo data
-  List<SurgeryUiModel> surgeriesList=[SurgeryUiModel(surgeryName:"عملية زراعة كلي" , surgeryNumber: "OP002", surgeryState: OperationStatus.completed, patientName:"عمر الزهراني" , donorName:"سارة أحمد", hospitalName: "الجراحة - عيادة الكلي", date:"15-02-2025"),
-];
+  /// demo data
+  List<SurgeryUiModel> surgeriesList = [
+    SurgeryUiModel(
+      surgeryName: "عملية زراعة كلي",
+      surgeryNumber: "OP002",
+      surgeryState: OperationStatus.completed,
+      patientName: "عمر الزهراني",
+      donorName: "سارة أحمد",
+      hospitalName: "الجراحة - عيادة الكلي",
+      date: "15-02-2025",
+    ),
+  ];
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: HospitalBaseBodyScaffold(
         titleOfScreen: "Surgeries",
-         backTap: (){},
-         body:_buildBody(),)
-      
-      );
+        backTap: () {},
+        body: _buildBody(),
+      ),
+    );
   }
 
-  
   ///////////////////////////////////////////////////////////
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
@@ -65,67 +75,32 @@ class _SurgeriesScreenState extends BaseScreenState<SurgeriesScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _overViewContainer(
+              CustomOverViewContainer(
                 backgroundColor: Color(0xffFFF2DC),
                 text: "تحت المتابعة",
                 count: "10",
               ),
-              _overViewContainer( backgroundColor: Color(0xffDEFFDF),
-                text: "مكتملة", count: "5"),
-              _overViewContainer( backgroundColor: Color(0xffE6F4FF),
-                text: "جارية", count: "1"),
-              _overViewContainer(
-                 backgroundColor: Color(0xffFCE4FF),
-                text: "مدجولة", count: "5"),
+              CustomOverViewContainer(
+                backgroundColor: Color(0xffDEFFDF),
+                text: "مكتملة",
+                count: "5",
+              ),
+              CustomOverViewContainer(
+                backgroundColor: Color(0xffE6F4FF),
+                text: "جارية",
+                count: "1",
+              ),
+              CustomOverViewContainer(
+                backgroundColor: Color(0xffFCE4FF),
+                text: "مدجولة",
+                count: "5",
+              ),
             ],
           ),
         ),
       ],
     );
   }
-
-  Widget _overViewContainer({
-    required String text,
-    required String count,
-    Color? backgroundColor,
-    bool isGradient = false,
-  }) {
-    return Container(
-      height: 80.h,
-      width: 74.w,
-
-      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 14.w),
-      decoration: BoxDecoration(
-        gradient: isGradient
-            ? LinearGradient(
-                colors: [
-                  AppColors.mainColor.withValues(alpha: 0.43),
-                  AppColors.seconderColor.withValues(alpha: 0.43),
-                ],
-              )
-            : null,
-        color: isGradient ? null : backgroundColor?? AppColors.overViewContainerBG,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: context.textTheme.labelMedium!.copyWith(
-              fontWeight: FontWeight.w400,
-              fontSize: 13,
-            ),
-          ),
-          SizedBox(height: 8.h),
-          Flexible(child: Text(count, style: context.textTheme.bodyMedium)),
-        ],
-      ),
-    );
-  }
-
 
   Widget _surgeriesList() {
     return Column(
@@ -145,7 +120,7 @@ class _SurgeriesScreenState extends BaseScreenState<SurgeriesScreen> {
           itemCount: surgeriesList.length,
           itemBuilder: (context, index) {
             return ContainerWithShadow(
-              borderSideColor:surgeriesList[index].surgeryState.sideColor,
+              borderSideColor: surgeriesList[index].surgeryState.sideColor,
               padding: EdgeInsets.symmetric(vertical: 12.h),
               contentPadding: EdgeInsets.symmetric(
                 vertical: 24.h,
@@ -158,7 +133,7 @@ class _SurgeriesScreenState extends BaseScreenState<SurgeriesScreen> {
                   DataRowWithDivider(
                     divider: true,
                     title: context.translate("المريض"),
-                    subTitle:surgeriesList[index].patientName,
+                    subTitle: surgeriesList[index].patientName,
                   ),
                   DataRowWithDivider(
                     divider: true,
@@ -168,18 +143,15 @@ class _SurgeriesScreenState extends BaseScreenState<SurgeriesScreen> {
                   DataRowWithDivider(
                     divider: true,
                     title: context.translate("القسم"),
-                    subTitle:surgeriesList[index].hospitalName,
+                    subTitle: surgeriesList[index].hospitalName,
                   ),
-                   DataRowWithDivider(
+                  DataRowWithDivider(
                     title: context.translate("التاريخ"),
-                    subTitle:surgeriesList[index].date,
+                    subTitle: surgeriesList[index].date,
                   ),
                   CustomDividerWidget(indent: 24.w, endIndent: 24.w),
                   SizedBox(height: 16.h),
-                  AppButtonWithGradientColors(
-                    text: "التفاصيل",
-                    onTap: () {},
-                  ),
+                  AppButtonWithGradientColors(text: "التفاصيل", onTap: () {}),
                 ],
               ),
             );
@@ -188,6 +160,7 @@ class _SurgeriesScreenState extends BaseScreenState<SurgeriesScreen> {
       ],
     );
   }
+
   Widget _surgeryNameAndIdAndStatusRow(int index) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -197,7 +170,7 @@ class _SurgeriesScreenState extends BaseScreenState<SurgeriesScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-             surgeriesList[index].surgeryName,
+              surgeriesList[index].surgeryName,
               style: context.textTheme.bodyMedium!.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -223,5 +196,4 @@ class _SurgeriesScreenState extends BaseScreenState<SurgeriesScreen> {
       ],
     );
   }
-
 }

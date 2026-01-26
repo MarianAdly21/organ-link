@@ -50,21 +50,22 @@ class AppColors {
   static const _fogApprox = Color(0xffDEDEFF);
   static const _concreteSolid = Color(0xffF2F2F2);
   static const _snowyMintApprox = Color(0xffC9FFCB);
-  static const _funGreenApprox= Color(0xff008736);
-  static const _periwinkleApprox= Color(0xffC1DAFF);
-  static const _cosmosApprox= Color(0xffFFDADE);
-  static const _brightRedApprox= Color(0xffAD0000);
-  static const _buttermilkApprox= Color(0xffFFF4B6);
-  static const _goldDropApprox= Color(0xffF57C00);
-  static const _mineShaftApprox= Color(0xff222222);
-  static const _dewApprox= Color(0xffF8FFFE);
-  static const _nobelApprox= Color(0xffB6B6B6);
-  static const _galleryApprox= Color(0xffF0F0F0);
-  static const _aeroBlueApprox= Color(0xffC4FFD6);
-  static const _silverApprox= Color(0xffC4C4C4);
-  static const _zumthorApprox= Color(0xffEFF6FF);
-  static const _periwinkle= Color(0xffBCD7FF);
-
+  static const _funGreenApprox = Color(0xff008736);
+  static const _periwinkleApprox = Color(0xffC1DAFF);
+  static const _cosmosApprox = Color(0xffFFDADE);
+  static const _brightRedApprox = Color(0xffAD0000);
+  static const _buttermilkApprox = Color(0xffFFF4B6);
+  static const _goldDropApprox = Color(0xffF57C00);
+  static const _mineShaftApprox = Color(0xff222222);
+  static const _dewApprox = Color(0xffF8FFFE);
+  static const _nobelApprox = Color(0xffB6B6B6);
+  static const _galleryApprox = Color(0xffF0F0F0);
+  static const _aeroBlueApprox = Color(0xffC4FFD6);
+  static const _silverApprox = Color(0xffC4C4C4);
+  static const _zumthorApprox = Color(0xffEFF6FF);
+  static const _periwinkle = Color(0xffBCD7FF);
+  static const _athensGray = Color(0xffECECF0);
+  static const _mineShaft = Color(0xff3D3D3D);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -230,7 +231,6 @@ class AppColors {
   static const hospitalBtnText = _aquaSpringApprox;
   static const idContainerBG = _concreteSolid;
 
-
   /// status Model
   static const readyTextBG = _snowyMintApprox;
   static const underMatchingTextBG = _periwinkleApprox;
@@ -247,16 +247,20 @@ class AppColors {
   static const notesBG = _galleryApprox;
   static const importantInfContainerBG = _periwinkleApprox;
 
-  /// Matching Screen 
-  static const overViewContainerBG =_galleryApprox;
+  /// Matching Screen
+  static const overViewContainerBG = _galleryApprox;
   static const matchingDataUserContainerBG = _aeroBlueApprox;
   static const matchingDataUserDivider = _silverApprox;
-  static const matchingParentage= _funGreenApprox;
-  static const waitingAiResultBG= _zumthorApprox;
-  
- /// Surgery details screen
-    static const notCardBG = _linkWaterApprox;
-    static const notCardBorder = _periwinkle;
+  static const matchingParentage = _funGreenApprox;
+  static const waitingAiResultBG = _zumthorApprox;
 
+  /// Surgery details screen
+  static const notCardBG = _linkWaterApprox;
+  static const notCardBorder = _periwinkle;
 
+  /// Notifications screen
+  static const notificationFilterContianerBGColor = _athensGray;
+  static final notificationFilterContianerShadow = _mineShaft.withValues(
+    alpha: 0.25,
+  );
 }

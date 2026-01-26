@@ -42,4 +42,6 @@ class AppAssetPaths {
   static const arrowIcon = "assets/icons/assets/icons/arrow_icon.svg";
   static const doneImage = "assets/images/done_image.svg";
 
+  static const doneIcon = "assets/icons/done_icon.svg";
+  static const deleteIcon = "assets/icons/delete_icon.svg";
 }

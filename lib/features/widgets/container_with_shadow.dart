@@ -32,16 +32,16 @@ class ContainerWithShadow extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if(sectionTitle!=null)...[
-              Text(
-          sectionTitle!,
-          style: context.textTheme.bodyMedium!.copyWith(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.blackText,
-          ),
-        ),
-        SizedBox(height: 16.h),
+          if (sectionTitle != null) ...[
+            Text(
+              sectionTitle!,
+              style: context.textTheme.bodyMedium!.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.blackText,
+              ),
+            ),
+            SizedBox(height: 16.h),
           ],
           Container(
             height: height,
@@ -50,17 +50,17 @@ class ContainerWithShadow extends StatelessWidget {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.shadowForContainerInfo.withValues(alpha: 0.25),
+                  color: AppColors.shadowForContainerInfo.withValues(
+                    alpha: 0.25,
+                  ),
                   blurRadius: 4,
                 ),
               ],
-              border: borderSideColor==null? null:BorderDirectional(
-              end: BorderSide(
-                width: 6,
-                color:borderSideColor!,
-                
-              ),
-            ),
+              border: borderSideColor == null
+                  ? null
+                  : BorderDirectional(
+                      end: BorderSide(width: 6, color: borderSideColor!),
+                    ),
               borderRadius: BorderRadius.circular(borderRadius ?? 16.r),
               color: background ?? AppColors.containerColor,
             ),

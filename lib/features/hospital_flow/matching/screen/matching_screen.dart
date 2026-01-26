@@ -9,6 +9,7 @@ import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaf
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
+import 'package:organ_link/features/widgets/custom_over_view_container.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
@@ -61,59 +62,18 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _overViewContainer(
+              CustomOverViewContainer(
                 isGradient: true,
                 text: "إجمالي الطلبات",
                 count: "1000",
               ),
-              _overViewContainer(text: "تحت المطابقة", count: "5"),
-              _overViewContainer(text: "قيد التحليل", count: "100"),
-              _overViewContainer(text: "تحت المراجعة", count: "100"),
+              CustomOverViewContainer(text: "تحت المطابقة", count: "5"),
+              CustomOverViewContainer(text: "قيد التحليل", count: "100"),
+              CustomOverViewContainer(text: "تحت المراجعة", count: "100"),
             ],
           ),
         ),
       ],
-    );
-  }
-
-  Widget _overViewContainer({
-    required String text,
-    required String count,
-    bool isGradient = false,
-  }) {
-    return Container(
-      height: 80.h,
-      width: 74.w,
-
-      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 14.w),
-      decoration: BoxDecoration(
-        gradient: isGradient
-            ? LinearGradient(
-                colors: [
-                  AppColors.mainColor.withValues(alpha: 0.43),
-                  AppColors.seconderColor.withValues(alpha: 0.43),
-                ],
-              )
-            : null,
-        color: isGradient ? null : AppColors.overViewContainerBG,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: context.textTheme.labelMedium!.copyWith(
-              fontWeight: FontWeight.w400,
-              fontSize: 13,
-            ),
-          ),
-          SizedBox(height: 8.h),
-          Flexible(child: Text(count, style: context.textTheme.bodyMedium)),
-        ],
-      ),
     );
   }
 

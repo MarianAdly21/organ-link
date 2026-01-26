@@ -9,10 +9,12 @@ class HospitalBaseBodyScaffold extends StatelessWidget {
     required this.body,
     required this.titleOfScreen,
     required this.backTap,
+    this.padding,
   });
   final Widget body;
   final String titleOfScreen;
   final void Function() backTap;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,7 +27,9 @@ class HospitalBaseBodyScaffold extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+              padding:
+                  padding ??
+                  EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
               child: body,
             ),
           ),
