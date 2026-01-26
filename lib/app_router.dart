@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:organ_link/features/hospital_flow/hospital_dashboard/screen/hospital_dashboard_screen.dart';
+import 'package:organ_link/features/hospital_flow/hospital_setting/screen/hospital_setting.dart';
 import 'package:organ_link/features/hospital_flow/matching/screen/matching_screen.dart';
 import 'package:organ_link/features/hospital_flow/matching_details/screen/matching_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/notification_screen/screen/hospital_notification_screen.dart';
@@ -39,5 +40,6 @@ class AppRouter {
     SurgeryDetailsScreen.routeName: (ctx) => const SurgeryDetailsScreen(),
     HospitalNotificationScreen.routeName: (ctx) =>
         const HospitalNotificationScreen(),
+    HospitalSetting.routeName: (ctx) => const HospitalSetting(),
   };
 }
