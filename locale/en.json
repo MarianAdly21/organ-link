@@ -165,5 +165,12 @@
   "patient_name": "Patient Name",
   "file_number_without_column": "File Number",
   "donor_name": "Donor Name",
-  "go_to_patient_file": "Go to Patient File"
+  "unread": "Unread",
+  "total_notifications": "Total Notifications",
+  "urgent": "Urgent",
+  "notification_screen": "Notification",
+  "notification_list": "Notification List",
+  "all_alerts": "All Alerts",
+  "all": "All",
+  "organ_transplant_tracking": "Organ Transplant Tracking"
 }

@@ -165,5 +165,13 @@
   "patient_name": "اسم المريض",
   "file_number_without_column": "رقم الملف",
   "donor_name": "اسم المتبرع",
-  "go_to_patient_file": "الانتقال لملف المريض"
+  "go_to_patient_file": "الانتقال لملف المريض",
+  "unread": "غير مقروءة",
+  "total_notifications": "إجمالي الإشعارات",
+  "urgent": "عاجلة",
+  "notification_screen": "الإشعارات",
+  "notification_list": "قائمة الإشعارات",
+  "all_alerts": "جميع التنبيهات",
+  "all": "الكل",
+  "organ_transplant_tracking": "متابعة عمليات زراعة الأعضاء"
 }

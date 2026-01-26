@@ -17,6 +17,7 @@ import 'package:organ_link/features/user_flow/medical_details/screens/medical_de
 import 'package:organ_link/features/user_flow/notification/screens/notification_screen.dart';
 import 'package:organ_link/features/user_flow/settings/screen/settings_screen.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
+import 'package:organ_link/features/widgets/custom_notification_icon.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
@@ -28,7 +29,11 @@ class HomeUserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UserHomeBloc(UserHomeRepository(userHomeApiManager:UserHomeApiManager(GetIt.I<DioApiManager>()) )),
+      create: (context) => UserHomeBloc(
+        UserHomeRepository(
+          userHomeApiManager: UserHomeApiManager(GetIt.I<DioApiManager>()),
+        ),
+      ),
       child: const HomeUserScreenWithBloc(),
     );
   }
@@ -56,32 +61,25 @@ class _HomeUserScreenWithBlocState
       backgroundColor: AppColors.scaffoldBackground,
       body: BlocListener<UserHomeBloc, UserHomeState>(
         listener: (context, state) {
-          if(state is UserHomeLoadingState)
-          {
-              showLoading();
-          }else{
-              hideLoading();
-          }if(state is UserHomeDataLoadedSuccessfullyState)
-          {
-            userHomeDataUiModel=state.userHomeDataUiModel;
-          }else if(state is NavToNotificationScreenState)
-          {
-                Navigator.of(context).pushNamed(NotificationScreen.routeName);
-          }else if(state is NavToSettingScreenState)
-          {    Navigator.of(context).pushNamed(SettingsScreen.routeName);
-
-          }else if(state is NavToHospitalInfoScreenState)
-          {
-    Navigator.of(context).pushNamed(HospitalInformationScreen.routeName);
-
-          }else if(state is NavToCaseFollowUpScreenState)
-          {
-    Navigator.of(context).pushNamed(CaseFollowUpScreen.routeName);
-
+          if (state is UserHomeLoadingState) {
+            showLoading();
+          } else {
+            hideLoading();
           }
-          else if(state is NavToMedicalDetailsScreenState)
-          {
-                Navigator.of(context).pushNamed(MedicalDetailsScreen.routeName);
+          if (state is UserHomeDataLoadedSuccessfullyState) {
+            userHomeDataUiModel = state.userHomeDataUiModel;
+          } else if (state is NavToNotificationScreenState) {
+            Navigator.of(context).pushNamed(NotificationScreen.routeName);
+          } else if (state is NavToSettingScreenState) {
+            Navigator.of(context).pushNamed(SettingsScreen.routeName);
+          } else if (state is NavToHospitalInfoScreenState) {
+            Navigator.of(
+              context,
+            ).pushNamed(HospitalInformationScreen.routeName);
+          } else if (state is NavToCaseFollowUpScreenState) {
+            Navigator.of(context).pushNamed(CaseFollowUpScreen.routeName);
+          } else if (state is NavToMedicalDetailsScreenState) {
+            Navigator.of(context).pushNamed(MedicalDetailsScreen.routeName);
           }
         },
         child: _buildBody(),
@@ -239,15 +237,12 @@ class _HomeUserScreenWithBlocState
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        GestureDetector(
+        CustomNotificationIcon(
           onTap: () {
             _navToNotificationScreenEvent();
           },
-          child: SvgPicture.asset(
-            height: 32.h,
-            width: 32.w,
-            AppAssetPaths.notificationIcon,
-          ),
+          height: 32.h,
+          width: 32.w,
         ),
         SvgPicture.asset(
           height: 32.h,
@@ -370,27 +365,25 @@ class _HomeUserScreenWithBlocState
   ///////////////////////////////////////////////////////////
   /////////////////// Helper methods ////////////////////////
   ///////////////////////////////////////////////////////////
-  
-  UserHomeBloc get _currentBloc=> context.read<UserHomeBloc>();
+
+  UserHomeBloc get _currentBloc => context.read<UserHomeBloc>();
   void _navToNotificationScreenEvent() {
-     _currentBloc.add(NavToNotificationScreenEvent());
+    _currentBloc.add(NavToNotificationScreenEvent());
   }
 
   void _navToSettingsScreenEvent() {
-         _currentBloc.add(NavToSettingScreenEvent());
+    _currentBloc.add(NavToSettingScreenEvent());
   }
 
   void _navToHospitalInfoScreenEvent() {
-             _currentBloc.add(NavToHospitalInfoScreenEvent());
+    _currentBloc.add(NavToHospitalInfoScreenEvent());
   }
 
   void _navToCaseFollowUpScreenEvent() {
-                 _currentBloc.add(NavToCaseFollowUpScreenEvent());
-
+    _currentBloc.add(NavToCaseFollowUpScreenEvent());
   }
 
   void _navToMedicalDetailsScreenEvent() {
-                 _currentBloc.add(NavToMedicalDetailsScreenEvent());
-
+    _currentBloc.add(NavToMedicalDetailsScreenEvent());
   }
 }

@@ -95,25 +95,6 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
     );
   }
 
-  // Widget _statusRow() {
-  //   return Row(
-  //     mainAxisSize: MainAxisSize.min,
-  //     children: [
-  //       _containerWithBG(
-  //         backgroundColor: getPriority("أولوية عالية").backgroundColor,
-  //         textColor: getPriority("أولوية عالية").textColor,
-  //         text: getPriority("أولوية عالية").priority,
-  //       ),
-  //       SizedBox(width: 16.w),
-  //       _containerWithBG(
-  //         backgroundColor: getStatus("جاهز").backgroundColor,
-  //         textColor: getStatus("جاهز").textColor,
-  //         text: getStatus("جاهز").status,
-  //       ),
-  //     ],
-  //   );
-  // }
-
   Widget _infoRow() {
     return Padding(
       padding: EdgeInsets.only(top: 8.h, bottom: 16.h),
@@ -154,28 +135,6 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
       ],
     );
   }
-
-  // Widget _containerWithBG({
-  //   Color? textColor,
-  //   required Color backgroundColor,
-  //   required String text,
-  // }) {
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.circular(12),
-  //       color: backgroundColor,
-  //     ),
-  //     child: Text(
-  //       text,
-  //       style: context.textTheme.labelMedium!.copyWith(
-  //         color: textColor ?? AppColors.grayText,
-  //         fontSize: 13,
-  //         fontWeight: FontWeight.w400,
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _searchSection() {
     return Column(

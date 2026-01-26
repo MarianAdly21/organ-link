@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:organ_link/features/hospital_flow/hospital_dashboard/screen/hospital_dashboard_screen.dart';
 import 'package:organ_link/features/hospital_flow/matching/screen/matching_screen.dart';
 import 'package:organ_link/features/hospital_flow/matching_details/screen/matching_details_screen.dart';
+import 'package:organ_link/features/hospital_flow/notification_screen/screen/hospital_notification_screen.dart';
 import 'package:organ_link/features/hospital_flow/patient_details/screen/patient_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/screen/surgeries_screen.dart';
 import 'package:organ_link/features/hospital_flow/surgery_details/screen/surgery_details_screen.dart';
@@ -33,8 +34,10 @@ class AppRouter {
     ViewPatientScreen.routeName: (ctx) => const ViewPatientScreen(),
     PatientDetailsScreen.routeName: (ctx) => const PatientDetailsScreen(),
     MatchingScreen.routeName: (ctx) => const MatchingScreen(),
-    MatchingDetailsScreen.routeName:(ctx)=> const MatchingDetailsScreen(),
-    SurgeriesScreen.routeName:(ctx)=> const SurgeriesScreen(),
-    SurgeryDetailsScreen.routeName:(ctx)=> const SurgeryDetailsScreen(),
+    MatchingDetailsScreen.routeName: (ctx) => const MatchingDetailsScreen(),
+    SurgeriesScreen.routeName: (ctx) => const SurgeriesScreen(),
+    SurgeryDetailsScreen.routeName: (ctx) => const SurgeryDetailsScreen(),
+    HospitalNotificationScreen.routeName: (ctx) =>
+        const HospitalNotificationScreen(),
   };
 }

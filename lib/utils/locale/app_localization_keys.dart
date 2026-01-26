@@ -176,4 +176,12 @@ class LocalizationKeys {
   static const fileNumberWithoutColumn = "file_number_without_column";
   static const donorName = "donor_name";
   static const goToPatientFile = "Go to Patient File";
+  static const unread = "unread";
+  static const totalNotification = "total_notifications";
+  static const urgent = "urgent";
+  static const notificationScreen = "notification_screen";
+  static const notificationList = "notification_list";
+  static const allAlerts = "all_alerts";
+  static const all = "all";
+  static const organTransplantTracking = "organ_transplant_tracking";
 }

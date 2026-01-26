@@ -4,9 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/app_router.dart';
+import 'package:organ_link/features/hospital_flow/notification_screen/screen/hospital_notification_screen.dart';
 import 'package:organ_link/features/hospital_flow/view_patient/screen/view_patient_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_app_bar_base.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
+import 'package:organ_link/features/widgets/custom_notification_icon.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
@@ -67,7 +70,13 @@ class _HospitalDashboardScreenState
           ),
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 24),
-            child: SvgPicture.asset(AppAssetPaths.notificationIcon),
+            child: CustomNotificationIcon(
+              onTap: () {
+                Navigator.of(
+                  context,
+                ).pushNamed(HospitalNotificationScreen.routeName);
+              },
+            ),
           ),
         ],
       ),
