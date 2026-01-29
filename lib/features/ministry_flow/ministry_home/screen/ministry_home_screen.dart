@@ -5,6 +5,7 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_app_bar_base.dart';
+import 'package:organ_link/features/ministry_flow/hospitals/screen/hospitals_screen.dart';
 import 'package:organ_link/features/ministry_flow/ministry_home/screen/widget/monthly_operations_chart.dart';
 import 'package:organ_link/features/ministry_flow/ministry_home/screen/widget/organ_distribution_chart.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
@@ -145,7 +146,6 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
   Widget _quickActionsSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-
       children: [
         Text(
           context.translate(LocalizationKeys.quickActions),
@@ -162,7 +162,9 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
               ),
               SizedBox(width: 16.w),
               _quickActionsBtn(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(HospitalsScreen.routeName);
+                },
                 text: "المستشفيات",
                 backgroundColor: AppColors.mainColor,
               ),

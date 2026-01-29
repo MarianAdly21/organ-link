@@ -7,7 +7,7 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/patient_details/widget/gradient_text.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
-import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
+import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/hospital_flow/widget/status_row_widget.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_buttons.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
@@ -34,7 +34,7 @@ class _PatientDetailsScreenState extends BaseScreenState<PatientDetailsScreen> {
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: HospitalBaseBodyScaffold(
+      body: AppBaseBodyScaffold(
         titleOfScreen: context.translate(LocalizationKeys.patientDetails),
         backTap: () {},
         body: _buildBody(),
@@ -219,7 +219,9 @@ class _PatientDetailsScreenState extends BaseScreenState<PatientDetailsScreen> {
           DataSection(
             paddingAroundContainer: EdgeInsets.only(bottom: 24.h),
             title: context.translate(LocalizationKeys.caseRecord),
-            body: Column(children: [CustomDividerWidget(), _myTimeLineColumn()]),
+            body: Column(
+              children: [CustomDividerWidget(), _myTimeLineColumn()],
+            ),
           ),
         ],
       ),

@@ -4,7 +4,7 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
-import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
+import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_search_custom_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/status_row_widget.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
@@ -35,7 +35,7 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
   ///////////////////////////////////////////////////////////
 
   Widget _buildBody() {
-    return HospitalBaseBodyScaffold(
+    return AppBaseBodyScaffold(
       titleOfScreen: LocalizationKeys.patientTitle,
       backTap: () {
         Navigator.pop(context);
@@ -156,7 +156,10 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
           ),
         ),
         SizedBox(height: 16.h),
-        AppSearchCustomWidget(hintText: LocalizationKeys.searchByNameOrMRN),
+        AppSearchCustomWidget(
+          hintText: LocalizationKeys.searchByNameOrMRN,
+          onChanged: (value) {},
+        ),
         _searchByOrganOrCaseSection(),
       ],
     );
