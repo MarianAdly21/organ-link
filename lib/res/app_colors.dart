@@ -67,7 +67,10 @@ class AppColors {
   static const _athensGray = Color(0xffECECF0);
   static const _mineShaft = Color(0xff3D3D3D);
   static const _periwinkleA = Color(0xffCDCDFF);
-  static const _AliceBlue = Color(0xffF5FBFF);
+  static const _aliceBlue = Color(0xffF5FBFF);
+  static const _fruitSaladApprox = Color(0xff4CAF50);
+  static const _orangePeelApprox = Color(0xffFF9800);
+  static const _oPomegranateApprox = Color(0xffF44336);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -267,5 +270,8 @@ class AppColors {
   );
 
   static const enableBorderColorStting = _periwinkleA;
-  static const filledColorenable = _AliceBlue;
+  static const filledColorenable = _aliceBlue;
+  static const alegend1 = _fruitSaladApprox;
+  static const alegend2 = _orangePeelApprox;
+  static const alegend3 = _oPomegranateApprox;
 }
