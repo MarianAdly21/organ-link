@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
-import 'package:organ_link/app_router.dart';
-import 'package:organ_link/features/hospital_flow/hospital_setting/screen/hospital_setting.dart';
-import 'package:organ_link/features/hospital_flow/notification_screen/screen/hospital_notification_screen.dart';
-import 'package:organ_link/features/hospital_flow/view_patient/screen/view_patient_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_app_bar_base.dart';
+import 'package:organ_link/features/ministry_flow/ministry_home/screen/widget/monthly_operations_chart.dart';
+import 'package:organ_link/features/ministry_flow/ministry_home/screen/widget/organ_distribution_chart.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/custom_notification_icon.dart';
@@ -16,17 +14,16 @@ import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
-class HospitalDashboardScreen extends BaseStatefulScreenWidget {
-  const HospitalDashboardScreen({super.key});
-  static const routeName = "/hospital-dashboard-screen";
+class MinistryHomeScreen extends BaseStatefulScreenWidget {
+  const MinistryHomeScreen({super.key});
+  static const routeName = "/ministry-home-screen";
 
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _HospitalDashboardScreenState();
+      _MinistryHomeState();
 }
 
-class _HospitalDashboardScreenState
-    extends BaseScreenState<HospitalDashboardScreen> {
+class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
@@ -46,39 +43,35 @@ class _HospitalDashboardScreenState
     return HospitalAppBarBase(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(
-                  child: Text(
-                    "مستشفى القصر العيني",
-                    style: context.textTheme.bodyLarge!.copyWith(
-                      color: AppColors.blackText,
-                    ),
-                  ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "لوحة التحكم",
+                style: context.textTheme.bodyLarge!.copyWith(
+                  color: AppColors.blackText,
                 ),
-                SizedBox(height: 9.h),
-                Text(
-                  "القاهرة",
-                  style: context.textTheme.labelMedium!.copyWith(
-                    color: AppColors.blackText,
-                  ),
+              ),
+              SizedBox(height: 9.h),
+              Text(
+                'OrganLink',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  foreground: Paint()
+                    ..shader = LinearGradient(
+                      colors: [AppColors.seconderColor, AppColors.mainColor],
+                    ).createShader(Rect.fromLTWH(0, 0, 100, 70)),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 24),
-            child: CustomNotificationIcon(
-              onTap: () {
-                Navigator.of(
-                  context,
-                ).pushNamed(HospitalNotificationScreen.routeName);
-              },
-            ),
+            child: CustomNotificationIcon(onTap: () {}),
           ),
         ],
       ),
@@ -86,22 +79,73 @@ class _HospitalDashboardScreenState
   }
 
   Widget _bodyContent() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _welcomeMessage(),
+              _dashboardSection(),
+              _organDistributionSection(),
+              _monthlyOpertionsSection(),
+              _quickActionsSection(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _baseChartContainer({
+    required String title,
+    required String subTitle,
+    required Widget body,
+    EdgeInsetsGeometry? padding,
+  }) {
+    return ContainerWithBlackShadow(
+      padding: padding,
+      body: Column(
         children: [
-          _welcomeMessage(),
-          _dashboardSection(),
-          _quickActionsSection(),
+          _titelAndSubTitalWidget(title: title, subTitle: subTitle),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.h),
+            child: body,
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _monthlyOpertionsSection() {
+    return _baseChartContainer(
+      padding: EdgeInsets.symmetric(vertical: 24.h),
+      title: "العمليات الشهرية",
+      subTitle: "إحصائيات العمليات على مدار اخر 6 شهور",
+      body: MonthlyOperationsChart(),
+    );
+  }
+
+  Widget _welcomeMessage() {
+    return _titelAndSubTitalWidget(
+      title: "مرحباً بك في نظام إدارة الأعضاء",
+      subTitle: "مركز عامة على تطاوير زراعة الأعضاء",
+    );
+  }
+
+  Widget _organDistributionSection() {
+    return _baseChartContainer(
+      title: "توزيع الأعضاء",
+      subTitle: "نسب عمليات زراعة الأعضاء المختلفة",
+      body: OrganDistributionChart(),
     );
   }
 
   Widget _quickActionsSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+
       children: [
         Text(
           context.translate(LocalizationKeys.quickActions),
@@ -112,16 +156,14 @@ class _HospitalDashboardScreenState
           child: Row(
             children: [
               _quickActionsBtn(
-                onTap: () {
-                  Navigator.of(context).pushNamed(ViewPatientScreen.routeName);
-                },
-                text: LocalizationKeys.viewDonors,
+                onTap: () {},
+                text: "التقارير",
                 backgroundColor: AppColors.seconderColor,
               ),
               SizedBox(width: 16.w),
               _quickActionsBtn(
                 onTap: () {},
-                text: LocalizationKeys.viewPatients,
+                text: "المستشفيات",
                 backgroundColor: AppColors.mainColor,
               ),
             ],
@@ -131,54 +173,18 @@ class _HospitalDashboardScreenState
           children: [
             _quickActionsBtn(
               onTap: () {},
-              text: LocalizationKeys.operations,
+              text: "الاعدادات",
               backgroundColor: Color(0xffFF0004),
             ),
             SizedBox(width: 16.w),
             _quickActionsBtn(
               onTap: () {},
-              text: LocalizationKeys.compatibilityRequests,
+              text: "التنبيهات",
               backgroundColor: AppColors.grayText,
             ),
           ],
         ),
-        _settingBtn(),
       ],
-    );
-  }
-
-  Widget _settingBtn() {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(HospitalSetting.routeName);
-      },
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.h),
-        child: Container(
-          height: 48.h,
-          //padding: EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            color: Color(0xffD9D9D9),
-            borderRadius: BorderRadius.circular(8.r),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.15),
-                blurRadius: 2,
-              ),
-            ],
-          ),
-          child: Center(
-            child: FittedBox(
-              child: Text(
-                context.translate(LocalizationKeys.settings),
-                style: context.textTheme.bodyMedium!.copyWith(
-                  color: Color(0xff4F4F4F),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 
@@ -193,7 +199,6 @@ class _HospitalDashboardScreenState
         onPressed: onTap,
         color: backgroundColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         label: FittedBox(
           fit: BoxFit.scaleDown,
@@ -218,21 +223,17 @@ class _HospitalDashboardScreenState
             children: [
               Expanded(
                 child: _mainCard(
-                  icon: AppAssetPaths.heartIcon,
-                  title: LocalizationKeys.registeredDonor,
-                  subTitle1: "24",
-                  subTitle2:
-                      "+3${context.translate(LocalizationKeys.thisMonthCount)}",
+                  icon: AppAssetPaths.patientIcon,
+                  title: "المرضى المحتاجون",
+                  value: "24",
                 ),
               ),
               SizedBox(width: 16),
               Expanded(
                 child: _mainCard(
-                  icon: AppAssetPaths.peopleIcon,
-                  title: LocalizationKeys.patientWaitingForTransplant,
-                  subTitle1: "24",
-                  subTitle2:
-                      "+3${context.translate(LocalizationKeys.thisMonthCount)}",
+                  icon: AppAssetPaths.hospitalsIcon,
+                  title: "المستشفيات المشاركة",
+                  value: "24",
                 ),
               ),
             ],
@@ -242,21 +243,17 @@ class _HospitalDashboardScreenState
             children: [
               Expanded(
                 child: _mainCard(
-                  icon: AppAssetPaths.notesBookIcon,
-                  title: LocalizationKeys.matchingRequests,
-                  subTitle1: "12",
-                  subTitle2:
-                      "3${context.translate(LocalizationKeys.underAnalysisCount)}",
+                  icon: AppAssetPaths.opertionsDoneIcon,
+                  title: "العمليات الناجحة",
+                  value: "12",
                 ),
               ),
               SizedBox(width: 16),
               Expanded(
                 child: _mainCard(
-                  icon: AppAssetPaths.voltageIcon,
-                  title: LocalizationKeys.ongoingOperations,
-                  subTitle1: "7", //from back
-                  subTitle2:
-                      "3${context.translate(LocalizationKeys.ongoingOperationsCount)}",
+                  icon: AppAssetPaths.donorsIcon,
+                  title: "المتبرعون",
+                  value: "7", //from back
                 ),
               ),
             ],
@@ -269,8 +266,7 @@ class _HospitalDashboardScreenState
   Widget _mainCard({
     required String icon,
     required String title,
-    required String subTitle1,
-    required String subTitle2,
+    required String value,
   }) {
     return GestureDetector(
       child: ContainerWithBlackShadow(
@@ -286,27 +282,16 @@ class _HospitalDashboardScreenState
                 context.translate(title),
                 style: context.textTheme.labelMedium!.copyWith(
                   color: AppColors.grayText,
-                  //fontSize: 14.sp,
                 ),
               ),
-              // SizedBox(height: 4.h),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 7.h),
                 child: Text(
                   textAlign: TextAlign.center,
-                  subTitle1,
+                  value,
                   style: context.textTheme.bodyLarge!.copyWith(
                     color: AppColors.blackText,
                   ),
-                ),
-              ),
-              Text(
-                textAlign: TextAlign.center,
-                subTitle2,
-                style: context.textTheme.labelMedium!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 13,
-                  color: AppColors.grayText,
                 ),
               ),
             ],
@@ -316,20 +301,22 @@ class _HospitalDashboardScreenState
     );
   }
 
-  Widget _welcomeMessage() {
+  Widget _titelAndSubTitalWidget({
+    required String title,
+    required String subTitle,
+  }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          context.translate(LocalizationKeys.dashboard),
+          context.translate(title),
           style: context.textTheme.bodyLarge!.copyWith(
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 8.h),
         Text(
-          " ${context.translate(LocalizationKeys.welcomeMessage)} مستشفى القصر العيني",
+          subTitle,
           style: context.textTheme.labelMedium!.copyWith(
             color: AppColors.grayText,
           ),
