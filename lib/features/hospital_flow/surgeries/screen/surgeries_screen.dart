@@ -6,7 +6,7 @@ import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/extension/opertion_status_ui.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/models/surgeries_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
-import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
+import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
@@ -40,7 +40,7 @@ class _SurgeriesScreenState extends BaseScreenState<SurgeriesScreen> {
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: HospitalBaseBodyScaffold(
+      body: AppBaseBodyScaffold(
         titleOfScreen: "Surgeries",
         backTap: () {},
         body: _buildBody(),

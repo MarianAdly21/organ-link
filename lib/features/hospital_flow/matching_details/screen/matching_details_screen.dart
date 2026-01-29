@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
-import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
+import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/res/app_colors.dart';
@@ -22,7 +22,7 @@ class _MatchingDetailsScreenState
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: HospitalBaseBodyScaffold(
+      body: AppBaseBodyScaffold(
         titleOfScreen: "Matching Details",
         backTap: () {
           Navigator.pop(context);
@@ -75,7 +75,9 @@ class _MatchingDetailsScreenState
                 ),
               ),
               _matchingResultAi(),
-              _waitingAiResultContainer(),/// if 
+              _waitingAiResultContainer(),
+
+              /// if
             ],
           ),
         ),
@@ -85,41 +87,38 @@ class _MatchingDetailsScreenState
 
   Widget _matchingResultAi() {
     return ContainerWithShadow(
-              background: AppColors.matchingDataUserContainerBG,
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 24.h,
-                horizontal: 16.w,
-              ),
-              child: Column(
-                children: [
-                  DataRowWithDivider(
-                    divider: true,
-                    dividerColor: AppColors.matchingDataUserDivider,
-                    title: "اسم المتبرع",
-                    subTitle: "سارة أحمد",
-                  ),
-                  DataRowWithDivider(
-                    divider: true,
-                    dividerColor: AppColors.matchingDataUserDivider,
-                    title: "رقم الملف",
-                    subTitle: "P001",
-                  ),
-                  DataRowWithDivider(
-                    divider: true,
-                    dividerColor: AppColors.matchingDataUserDivider,
-                    title: "فصيلة الدم",
-                    subTitle: "+A",
-                  ),
-                  DataRowWithDivider(
-                    isImportant: true,
-                    dividerColor: AppColors.matchingDataUserDivider,
-                    title: "نسبة التطابق",
-                    subTitle: "%95",
-                    importantTextColor: AppColors.matchingParentage,
-                  ),
-                ],
-              ),
-            );
+      background: AppColors.matchingDataUserContainerBG,
+      contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+      child: Column(
+        children: [
+          DataRowWithDivider(
+            divider: true,
+            dividerColor: AppColors.matchingDataUserDivider,
+            title: "اسم المتبرع",
+            subTitle: "سارة أحمد",
+          ),
+          DataRowWithDivider(
+            divider: true,
+            dividerColor: AppColors.matchingDataUserDivider,
+            title: "رقم الملف",
+            subTitle: "P001",
+          ),
+          DataRowWithDivider(
+            divider: true,
+            dividerColor: AppColors.matchingDataUserDivider,
+            title: "فصيلة الدم",
+            subTitle: "+A",
+          ),
+          DataRowWithDivider(
+            isImportant: true,
+            dividerColor: AppColors.matchingDataUserDivider,
+            title: "نسبة التطابق",
+            subTitle: "%95",
+            importantTextColor: AppColors.matchingParentage,
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _waitingAiResultContainer() {

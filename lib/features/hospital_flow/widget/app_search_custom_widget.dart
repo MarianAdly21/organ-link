@@ -6,8 +6,13 @@ import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 class AppSearchCustomWidget extends StatelessWidget {
-  const AppSearchCustomWidget({super.key, required this.hintText});
+  const AppSearchCustomWidget({
+    super.key,
+    required this.hintText,
+    required this.onChanged,
+  });
   final String hintText;
+  final Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,6 +43,7 @@ class AppSearchCustomWidget extends StatelessWidget {
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         ),
+        onChanged: onChanged,
       ),
     );
   }

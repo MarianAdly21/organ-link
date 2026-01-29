@@ -7,7 +7,7 @@ import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/notification_screen/model/notification_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/notification_screen/widget/notification_filter_bar.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
-import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
+import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/custom_over_view_container.dart';
@@ -38,7 +38,7 @@ class _HospitalNotificationScreenState
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: HospitalBaseBodyScaffold(
+      body: AppBaseBodyScaffold(
         titleOfScreen: context.translate(LocalizationKeys.notificationScreen),
         backTap: () {
           Navigator.pop(context);

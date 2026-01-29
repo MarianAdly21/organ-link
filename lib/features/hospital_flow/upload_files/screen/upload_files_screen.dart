@@ -10,7 +10,7 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/upload_files/screen/upload_report_confarmation_screen.dart';
-import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
+import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/text_field/custom_drop_down_form_filed_widget.dart';
@@ -43,7 +43,7 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
   ///////////////////////////////////////////////////////////
 
   Widget _buildBody() {
-    return HospitalBaseBodyScaffold(
+    return AppBaseBodyScaffold(
       titleOfScreen: LocalizationKeys.reportNewTitle,
       backTap: () {},
       body: SingleChildScrollView(

@@ -4,7 +4,7 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
-import 'package:organ_link/features/hospital_flow/widget/hospital_base_body_scaffold.dart';
+import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
@@ -30,7 +30,7 @@ class _SurgeryDetailsScreenState extends BaseScreenState<SurgeryDetailsScreen> {
   }
 
   Widget _buildBody() {
-    return HospitalBaseBodyScaffold(
+    return AppBaseBodyScaffold(
       titleOfScreen: LocalizationKeys.surgeryDetails,
       backTap: () {},
       body: SingleChildScrollView(

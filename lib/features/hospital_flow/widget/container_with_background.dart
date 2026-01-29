@@ -11,12 +11,14 @@ class ContainerWithBackground extends BaseStatelessWidget {
     required this.text,
     this.isCentered = false,
     this.contentPadding,
+    this.textStyle,
   });
   final Color? textColor;
   final Color backgroundColor;
   final String text;
   final bool isCentered;
   final EdgeInsetsGeometry? contentPadding;
+  final TextStyle? textStyle;
 
   @override
   Widget baseBuild(BuildContext context) {
@@ -31,11 +33,13 @@ class ContainerWithBackground extends BaseStatelessWidget {
       child: Text(
         textAlign: isCentered ? TextAlign.center : null,
         text,
-        style: TextStyle(
-          color: textColor ?? AppColors.grayText,
-          fontSize: 13,
-          fontWeight: FontWeight.w400,
-        ),
+        style:
+            textStyle ??
+            TextStyle(
+              color: textColor ?? AppColors.grayText,
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+            ),
       ),
     );
   }
