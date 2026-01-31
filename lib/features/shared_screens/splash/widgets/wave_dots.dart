@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 class WaveDots extends StatefulWidget {
@@ -21,15 +22,13 @@ class _WaveDotsState extends State<WaveDots>
 
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200), 
+      duration: const Duration(milliseconds: 1200),
     )..repeat();
 
-    animation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Curves.easeInOut,
-      ),
-    );
+    animation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -61,7 +60,7 @@ class _WaveDotsState extends State<WaveDots>
     return Transform.translate(
       offset: Offset(0, offsetY),
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8),
+        margin: EdgeInsets.symmetric(horizontal: 8.w),
         width: 12,
         height: 12,
         decoration: BoxDecoration(

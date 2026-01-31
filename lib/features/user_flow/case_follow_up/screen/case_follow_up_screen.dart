@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
-import 'package:organ_link/_core/extensions/screen_sizer_extension.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/widget/gradient_progress_bar.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/user_flow/widget/notice_container.dart';
+import 'package:organ_link/features/widgets/app_base_progress.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
@@ -96,70 +96,54 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
   }
 
   Widget _progressSummaryCard() {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 24.h, top: 8.h, left: 2.w, right: 2.w),
-      child: Container(
-        width: context.width,
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
-        decoration: BoxDecoration(
-          color: AppColors.progressContainerBG.withValues(alpha: 0),
-          borderRadius: BorderRadius.circular(42),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.25),
-              blurRadius: 4,
-              blurStyle: BlurStyle.outer,
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SvgPicture.asset(
-                  AppAssetPaths.inProgressIcon,
-                  width: 28.w,
-                  height: 28.w,
-                ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'ملخص التقدم',
-                        style: context.textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(height: 4.h),
-                      Text(
-                        'الخطوات المكتملة',
-                        style: context.textTheme.labelMedium!.copyWith(
-                          color: AppColors.grayText,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 24.h),
-            GradientProgressBar(value: 3 / 6),
-            SizedBox(height: 8.h),
-            Text(
-              '3 from 6',
-              style: context.textTheme.labelMedium!.copyWith(
-                color: AppColors.grayText,
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
+    return AppBaseProgress(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset(
+                AppAssetPaths.inProgressIcon,
+                width: 28.w,
+                height: 28.w,
               ),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'ملخص التقدم',
+                      style: context.textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      'الخطوات المكتملة',
+                      style: context.textTheme.labelMedium!.copyWith(
+                        color: AppColors.grayText,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 24.h),
+          GradientProgressBar(value: 3 / 6),
+          SizedBox(height: 8.h),
+          Text(
+            '3 from 6',
+            style: context.textTheme.labelMedium!.copyWith(
+              color: AppColors.grayText,
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -241,7 +225,7 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
         child: Text(
           "قيد التنفيذ",
           style: context.textTheme.labelMedium!.copyWith(
