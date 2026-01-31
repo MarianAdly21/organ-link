@@ -6,9 +6,10 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_app_bar_base.dart';
 import 'package:organ_link/features/ministry_flow/hospitals/screen/hospitals_screen.dart';
-import 'package:organ_link/features/ministry_flow/ministry_home/screen/widget/monthly_operations_chart.dart';
-import 'package:organ_link/features/ministry_flow/ministry_home/screen/widget/organ_distribution_chart.dart';
-import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
+import 'package:organ_link/features/ministry_flow/ministry_home/models/quick_action_item.dart';
+import 'package:organ_link/features/ministry_flow/ministry_home/widget/monthly_operations_chart.dart';
+import 'package:organ_link/features/ministry_flow/ministry_home/widget/organ_distribution_chart.dart';
+import 'package:organ_link/features/ministry_flow/ministry_home/widget/quick_action_button.dart';
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/custom_notification_icon.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
@@ -25,19 +26,44 @@ class MinistryHomeScreen extends BaseStatefulScreenWidget {
 }
 
 class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
+  List<QuickActionItem> buildQuickActions(BuildContext context) {
+    return [
+      QuickActionItem(
+        text: "التنبيهات",
+        backgroundColor: AppColors.grayText,
+        onTap: () {},
+      ),
+      QuickActionItem(
+        text: "المستشفيات",
+        backgroundColor: AppColors.mainColor,
+        onTap: () {
+          Navigator.of(context).pushNamed(HospitalsScreen.routeName);
+        },
+      ),
+      QuickActionItem(
+        text: "الاعدادات",
+        backgroundColor: const Color(0xffFF0004),
+        onTap: () {},
+      ),
+    ];
+  }
+
   @override
   Widget baseScreenBuild(BuildContext context) {
+    final quickActions = buildQuickActions(context);
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: _buildBody(),
+      body: _buildBody(quickActions),
     );
   }
   ///////////////////////////////////////////////////////////
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget _buildBody() {
-    return SafeArea(child: Column(children: [_appBar(), _bodyContent()]));
+  Widget _buildBody(List<QuickActionItem> quickActions) {
+    return SafeArea(
+      child: Column(children: [_appBar(), _bodyContent(quickActions)]),
+    );
   }
 
   Widget _appBar() {
@@ -79,7 +105,7 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
     );
   }
 
-  Widget _bodyContent() {
+  Widget _bodyContent(List<QuickActionItem> quickActions) {
     return Expanded(
       child: SingleChildScrollView(
         child: Padding(
@@ -91,7 +117,7 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
               _dashboardSection(),
               _organDistributionSection(),
               _monthlyOpertionsSection(),
-              _quickActionsSection(),
+              _quickActionsSection(quickActions),
             ],
           ),
         ),
@@ -143,7 +169,7 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
     );
   }
 
-  Widget _quickActionsSection() {
+  Widget _quickActionsSection(List<QuickActionItem> quickActions) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -155,65 +181,60 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
           padding: EdgeInsets.symmetric(vertical: 16.h),
           child: Row(
             children: [
-              _quickActionsBtn(
-                onTap: () {},
-                text: "التقارير",
-                backgroundColor: AppColors.seconderColor,
+              Expanded(
+                child: QuickActionButton(item: quickActions[0]),
+                //  _quickActionsBtn(
+                //   onTap: () {},
+                //   text: "التنبيهات",
+                //   backgroundColor: AppColors.grayText,
+                // ),
               ),
               SizedBox(width: 16.w),
-              _quickActionsBtn(
-                onTap: () {
-                  Navigator.of(context).pushNamed(HospitalsScreen.routeName);
-                },
-                text: "المستشفيات",
-                backgroundColor: AppColors.mainColor,
+              Expanded(
+                child: QuickActionButton(item: quickActions[1]),
+                // _quickActionsBtn(
+                //   onTap: () {
+                //     Navigator.of(context).pushNamed(HospitalsScreen.routeName);
+                //   },
+                //   text: "المستشفيات",
+                //   backgroundColor: AppColors.mainColor,
+                // ),
               ),
             ],
           ),
         ),
-        Row(
-          children: [
-            _quickActionsBtn(
-              onTap: () {},
-              text: "الاعدادات",
-              backgroundColor: Color(0xffFF0004),
-            ),
-            SizedBox(width: 16.w),
-            _quickActionsBtn(
-              onTap: () {},
-              text: "التنبيهات",
-              backgroundColor: AppColors.grayText,
-            ),
-          ],
-        ),
+        QuickActionButton(item: quickActions[2]),
+        // _quickActionsBtn(
+        //   onTap: () {},
+        //   text: "الاعدادات",
+        //   backgroundColor: Color(0xffFF0004),
+        // ),
       ],
     );
   }
 
-  Widget _quickActionsBtn({
-    required String text,
-    Color? textColor,
-    required Color? backgroundColor,
-    required void Function() onTap,
-  }) {
-    return Expanded(
-      child: AppElevatedButton(
-        onPressed: onTap,
-        color: backgroundColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 8.w),
-        label: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            context.translate(text),
-            style: context.textTheme.bodyMedium!.copyWith(
-              color: textColor ?? AppColors.hospitalBtnText,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _quickActionsBtn({
+  //   required String text,
+  //   Color? textColor,
+  //   required Color? backgroundColor,
+  //   required void Function() onTap,
+  // }) {
+  //   return AppElevatedButton(
+  //     onPressed: onTap,
+  //     color: backgroundColor,
+  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+  //     padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 8.w),
+  //     label: FittedBox(
+  //       fit: BoxFit.scaleDown,
+  //       child: Text(
+  //         context.translate(text),
+  //         style: context.textTheme.bodyMedium!.copyWith(
+  //           color: textColor ?? AppColors.hospitalBtnText,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _dashboardSection() {
     return Padding(
