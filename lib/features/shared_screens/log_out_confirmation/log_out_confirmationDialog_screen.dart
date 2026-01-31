@@ -70,7 +70,7 @@ class _LogoutConfirmationDialogScreenState
       child: AppElevatedButton(
         onPressed: onTap,
         color: backgroundColor,
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: EdgeInsets.symmetric(vertical: 16.h),
         label: FittedBox(
           fit: BoxFit.scaleDown,
           child: Text(

@@ -49,7 +49,7 @@ class CustomCardWidget extends StatelessWidget {
                 // maxLines: 1,
                 // overflow: TextOverflow.visible,
                 textAlign: TextAlign.center,
-               context.translate( cardUiModel.subTitle),
+                context.translate(cardUiModel.subTitle),
                 style: context.textTheme.labelMedium!.copyWith(
                   fontWeight: FontWeight.w400,
                   fontSize: 13.sp,

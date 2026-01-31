@@ -201,7 +201,7 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
         onPressed: onTap,
         color: backgroundColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 8.w),
         label: FittedBox(
           fit: BoxFit.scaleDown,
           child: Text(

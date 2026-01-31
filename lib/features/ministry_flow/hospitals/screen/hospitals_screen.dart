@@ -6,9 +6,11 @@ import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_search_custom_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
+import 'package:organ_link/features/ministry_flow/hospital_detailes/screen/hospital_details_screen.dart';
 import 'package:organ_link/features/ministry_flow/hospitals/models/hospital_ui_model.dart';
+import 'package:organ_link/features/ministry_flow/widgets/conut_container.dart';
+import 'package:organ_link/features/ministry_flow/widgets/info_tile_with_status_custom_widget.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
-import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/res/app_colors.dart';
 
@@ -79,27 +81,27 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
             ),
             child: Column(
               children: [
-                _nameAndCityHospitalAndStatusRow(
-                  hospitalName: demoData[index].hospitalName,
-                  hospitalState: demoData[index].hospitalState,
-                  city: demoData[index].city,
+                InfoTileWithStatusCustomWidget(
+                  title: demoData[index].hospitalName,
+                  status: demoData[index].hospitalState,
+                  subtitle: demoData[index].city,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _conutContainer(
+                      ConutContainer(
                         padding: EdgeInsetsDirectional.only(end: 16),
                         title: "العمليات",
                         count: demoData[index].operationsCount.toString(),
                       ),
-                      _conutContainer(
+                      ConutContainer(
                         padding: EdgeInsetsDirectional.only(end: 16),
                         title: "المتبرعون",
                         count: demoData[index].donorsCount.toString(),
                       ),
-                      _conutContainer(
+                      ConutContainer(
                         title: "المرضى",
                         count: demoData[index].patientsCount.toString(),
                       ),
@@ -107,7 +109,14 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
                   ),
                 ),
                 _needsSection(organNeedModelList: demoData[index].organNeeds),
-                AppButtonWithGradientColors(text: "التفاصيل", onTap: () {}),
+                AppButtonWithGradientColors(
+                  text: "التفاصيل",
+                  onTap: () {
+                    Navigator.of(
+                      context,
+                    ).pushNamed(HospitalDetailsScreen.routeName);
+                  },
+                ),
               ],
             ),
           );
@@ -118,7 +127,7 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
 
   Widget _needsSection({required List<OrganNeedModel> organNeedModelList}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -152,7 +161,7 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
     required Color color2,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Row(
         children: [
           _organNeedCount(
@@ -189,75 +198,75 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
     );
   }
 
-  Widget _conutContainer({
-    required String title,
-    required String count,
-    EdgeInsetsGeometry? padding,
-  }) {
-    return Expanded(
-      child: ContainerWithBlackShadow(
-        padding: padding,
-        body: Column(
-          children: [
-            Text(
-              title,
-              style: context.textTheme.labelMedium!.copyWith(
-                color: Color(0xff575757),
-                fontSize: 13,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              overflow: TextOverflow.visible,
-              maxLines: 1,
-              count,
-              style: context.textTheme.bodyLarge,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _conutContainer({
+  //   required String title,
+  //   required String count,
+  //   EdgeInsetsGeometry? padding,
+  // }) {
+  //   return Expanded(
+  //     child: ContainerWithBlackShadow(
+  //       padding: padding,
+  //       body: Column(
+  //         children: [
+  //           Text(
+  //             title,
+  //             style: context.textTheme.labelMedium!.copyWith(
+  //               color: Color(0xff575757),
+  //               fontSize: 13,
+  //               fontWeight: FontWeight.w400,
+  //             ),
+  //           ),
+  //           Text(
+  //             overflow: TextOverflow.visible,
+  //             maxLines: 1,
+  //             count,
+  //             style: context.textTheme.bodyLarge,
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _nameAndCityHospitalAndStatusRow({
-    required String hospitalName,
-    required String city,
-    required String hospitalState,
-  }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              hospitalName,
-              style: context.textTheme.bodyMedium!.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppColors.blackText,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 8.h),
-              child: Text(
-                city,
-                style: context.textTheme.labelMedium!.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ],
-        ),
-        ContainerWithBackground(
-          backgroundColor: AppColors.readyTextBG,
-          text: hospitalState,
-        ),
-      ],
-    );
-  }
+  // Widget _nameAndCityHospitalAndStatusRow({
+  //   required String hospitalName,
+  //   required String city,
+  //   required String hospitalState,
+  // }) {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     children: [
+  //       Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text(
+  //             hospitalName,
+  //             style: context.textTheme.bodyMedium!.copyWith(
+  //               fontSize: 16,
+  //               fontWeight: FontWeight.w600,
+  //               color: AppColors.blackText,
+  //             ),
+  //           ),
+  //           Padding(
+  //             padding: EdgeInsets.only(top: 8.h),
+  //             child: Text(
+  //               city,
+  //               style: context.textTheme.labelMedium!.copyWith(
+  //                 fontSize: 13,
+  //                 fontWeight: FontWeight.w400,
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //       ContainerWithBackground(
+  //         backgroundColor: AppColors.readyTextBG,
+  //         text: hospitalState,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _searchSection() {
     return Column(

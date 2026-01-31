@@ -15,6 +15,7 @@ class ContainerWithShadow extends StatelessWidget {
     this.borderRadius,
     this.borderSideColor,
     this.sectionTitle,
+    this.titleColor,
   });
   final Widget child;
   final double? height;
@@ -24,6 +25,7 @@ class ContainerWithShadow extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? contentPadding;
   final Color? borderSideColor;
+  final Color? titleColor;
   final String? sectionTitle;
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class ContainerWithShadow extends StatelessWidget {
               style: context.textTheme.bodyMedium!.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: AppColors.blackText,
+                color: titleColor ?? AppColors.blackText,
               ),
             ),
             SizedBox(height: 16.h),

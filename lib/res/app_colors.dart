@@ -71,6 +71,8 @@ class AppColors {
   static const _fruitSaladApprox = Color(0xff4CAF50);
   static const _orangePeelApprox = Color(0xffFF9800);
   static const _oPomegranateApprox = Color(0xffF44336);
+  static const _cosmos = Color(0xffFFD3D3);
+  static const _rusticRedApprox = Color(0xff4B0303);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -274,4 +276,7 @@ class AppColors {
   static const alegend1 = _fruitSaladApprox;
   static const alegend2 = _orangePeelApprox;
   static const alegend3 = _oPomegranateApprox;
+
+  static const notificationBGHospitalForEachOne = _cosmos;
+  static const notificationContentHospitalForEachOne = _rusticRedApprox;
 }
