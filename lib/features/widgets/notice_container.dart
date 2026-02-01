@@ -5,14 +5,20 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 class NoticeContainer extends StatelessWidget {
-  const NoticeContainer({super.key, required this.notice, this.height});
+  const NoticeContainer({
+    super.key,
+    required this.notice,
+    this.height,
+    this.padding,
+  });
   final String notice;
   final double? height;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(end: 6),
+      padding: padding ?? EdgeInsetsDirectional.only(end: 6),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 26),
         height: height ?? 75.h,
