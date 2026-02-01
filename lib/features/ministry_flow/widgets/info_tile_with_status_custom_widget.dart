@@ -10,43 +10,55 @@ class InfoTileWithStatusCustomWidget extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.status,
+    this.textColor,
+    this.textStatusColor,
+    this.statusBGColor,
   });
 
   final String title;
   final String subtitle;
   final String status;
+  final Color? textColor;
+  final Color? textStatusColor;
+  final Color? statusBGColor;
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: context.textTheme.bodyMedium!.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppColors.blackText,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 8.h),
-              child: Text(
-                subtitle,
-                style: context.textTheme.labelMedium!.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
+        Expanded(
+          child: Padding(
+            padding: EdgeInsetsDirectional.only(end: 12.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: context.textTheme.bodyMedium!.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: textColor ?? AppColors.blackText,
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsets.only(top: 8.h),
+                  child: Text(
+                    subtitle,
+                    style: context.textTheme.labelMedium!.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
         ContainerWithBackground(
-          backgroundColor: AppColors.readyTextBG,
+          backgroundColor: statusBGColor ?? AppColors.readyTextBG,
           text: status,
+          textColor: textStatusColor,
         ),
       ],
     );

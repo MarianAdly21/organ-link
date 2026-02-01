@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
@@ -10,6 +9,10 @@ import 'package:organ_link/features/ministry_flow/ministry_home/models/quick_act
 import 'package:organ_link/features/ministry_flow/ministry_home/widget/monthly_operations_chart.dart';
 import 'package:organ_link/features/ministry_flow/ministry_home/widget/organ_distribution_chart.dart';
 import 'package:organ_link/features/ministry_flow/ministry_home/widget/quick_action_button.dart';
+import 'package:organ_link/features/ministry_flow/ministry_notification/screen/ministry_notification_screen.dart';
+import 'package:organ_link/features/ministry_flow/model/dashboard_ministry_ui_model.dart';
+import 'package:organ_link/features/ministry_flow/widgets/dashboard_ministry_widget.dart';
+import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/custom_notification_icon.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
@@ -31,7 +34,9 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
       QuickActionItem(
         text: "التنبيهات",
         backgroundColor: AppColors.grayText,
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(MinistryNotificationScreen.routeName);
+        },
       ),
       QuickActionItem(
         text: "المستشفيات",
@@ -47,6 +52,29 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
       ),
     ];
   }
+
+  final List<DashboardMinistryUiModel> dashboardList = [
+    DashboardMinistryUiModel(
+      icon: AppAssetPaths.patientIcon,
+      title: "المرضى المحتاجون",
+      conut: "24",
+    ),
+    DashboardMinistryUiModel(
+      icon: AppAssetPaths.hospitalsIcon,
+      title: "المستشفيات المشاركة",
+      conut: "24",
+    ),
+    DashboardMinistryUiModel(
+      icon: AppAssetPaths.opertionsDoneIcon,
+      title: "العمليات الناجحة",
+      conut: "12",
+    ),
+    DashboardMinistryUiModel(
+      icon: AppAssetPaths.donorsIcon,
+      title: "المتبرعون",
+      conut: "7",
+    ),
+  ];
 
   @override
   Widget baseScreenBuild(BuildContext context) {
@@ -113,8 +141,12 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _welcomeMessage(),
-              _dashboardSection(),
+              TitleAndSubtitleCustomWidget(
+                title: "مرحباً بك في نظام إدارة الأعضاء",
+                subTitle: "مركز عامة على تطاوير زراعة الأعضاء",
+              ),
+              DashboardMinistryWidget(dashboardList: dashboardList),
+              // _dashboardSection(),
               _organDistributionSection(),
               _monthlyOpertionsSection(),
               _quickActionsSection(quickActions),
@@ -135,7 +167,7 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
       padding: padding,
       body: Column(
         children: [
-          _titelAndSubTitalWidget(title: title, subTitle: subTitle),
+          TitleAndSubtitleCustomWidget(title: title, subTitle: subTitle),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h),
             child: body,
@@ -151,13 +183,6 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
       title: "العمليات الشهرية",
       subTitle: "إحصائيات العمليات على مدار اخر 6 شهور",
       body: MonthlyOperationsChart(),
-    );
-  }
-
-  Widget _welcomeMessage() {
-    return _titelAndSubTitalWidget(
-      title: "مرحباً بك في نظام إدارة الأعضاء",
-      subTitle: "مركز عامة على تطاوير زراعة الأعضاء",
     );
   }
 
@@ -236,115 +261,115 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
   //   );
   // }
 
-  Widget _dashboardSection() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 24.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: _mainCard(
-                  icon: AppAssetPaths.patientIcon,
-                  title: "المرضى المحتاجون",
-                  value: "24",
-                ),
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                child: _mainCard(
-                  icon: AppAssetPaths.hospitalsIcon,
-                  title: "المستشفيات المشاركة",
-                  value: "24",
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: _mainCard(
-                  icon: AppAssetPaths.opertionsDoneIcon,
-                  title: "العمليات الناجحة",
-                  value: "12",
-                ),
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                child: _mainCard(
-                  icon: AppAssetPaths.donorsIcon,
-                  title: "المتبرعون",
-                  value: "7", //from back
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _dashboardSection() {
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(vertical: 24.h),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.stretch,
+  //       children: [
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               child: _mainCard(
+  //                 icon: AppAssetPaths.patientIcon,
+  //                 title: "المرضى المحتاجون",
+  //                 value: "24",
+  //               ),
+  //             ),
+  //             SizedBox(width: 16),
+  //             Expanded(
+  //               child: _mainCard(
+  //                 icon: AppAssetPaths.hospitalsIcon,
+  //                 title: "المستشفيات المشاركة",
+  //                 value: "24",
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         SizedBox(height: 16),
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               child: _mainCard(
+  //                 icon: AppAssetPaths.opertionsDoneIcon,
+  //                 title: "العمليات الناجحة",
+  //                 value: "12",
+  //               ),
+  //             ),
+  //             SizedBox(width: 16),
+  //             Expanded(
+  //               child: _mainCard(
+  //                 icon: AppAssetPaths.donorsIcon,
+  //                 title: "المتبرعون",
+  //                 value: "7", //from back
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget _mainCard({
-    required String icon,
-    required String title,
-    required String value,
-  }) {
-    return GestureDetector(
-      child: ContainerWithBlackShadow(
-        body: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SvgPicture.asset(width: 32.w, height: 32.h, icon),
-              SizedBox(height: 16.h),
-              Text(
-                context.translate(title),
-                style: context.textTheme.labelMedium!.copyWith(
-                  color: AppColors.grayText,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 7.h),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  value,
-                  style: context.textTheme.bodyLarge!.copyWith(
-                    color: AppColors.blackText,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _mainCard({
+  //   required String icon,
+  //   required String title,
+  //   required String value,
+  // }) {
+  //   return GestureDetector(
+  //     child: ContainerWithBlackShadow(
+  //       body: FittedBox(
+  //         fit: BoxFit.scaleDown,
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             SvgPicture.asset(width: 32.w, height: 32.h, icon),
+  //             SizedBox(height: 16.h),
+  //             Text(
+  //               context.translate(title),
+  //               style: context.textTheme.labelMedium!.copyWith(
+  //                 color: AppColors.grayText,
+  //               ),
+  //             ),
+  //             Padding(
+  //               padding: EdgeInsets.symmetric(vertical: 7.h),
+  //               child: Text(
+  //                 textAlign: TextAlign.center,
+  //                 value,
+  //                 style: context.textTheme.bodyLarge!.copyWith(
+  //                   color: AppColors.blackText,
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _titelAndSubTitalWidget({
-    required String title,
-    required String subTitle,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          context.translate(title),
-          style: context.textTheme.bodyLarge!.copyWith(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        Text(
-          subTitle,
-          style: context.textTheme.labelMedium!.copyWith(
-            color: AppColors.grayText,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _titelAndSubTitalWidget({
+  //   required String title,
+  //   required String subTitle,
+  // }) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.stretch,
+  //     children: [
+  //       Text(
+  //         context.translate(title),
+  //         style: context.textTheme.bodyLarge!.copyWith(
+  //           fontSize: 18,
+  //           fontWeight: FontWeight.w600,
+  //         ),
+  //       ),
+  //       Text(
+  //         subTitle,
+  //         style: context.textTheme.labelMedium!.copyWith(
+  //           color: AppColors.grayText,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }

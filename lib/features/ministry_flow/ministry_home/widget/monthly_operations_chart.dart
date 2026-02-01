@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:organ_link/features/ministry_flow/ministry_home/screen/widget/legend_item.dart';
+import 'package:organ_link/features/ministry_flow/ministry_home/widget/legend_item.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 class MonthlyOperationsChart extends StatelessWidget {

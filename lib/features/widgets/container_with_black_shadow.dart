@@ -7,15 +7,19 @@ class ContainerWithBlackShadow extends StatelessWidget {
     super.key,
     required this.body,
     this.borderRadius,
-    this.contentyPadding,
+    this.contentPadding,
     this.height,
     this.padding,
+    this.backgroundColor,
+    this.gradientbackgroundColor,
   });
   final Widget body;
   final double? borderRadius;
   final double? height;
-  final EdgeInsetsGeometry? contentyPadding;
+  final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? padding;
+  final Color? backgroundColor;
+  final List<Color>? gradientbackgroundColor;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +27,7 @@ class ContainerWithBlackShadow extends StatelessWidget {
       child: Container(
         //  height: height ?? 132.h,
         padding:
-            contentyPadding ??
+            contentPadding ??
             EdgeInsets.symmetric(vertical: 18, horizontal: 14),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius ?? 16),
@@ -34,7 +38,18 @@ class ContainerWithBlackShadow extends StatelessWidget {
               color: Colors.black.withValues(alpha: 0.15),
             ),
           ],
-          color: AppColors.homeCardBG.withValues(alpha: 0.45),
+
+          gradient: gradientbackgroundColor != null
+              ? LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  colors: gradientbackgroundColor!,
+                  stops: const [0.0, 0.92],
+                )
+              : null,
+          color: (gradientbackgroundColor == null && backgroundColor == null)
+              ? null
+              : AppColors.homeCardBG.withValues(alpha: 0.45),
         ),
         child: body,
       ),

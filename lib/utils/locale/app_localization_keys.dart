@@ -184,4 +184,13 @@ class LocalizationKeys {
   static const allAlerts = "all_alerts";
   static const all = "all";
   static const organTransplantTracking = "organ_transplant_tracking";
+  static const alerts = "alerts";
+  static const alertsNotifications = "alerts_notifications";
+  static const allImportantAlerts = "all_important_alerts";
+  static const viewDetails = "view_details";
+  static const investigationFollowUp = "investigation_follow_up";
+  static const totalAlarts = "total_alerts";
+  static const resolved = "resolved";
+  static const newAlarts = "new_alarts";
+  static const underInvestigation = "under_investigation";
 }

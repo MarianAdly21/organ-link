@@ -27,22 +27,25 @@ class AppButtonWithGradientColors extends BaseStatelessWidget {
       onTap: onTap,
       child: Container(
         height: 48.h,
+        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
         decoration: BoxDecoration(
-          border:border ,
+          border: border,
           borderRadius: BorderRadius.circular(borderRadius ?? 16),
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
-            colors:colors?? [AppColors.seconderColor, AppColors.mainColor],
+            colors: colors ?? [AppColors.seconderColor, AppColors.mainColor],
           ),
         ),
         child: Center(
-          child: Text(
-            text,
-            style: context.textTheme.labelLarge!.copyWith(
-              color:textColor?? AppColors.appButtonText,
-              fontWeight: FontWeight.w700,
-              fontSize: 16,
+          child: FittedBox(
+            child: Text(
+              text,
+              style: context.textTheme.labelLarge!.copyWith(
+                color: textColor ?? AppColors.appButtonText,
+                fontWeight: FontWeight.w700,
+                fontSize: 16,
+              ),
             ),
           ),
         ),

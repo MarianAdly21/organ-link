@@ -173,5 +173,14 @@
   "notification_list": "قائمة الإشعارات",
   "all_alerts": "جميع التنبيهات",
   "all": "الكل",
-  "organ_transplant_tracking": "متابعة عمليات زراعة الأعضاء"
+  "organ_transplant_tracking": "متابعة عمليات زراعة الأعضاء",
+  "alerts": "التنبيهات",
+  "alerts_notifications": "التنبيهات والإشعارات",
+  "all_important_alerts": "جميع التنبيهات والإشعارات الهامة عن النظام",
+  "view_details": "عرض التفاصيل",
+  "investigation_follow_up": "متابعة التحقيق",
+  "total_alerts": "إجمالي التنبيهات",
+  "resolved": "تم حلها",
+  "new_alarts": "تنبيهات جديدة",
+  "under_investigation": "قيد التحقيق"
 }

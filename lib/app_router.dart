@@ -11,6 +11,7 @@ import 'package:organ_link/features/hospital_flow/view_patient/screen/view_patie
 import 'package:organ_link/features/ministry_flow/hospital_detailes/screen/hospital_details_screen.dart';
 import 'package:organ_link/features/ministry_flow/hospitals/screen/hospitals_screen.dart';
 import 'package:organ_link/features/ministry_flow/ministry_home/screen/ministry_home_screen.dart';
+import 'package:organ_link/features/ministry_flow/ministry_notification/screen/ministry_notification_screen.dart';
 import 'package:organ_link/features/shared_screens/login/screen/login_screen.dart';
 import 'package:organ_link/features/shared_screens/splash/splash_screen.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_up_screen.dart';
@@ -47,5 +48,7 @@ class AppRouter {
     MinistryHomeScreen.routeName: (ctx) => const MinistryHomeScreen(),
     HospitalsScreen.routeName: (ctx) => const HospitalsScreen(),
     HospitalDetailsScreen.routeName: (ctx) => const HospitalDetailsScreen(),
+    MinistryNotificationScreen.routeName: (ctx) =>
+        const MinistryNotificationScreen(),
   };
 }
