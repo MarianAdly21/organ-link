@@ -47,9 +47,10 @@ class ContainerWithBlackShadow extends StatelessWidget {
                   stops: const [0.0, 0.92],
                 )
               : null,
-          color: (gradientbackgroundColor == null && backgroundColor == null)
-              ? null
-              : AppColors.homeCardBG.withValues(alpha: 0.45),
+          color: gradientbackgroundColor == null
+              ? (backgroundColor ??
+                    AppColors.homeCardBG.withValues(alpha: 0.45))
+              : null,
         ),
         child: body,
       ),

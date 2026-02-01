@@ -74,6 +74,12 @@ class AppColors {
   static const _cosmos = Color(0xffFFD3D3);
   static const _rusticRedApprox = Color(0xff4B0303);
 
+  static const _pinkApprox = Color(0xffFFBEC5);
+  static const _fairPinkApprox = Color(0xffFFE8EB);
+  static const _butterMilkApprox = Color(0xffFFF4B6);
+  static const _orchidWhiteApprox = Color(0xffFFFDF1);
+  static const _redApprox = Color(0xffFF001C);
+
   /// app main theme ...
   static const mainColor = _malachite;
   static const seconderColor = _dodgerBlueApprox;
@@ -280,4 +286,14 @@ class AppColors {
   static const notificationBGHospitalForEachOne = _cosmos;
   static const notificationContentHospitalForEachOne = _rusticRedApprox;
   static const followUpInvestigation = _titanWhite;
+  static const statusTextInMinistryAlart = _white;
+  static const resolveStatusContainerBGMinistryAlart = _white;
+  static const generalContainerBGMinistry = _white;
+  static const resolveStatusBGMinistryAlart = _jacksonsPurpleApprox;
+  static const dangerStatusContainerBGMinistryAlart1 = _pinkApprox;
+  static const dangerStatusContainerBGMinistryAlart2 = _fairPinkApprox;
+  static const dangerStatusBGMinistryAlart = _redApprox;
+  static const warningStatusContainerBGMinistryAlart1 = _butterMilkApprox;
+  static const warningStatusContainerBGMinistryAlart2 = _orchidWhiteApprox;
+  static const warningStatusBGMinistryAlart = _goldDropApprox;
 }

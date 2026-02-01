@@ -8,6 +8,7 @@ import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
+import 'package:organ_link/features/widgets/data_row_with_status_container_widget.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
@@ -75,20 +76,10 @@ class _SurgeryDetailsScreenState extends BaseScreenState<SurgeryDetailsScreen> {
                     title: context.translate(LocalizationKeys.date),
                     subTitle: "15-02-2025",
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        context.translate(LocalizationKeys.surgeryStatus),
-                        style: context.textTheme.labelMedium!.copyWith(
-                          color: AppColors.grayText,
-                        ),
-                      ),
-                      ContainerWithBackground(
-                        backgroundColor: Colors.cyan,
-                        text: "مجدولة",
-                      ),
-                    ],
+                  DataRowWithStatusContianerWidget(
+                    title: LocalizationKeys.surgeryStatus,
+                    subTitle: "مجدولة",
+                    backgroundColor: AppColors.medicalTestDoneBG,
                   ),
                 ],
               ),

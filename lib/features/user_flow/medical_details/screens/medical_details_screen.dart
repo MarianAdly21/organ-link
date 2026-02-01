@@ -7,6 +7,7 @@ import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
+import 'package:organ_link/features/widgets/notice_container.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
@@ -44,7 +45,7 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
           _chronicDiseasesCard(),
           _medicalTestCard(),
           _upcomingAppointmentCard(),
-          _infoNoticeCard(),
+          NoticeContainer(notice: LocalizationKeys.hospitalDataNote),
         ],
       ),
     );
@@ -353,44 +354,6 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _infoNoticeCard() {
-    return Padding(
-      padding: const EdgeInsetsDirectional.only(end: 6),
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 26),
-        height: 75.h,
-        // width: 311.w,
-        decoration: BoxDecoration(
-          color: AppColors.medicalTestContainerBG,
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [
-              AppColors.hospitalInfoColorBG2,
-              AppColors.hospitalInfoColorBG1,
-            ],
-          ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.hospitalInfoShadow,
-              offset: Offset(4, 0),
-            ),
-          ],
-        ),
-        child: Center(
-          child: Text(
-            context.translate(LocalizationKeys.hospitalDataNote),
-            style: context.textTheme.displayMedium!.copyWith(
-              fontSize: 16,
-              color: AppColors.hospitalInfoText,
-            ),
-          ),
-        ),
       ),
     );
   }

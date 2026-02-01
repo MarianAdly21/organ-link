@@ -4,6 +4,7 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
+import 'package:organ_link/features/ministry_flow/ministry_notification_details/screens/ministry_notification_details_screen.dart';
 import 'package:organ_link/features/ministry_flow/model/dashboard_ministry_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/model/ministry_alart_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/widgets/dashboard_ministry_widget.dart';
@@ -65,95 +66,111 @@ class _MinistryNotificationScreenState
         backTap: () {
           Navigator.pop(context);
         },
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TitleAndSubtitleCustomWidget(
-                title: LocalizationKeys.alertsNotifications,
-                subTitle: LocalizationKeys.allImportantAlerts,
-              ),
-              DashboardMinistryWidget(dashboardList: dashboardList),
-              ListView.builder(
-                itemCount: alarts.length,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, index) {
-                  return ContainerWithBlackShadow(
-                    gradientbackgroundColor: [
-                      /// change based on its status
-                      /// status==> تم الحل
-                      Colors.white,
-                      Colors.white,
+        body: _buildBody(),
+      ),
+    );
+  }
 
-                      /// status==> خطر
-                      // Color(0xffFFBEC5),
-                      // Color(0xffFFE8EB),
-                      /// status==> تحذير
-                      // Color(0xffFFF4B6),
-                      // Color(0xffFFFDF1),
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper widget ////////////////////////
+  ///////////////////////////////////////////////////////////
+
+  Widget _buildBody() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 3.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TitleAndSubtitleCustomWidget(
+              title: LocalizationKeys.alertsNotifications,
+              subTitle: LocalizationKeys.allImportantAlerts,
+            ),
+            DashboardMinistryWidget(dashboardList: dashboardList),
+            ListView.builder(
+              itemCount: alarts.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, index) {
+                return ContainerWithBlackShadow(
+                  gradientbackgroundColor: [
+                    /// change based on its status
+                    /// status==> تم الحل
+                    AppColors.resolveStatusContainerBGMinistryAlart,
+                    AppColors.resolveStatusContainerBGMinistryAlart,
+
+                    /// status==> خطر
+                    //  AppColors.dangerStatusContainerBGMinistryAlart1,
+                    //  AppColors.dangerStatusContainerBGMinistryAlart2,
+
+                    /// status==> تحذير
+                    // AppColors.warningStatusContainerBGMinistryAlart1,
+                    // AppColors.warningStatusContainerBGMinistryAlart2,
+                  ],
+                  padding: EdgeInsets.only(bottom: 16.h),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 16.h,
+                    horizontal: 16.w,
+                  ),
+                  body: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      InfoTileWithStatusCustomWidget(
+                        textColor: AppColors.textColor,
+                        textStatusColor: AppColors.statusTextInMinistryAlart,
+                        statusBGColor: AppColors.resolveStatusBGMinistryAlart,
+
+                        /// change the color based on its status
+                        title: alarts[index].alartTitel,
+                        subtitle: alarts[index].alartContent,
+                        status: alarts[index].alartStatus,
+                      ),
+                      CustomDividerWidget(),
+                      _hospitalNameAndDate(
+                        hospitalName: alarts[index].hospitalName,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16.h),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: AppButtonWithGradientColors(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    MinistryNotificationDetailsScreen.routeName,
+                                  );
+                                },
+                                text: context.translate(
+                                  LocalizationKeys.viewDetails,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: AppButtonWithGradientColors(
+                                onTap: () {},
+                                text: context.translate(
+                                  LocalizationKeys.investigationFollowUp,
+                                ),
+                                textColor: AppColors.blackText,
+                                border: BoxBorder.all(
+                                  color: AppColors.backButtonBorder,
+                                ),
+                                colors: [
+                                  AppColors.followUpInvestigation,
+                                  AppColors.followUpInvestigation,
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
-                    padding: EdgeInsets.only(bottom: 16.h),
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 16.h,
-                      horizontal: 16.w,
-                    ),
-                    body: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        InfoTileWithStatusCustomWidget(
-                          textColor: AppColors.textColor,
-                          textStatusColor: Colors.white,
-                          statusBGColor: Color(0xff1C3B8D),
-
-                          /// change the color based on its status
-                          title: alarts[index].alartTitel,
-                          subtitle: alarts[index].alartContent,
-                          status: alarts[index].alartStatus,
-                        ),
-                        CustomDividerWidget(),
-                        _hospitalNameAndDate(
-                          hospitalName: alarts[index].hospitalName,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 16.h),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: AppButtonWithGradientColors(
-                                  onTap: () {},
-                                  text: context.translate(
-                                    LocalizationKeys.viewDetails,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 16),
-                              Expanded(
-                                child: AppButtonWithGradientColors(
-                                  onTap: () {},
-                                  text: context.translate(
-                                    LocalizationKeys.investigationFollowUp,
-                                  ),
-                                  textColor: AppColors.blackText,
-                                  border: BoxBorder.all(
-                                    color: AppColors.backButtonBorder,
-                                  ),
-                                  colors: [
-                                    AppColors.followUpInvestigation,
-                                    AppColors.followUpInvestigation,
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
