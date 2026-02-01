@@ -172,5 +172,14 @@
   "notification_list": "Notification List",
   "all_alerts": "All Alerts",
   "all": "All",
-  "organ_transplant_tracking": "Organ Transplant Tracking"
+  "organ_transplant_tracking": "Organ Transplant Tracking",
+  "alerts": "Alerts",
+  "alerts_notifications": "Alerts & Notifications",
+  "all_important_alerts": "All important system alerts and notifications",
+  "view_details": "View Details",
+  "investigation_follow_up": "Investigation Follow Up",
+  "total_alerts": "Total Alerts",
+  "resolved": "Resolved",
+  "new_alarts": "New Alarts",
+  "under_investigation": "Under Investigation"
 }

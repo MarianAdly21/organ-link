@@ -279,4 +279,5 @@ class AppColors {
 
   static const notificationBGHospitalForEachOne = _cosmos;
   static const notificationContentHospitalForEachOne = _rusticRedApprox;
+  static const followUpInvestigation = _titanWhite;
 }

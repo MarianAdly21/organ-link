@@ -53,4 +53,6 @@ class AppAssetPaths {
   static const callIcon = "assets/icons/call_icon.svg";
   static const hospitalTypeIcon = "assets/icons/type_hospital_icon.svg";
   static const locationIcon = "assets/icons/location_icon.svg";
+  static const folderNotificationIcon = "assets/icons/folder_notification.svg";
+  static const newNotificationIcon = "assets/icons/new_notification.svg";
 }
