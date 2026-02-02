@@ -201,4 +201,9 @@ class LocalizationKeys {
   static const registeredUsers = "registered_users";
   static const userManagement = "user_management";
   static const addNewUser = "add_new_user";
+  static const enterFullName = "enter_full_name";
+  static const enterPhoneNumber = "enter_phone_number";
+  static const enterEmail = "enter_email";
+  static const whatIsYourPosition = "what_is_your_position";
+  static const addUser = "add_user";
 }
