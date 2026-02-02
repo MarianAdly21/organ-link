@@ -193,4 +193,12 @@ class LocalizationKeys {
   static const resolved = "resolved";
   static const newAlarts = "new_alarts";
   static const underInvestigation = "under_investigation";
+  static const profileInformation = "profile_information";
+  static const updatePersonalData = "update_personal_data";
+  static const position = "position";
+  static const job = "job_title";
+  static const saveChange = "save_changes";
+  static const registeredUsers = "registered_users";
+  static const userManagement = "user_management";
+  static const addNewUser = "add_new_user";
 }

@@ -13,6 +13,7 @@ import 'package:organ_link/features/ministry_flow/hospitals/screen/hospitals_scr
 import 'package:organ_link/features/ministry_flow/ministry_home/screen/ministry_home_screen.dart';
 import 'package:organ_link/features/ministry_flow/ministry_notification/screen/ministry_notification_screen.dart';
 import 'package:organ_link/features/ministry_flow/ministry_notification_details/screens/ministry_notification_details_screen.dart';
+import 'package:organ_link/features/ministry_flow/ministry_setting/screens/ministry_settings_screen.dart';
 import 'package:organ_link/features/shared_screens/login/screen/login_screen.dart';
 import 'package:organ_link/features/shared_screens/splash/splash_screen.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_up_screen.dart';
@@ -53,5 +54,6 @@ class AppRouter {
         const MinistryNotificationScreen(),
     MinistryNotificationDetailsScreen.routeName: (ctx) =>
         const MinistryNotificationDetailsScreen(),
+    MinistrySettingsScreen.routeName: (ctx) => const MinistrySettingsScreen(),
   };
 }

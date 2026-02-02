@@ -97,7 +97,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                 ),
               )
             : const EmptyWidget(),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         TextFormField(
           autovalidateMode: widget.autovalidateMode,
           enabled: widget.enable,

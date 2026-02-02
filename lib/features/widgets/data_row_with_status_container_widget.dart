@@ -14,6 +14,9 @@ class DataRowWithStatusContianerWidget extends StatelessWidget {
     required this.backgroundColor,
     this.subTitleColor,
     this.divider = false,
+    this.border,
+    this.statusIsCentered = false,
+    this.statusTextStyle,
   });
   final String title;
 
@@ -21,6 +24,9 @@ class DataRowWithStatusContianerWidget extends StatelessWidget {
   final Color? subTitleColor;
   final Color backgroundColor;
   final bool divider;
+  final BoxBorder? border;
+  final TextStyle? statusTextStyle;
+  final bool statusIsCentered;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +45,9 @@ class DataRowWithStatusContianerWidget extends StatelessWidget {
               backgroundColor: backgroundColor,
               text: subTitle,
               textColor: subTitleColor,
+              border: border,
+              isCentered: statusIsCentered,
+              textStyle: statusTextStyle,
             ),
           ],
         ),
