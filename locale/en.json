@@ -181,5 +181,13 @@
   "total_alerts": "Total Alerts",
   "resolved": "Resolved",
   "new_alarts": "New Alarts",
-  "under_investigation": "Under Investigation"
+  "under_investigation": "Under Investigation",
+  "profile_information": "Profile Information",
+  "update_personal_data": "Update Your Personal Information",
+  "position": "Position",
+  "job_title": "Job Title",
+  "save_changes": "Save Changes",
+  "registered_users": "Registered Users",
+  "user_management": "User Accounts & Permissions Management",
+  "add_new_user": "Add New User"
 }

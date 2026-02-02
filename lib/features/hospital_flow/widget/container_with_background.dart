@@ -12,6 +12,7 @@ class ContainerWithBackground extends BaseStatelessWidget {
     this.isCentered = false,
     this.contentPadding,
     this.textStyle,
+    this.border,
   });
   final Color? textColor;
   final Color backgroundColor;
@@ -19,6 +20,7 @@ class ContainerWithBackground extends BaseStatelessWidget {
   final bool isCentered;
   final EdgeInsetsGeometry? contentPadding;
   final TextStyle? textStyle;
+  final BoxBorder? border;
 
   @override
   Widget baseBuild(BuildContext context) {
@@ -28,6 +30,7 @@ class ContainerWithBackground extends BaseStatelessWidget {
           EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
+        border: border,
         color: backgroundColor,
       ),
       child: Text(

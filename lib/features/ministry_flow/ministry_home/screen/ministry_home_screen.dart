@@ -10,6 +10,7 @@ import 'package:organ_link/features/ministry_flow/ministry_home/widget/monthly_o
 import 'package:organ_link/features/ministry_flow/ministry_home/widget/organ_distribution_chart.dart';
 import 'package:organ_link/features/ministry_flow/ministry_home/widget/quick_action_button.dart';
 import 'package:organ_link/features/ministry_flow/ministry_notification/screen/ministry_notification_screen.dart';
+import 'package:organ_link/features/ministry_flow/ministry_setting/screens/ministry_settings_screen.dart';
 import 'package:organ_link/features/ministry_flow/model/dashboard_ministry_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/widgets/dashboard_ministry_widget.dart';
 import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
@@ -48,7 +49,9 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
       QuickActionItem(
         text: "الاعدادات",
         backgroundColor: const Color(0xffFF0004),
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(MinistrySettingsScreen.routeName);
+        },
       ),
     ];
   }

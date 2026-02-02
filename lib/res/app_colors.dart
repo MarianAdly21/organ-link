@@ -79,6 +79,8 @@ class AppColors {
   static const _butterMilkApprox = Color(0xffFFF4B6);
   static const _orchidWhiteApprox = Color(0xffFFFDF1);
   static const _redApprox = Color(0xffFF001C);
+  static const _mercuryApprox = Color(0xffE7E7E7);
+  static const _altoApprox = Color(0xffDDDDDD);
 
   /// app main theme ...
   static const mainColor = _malachite;
@@ -296,4 +298,10 @@ class AppColors {
   static const warningStatusContainerBGMinistryAlart1 = _butterMilkApprox;
   static const warningStatusContainerBGMinistryAlart2 = _orchidWhiteApprox;
   static const warningStatusBGMinistryAlart = _goldDropApprox;
+
+  ////  Ministry settings
+  static const nameInSettingsScreen = _white;
+  static const backgroundOfNameContainer = _mercuryApprox;
+  static const borderOfNameContainer = _altoApprox;
+  static const borderSettingsContainer = _periwinkleApprox;
 }
