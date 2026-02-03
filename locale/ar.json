@@ -182,5 +182,18 @@
   "total_alerts": "إجمالي التنبيهات",
   "resolved": "تم حلها",
   "new_alarts": "تنبيهات جديدة",
-  "under_investigation": "قيد التحقيق"
+  "under_investigation": "قيد التحقيق",
+  "profile_information": "معلومات الملف الشخصي",
+  "update_personal_data": "تحديث بياناتك الشخصية",
+  "position": "المنصب",
+  "job_title": "الوظيفة",
+  "save_changes": "حفظ التعديلات",
+  "registered_users": "المستخدمون المسجلون",
+  "user_management": "إدارة حسابات المستخدمين والصلاحيات",
+  "add_new_user": "إضافة مستخدم جديد",
+  "enter_full_name": "ادخل اسمك ثلاثي",
+  "enter_email": "ادخل بريدك الالكتروني",
+  "enter_phone_number": "ادخل رقم الهاتف الخاص بك",
+  "what_is_your_position": "ما هو منصبك؟",
+  "add_user": "إضافة مستخدم"
 }

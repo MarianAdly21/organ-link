@@ -185,9 +185,14 @@
   "profile_information": "Profile Information",
   "update_personal_data": "Update Your Personal Information",
   "position": "Position",
-  "job_title": "Job Title",
+  "job_title": "Job",
   "save_changes": "Save Changes",
   "registered_users": "Registered Users",
   "user_management": "User Accounts & Permissions Management",
-  "add_new_user": "Add New User"
+  "add_new_user": "Add New User",
+  "enter_full_name": "Enter your full name",
+  "enter_phone_number": "Enter your phone number",
+  "enter_email": "Enter your Email",
+  "what_is_your_position": "What is your position?",
+  "add_user": "Add User"
 }

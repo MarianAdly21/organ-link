@@ -6,6 +6,8 @@ import 'package:organ_link/_core/extensions/screen_sizer_extension.dart';
 import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
+import 'package:organ_link/features/ministry_flow/add_users/screen/add_new_user_screen.dart';
+import 'package:organ_link/features/ministry_flow/widgets/custom_ministry_form_widget.dart';
 import 'package:organ_link/features/ministry_flow/widgets/info_tile_with_status_custom_widget.dart';
 import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
 import 'package:organ_link/features/shared_screens/log_out_confirmation/log_out_confirmationDialog_screen.dart';
@@ -14,9 +16,7 @@ import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/data_row_with_status_container_widget.dart';
 import 'package:organ_link/features/widgets/log_out_Widget.dart';
-import 'package:organ_link/features/widgets/text_field/app_text_form_filed_widget.dart';
 import 'package:organ_link/res/app_colors.dart';
-import 'package:organ_link/utils/locale/app_localization.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class MinistrySettingsScreen extends BaseStatefulScreenWidget {
@@ -91,7 +91,9 @@ class _MinistrySettingsScreenState
           ),
           AppButtonWithGradientColors(
             text: context.translate(LocalizationKeys.addNewUser),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(AddNewUserScreen.routeName);
+            },
           ),
         ],
       ),
@@ -116,7 +118,7 @@ class _MinistrySettingsScreenState
           child: DataRowWithStatusContianerWidget(
             statusIsCentered: true,
             divider: true,
-            title: "الوظيفة",
+            title: LocalizationKeys.job,
             subTitle: job,
             statusTextStyle: context.textTheme.labelMedium!.copyWith(
               color: AppColors.textColor,
@@ -146,74 +148,44 @@ class _MinistrySettingsScreenState
     );
   }
 
-  Widget _textField({required String title, required String hintText}) {
-    return AppTextFormField(
-      title: title,
-      enableBorderColor: AppColors.enableBorderColorStting,
-      fillColor: AppColors.filledColorenable,
-      titleColor: AppColors.grayText,
-      hintText: hintText,
-      hintTextStyle: context.textTheme.labelMedium!.copyWith(
-        color: AppColors.textColor,
-      ),
-    );
-  }
-
   Widget _formSection() {
-    return Form(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: _textField(
-              title: LocalizationKeys.fullName,
-              hintText: "د. أحمد محمود",
-            ),
-          ),
-          _textField(
-            title: LocalizationKeys.phoneNumber,
-            hintText: "+201001234567",
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: _textField(
-              title: LocalizationKeys.email,
-              hintText: "ahmed.mahmoud@moh.gov.eg",
-            ),
-          ),
-          _textField(
-            title: LocalizationKeys.position,
-            hintText: "مسؤول النظام - وزارة الصحة",
-          ),
+    return Column(
+      children: [
+        CustomMinistryFormWidget(
+          /// المفروض ف بيانات موجوده و ممكن يحصل عليها تعديل
+          fullNameTitle: LocalizationKeys.fullName,
+          phoneTitle: LocalizationKeys.phoneNumber,
+          emailTitle: LocalizationKeys.email,
+          positionTitle: LocalizationKeys.position,
+        ),
 
-          Padding(
-            padding: EdgeInsets.only(top: 16.h),
-            child: Row(
-              children: [
-                Expanded(
-                  child: AppButtonWithGradientColors(
-                    onTap: () {},
-                    text: context.translate(LocalizationKeys.saveChange),
-                  ),
+        Padding(
+          padding: EdgeInsets.only(top: 16.h),
+          child: Row(
+            children: [
+              Expanded(
+                child: AppButtonWithGradientColors(
+                  onTap: () {},
+                  text: context.translate(LocalizationKeys.saveChange),
                 ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: AppButtonWithGradientColors(
-                    onTap: () {},
-                    text: context.translate(LocalizationKeys.cancel),
-                    textColor: AppColors.blackText,
-                    border: BoxBorder.all(color: AppColors.backButtonBorder),
-                    colors: [
-                      AppColors.followUpInvestigation,
-                      AppColors.followUpInvestigation,
-                    ],
-                  ),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: AppButtonWithGradientColors(
+                  onTap: () {},
+                  text: context.translate(LocalizationKeys.cancel),
+                  textColor: AppColors.blackText,
+                  border: BoxBorder.all(color: AppColors.backButtonBorder),
+                  colors: [
+                    AppColors.followUpInvestigation,
+                    AppColors.followUpInvestigation,
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
