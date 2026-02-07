@@ -16,6 +16,7 @@ import 'package:organ_link/features/user_flow/hospital_information/screen/hospit
 import 'package:organ_link/features/user_flow/medical_details/screens/medical_details_screen.dart';
 import 'package:organ_link/features/user_flow/notification/screens/notification_screen.dart';
 import 'package:organ_link/features/user_flow/settings/screen/settings_screen.dart';
+import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/custom_notification_icon.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
@@ -49,11 +50,12 @@ class HomeUserScreenWithBloc extends BaseStatefulScreenWidget {
 
 class _HomeUserScreenWithBlocState
     extends BaseScreenState<HomeUserScreenWithBloc> {
-  //     @override
+  // @override
   // void initState() {
   //   _currentBloc.add(GetHomeUserDateEvent(id: 1));
   //   super.initState();
   // }
+
   late UserHomeDataUiModel userHomeDataUiModel;
   @override
   Widget baseScreenBuild(BuildContext context) {
@@ -103,9 +105,10 @@ class _HomeUserScreenWithBlocState
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: 48.h),
-                    _cardDetails(),
-                    SizedBox(height: 24.h),
+                    Padding(
+                      padding: EdgeInsets.only(top: 48.h, bottom: 24.h),
+                      child: _cardDetails(),
+                    ),
                     _buildBodyList(),
                   ],
                 ),
@@ -183,46 +186,33 @@ class _HomeUserScreenWithBlocState
   }) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: ContainerWithBlackShadow(
         height: 116.h,
         width: 164.w,
-        padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 14.w),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              blurStyle: BlurStyle.outer,
-              blurRadius: 8,
-              color: Colors.black.withValues(alpha: 0.15),
-            ),
-          ],
-          color: AppColors.homeCardBG.withValues(alpha: 0.45),
-        ),
-        child: FittedBox(
+        contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 14.w),
+        body: FittedBox(
           fit: BoxFit.scaleDown,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SvgPicture.asset(width: 32.w, height: 32.h, icon),
+              SvgPicture.asset(icon),
               SizedBox(height: 16.h),
               Text(
                 context.translate(title),
                 style: context.textTheme.labelMedium!.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.blackText,
-                  fontSize: 14.sp,
+                  fontSize: 14,
                 ),
               ),
               SizedBox(height: 4.h),
               Text(
-                // maxLines: 1,
-                // overflow: TextOverflow.visible,
                 textAlign: TextAlign.center,
                 context.translate(subTitle),
                 style: context.textTheme.labelMedium!.copyWith(
                   fontWeight: FontWeight.w400,
-                  fontSize: 13.sp,
+                  fontSize: 13,
                   color: AppColors.grayText,
                 ),
               ),
@@ -230,6 +220,54 @@ class _HomeUserScreenWithBlocState
           ),
         ),
       ),
+
+      //  Container(
+      //   height: 116.h,
+      //   width: 164.w,
+      //   padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 14.w),
+      //   decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.circular(16),
+      //     boxShadow: [
+      //       BoxShadow(
+      //         blurStyle: BlurStyle.outer,
+      //         blurRadius: 8,
+      //         color: Colors.black.withValues(alpha: 0.15),
+      //       ),
+      //     ],
+      //     color: AppColors.homeCardBG.withValues(alpha: 0.45),
+      //   ),
+      //   child: FittedBox(
+      //     fit: BoxFit.scaleDown,
+      //     child: Column(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       mainAxisSize: MainAxisSize.min,
+      //       children: [
+      //         SvgPicture.asset(width: 32.w, height: 32.h, icon),
+      //         SizedBox(height: 16.h),
+      //         Text(
+      //           context.translate(title),
+      //           style: context.textTheme.labelMedium!.copyWith(
+      //             fontWeight: FontWeight.w600,
+      //             color: AppColors.blackText,
+      //             fontSize: 14.sp,
+      //           ),
+      //         ),
+      //         SizedBox(height: 4.h),
+      //         Text(
+      //           // maxLines: 1,
+      //           // overflow: TextOverflow.visible,
+      //           textAlign: TextAlign.center,
+      //           context.translate(subTitle),
+      //           style: context.textTheme.labelMedium!.copyWith(
+      //             fontWeight: FontWeight.w400,
+      //             fontSize: 13.sp,
+      //             color: AppColors.grayText,
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 
@@ -255,7 +293,6 @@ class _HomeUserScreenWithBlocState
 
   Widget _cardDetails() {
     return Container(
-      // height: 230.h,
       width: 343.w,
       decoration: BoxDecoration(
         boxShadow: [
@@ -276,28 +313,33 @@ class _HomeUserScreenWithBlocState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "Mariana Adly Labib",
-                      style: context.textTheme.bodyLarge!.copyWith(
-                        color: AppColors.blackText,
-                      ),
+                Flexible(
+                  child: FittedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Mariana Adly Labib",
+                          style: context.textTheme.bodyLarge!.copyWith(
+                            color: AppColors.blackText,
+                          ),
+                        ),
+                        SizedBox(height: 16.h),
+                        Text(
+                          "${context.translate(LocalizationKeys.identificationNumberWithColumn)}1234 ",
+                          style: context.textTheme.labelMedium!.copyWith(
+                            color: AppColors.grayText,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 16.h),
-                    Text(
-                      "${context.translate(LocalizationKeys.identificationNumberWithColumn)}1234 ",
-                      style: context.textTheme.labelMedium!.copyWith(
-                        color: AppColors.grayText,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
+                SizedBox(width: 9),
                 Container(
-                  height: 24,
-                  width: 56,
+                  height: 24.h,
+                  width: 56.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.r),
                     color: AppColors.displayFieldBGColor,
@@ -349,7 +391,7 @@ class _HomeUserScreenWithBlocState
             ),
             SizedBox(height: 16.h),
             Text(
-              "${context.translate(LocalizationKeys.lastUpdate)}date",
+              "${context.translate(LocalizationKeys.lastUpdate)}: date",
               style: context.textTheme.bodySmall!.copyWith(
                 color: AppColors.grayText,
                 fontWeight: FontWeight.w400,

@@ -4,11 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
-import 'package:organ_link/app_router.dart';
 import 'package:organ_link/features/hospital_flow/hospital_setting/screen/hospital_setting.dart';
+import 'package:organ_link/features/hospital_flow/matching/screen/matching_screen.dart';
 import 'package:organ_link/features/hospital_flow/notification_screen/screen/hospital_notification_screen.dart';
+import 'package:organ_link/features/hospital_flow/surgeries/screen/surgeries_screen.dart';
 import 'package:organ_link/features/hospital_flow/view_patient/screen/view_patient_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_app_bar_base.dart';
+import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/custom_notification_icon.dart';
@@ -39,7 +41,14 @@ class _HospitalDashboardScreenState
   ///////////////////////////////////////////////////////////
 
   Widget _buildBody() {
-    return SafeArea(child: Column(children: [_appBar(), _bodyContent()]));
+    return SafeArea(
+      child: Column(
+        children: [
+          _appBar(),
+          Expanded(child: SingleChildScrollView(child: _bodyContent())),
+        ],
+      ),
+    );
   }
 
   Widget _appBar() {
@@ -91,7 +100,11 @@ class _HospitalDashboardScreenState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _welcomeMessage(),
+          TitleAndSubtitleCustomWidget(
+            title: context.translate(LocalizationKeys.dashboard),
+            subTitle:
+                " ${context.translate(LocalizationKeys.welcomeMessage)} مستشفى القصر العيني",
+          ),
           _dashboardSection(),
           _quickActionsSection(),
         ],
@@ -120,7 +133,9 @@ class _HospitalDashboardScreenState
               ),
               SizedBox(width: 16.w),
               _quickActionsBtn(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(ViewPatientScreen.routeName);
+                },
                 text: LocalizationKeys.viewPatients,
                 backgroundColor: AppColors.mainColor,
               ),
@@ -130,13 +145,17 @@ class _HospitalDashboardScreenState
         Row(
           children: [
             _quickActionsBtn(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(SurgeriesScreen.routeName);
+              },
               text: LocalizationKeys.operations,
               backgroundColor: Color(0xffFF0004),
             ),
             SizedBox(width: 16.w),
             _quickActionsBtn(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(MatchingScreen.routeName);
+              },
               text: LocalizationKeys.compatibilityRequests,
               backgroundColor: AppColors.grayText,
             ),
@@ -220,7 +239,7 @@ class _HospitalDashboardScreenState
                 child: _mainCard(
                   icon: AppAssetPaths.heartIcon,
                   title: LocalizationKeys.registeredDonor,
-                  subTitle1: "24",
+                  count: "24",
                   subTitle2:
                       "+3${context.translate(LocalizationKeys.thisMonthCount)}",
                 ),
@@ -230,7 +249,7 @@ class _HospitalDashboardScreenState
                 child: _mainCard(
                   icon: AppAssetPaths.peopleIcon,
                   title: LocalizationKeys.patientWaitingForTransplant,
-                  subTitle1: "24",
+                  count: "24",
                   subTitle2:
                       "+3${context.translate(LocalizationKeys.thisMonthCount)}",
                 ),
@@ -244,7 +263,7 @@ class _HospitalDashboardScreenState
                 child: _mainCard(
                   icon: AppAssetPaths.notesBookIcon,
                   title: LocalizationKeys.matchingRequests,
-                  subTitle1: "12",
+                  count: "126578",
                   subTitle2:
                       "3${context.translate(LocalizationKeys.underAnalysisCount)}",
                 ),
@@ -254,7 +273,7 @@ class _HospitalDashboardScreenState
                 child: _mainCard(
                   icon: AppAssetPaths.voltageIcon,
                   title: LocalizationKeys.ongoingOperations,
-                  subTitle1: "7", //from back
+                  count: "56", //from back
                   subTitle2:
                       "3${context.translate(LocalizationKeys.ongoingOperationsCount)}",
                 ),
@@ -269,72 +288,48 @@ class _HospitalDashboardScreenState
   Widget _mainCard({
     required String icon,
     required String title,
-    required String subTitle1,
+    required String count,
     required String subTitle2,
   }) {
-    return GestureDetector(
-      child: ContainerWithBlackShadow(
-        body: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SvgPicture.asset(width: 32.w, height: 32.h, icon),
-              SizedBox(height: 16.h),
-              Text(
-                context.translate(title),
-                style: context.textTheme.labelMedium!.copyWith(
-                  color: AppColors.grayText,
-                  //fontSize: 14.sp,
-                ),
+    return ContainerWithBlackShadow(
+      height: 132.h,
+      body: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset(icon),
+            SizedBox(height: 16),
+            Text(
+              maxLines: 1,
+              context.translate(title),
+              style: context.textTheme.labelMedium!.copyWith(
+                color: AppColors.grayText,
               ),
-              // SizedBox(height: 4.h),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 7.h),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  subTitle1,
-                  style: context.textTheme.bodyLarge!.copyWith(
-                    color: AppColors.blackText,
-                  ),
-                ),
-              ),
-              Text(
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 7),
+              child: Text(
                 textAlign: TextAlign.center,
-                subTitle2,
-                style: context.textTheme.labelMedium!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 13,
-                  color: AppColors.grayText,
+                count,
+                style: context.textTheme.bodyLarge!.copyWith(
+                  color: AppColors.blackText,
                 ),
               ),
-            ],
-          ),
+            ),
+            Text(
+              textAlign: TextAlign.center,
+              subTitle2,
+              style: context.textTheme.labelMedium!.copyWith(
+                fontWeight: FontWeight.w400,
+                fontSize: 13,
+                color: AppColors.grayText,
+              ),
+            ),
+          ],
         ),
       ),
-    );
-  }
-
-  Widget _welcomeMessage() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.translate(LocalizationKeys.dashboard),
-          style: context.textTheme.bodyLarge!.copyWith(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        SizedBox(height: 8.h),
-        Text(
-          " ${context.translate(LocalizationKeys.welcomeMessage)} مستشفى القصر العيني",
-          style: context.textTheme.labelMedium!.copyWith(
-            color: AppColors.grayText,
-          ),
-        ),
-      ],
     );
   }
 }

@@ -23,17 +23,21 @@ class ConutContainer extends StatelessWidget {
           children: [
             Text(
               title,
+              maxLines: 1,
               style: context.textTheme.labelMedium!.copyWith(
                 color: Color(0xff575757),
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
               ),
             ),
-            Text(
-              overflow: TextOverflow.visible,
-              maxLines: 1,
-              count,
-              style: context.textTheme.bodyLarge,
+            SizedBox(height: 8),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                maxLines: 1,
+                count,
+                style: context.textTheme.bodyLarge,
+              ),
             ),
           ],
         ),

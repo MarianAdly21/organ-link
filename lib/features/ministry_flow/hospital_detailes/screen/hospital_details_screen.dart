@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
@@ -12,6 +13,7 @@ import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class HospitalDetailsScreen extends BaseStatefulScreenWidget {
   const HospitalDetailsScreen({super.key});
@@ -38,7 +40,6 @@ class _HospitalDetailsScreenState
               _infoHospitalSection(),
               _countRow(),
               _progressCard(),
-              //  _alartSection(),
               _hospitalNeedSection(),
               _lastOperationsSection(),
               _devicesAndEquipmentSection(),
@@ -158,23 +159,6 @@ class _HospitalDetailsScreenState
     );
   }
 
-  // Widget _fdd({
-  //   required String title,
-  //   required String subtitle,
-  //   required String status,
-  // }) {
-  //   return Column(
-  //     children: [
-  //       InfoTileWithStatusCustomWidget(
-  //         title: title,
-  //         status: status,
-  //         subtitle: subtitle,
-  //       ),
-  //       CustomDividerWidget(),
-  //     ],
-  //   );
-  // }
-
   Widget _lastOpertionsRow({
     required String title,
     required String subtitle,
@@ -191,82 +175,6 @@ class _HospitalDetailsScreenState
       ],
     );
   }
-
-  // Widget _alartSection() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.stretch,
-  //     children: [
-  //       Text(
-  //         "التنبيهات الحالية",
-  //         style: context.textTheme.bodyMedium!.copyWith(
-  //           fontSize: 16,
-  //           fontWeight: FontWeight.w600,
-  //         ),
-  //       ),
-  //       Text(
-  //         "التنبيهات المتعلقة بهذه المستشفى",
-  //         style: context.textTheme.labelMedium!.copyWith(
-  //           fontSize: 13,
-  //           fontWeight: FontWeight.w400,
-  //         ),
-  //       ),
-  //       ListView.builder(
-  //         itemCount: 1,
-  //         shrinkWrap: true,
-  //         physics: NeverScrollableScrollPhysics(),
-  //         itemBuilder: (context, index) {
-  //           return _notificationItem();
-  //         },
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // Widget _notificationItem() {
-  //   return Container(
-  //     margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 16.h),
-  //     padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
-  //     decoration: BoxDecoration(
-  //       color: AppColors.notificationBGHospitalForEachOne,
-  //       borderRadius: BorderRadius.circular(16),
-  //       boxShadow: [
-  //         BoxShadow(color: Colors.black.withValues(alpha: 0.25), blurRadius: 2),
-  //       ],
-  //     ),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Text(
-  //           "title",
-  //           style: context.textTheme.bodyMedium!.copyWith(
-  //             color: AppColors.notificationMainTitle,
-  //             fontWeight: FontWeight.w600,
-  //           ),
-  //         ),
-  //         SizedBox(height: 8),
-  //         Padding(
-  //           padding: EdgeInsets.only(top: 8.h, bottom: 16.h),
-  //           child: Text(
-  //             "تم تسجيل عملية  دون توثيق كامل للإجراءات المطلوبة",
-  //             style: context.textTheme.labelLarge!.copyWith(
-  //               color: AppColors.notificationContentHospitalForEachOne,
-  //               fontSize: 13,
-  //               fontWeight: FontWeight.w400,
-  //             ),
-  //           ),
-  //         ),
-  //         Text(
-  //           "1/11/2025 - 11:00 ص",
-  //           style: context.textTheme.labelLarge!.copyWith(
-  //             color: Color(0xff210000),
-  //             fontSize: 12,
-  //             fontWeight: FontWeight.w300,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget _progressCard() {
     return Padding(
@@ -318,17 +226,17 @@ class _HospitalDetailsScreenState
       children: [
         ConutContainer(
           padding: EdgeInsetsDirectional.only(end: 16, start: 2.w),
-          title: "العمليات",
+          title: context.translate(LocalizationKeys.surgeries),
           count: "8758",
         ),
         ConutContainer(
           padding: EdgeInsetsDirectional.only(end: 16),
-          title: "المتبرعون",
+          title: context.translate(LocalizationKeys.donors),
           count: "567",
         ),
         ConutContainer(
           padding: EdgeInsetsDirectional.only(end: 2.w),
-          title: "المرضى",
+          title: context.translate(LocalizationKeys.patients),
           count: "123",
         ),
       ],

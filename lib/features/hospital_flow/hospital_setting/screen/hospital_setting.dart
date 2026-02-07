@@ -6,6 +6,7 @@ import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
+import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
 import 'package:organ_link/features/shared_screens/log_out_confirmation/log_out_confirmationDialog_screen.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
@@ -47,10 +48,11 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text("الإعدادات والمعلومات", style: context.textTheme.bodyMedium),
-          Text(
-            "إدارة معلومات المستشفى والحساب",
-            style: context.textTheme.labelMedium,
+          TitleAndSubtitleCustomWidget(
+            title: context.translate(LocalizationKeys.settingsInformation),
+            subTitle: context.translate(
+              LocalizationKeys.manageHospitalAccountInfo,
+            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 24.h),
@@ -58,7 +60,7 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _hospitalInfoSection(),
-                _info(),
+                _systemInformation(),
                 LogOutWidget(
                   onPressed: () {
                     _logoutConfirmation();
@@ -73,7 +75,7 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
     );
   }
 
-  Widget _info() {
+  Widget _systemInformation() {
     return ContainerWithShadow(
       borderSideColor: AppColors.seconderColor,
       padding: EdgeInsets.symmetric(vertical: 12.h),
@@ -82,7 +84,7 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "معلومات النظام",
+            context.translate(LocalizationKeys.systemInformation),
             style: context.textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.blackText,
@@ -91,24 +93,24 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
           CustomDividerWidget(),
           DataRowWithDivider(
             divider: true,
-            title: context.translate("إصدار النظام"),
+            title: context.translate(LocalizationKeys.appVersion),
             subTitle: "v2.5.0",
           ),
           DataRowWithDivider(
             divider: true,
-            title: context.translate("رقم المستخدم"),
+            title: context.translate(LocalizationKeys.userId),
             subTitle: "KE",
           ),
           DataRowWithDivider(
             divider: true,
-            title: context.translate("آخر تحديث"),
+            title: context.translate(LocalizationKeys.lastUpdate),
             subTitle: "2025-02-10",
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "حالة الاتصال",
+                context.translate(LocalizationKeys.connectionStatus),
                 style: context.textTheme.labelMedium!.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
@@ -122,7 +124,10 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
             ],
           ),
           SizedBox(height: 16.h),
-          AppButtonWithGradientColors(text: "التفاصيل", onTap: () {}),
+          AppButtonWithGradientColors(
+            text: context.translate(LocalizationKeys.details),
+            onTap: () {},
+          ),
         ],
       ),
     );
@@ -136,27 +141,38 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "معلومات المستشفى",
+            context.translate(LocalizationKeys.hospitalInformation),
             style: context.textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.w600,
             ),
           ),
           Text(
-            "البيانات الأساسية للمستشفى المعتمدة من وزارة الصحة",
+            context.translate(LocalizationKeys.basicHospitalInfoMoh),
             style: context.textTheme.labelMedium!.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w400,
             ),
           ),
           CustomDividerWidget(),
-          _textField(title: "اسم المستشفى", hintText: "مستشفى القصر العيني  "),
+          _textField(
+            title: context.translate(LocalizationKeys.hospitalName),
+            hintText: "مستشفى القصر العيني  ",
+          ),
           Row(
             children: [
               Flexible(
                 child: Column(
                   children: [
-                    _textField(title: "رقم التسجيل", hintText: "HSP-2024-001"),
-                    _textField(title: "عدد الأسرة", hintText: "HSP-2024-001"),
+                    _textField(
+                      title: context.translate(
+                        LocalizationKeys.registrationNumber,
+                      ),
+                      hintText: "HSP-2024-001",
+                    ),
+                    _textField(
+                      title: context.translate(LocalizationKeys.numberOfBeds),
+                      hintText: "HSP-2024-001",
+                    ),
                   ],
                 ),
               ),
@@ -164,10 +180,13 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
               Flexible(
                 child: Column(
                   children: [
-                    _textField(title: "المدينة", hintText: "القاهرة"),
+                    _textField(
+                      title: context.translate(LocalizationKeys.city),
+                      hintText: "القاهرة",
+                    ),
                     _textField(
                       isEnable: true,
-                      title: "رقم الهاتف",
+                      title: context.translate(LocalizationKeys.phoneNumber),
                       hintText: "012222222",
                     ),
                   ],
@@ -175,11 +194,15 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
               ),
             ],
           ),
-          _textField(isEnable: true, title: "email", hintText: "m2005@gamialh"),
+          _textField(
+            isEnable: true,
+            title: context.translate(LocalizationKeys.email),
+            hintText: "m2005@gamialh",
+          ),
           Padding(
             padding: EdgeInsets.only(top: 16.h, bottom: 24.h),
             child: AppButtonWithGradientColors(
-              text: "حفظ التعديلات",
+              text: context.translate(LocalizationKeys.saveChange),
               onTap: () {},
             ),
           ),
@@ -195,8 +218,7 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
       contentPadding: EdgeInsets.symmetric(vertical: 9.h, horizontal: 16.w),
       textColor: AppColors.notificationMainTitle,
       backgroundColor: AppColors.notificationImportantItemBG,
-      text:
-          'ملاحظة: بعض المعلومات مرتبطة بالتسجيل في وزارة الصحة ولا يمكن تعديلها. للتفعيل، يرجى التواصل مع الدعم الفني',
+      text: context.translate(LocalizationKeys.mohNota),
     );
   }
 
@@ -205,17 +227,20 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
     required String title,
     required String hintText,
   }) {
-    return AppTextFormField(
-      enable: isEnable ?? false,
-      title: title,
-      enableBorderColor: isEnable == true
-          ? AppColors.enableBorderColorStting
-          : null,
-      fillColor: isEnable == true ? AppColors.filledColorenable : null,
-      titleColor: AppColors.grayText,
-      hintText: hintText,
-      hintTextStyle: context.textTheme.labelMedium!.copyWith(
-        color: isEnable == true ? AppColors.textColor : AppColors.blackText,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: AppTextFormField(
+        enable: isEnable ?? false,
+        title: title,
+        enableBorderColor: isEnable == true
+            ? AppColors.enableBorderColorStting
+            : null,
+        fillColor: isEnable == true ? AppColors.filledColorenable : null,
+        titleColor: AppColors.grayText,
+        hintText: hintText,
+        hintTextStyle: context.textTheme.labelMedium!.copyWith(
+          color: isEnable == true ? AppColors.textColor : AppColors.blackText,
+        ),
       ),
     );
   }

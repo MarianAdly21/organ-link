@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
-import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/shared_screens/log_out_confirmation/log_out_confirmationDialog_screen.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
+import 'package:organ_link/features/user_flow/widget/hospital_name_container.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/features/widgets/data_section.dart';
-import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/log_out_Widget.dart';
 import 'package:organ_link/res/app_colors.dart';
@@ -44,7 +43,10 @@ class _SettingsScreenState extends BaseScreenState<SettingsScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _hospitalName(),
+          HospitalNameContainer(
+            hospitalName: "Qasr El Aini Hospital",
+            hospitalLocation: "Cairo",
+          ),
           DataSection(
             paddingAroundContainer: EdgeInsets.symmetric(vertical: 0),
             title: context.translate(LocalizationKeys.appAbout),
@@ -112,39 +114,9 @@ class _SettingsScreenState extends BaseScreenState<SettingsScreen> {
     );
   }
 
-  Widget _hospitalName() {
-    return ContainerWithShadow(
-      //height: 93.h,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                "Qasr El Aini Hospital",
-                style: context.textTheme.bodyLarge,
-              ),
-            ),
-            SizedBox(height: 10.h),
-            Text(
-              "Cairo",
-              style: context.textTheme.labelMedium!.copyWith(
-                color: AppColors.grayText,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   ///////////////////////////////////////////////////////////
   /////////////////// Helper Method ////////////////////////
   ///////////////////////////////////////////////////////////
-
 
   Future<void> _logoutConfirmation() {
     return showAppDialog(
@@ -156,4 +128,3 @@ class _SettingsScreenState extends BaseScreenState<SettingsScreen> {
     );
   }
 }
-

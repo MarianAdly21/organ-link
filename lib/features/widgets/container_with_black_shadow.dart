@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 class ContainerWithBlackShadow extends StatelessWidget {
@@ -9,6 +8,7 @@ class ContainerWithBlackShadow extends StatelessWidget {
     this.borderRadius,
     this.contentPadding,
     this.height,
+    this.width,
     this.padding,
     this.backgroundColor,
     this.gradientbackgroundColor,
@@ -16,6 +16,7 @@ class ContainerWithBlackShadow extends StatelessWidget {
   final Widget body;
   final double? borderRadius;
   final double? height;
+  final double? width;
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? padding;
   final Color? backgroundColor;
@@ -25,7 +26,8 @@ class ContainerWithBlackShadow extends StatelessWidget {
     return Padding(
       padding: padding ?? EdgeInsets.all(0),
       child: Container(
-        //  height: height ?? 132.h,
+        height: height,
+        width: width,
         padding:
             contentPadding ??
             EdgeInsets.symmetric(vertical: 18, horizontal: 14),

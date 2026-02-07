@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
+import 'package:organ_link/_core/extensions/screen_sizer_extension.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/features/hospital_flow/enum/matching_status.dart';
+import 'package:organ_link/features/hospital_flow/extension/matching_status_ui.dart';
+import 'package:organ_link/features/hospital_flow/matching/models/matching_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/matching_details/screen/matching_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
+import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
@@ -23,13 +28,42 @@ class MatchingScreen extends BaseStatefulScreenWidget {
 }
 
 class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
+  ///demo data
+  List<MatchingUiModel> matchingList = [
+    MatchingUiModel(
+      patientName: "أحمد محمد العلي",
+      requestStatus: "تمت المطابقة",
+      status: "جاهز",
+      requestDate: "2025-10-15",
+      donorName: "سارة أحمد",
+      requestId: "12354",
+      organType: "كلى",
+      matchPercentage: "%95",
+      donorBloodType: "A+",
+      aiMessage: "تم العثور علي متبرع متطابق",
+    ),
+    MatchingUiModel(
+      patientName: "خالد سعيد",
+      requestStatus: "تحت المراجعة",
+      status: "انتظار",
+      requestDate: "2025-10-15",
+      requestId: "12354",
+      organType: "كلى",
+      donorName: "أحمد محمود",
+      matchPercentage: "%78",
+      donorBloodType: "A+",
+      aiMessage: "تم العثور علي متبرع متطابق",
+    ),
+  ];
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: AppBaseBodyScaffold(
-        titleOfScreen: "Matching",
-        backTap: () {},
+        titleOfScreen: context.translate(LocalizationKeys.matching),
+        backTap: () {
+          Navigator.pop(context);
+        },
         body: _buildBody(),
       ),
     );
@@ -52,10 +86,11 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text("طلبات المطابقة", style: context.textTheme.bodyMedium),
-        Text(
-          "متابعة طلبات المطابقة من نظام الذكاء الاصطناعي",
-          style: context.textTheme.labelMedium,
+        TitleAndSubtitleCustomWidget(
+          title: context.translate(LocalizationKeys.matchingRequests),
+          subTitle: context.translate(
+            LocalizationKeys.followuponAIMatchingRequests,
+          ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 24.h),
@@ -64,12 +99,21 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
             children: [
               CustomOverViewContainer(
                 isGradient: true,
-                text: "إجمالي الطلبات",
+                text: context.translate(LocalizationKeys.totalRequests),
                 count: "1000",
               ),
-              CustomOverViewContainer(text: "تحت المطابقة", count: "5"),
-              CustomOverViewContainer(text: "قيد التحليل", count: "100"),
-              CustomOverViewContainer(text: "تحت المراجعة", count: "100"),
+              CustomOverViewContainer(
+                text: context.translate(LocalizationKeys.underMatching),
+                count: "5",
+              ),
+              CustomOverViewContainer(
+                text: context.translate(LocalizationKeys.underAnalysis),
+                count: "100",
+              ),
+              CustomOverViewContainer(
+                text: context.translate(LocalizationKeys.underReview),
+                count: "100",
+              ),
             ],
           ),
         ),
@@ -82,7 +126,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          "قائمة الطلبات",
+          context.translate(LocalizationKeys.requestsList),
           style: context.textTheme.bodyMedium!.copyWith(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -92,7 +136,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: 5,
+          itemCount: matchingList.length,
           itemBuilder: (context, index) {
             return ContainerWithShadow(
               padding: EdgeInsets.symmetric(vertical: 12.h),
@@ -102,29 +146,45 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
               ),
               child: Column(
                 children: [
-                  _nameAndIdAndStatusRow(),
+                  _nameAndIdAndStatusRow(index),
                   CustomDividerWidget(),
                   DataRowWithDivider(
                     divider: true,
-                    title: context.translate("العضو"),
-                    subTitle: "كلى",
+                    title: context.translate(LocalizationKeys.organ),
+                    subTitle: matchingList[index].organType,
                   ),
                   DataRowWithDivider(
                     divider: true,
-                    title: context.translate("تاريخ الطلب"),
-                    subTitle: "2025-10-15",
+                    title: context.translate(LocalizationKeys.requestDate),
+                    subTitle: matchingList[index].requestDate,
                   ),
                   DataRowWithDivider(
-                    title: context.translate("نسبة التطابق"),
-                    subTitle: "%95",
+                    title: context.translate(LocalizationKeys.matchPercentage),
+                    subTitle: matchingList[index].matchPercentage,
                   ),
 
                   /// notes: the divider and container appears based on condition
-                  CustomDividerWidget(indent: 24.w, endIndent: 24.w),
-                  _resultMatching(),
+                  if (matchingList[index].requestStatus != null) ...[
+                    CustomDividerWidget(indent: 24.w, endIndent: 24.w),
+                    _resultMatching(index),
+                    if (matchingList[index].requestStatus ==
+                        "لم يتم العثور") ...[
+                      ContainerWithBackground(
+                        isCentered: true,
+                        width: context.width,
+                        contentPadding: EdgeInsets.symmetric(vertical: 28.h),
+                        backgroundColor: AppColors.notFoundBG,
+                        text: "لم يتم العثور علي متبرع متطابق",
+                        textStyle: context.textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.notFoundtext,
+                        ),
+                      ),
+                    ],
+                  ],
                   SizedBox(height: 16.h),
                   AppButtonWithGradientColors(
-                    text: "التفاصيل",
+                    text: context.translate(LocalizationKeys.details),
                     onTap: () {
                       Navigator.of(
                         context,
@@ -140,7 +200,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
     );
   }
 
-  Widget _resultMatching() {
+  Widget _resultMatching(int index) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
       decoration: BoxDecoration(
@@ -151,7 +211,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "تم العثور علي متبرع متطابق",
+            matchingList[index].aiMessage,
 
             ///message from back
             style: context.textTheme.bodyMedium!.copyWith(
@@ -162,7 +222,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
           ),
 
           Text(
-            "المتبرع: سارة أحمد",
+            "${context.translate(LocalizationKeys.donor)}: ${matchingList[index].donorName}",
             style: context.textTheme.labelMedium!.copyWith(
               color: AppColors.readyText,
             ),
@@ -172,15 +232,19 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "فصيلة الدم: +A",
+                "${context.translate(LocalizationKeys.bloodType)}: ${matchingList[index].donorBloodType} ",
                 style: context.textTheme.labelMedium!.copyWith(
                   color: AppColors.readyText,
                 ),
               ),
               ContainerWithBackground(
-                backgroundColor: AppColors.importantInfContainerBG,
-                text: "تمت المطابقة",
-                textColor: AppColors.textColor,
+                backgroundColor: mapMatchingStatus(
+                  matchingList[index].requestStatus!,
+                ).backgroundColor,
+                text: matchingList[index].requestStatus!,
+                textColor: mapMatchingStatus(
+                  matchingList[index].requestStatus!,
+                ).textColor,
               ),
             ],
           ),
@@ -189,7 +253,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
     );
   }
 
-  Widget _nameAndIdAndStatusRow() {
+  Widget _nameAndIdAndStatusRow(int index) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -198,7 +262,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "أحمد محمد العلي",
+              matchingList[index].patientName,
               style: context.textTheme.bodyMedium!.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -208,7 +272,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
             Padding(
               padding: EdgeInsets.only(top: 8.h),
               child: Text(
-                "${context.translate(LocalizationKeys.fileNumber)} 12345",
+                "${context.translate(LocalizationKeys.requestId)}: ${matchingList[index].requestId}",
                 style: context.textTheme.labelMedium!.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
@@ -218,8 +282,11 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
           ],
         ),
         ContainerWithBackground(
-          backgroundColor: AppColors.readyTextBG,
-          text: "جاهز",
+          backgroundColor: mapMatchingStatus(
+            matchingList[index].status,
+          ).backgroundColor,
+          text: matchingList[index].status,
+          textColor: mapMatchingStatus(matchingList[index].status).textColor,
         ),
       ],
     );

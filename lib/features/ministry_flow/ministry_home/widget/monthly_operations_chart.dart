@@ -1,8 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/features/ministry_flow/ministry_home/widget/legend_item.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class MonthlyOperationsChart extends StatelessWidget {
   const MonthlyOperationsChart({super.key});
@@ -96,9 +98,17 @@ class MonthlyOperationsChart extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            LegendItem(color: AppColors.seconderColor, text: "إجمالي العمليات"),
+            LegendItem(
+              color: AppColors.seconderColor,
+              text: context.translate(LocalizationKeys.totalOpertions),
+            ),
             SizedBox(width: 16),
-            LegendItem(color: AppColors.mainColor, text: "عمليات ناجحة"),
+            LegendItem(
+              color: AppColors.mainColor,
+              text: context.translate(
+                LocalizationKeys.successfulOperationCount,
+              ),
+            ),
           ],
         ),
       ],

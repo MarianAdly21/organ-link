@@ -13,6 +13,8 @@ class ContainerWithBackground extends BaseStatelessWidget {
     this.contentPadding,
     this.textStyle,
     this.border,
+    this.height,
+    this.width,
   });
   final Color? textColor;
   final Color backgroundColor;
@@ -21,10 +23,14 @@ class ContainerWithBackground extends BaseStatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final TextStyle? textStyle;
   final BoxBorder? border;
+  final double? height;
+  final double? width;
 
   @override
   Widget baseBuild(BuildContext context) {
     return Container(
+      height: height,
+      width: width,
       padding:
           contentPadding ??
           EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),

@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
-import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
+import 'package:organ_link/features/hospital_flow/enum/operation_status.dart';
+import 'package:organ_link/features/hospital_flow/extension/operation_status_ui.dart';
+import 'package:organ_link/features/hospital_flow/surgery_details/models/surgery_details_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
@@ -22,6 +24,18 @@ class SurgeryDetailsScreen extends BaseStatefulScreenWidget {
 }
 
 class _SurgeryDetailsScreenState extends BaseScreenState<SurgeryDetailsScreen> {
+  final SurgeryDetailsUiModel surgeryDetailsUiModel = SurgeryDetailsUiModel(
+    surgeryNumber: "Op001",
+    organType: "كلى",
+    responsibleSurgeon: "د. عبدالله خالد",
+    department: "الجراحة - عيادة الكلي",
+    date: "15-02-2025",
+    surgeryStatus: "جارية",
+    patientName: "أحمد محمد العلي",
+    patientFileNumber: "P001",
+    donorName: "سارة أحمد",
+    donorNameFileNumber: "D001",
+  );
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
@@ -29,126 +43,136 @@ class _SurgeryDetailsScreenState extends BaseScreenState<SurgeryDetailsScreen> {
       body: _buildBody(),
     );
   }
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper widget ////////////////////////
+  ///////////////////////////////////////////////////////////
 
   Widget _buildBody() {
     return AppBaseBodyScaffold(
       titleOfScreen: LocalizationKeys.surgeryDetails,
-      backTap: () {},
+      backTap: () {
+        Navigator.pop(context);
+      },
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "${context.translate(LocalizationKeys.surgeryNumber)} OP001",
+              "${context.translate(LocalizationKeys.surgeryNumber)}:${surgeryDetailsUiModel.surgeryNumber}",
               style: context.textTheme.bodyLarge,
             ),
-            ContainerWithShadow(
-              borderSideColor: Colors.amber,
-              padding: EdgeInsets.symmetric(vertical: 12.h),
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 24.h,
-                horizontal: 16.w,
-              ),
-              sectionTitle: context.translate(
-                LocalizationKeys.surgeryInformation,
-              ),
-              child: Column(
-                children: [
-                  DataRowWithDivider(
-                    divider: true,
-                    title: context.translate(LocalizationKeys.organ),
-                    subTitle: "كلي",
-                  ),
-                  DataRowWithDivider(
-                    divider: true,
-                    title: context.translate(
-                      LocalizationKeys.responsibleSurgeon,
-                    ),
-                    subTitle: "د. عبدالله خالد",
-                  ),
-                  DataRowWithDivider(
-                    divider: true,
-                    title: context.translate(LocalizationKeys.department),
-                    subTitle: "الجراحة - عيادة الكلي",
-                  ),
-                  DataRowWithDivider(
-                    divider: true,
-                    title: context.translate(LocalizationKeys.date),
-                    subTitle: "15-02-2025",
-                  ),
-                  DataRowWithStatusContianerWidget(
-                    title: LocalizationKeys.surgeryStatus,
-                    subTitle: "مجدولة",
-                    backgroundColor: AppColors.medicalTestDoneBG,
-                  ),
-                ],
-              ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: _surgeryInfoSection(),
             ),
-            ContainerWithShadow(
-              padding: EdgeInsets.symmetric(vertical: 12.h),
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 24.h,
-                horizontal: 16.w,
-              ),
-              sectionTitle: context.translate(
-                LocalizationKeys.patientInformation,
-              ),
-              child: Column(
-                children: [
-                  DataRowWithDivider(
-                    divider: true,
-                    title: context.translate(LocalizationKeys.patientName),
-                    subTitle: "كلي",
-                  ),
-                  DataRowWithDivider(
-                    title: context.translate(
-                      LocalizationKeys.fileNumberWithoutColumn,
-                    ),
-                    subTitle: "كلي",
-                  ),
-                  SizedBox(height: 24.h),
-                  AppButtonWithGradientColors(
-                    text: context.translate(LocalizationKeys.goToPatientFile),
-                    onTap: () {},
-                  ),
-                ],
-              ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: _patientInfoSection(),
             ),
-            ContainerWithShadow(
-              padding: EdgeInsets.symmetric(vertical: 12.h),
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 24.h,
-                horizontal: 16.w,
-              ),
-              sectionTitle: context.translate(
-                LocalizationKeys.donorInformation,
-              ),
-              child: Column(
-                children: [
-                  DataRowWithDivider(
-                    divider: true,
-                    title: context.translate(LocalizationKeys.donorName),
-                    subTitle: "كلي",
-                  ),
-                  DataRowWithDivider(
-                    title: context.translate(
-                      LocalizationKeys.fileNumberWithoutColumn,
-                    ),
-                    subTitle: "12345",
-                  ),
-                  SizedBox(height: 24.h),
-                  AppButtonWithGradientColors(
-                    text: context.translate(LocalizationKeys.goToPatientFile),
-                    onTap: () {},
-                  ),
-                ],
-              ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: _donorInfoSection(),
             ),
-            _infoNoticeCard(),
-
-            /// هتضهر لو العمليه اتحدد ليها معاد
+            if (surgeryDetailsUiModel.date != null) ...[_infoNoticeCard()],
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _surgeryInfoSection() {
+    return ContainerWithShadow(
+      borderSideColor: mapOperationStatus(
+        surgeryDetailsUiModel.surgeryStatus,
+      ).sideColor,
+      padding: EdgeInsets.symmetric(vertical: 12.h),
+      contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+      sectionTitle: context.translate(LocalizationKeys.surgeryInformation),
+      child: Column(
+        children: [
+          DataRowWithDivider(
+            divider: true,
+            title: context.translate(LocalizationKeys.organ),
+            subTitle: surgeryDetailsUiModel.organType,
+          ),
+          DataRowWithDivider(
+            divider: true,
+            title: context.translate(LocalizationKeys.responsibleSurgeon),
+            subTitle: surgeryDetailsUiModel.responsibleSurgeon,
+          ),
+          DataRowWithDivider(
+            divider: true,
+            title: context.translate(LocalizationKeys.department),
+            subTitle: surgeryDetailsUiModel.department,
+          ),
+          DataRowWithDivider(
+            divider: true,
+            title: context.translate(LocalizationKeys.date),
+            subTitle: surgeryDetailsUiModel.date ?? "",
+          ),
+          DataRowWithStatusContianerWidget(
+            title: LocalizationKeys.surgeryStatus,
+            subTitle: surgeryDetailsUiModel.surgeryStatus,
+            backgroundColor: mapOperationStatus(
+              surgeryDetailsUiModel.surgeryStatus,
+            ).badgeBackground,
+            subTitleColor: mapOperationStatus(
+              surgeryDetailsUiModel.surgeryStatus,
+            ).sideColor,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _donorInfoSection() {
+    return ContainerWithShadow(
+      padding: EdgeInsets.symmetric(vertical: 12.h),
+      contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+      sectionTitle: context.translate(LocalizationKeys.donorInformation),
+      child: Column(
+        children: [
+          DataRowWithDivider(
+            divider: true,
+            title: context.translate(LocalizationKeys.donorName),
+            subTitle: surgeryDetailsUiModel.donorName,
+          ),
+          DataRowWithDivider(
+            title: context.translate(LocalizationKeys.fileNumberWithoutColumn),
+            subTitle: surgeryDetailsUiModel.donorNameFileNumber,
+          ),
+          SizedBox(height: 24.h),
+          AppButtonWithGradientColors(
+            text: context.translate(LocalizationKeys.goToPatientFile),
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _patientInfoSection() {
+    return ContainerWithShadow(
+      padding: EdgeInsets.symmetric(vertical: 12.h),
+      contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+      sectionTitle: context.translate(LocalizationKeys.patientInformation),
+      child: Column(
+        children: [
+          DataRowWithDivider(
+            divider: true,
+            title: context.translate(LocalizationKeys.patientName),
+            subTitle: surgeryDetailsUiModel.patientName,
+          ),
+          DataRowWithDivider(
+            title: context.translate(LocalizationKeys.fileNumberWithoutColumn),
+            subTitle: surgeryDetailsUiModel.patientFileNumber,
+          ),
+          SizedBox(height: 24.h),
+          AppButtonWithGradientColors(
+            text: context.translate(LocalizationKeys.goToPatientFile),
+            onTap: () {},
+          ),
+        ],
       ),
     );
   }

@@ -16,8 +16,8 @@ class OrganDistributionChart extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             LegendItem(color: AppColors.alegend1, text: "كبد (40%)"),
-            LegendItem(color: AppColors.alegend2, text: "كلي (22%)"),
-            LegendItem(color: AppColors.alegend3, text: "رئة (16%)"),
+            LegendItem(color: AppColors.alegend2, text: "كلي يمنى (22%)"),
+            LegendItem(color: AppColors.alegend3, text: "كلي يسرى (22%)"),
           ],
         ),
         SizedBox(
