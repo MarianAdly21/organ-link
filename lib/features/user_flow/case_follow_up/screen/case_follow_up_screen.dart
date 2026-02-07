@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/features/user_flow/case_follow_up/models/step_ui_model.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/widget/gradient_progress_bar.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/notice_container.dart';
@@ -22,6 +24,38 @@ class CaseFollowUpScreen extends BaseStatefulScreenWidget {
 }
 
 class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
+  final List<StepUiModel> steps = [
+    StepUiModel(
+      stepTitle: LocalizationKeys.dataRegistration,
+      stepDescription: LocalizationKeys.dataRRegistrationSuccessfully,
+      isDone: true,
+    ),
+    StepUiModel(
+      stepTitle: LocalizationKeys.initialTests,
+      stepDescription: LocalizationKeys.initialTestsDescription,
+      isDone: true,
+    ),
+    StepUiModel(
+      stepTitle: LocalizationKeys.donorSearch,
+      stepDescription: LocalizationKeys.initialTestsDescription,
+      isDone: true,
+    ),
+    StepUiModel(
+      stepTitle: LocalizationKeys.tissueCompatibilityTest,
+      stepDescription: LocalizationKeys.tissueCompatibilityDescription,
+      isDone: true,
+    ),
+    StepUiModel(
+      stepTitle: LocalizationKeys.procedureScheduling,
+      stepDescription: LocalizationKeys.procedureSchedulingDescription,
+      isDone: true,
+    ),
+    StepUiModel(
+      stepTitle: LocalizationKeys.transplantProcedure,
+      stepDescription: LocalizationKeys.transplantProcedureDescription,
+      isDone: true,
+    ),
+  ];
   bool isScheduling = true;
   @override
   Widget baseScreenBuild(BuildContext context) {
@@ -36,52 +70,29 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
 
   Widget _buildBody() {
     return BaseBodyScaffold(
-      title: "Case Follow-up",
+      title: context.translate(LocalizationKeys.caseFollowUp),
       onBackTap: () {
         Navigator.pop(context);
       },
       body: Column(
         children: [
-          _stepCard(
-            title: "تسجيل البيانات",
-            subTitle: "تم تسجيل بياناتك بنجاح في النظام",
-            doneHistory: " 1 سبتمبر 2025",
-            isDone: true,
-          ),
-          _stepCard(
-            title: "الفحوصات الأولية",
-            subTitle: "إجراء الفحوصات والتحاليل الطبية الأولية",
-            doneHistory: "15 سبتمبر 2025",
-            isDone: true,
-          ),
-          _stepCard(
-            title: "البحث عن متبرع متوافق",
-            subTitle: "إجراء الفحوصات والتحاليل الطبية الأولية",
-            doneHistory: "1 أكتوبر 2025",
-            isDone: true,
-          ),
-          _stepCard(
-            title: "فحص التوافق النسيجي",
-            subTitle: "إجراء فحوصات التوافق بينك وبين المتبرع المحتمل",
-            doneHistory: "1 أكتوبر 2025",
-            isDone: false,
-          ),
-          _stepCard(
-            title: "جدولة العملية",
-            subTitle: "تحديد موعد العملية والتحضيرات اللازمة",
-            doneHistory: "1 أكتوبر 2025",
-            isDone: false,
-          ),
-          _stepCard(
-            title: "إجراء عملية الزراعة",
-            subTitle: "تنفيذ العملية الجراحية",
-            doneHistory: "1 أكتوبر 2025",
-            isDone: isScheduling,
+          ListView.builder(
+            itemCount: steps.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return _stepCard(
+                title: context.translate(steps[index].stepTitle),
+                subTitle: context.translate(steps[index].stepDescription),
+                doneHistory: " 1 سبتمبر 2025",
+                isDone: steps[index].isDone,
+              );
+            },
           ),
           _progressSummaryCard(),
           isScheduling
               ? AppButtonWithGradientColors(
-                  text: "Procedure Scheduling",
+                  text: context.translate(LocalizationKeys.procedureScheduling),
                   onTap: () {},
                 )
               : SizedBox.shrink(),
@@ -114,14 +125,14 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'ملخص التقدم',
+                      context.translate(LocalizationKeys.progressSummary),
                       style: context.textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      'الخطوات المكتملة',
+                      context.translate(LocalizationKeys.completedSteps),
                       style: context.textTheme.labelMedium!.copyWith(
                         color: AppColors.grayText,
                         fontWeight: FontWeight.w400,
@@ -155,7 +166,7 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
     required String doneHistory,
   }) {
     return ContainerWithShadow(
-      padding: EdgeInsets.symmetric(vertical: 16.h),
+      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 2.w),
       child: Padding(
         padding: const EdgeInsetsDirectional.only(
           top: 16,
@@ -175,7 +186,7 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    context.translate(title),
                     style: context.textTheme.bodyMedium!.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -184,7 +195,7 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
                   Text(
                     softWrap: true,
                     overflow: TextOverflow.visible,
-                    subTitle,
+                    context.translate(subTitle),
                     style: context.textTheme.labelMedium!.copyWith(
                       color: AppColors.grayText,
                     ),
@@ -227,7 +238,7 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
         child: Text(
-          "قيد التنفيذ",
+          context.translate(LocalizationKeys.inProgress),
           style: context.textTheme.labelMedium!.copyWith(
             color: AppColors.textColor,
             fontWeight: FontWeight.w500,

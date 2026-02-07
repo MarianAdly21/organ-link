@@ -304,4 +304,10 @@ class AppColors {
   static const backgroundOfNameContainer = _mercuryApprox;
   static const borderOfNameContainer = _altoApprox;
   static const borderSettingsContainer = _periwinkleApprox;
+
+  static const underReviewBG = _periwinkleApprox;
+  static const pendingText = _goldDropApprox;
+  static const pendingBG = _buttermilkApprox;
+  static const notFoundBG = _cosmosApprox;
+  static const notFoundtext = _brightRedApprox;
 }

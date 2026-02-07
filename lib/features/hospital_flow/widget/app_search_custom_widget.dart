@@ -28,7 +28,14 @@ class AppSearchCustomWidget extends StatelessWidget {
         ],
       ),
       child: TextField(
+        maxLines: 1,
+        cursorColor: AppColors.blackText,
+        textInputAction: TextInputAction.search,
+        style: context.textTheme.labelMedium!.copyWith(
+          color: AppColors.blackText,
+        ),
         decoration: InputDecoration(
+          isDense: true,
           hintText: context.translate(hintText),
           hintStyle: context.textTheme.labelMedium!.copyWith(
             color: AppColors.grayText,

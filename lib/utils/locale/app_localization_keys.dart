@@ -49,6 +49,7 @@ class LocalizationKeys {
   static const identificationNumberWithColumn =
       "identification_number_with_column";
   static const patient = "patient";
+  static const patients = "patients";
   static const currentStatus = "current_status";
   static const underReview = "under_review";
   static const lastUpdate = "last_update";
@@ -206,4 +207,80 @@ class LocalizationKeys {
   static const enterEmail = "enter_email";
   static const whatIsYourPosition = "what_is_your_position";
   static const addUser = "add_user";
+  static const dataRegistration = "data_registration";
+  static const dataRRegistrationSuccessfully = "data_registered_successfully";
+  static const initialTests = "initial_tests";
+  static const initialTestsDescription = "initial_tests_description";
+  static const donorSearch = "donor_search";
+  static const tissueCompatibilityTest = "tissue_compatibility_test";
+  static const tissueCompatibilityDescription =
+      "tissue_compatibility_description";
+  static const procedureScheduling = "procedure_scheduling";
+  static const procedureSchedulingDescription =
+      "procedure_scheduling_description";
+  static const transplantProcedure = "transplant_procedure";
+  static const transplantProcedureDescription =
+      "transplant_procedure_description";
+  static const progressSummary = "progress_summary";
+  static const completedSteps = "completed_steps";
+  static const inProgress = "in_progress";
+  static const years = "years";
+  static const surgeries = "surgeries";
+  static const surgeryRecord = "surgery_record";
+  static const organTransplantFollowUp = "organ_transplant_follow_up";
+  static const completed = "completed";
+  static const ongoing = "ongoing";
+  static const scheduled = "scheduled";
+  static const surgeriesList = "surgeries_list";
+  static const donor = "donor";
+  static const details = "details";
+  static const matching = "matching";
+  static const followuponAIMatchingRequests = "ai_matching_follow_up";
+  static const totalRequests = "total_requests";
+  static const underMatching = "under_matching";
+  static const underAnalysis = "under_analysis";
+  static const requestsList = "requests_list";
+  static const requestDate = "request_date";
+  static const matchPercentage = "match_percentage";
+  static const requestId = "request_id";
+
+  static const settingsInformation = "settings_information";
+  static const manageHospitalAccountInfo = "manage_hospital_account_info";
+  static const basicHospitalInfoMoh = "basic_hospital_info_moh";
+  static const registrationNumber = "registration_number";
+  static const numberOfBeds = "number_of_beds";
+  static const mohNota = "moh_note";
+  static const systemInformation = "system_information";
+  static const systemVersion = "system_version";
+  static const hospitalName = "hospital_name";
+  static const userId = "user_id";
+  static const connectionStatus = "connection_status";
+
+  static const notifications = "notifications";
+  static const hospitals = "hospitals";
+  static const patientsInNeed = "patients_in_need";
+  static const participatingHospitals = "participating_hospitals";
+  static const successfulOperations = "successful_operations";
+  static const donors = "donors";
+  static const welcomeToOrganManagement = "welcome_to_organ_management";
+  static const organTransplantOverview = "organ_transplant_overview";
+  static const organDistribution = "organ_distribution";
+  static const organTransplantDistribution = "organ_transplant_distribution";
+  static const monthlyOperations = "monthly_operations";
+  static const operationsLastSixMonths = "operations_last_6_months";
+  static const totalOpertions = "total_operations";
+  static const successfulOperationCount = "successful_operations_count";
+
+  static const participatingHospitalsList = "participating_hospitals_list";
+  static const hospitalRegisteredInSystem = "hospital_registered_in_system";
+  static const searchforHospital = "search_for_hospital";
+  static const needs = "needs";
+
+  static const hospitalDetails = "hospital_details";
+  static const hospitalNeeds = "hospital_needs";
+  static const status = "status";
+  static const recentOperations = "recent_operations";
+  static const patientAge = "patient_age";
+  static const equipmentDevices = "equipment_devices";
+  static const quantity = "quantity";
 }

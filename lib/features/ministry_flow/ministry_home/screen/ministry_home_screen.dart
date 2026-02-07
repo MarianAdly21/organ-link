@@ -33,21 +33,21 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
   List<QuickActionItem> buildQuickActions(BuildContext context) {
     return [
       QuickActionItem(
-        text: "التنبيهات",
+        text: LocalizationKeys.notifications,
         backgroundColor: AppColors.grayText,
         onTap: () {
           Navigator.of(context).pushNamed(MinistryNotificationScreen.routeName);
         },
       ),
       QuickActionItem(
-        text: "المستشفيات",
+        text: LocalizationKeys.hospitals,
         backgroundColor: AppColors.mainColor,
         onTap: () {
           Navigator.of(context).pushNamed(HospitalsScreen.routeName);
         },
       ),
       QuickActionItem(
-        text: "الاعدادات",
+        text: LocalizationKeys.settings,
         backgroundColor: const Color(0xffFF0004),
         onTap: () {
           Navigator.of(context).pushNamed(MinistrySettingsScreen.routeName);
@@ -59,22 +59,22 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
   final List<DashboardMinistryUiModel> dashboardList = [
     DashboardMinistryUiModel(
       icon: AppAssetPaths.patientIcon,
-      title: "المرضى المحتاجون",
+      title: LocalizationKeys.patientsInNeed,
       conut: "24",
     ),
     DashboardMinistryUiModel(
       icon: AppAssetPaths.hospitalsIcon,
-      title: "المستشفيات المشاركة",
+      title: LocalizationKeys.participatingHospitals,
       conut: "24",
     ),
     DashboardMinistryUiModel(
       icon: AppAssetPaths.opertionsDoneIcon,
-      title: "العمليات الناجحة",
+      title: LocalizationKeys.successfulOperations,
       conut: "12",
     ),
     DashboardMinistryUiModel(
       icon: AppAssetPaths.donorsIcon,
-      title: "المتبرعون",
+      title: LocalizationKeys.donors,
       conut: "7",
     ),
   ];
@@ -108,14 +108,14 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "لوحة التحكم",
+                context.translate(LocalizationKeys.dashboard),
                 style: context.textTheme.bodyLarge!.copyWith(
                   color: AppColors.blackText,
                 ),
               ),
               SizedBox(height: 9.h),
               Text(
-                'OrganLink',
+                context.translate(LocalizationKeys.appName),
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -145,8 +145,12 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TitleAndSubtitleCustomWidget(
-                title: "مرحباً بك في نظام إدارة الأعضاء",
-                subTitle: "مركز عامة على تطاوير زراعة الأعضاء",
+                title: context.translate(
+                  LocalizationKeys.welcomeToOrganManagement,
+                ),
+                subTitle: context.translate(
+                  LocalizationKeys.organTransplantOverview,
+                ),
               ),
               DashboardMinistryWidget(dashboardList: dashboardList),
               // _dashboardSection(),
@@ -183,16 +187,16 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
   Widget _monthlyOpertionsSection() {
     return _baseChartContainer(
       padding: EdgeInsets.symmetric(vertical: 24.h),
-      title: "العمليات الشهرية",
-      subTitle: "إحصائيات العمليات على مدار اخر 6 شهور",
+      title: context.translate(LocalizationKeys.monthlyOperations),
+      subTitle: context.translate(LocalizationKeys.operationsLastSixMonths),
       body: MonthlyOperationsChart(),
     );
   }
 
   Widget _organDistributionSection() {
     return _baseChartContainer(
-      title: "توزيع الأعضاء",
-      subTitle: "نسب عمليات زراعة الأعضاء المختلفة",
+      title: context.translate(LocalizationKeys.organDistribution),
+      subTitle: context.translate(LocalizationKeys.organTransplantDistribution),
       body: OrganDistributionChart(),
     );
   }
@@ -349,30 +353,6 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
   //         ),
   //       ),
   //     ),
-  //   );
-  // }
-
-  // Widget _titelAndSubTitalWidget({
-  //   required String title,
-  //   required String subTitle,
-  // }) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.stretch,
-  //     children: [
-  //       Text(
-  //         context.translate(title),
-  //         style: context.textTheme.bodyLarge!.copyWith(
-  //           fontSize: 18,
-  //           fontWeight: FontWeight.w600,
-  //         ),
-  //       ),
-  //       Text(
-  //         subTitle,
-  //         style: context.textTheme.labelMedium!.copyWith(
-  //           color: AppColors.grayText,
-  //         ),
-  //       ),
-  //     ],
   //   );
   // }
 }

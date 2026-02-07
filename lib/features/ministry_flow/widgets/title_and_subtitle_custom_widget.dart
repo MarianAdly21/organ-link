@@ -24,6 +24,7 @@ class TitleAndSubtitleCustomWidget extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
+        const SizedBox(height: 8),
         Text(
           context.translate(subTitle),
           style: context.textTheme.labelMedium!.copyWith(

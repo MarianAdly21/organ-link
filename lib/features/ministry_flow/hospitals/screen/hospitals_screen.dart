@@ -10,9 +10,11 @@ import 'package:organ_link/features/ministry_flow/hospital_detailes/screen/hospi
 import 'package:organ_link/features/ministry_flow/hospitals/models/hospital_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/widgets/conut_container.dart';
 import 'package:organ_link/features/ministry_flow/widgets/info_tile_with_status_custom_widget.dart';
+import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class HospitalsScreen extends BaseStatefulScreenWidget {
   const HospitalsScreen({super.key});
@@ -59,12 +61,34 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: AppBaseBodyScaffold(
-        titleOfScreen: "المستشفيات",
+        titleOfScreen: context.translate(LocalizationKeys.hospitals),
         backTap: () {
           Navigator.pop(context);
         },
         body: Column(children: [_searchSection(), _buildHospitalList()]),
       ),
+    );
+  }
+
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper widget ////////////////////////
+  ///////////////////////////////////////////////////////////
+  Widget _searchSection() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TitleAndSubtitleCustomWidget(
+          title: context.translate(LocalizationKeys.participatingHospitalsList),
+          subTitle:
+              "${context.translate(LocalizationKeys.hospitalRegisteredInSystem)} 6 ",
+        ),
+        SizedBox(height: 16.h),
+        AppSearchCustomWidget(
+          hintText: context.translate(LocalizationKeys.searchforHospital),
+          onChanged: (value) {},
+        ),
+      ],
     );
   }
 
@@ -93,16 +117,16 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
                     children: [
                       ConutContainer(
                         padding: EdgeInsetsDirectional.only(end: 16),
-                        title: "العمليات",
+                        title: context.translate(LocalizationKeys.surgeries),
                         count: demoData[index].operationsCount.toString(),
                       ),
                       ConutContainer(
                         padding: EdgeInsetsDirectional.only(end: 16),
-                        title: "المتبرعون",
+                        title: context.translate(LocalizationKeys.donors),
                         count: demoData[index].donorsCount.toString(),
                       ),
                       ConutContainer(
-                        title: "المرضى",
+                        title: context.translate(LocalizationKeys.patients),
                         count: demoData[index].patientsCount.toString(),
                       ),
                     ],
@@ -110,7 +134,7 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
                 ),
                 _needsSection(organNeedModelList: demoData[index].organNeeds),
                 AppButtonWithGradientColors(
-                  text: "التفاصيل",
+                  text: context.translate(LocalizationKeys.details),
                   onTap: () {
                     Navigator.of(
                       context,
@@ -132,7 +156,7 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "الاحتياجات",
+            context.translate(LocalizationKeys.needs),
             style: context.textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.w600,
             ),
@@ -267,34 +291,4 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
   //     ],
   //   );
   // }
-
-  Widget _searchSection() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          context.translate("قائمة المستشفيات المشاركة"),
-          style: context.textTheme.bodyLarge!.copyWith(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        SizedBox(height: 8),
-        Text(
-          context.translate("6 مستشفى مسجل في النظام"),
-
-          /// 6 is changed when get hospital list
-          style: context.textTheme.labelMedium!.copyWith(
-            color: AppColors.grayText,
-          ),
-        ),
-        SizedBox(height: 16.h),
-        AppSearchCustomWidget(
-          hintText: "البحث عن مستشفى...",
-          onChanged: (value) {},
-        ),
-      ],
-    );
-  }
 }

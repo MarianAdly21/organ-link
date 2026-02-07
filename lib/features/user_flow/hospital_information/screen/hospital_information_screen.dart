@@ -4,9 +4,9 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
+import 'package:organ_link/features/user_flow/widget/hospital_name_container.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/features/widgets/data_section.dart';
-import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
@@ -45,7 +45,11 @@ class _HospitalInformationScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _hospitalName(),
+            HospitalNameContainer(
+              hospitalName: "Qasr El Aini Hospital",
+              hospitalLocation: "Cairo",
+            ),
+
             DataSection(
               paddingAroundContainer: EdgeInsets.symmetric(vertical: 0),
               title: context.translate(LocalizationKeys.location),
@@ -154,35 +158,6 @@ class _HospitalInformationScreenState
               fontSize: 16,
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _hospitalName() {
-    return ContainerWithShadow(
-      //height: 93.h,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                "Qasr El Aini Hospital",
-                style: context.textTheme.bodyLarge,
-              ),
-            ),
-            SizedBox(height: 10.h),
-            Text(
-              "Cairo",
-              style: context.textTheme.labelMedium!.copyWith(
-                color: AppColors.grayText,
-              ),
-            ),
-          ],
         ),
       ),
     );

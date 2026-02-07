@@ -7,6 +7,7 @@ import 'package:organ_link/features/hospital_flow/widget/container_with_backgrou
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_search_custom_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/status_row_widget.dart';
+import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/text_field/custom_drop_down_form_filed_widget.dart';
@@ -48,7 +49,9 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
               slivers: [
                 SliverToBoxAdapter(
                   child: Text(
-                    "المرضي (5)",
+                    "${context.translate(LocalizationKeys.patients)} (6)",
+
+                    /// conut==> 6 from back and text patients changes based on pateint or donor
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -61,30 +64,7 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
                     context,
                     index,
                   ) {
-                    return ContainerWithShadow(
-                      padding: EdgeInsets.symmetric(vertical: 16.h),
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: 16.h,
-                        horizontal: 16.w,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _nameAndId(),
-                          _infoRow(),
-                          // _statusRow(),
-                          StatusRowWidget(
-                            priority: "أولوية عالية",
-                            status: "جاهز",
-                          ),
-                          SizedBox(height: 16.h),
-                          AppButtonWithGradientColors(
-                            text: "التفاصيل",
-                            onTap: () {},
-                          ),
-                        ],
-                      ),
-                    );
+                    return _cardItem();
                   }),
                 ),
               ],
@@ -95,15 +75,47 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
     );
   }
 
-  Widget _infoRow() {
+  Widget _cardItem() {
+    return ContainerWithShadow(
+      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 2),
+      contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _nameAndId(name: "أحمد محمد العلي", id: "100p"),
+          _infoRow(age: '12', bloodType: 'A+', organ: 'كلي'),
+          StatusRowWidget(priority: "أولوية عالية", status: "جاهز"),
+          SizedBox(height: 16.h),
+          AppButtonWithGradientColors(
+            text: context.translate(LocalizationKeys.details),
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _infoRow({
+    required String age,
+    required String bloodType,
+    required String organ,
+  }) {
     return Padding(
       padding: EdgeInsets.only(top: 8.h, bottom: 16.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _infoRowText(text: "age: 12 years"),
-          _infoRowText(text: "Blood Type: A+"),
-          _infoRowText(text: "organ:hhhhhh "),
+          _infoRowText(
+            text:
+                "${context.translate(LocalizationKeys.age)}: $age ${context.translate(LocalizationKeys.years)}",
+          ),
+          _infoRowText(
+            text:
+                "${context.translate(LocalizationKeys.bloodType)}: $bloodType",
+          ),
+          _infoRowText(
+            text: "${context.translate(LocalizationKeys.organ)}: $organ",
+          ),
         ],
       ),
     );
@@ -116,12 +128,12 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
     );
   }
 
-  Widget _nameAndId() {
+  Widget _nameAndId({required String name, required String id}) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          "أحمد محمد العلي",
+          name,
           style: context.bodyMedium!.copyWith(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -130,7 +142,7 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
         SizedBox(width: 16.w),
         ContainerWithBackground(
           backgroundColor: AppColors.idContainerBG,
-          text: "100p",
+          text: id,
         ),
       ],
     );
@@ -141,18 +153,10 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          context.translate(LocalizationKeys.patientList),
-          style: context.textTheme.bodyLarge!.copyWith(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        SizedBox(height: 8.h),
-        Text(
-          context.translate(LocalizationKeys.transplantPatientsManagement),
-          style: context.textTheme.labelMedium!.copyWith(
-            color: AppColors.grayText,
+        TitleAndSubtitleCustomWidget(
+          title: context.translate(LocalizationKeys.patientList),
+          subTitle: context.translate(
+            LocalizationKeys.transplantPatientsManagement,
           ),
         ),
         SizedBox(height: 16.h),
@@ -177,10 +181,9 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
                 color: AppColors.blackText,
               ),
               items: [
-                CustomDropDownItem(value: "كلي", key: "كلي"),
+                CustomDropDownItem(value: "كلي يمنى", key: "كلي"),
+                CustomDropDownItem(value: "كلي يسرى", key: "كلي"),
                 CustomDropDownItem(value: "كبد", key: "كبد"),
-                CustomDropDownItem(value: "رئه", key: "رئه"),
-                CustomDropDownItem(value: "قلب", key: "قلب"),
               ],
             ),
           ),
@@ -192,9 +195,9 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
                 color: AppColors.blackText,
               ),
               items: [
-                CustomDropDownItem(value: "قيد المراجعه", key: "كلي"),
-                CustomDropDownItem(value: "جاهز", key: "كبد"),
-                CustomDropDownItem(value: "تمت المطابقة", key: "رئه"),
+                CustomDropDownItem(value: "قيد المراجعه", key: ""),
+                CustomDropDownItem(value: "جاهز", key: ""),
+                CustomDropDownItem(value: "تمت المطابقة", key: ""),
               ],
             ),
           ),
