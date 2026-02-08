@@ -47,7 +47,7 @@ class AppAssetPaths {
 
   static const donorsIcon = "assets/icons/donors_icon.svg";
   static const hospitalsIcon = "assets/icons/hospitals_icon.svg";
-  static const opertionsDoneIcon = "assets/icons/opertions_done_icon.svg";
+  static const operationsDoneIcon = "assets/icons/opertions_done_icon.svg";
   static const patientIcon = "assets/icons/patient_icon.svg";
   static const emailIcon = "assets/icons/email_icon.svg";
   static const callIcon = "assets/icons/call_icon.svg";

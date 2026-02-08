@@ -46,7 +46,10 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
           _chronicDiseasesCard(),
           _medicalTestCard(),
           _upcomingAppointmentCard(),
-          NoticeContainer(notice: LocalizationKeys.hospitalDataNote),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: NoticeContainer(notice: LocalizationKeys.hospitalDataNote),
+          ),
         ],
       ),
     );

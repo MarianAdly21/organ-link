@@ -11,7 +11,7 @@ class ContainerWithBlackShadow extends StatelessWidget {
     this.width,
     this.padding,
     this.backgroundColor,
-    this.gradientbackgroundColor,
+    this.gradientBackgroundColor,
   });
   final Widget body;
   final double? borderRadius;
@@ -20,7 +20,7 @@ class ContainerWithBlackShadow extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? padding;
   final Color? backgroundColor;
-  final List<Color>? gradientbackgroundColor;
+  final List<Color>? gradientBackgroundColor;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,15 +41,15 @@ class ContainerWithBlackShadow extends StatelessWidget {
             ),
           ],
 
-          gradient: gradientbackgroundColor != null
+          gradient: gradientBackgroundColor != null
               ? LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomRight,
-                  colors: gradientbackgroundColor!,
+                  colors: gradientBackgroundColor!,
                   stops: const [0.0, 0.92],
                 )
               : null,
-          color: gradientbackgroundColor == null
+          color: gradientBackgroundColor == null
               ? (backgroundColor ??
                     AppColors.homeCardBG.withValues(alpha: 0.45))
               : null,

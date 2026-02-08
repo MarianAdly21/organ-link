@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
+import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/shared_screens/log_out_confirmation/log_out_confirmationDialog_screen.dart';
@@ -12,21 +14,29 @@ import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/log_out_Widget.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
+import 'package:organ_link/utils/locale/locale_cubit.dart';
+
+
 
 class SettingsScreen extends BaseStatefulScreenWidget {
   const SettingsScreen({super.key});
-  static const routeName = "/settings-screen";
+    static const routeName = "/settings-screen";
+
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
       _SettingsScreenState();
 }
 
-class _SettingsScreenState extends BaseScreenState<SettingsScreen> {
+class _SettingsScreenState
+    extends BaseScreenState<SettingsScreen> {
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: _buildBody(context),
+      body: _buildBody(
+        context,
+        appLocale: context.appLocale.currentLocaleCode(),
+      ),
     );
   }
 
@@ -34,7 +44,10 @@ class _SettingsScreenState extends BaseScreenState<SettingsScreen> {
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  BaseBodyScaffold _buildBody(BuildContext context) {
+  BaseBodyScaffold _buildBody(
+    BuildContext context, {
+    required String appLocale,
+  }) {
     return BaseBodyScaffold(
       title: context.translate(LocalizationKeys.settings),
       onBackTap: () {
@@ -80,6 +93,19 @@ class _SettingsScreenState extends BaseScreenState<SettingsScreen> {
               children: [
                 CustomDividerWidget(verticalPadding: 8),
                 SizedBox(height: 16.h),
+                _languageItemWidget(
+                  appLocale: appLocale,
+                  language: 'English',
+                  locale: 'en',
+                  onTap: _englishItemOnTap,
+                ),
+                
+                _languageItemWidget(
+                  appLocale: appLocale,
+                  language: 'عربي',
+                  locale: 'ar',
+                  onTap: _arabicItemOnTap,
+                ),
               ],
             ),
           ),
@@ -114,10 +140,67 @@ class _SettingsScreenState extends BaseScreenState<SettingsScreen> {
     );
   }
 
+  Widget _languageItemWidget({
+    required String appLocale,
+    required String language,
+    required void Function() onTap,
+    required String locale,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.symmetric( vertical:7.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              language,
+              style: context.textTheme.headlineMedium!.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            appLocale == locale
+                ? const Icon(Icons.check_box, size:26,color: AppColors.blackText,)
+                : const Icon(Icons.check_box_outline_blank, size: 26 ,color: AppColors.blackText),
+          ],
+        ),
+      ),
+    );
+  }
+
+ 
+
   ///////////////////////////////////////////////////////////
   /////////////////// Helper Method ////////////////////////
   ///////////////////////////////////////////////////////////
 
+  //SettingsBloc get currentBloc => context.read<SettingsBloc>();
+   void _arabicItemOnTap() {
+  //  _selectArabicLanguageEvent();
+    _changeToArabicEvent();
+  }
+
+  void _englishItemOnTap() {
+   // _selectEnglishLanguageEvent();
+    _changeToEnglishEvent();
+  }
+
+  // void _selectEnglishLanguageEvent() {
+  //   currentBloc.add(SelectEnglishLanguageEvent());
+  // }
+
+  void _changeToEnglishEvent() {
+    BlocProvider.of<LocaleCubit>(context).changeLocale(LocaleApp.en);
+  }
+
+  // void _selectArabicLanguageEvent() {
+  //   currentBloc.add(SelectArabicLanguageEvent());
+  // }
+
+  void _changeToArabicEvent() {
+    BlocProvider.of<LocaleCubit>(context).changeLocale(LocaleApp.ar);
+  }
   Future<void> _logoutConfirmation() {
     return showAppDialog(
       context: context,

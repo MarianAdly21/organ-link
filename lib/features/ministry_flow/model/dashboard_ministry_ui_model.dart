@@ -1,11 +1,11 @@
 class DashboardMinistryUiModel {
   final String title;
-  final String conut;
+  final String count;
   final String icon;
 
   DashboardMinistryUiModel({
     required this.title,
-    required this.conut,
+    required this.count,
     required this.icon,
   });
 }
