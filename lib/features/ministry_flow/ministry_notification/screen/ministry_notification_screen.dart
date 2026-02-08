@@ -31,22 +31,22 @@ class _MinistryNotificationScreenState
     DashboardMinistryUiModel(
       icon: AppAssetPaths.newNotificationIcon,
       title: LocalizationKeys.newAlarts,
-      conut: "24",
+      count: "24",
     ),
     DashboardMinistryUiModel(
       icon: AppAssetPaths.folderNotificationIcon,
       title: LocalizationKeys.totalAlarts,
-      conut: "24",
+      count: "24",
     ),
     DashboardMinistryUiModel(
       icon: AppAssetPaths.hospitalsIcon,
       title: LocalizationKeys.resolved,
-      conut: "12",
+      count: "12",
     ),
     DashboardMinistryUiModel(
       icon: AppAssetPaths.hourglassIcon,
       title: LocalizationKeys.underInvestigation,
-      conut: "7",
+      count: "7",
     ),
   ];
   final List<MinistryAlartUiModel> alarts = [
@@ -93,7 +93,7 @@ class _MinistryNotificationScreenState
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, index) {
                 return ContainerWithBlackShadow(
-                  gradientbackgroundColor: [
+                  gradientBackgroundColor: [
                     /// change based on its status
                     /// status==> تم الحل
                     AppColors.resolveStatusContainerBGMinistryAlart,

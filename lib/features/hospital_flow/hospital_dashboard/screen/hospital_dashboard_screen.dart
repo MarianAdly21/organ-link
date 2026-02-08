@@ -53,43 +53,46 @@ class _HospitalDashboardScreenState
 
   Widget _appBar() {
     return HospitalAppBarBase(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(
-                  child: Text(
-                    "مستشفى القصر العيني",
-                    style: context.textTheme.bodyLarge!.copyWith(
+      child: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 16.w),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FittedBox(
+                    child: Text(
+                      "مستشفى القصر العيني",
+                      style: context.textTheme.bodyLarge!.copyWith(
+                        color: AppColors.blackText,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 9.h),
+                  Text(
+                    "القاهرة",
+                    style: context.textTheme.labelMedium!.copyWith(
                       color: AppColors.blackText,
                     ),
                   ),
-                ),
-                SizedBox(height: 9.h),
-                Text(
-                  "القاهرة",
-                  style: context.textTheme.labelMedium!.copyWith(
-                    color: AppColors.blackText,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(start: 24),
-            child: CustomNotificationIcon(
-              onTap: () {
-                Navigator.of(
-                  context,
-                ).pushNamed(HospitalNotificationScreen.routeName);
-              },
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: 24),
+              child: CustomNotificationIcon(
+                onTap: () {
+                  Navigator.of(
+                    context,
+                  ).pushNamed(HospitalNotificationScreen.routeName);
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -227,7 +227,7 @@ class _MinistryNotificationDetailsScreenState
 
   Widget _headerContainer() {
     return ContainerWithBlackShadow(
-      gradientbackgroundColor: [
+      gradientBackgroundColor: [
         /// change based on its status
         /// status==> تم الحل
         AppColors.resolveStatusContainerBGMinistryAlart,

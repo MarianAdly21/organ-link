@@ -8,6 +8,7 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/user_manager/user_home_api_manager.dart';
+import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_up_screen.dart';
 import 'package:organ_link/features/user_flow/home/bloc/user_home_bloc.dart';
 import 'package:organ_link/features/user_flow/home/bloc/user_home_repository.dart';
@@ -219,56 +220,7 @@ class _HomeUserScreenWithBlocState
             ],
           ),
         ),
-      ),
-
-      //  Container(
-      //   height: 116.h,
-      //   width: 164.w,
-      //   padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 14.w),
-      //   decoration: BoxDecoration(
-      //     borderRadius: BorderRadius.circular(16),
-      //     boxShadow: [
-      //       BoxShadow(
-      //         blurStyle: BlurStyle.outer,
-      //         blurRadius: 8,
-      //         color: Colors.black.withValues(alpha: 0.15),
-      //       ),
-      //     ],
-      //     color: AppColors.homeCardBG.withValues(alpha: 0.45),
-      //   ),
-      //   child: FittedBox(
-      //     fit: BoxFit.scaleDown,
-      //     child: Column(
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       mainAxisSize: MainAxisSize.min,
-      //       children: [
-      //         SvgPicture.asset(width: 32.w, height: 32.h, icon),
-      //         SizedBox(height: 16.h),
-      //         Text(
-      //           context.translate(title),
-      //           style: context.textTheme.labelMedium!.copyWith(
-      //             fontWeight: FontWeight.w600,
-      //             color: AppColors.blackText,
-      //             fontSize: 14.sp,
-      //           ),
-      //         ),
-      //         SizedBox(height: 4.h),
-      //         Text(
-      //           // maxLines: 1,
-      //           // overflow: TextOverflow.visible,
-      //           textAlign: TextAlign.center,
-      //           context.translate(subTitle),
-      //           style: context.textTheme.labelMedium!.copyWith(
-      //             fontWeight: FontWeight.w400,
-      //             fontSize: 13.sp,
-      //             color: AppColors.grayText,
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-    );
+      ), );
   }
 
   Widget _appBarWidget() {
@@ -337,30 +289,17 @@ class _HomeUserScreenWithBlocState
                   ),
                 ),
                 SizedBox(width: 9),
-                Container(
-                  height: 24.h,
-                  width: 56.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.r),
-                    color: AppColors.displayFieldBGColor,
+                ContainerWithBackground(
+                  isCentered: true,
+                  borderRadius: 8,
+                  textStyle: context.textTheme.labelMedium!.copyWith(
+                    color: AppColors.textColor,
+                    fontSize: 14,
+                    height: 1.2,
                   ),
-                  child: Center(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        context.translate(LocalizationKeys.patient),
-
-                        /// change based on condition
-                        style: context.textTheme.labelMedium!.copyWith(
-                          color: AppColors.textColor,
-                          fontSize: 14,
-                          height: 1.2,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                  backgroundColor: AppColors.displayFieldBGColor,
+                  text: "مريض",
+                ),  ],
             ),
             CustomDividerWidget(),
             Text(
@@ -379,8 +318,7 @@ class _HomeUserScreenWithBlocState
               ),
               child: Center(
                 child: Text(
-                  context.translate(LocalizationKeys.underReview),
-
+                  "تحت المتابعة",
                   /// change based on condition
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: AppColors.textColor,

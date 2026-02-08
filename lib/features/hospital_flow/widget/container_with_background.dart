@@ -15,6 +15,7 @@ class ContainerWithBackground extends BaseStatelessWidget {
     this.border,
     this.height,
     this.width,
+    this.borderRadius,
   });
   final Color? textColor;
   final Color backgroundColor;
@@ -25,6 +26,7 @@ class ContainerWithBackground extends BaseStatelessWidget {
   final BoxBorder? border;
   final double? height;
   final double? width;
+  final double? borderRadius;
 
   @override
   Widget baseBuild(BuildContext context) {
@@ -35,7 +37,7 @@ class ContainerWithBackground extends BaseStatelessWidget {
           contentPadding ??
           EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(borderRadius?? 12),
         border: border,
         color: backgroundColor,
       ),

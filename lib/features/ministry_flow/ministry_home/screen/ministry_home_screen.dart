@@ -60,22 +60,22 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreen> {
     DashboardMinistryUiModel(
       icon: AppAssetPaths.patientIcon,
       title: LocalizationKeys.patientsInNeed,
-      conut: "24",
+      count: "24",
     ),
     DashboardMinistryUiModel(
       icon: AppAssetPaths.hospitalsIcon,
       title: LocalizationKeys.participatingHospitals,
-      conut: "24",
+      count: "24",
     ),
     DashboardMinistryUiModel(
-      icon: AppAssetPaths.opertionsDoneIcon,
+      icon: AppAssetPaths.operationsDoneIcon,
       title: LocalizationKeys.successfulOperations,
-      conut: "12",
+      count: "12",
     ),
     DashboardMinistryUiModel(
       icon: AppAssetPaths.donorsIcon,
       title: LocalizationKeys.donors,
-      conut: "7",
+      count: "7",
     ),
   ];
 

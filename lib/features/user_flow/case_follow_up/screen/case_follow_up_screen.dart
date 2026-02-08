@@ -97,9 +97,12 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
                 )
               : SizedBox.shrink(),
           SizedBox(height: 32.h),
-          NoticeContainer(
-            height: 95.h,
-            notice: LocalizationKeys.caseUpdateNote,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: NoticeContainer(
+              height: 95.h,
+              notice: LocalizationKeys.caseUpdateNote,
+            ),
           ),
         ],
       ),
