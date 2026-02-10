@@ -20,8 +20,11 @@ import 'package:organ_link/features/user_flow/settings/screen/settings_screen.da
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/custom_notification_icon.dart';
+import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/empty/empty_widgets.dart';
+import 'package:organ_link/utils/feedback/feedback_message.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class HomeUserScreen extends StatelessWidget {
@@ -34,6 +37,7 @@ class HomeUserScreen extends StatelessWidget {
       create: (context) => UserHomeBloc(
         UserHomeRepository(
           userHomeApiManager: UserHomeApiManager(GetIt.I<DioApiManager>()),
+          preferencesManager: GetIt.I<PreferencesManager>(),
         ),
       ),
       child: const HomeUserScreenWithBloc(),
@@ -51,18 +55,18 @@ class HomeUserScreenWithBloc extends BaseStatefulScreenWidget {
 
 class _HomeUserScreenWithBlocState
     extends BaseScreenState<HomeUserScreenWithBloc> {
-  // @override
-  // void initState() {
-  //   _currentBloc.add(GetHomeUserDateEvent(id: 1));
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    _currentBloc.add(GetHomeUserDateEvent());
+    super.initState();
+  }
 
   late UserHomeDataUiModel userHomeDataUiModel;
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: BlocListener<UserHomeBloc, UserHomeState>(
+      body: BlocConsumer<UserHomeBloc, UserHomeState>(
         listener: (context, state) {
           if (state is UserHomeLoadingState) {
             showLoading();
@@ -83,9 +87,14 @@ class _HomeUserScreenWithBlocState
             Navigator.of(context).pushNamed(CaseFollowUpScreen.routeName);
           } else if (state is NavToMedicalDetailsScreenState) {
             Navigator.of(context).pushNamed(MedicalDetailsScreen.routeName);
+          } else if (state is UserHomeErrorState && state.codeError != 1015) {
+            showFeedbackMessage(state.errorMessage);
           }
         },
-        child: _buildBody(),
+        buildWhen: (previous, current) =>
+            current is UserHomeDataLoadedSuccessfullyState ||
+            current is UserHomeErrorState,
+        builder: (context, state) => _buildBody(state),
       ),
     );
   }
@@ -94,31 +103,37 @@ class _HomeUserScreenWithBlocState
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget _buildBody() {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
-        child: Column(
-          children: [
-            _appBarWidget(),
-            SizedBox(height: 8.h),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 48.h, bottom: 24.h),
-                      child: _cardDetails(),
-                    ),
-                    _buildBodyList(),
-                  ],
+  Widget _buildBody(UserHomeState state) {
+    if (state is UserHomeDataLoadedSuccessfullyState) {
+      return SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+          child: Column(
+            children: [
+              _appBarWidget(),
+              SizedBox(height: 8.h),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 48.h, bottom: 24.h),
+                        child: _cardDetails(),
+                      ),
+                      _buildBodyList(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else if (state is UserHomeErrorState && state.codeError == 1015) {
+      return Center(child: Text("Please Check The Internet"));
+    } else {
+      return EmptyWidget();
+    }
   }
 
   Widget _buildBodyList() {
@@ -220,7 +235,8 @@ class _HomeUserScreenWithBlocState
             ],
           ),
         ),
-      ), );
+      ),
+    );
   }
 
   Widget _appBarWidget() {
@@ -272,14 +288,14 @@ class _HomeUserScreenWithBlocState
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "Mariana Adly Labib",
+                          userHomeDataUiModel.name,
                           style: context.textTheme.bodyLarge!.copyWith(
                             color: AppColors.blackText,
                           ),
                         ),
                         SizedBox(height: 16.h),
                         Text(
-                          "${context.translate(LocalizationKeys.identificationNumberWithColumn)}1234 ",
+                          "${context.translate(LocalizationKeys.identificationNumberWithColumn)} ${userHomeDataUiModel.identificationNumber} ",
                           style: context.textTheme.labelMedium!.copyWith(
                             color: AppColors.grayText,
                           ),
@@ -298,8 +314,9 @@ class _HomeUserScreenWithBlocState
                     height: 1.2,
                   ),
                   backgroundColor: AppColors.displayFieldBGColor,
-                  text: "مريض",
-                ),  ],
+                  text: userHomeDataUiModel.type,
+                ),
+              ],
             ),
             CustomDividerWidget(),
             Text(
@@ -318,8 +335,7 @@ class _HomeUserScreenWithBlocState
               ),
               child: Center(
                 child: Text(
-                  "تحت المتابعة",
-                  /// change based on condition
+                  userHomeDataUiModel.currentState,
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: AppColors.textColor,
                     fontWeight: FontWeight.w600,

@@ -28,6 +28,8 @@ class ApiKeys {
   static const baseUrl = 'https://web-production-00d08.up.railway.app/api';
 
   static const loginUrl = '$baseUrl/login/';
+  static String getHomeUserUrl(int id)=>  '$baseUrl/users/$id';
+ // static const homeUserUrl = '$baseUrl/users';
 
   static String get currentEnvironmentUrl =>
       isDevMode() ? ApiKeys.baseUrlProduction : ApiKeys.baseUrlProduction;

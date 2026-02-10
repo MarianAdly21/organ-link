@@ -45,7 +45,7 @@ class UserHomeBloc extends Bloc<UserHomeEvent, UserHomeState> {
 
   FutureOr<void> _getHomeUserDateEvent(GetHomeUserDateEvent event,Emitter<UserHomeState> emit)async {
     emit(UserHomeLoadingState());
-    emit(await userHomeRepository.getUserHomeData(id:event.id) );
+    emit(await userHomeRepository.getUserHomeData() );
     
   }
 }

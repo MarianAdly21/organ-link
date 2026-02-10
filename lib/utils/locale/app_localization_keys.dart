@@ -283,4 +283,5 @@ class LocalizationKeys {
   static const patientAge = "patient_age";
   static const equipmentDevices = "equipment_devices";
   static const quantity = "quantity";
+  static const nationalId = "national_id";
 }
