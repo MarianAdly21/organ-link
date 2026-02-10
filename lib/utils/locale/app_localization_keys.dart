@@ -36,7 +36,7 @@ class LocalizationKeys {
       "organ_donation_management_system";
   static const useYourIdentificationNumber = "use_your_identification_number";
   static const identificationNumber = "identification_number";
-  static const password = "Password";
+  static const password = "password";
   static const login = "login";
   static const hospitalInformation = "hospital_information";
   static const contactAndLocation = "contact_and_location";

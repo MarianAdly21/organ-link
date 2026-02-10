@@ -8,26 +8,35 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/auth_api_manager.dart';
+import 'package:organ_link/apis/models/auth/login/login_successful_response.dart';
+import 'package:organ_link/features/hospital_flow/hospital_dashboard/screen/hospital_dashboard_screen.dart';
+import 'package:organ_link/features/ministry_flow/ministry_home/screen/ministry_home_screen.dart';
+import 'package:organ_link/features/shared_screens/enum/user_type.dart';
 import 'package:organ_link/features/shared_screens/login/bloc/login_bloc.dart';
 import 'package:organ_link/features/shared_screens/login/bloc/login_repository.dart';
+import 'package:organ_link/features/user_flow/home/screen/home_user_screen.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/text_field/app_text_form_filed_widget.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/feedback/feedback_message.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 import 'package:organ_link/utils/validations/app_validate.dart';
 
 class LoginScreen extends StatelessWidget {
-  static const routName = "/login-screen";
+  static const routeName = "/login-screen";
   const LoginScreen({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginBloc(LoginRepository(
-        preferencesManager:  GetIt.I<PreferencesManager>(),
-        authApiManager:AuthApiManager( GetIt.I<DioApiManager>()))),
+      create: (context) => LoginBloc(
+        LoginRepository(
+          preferencesManager: GetIt.I<PreferencesManager>(),
+          authApiManager: AuthApiManager(GetIt.I<DioApiManager>()),
+        ),
+      ),
       child: LoginScreenWithBloc(),
     );
   }
@@ -52,26 +61,29 @@ class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
       backgroundColor: AppColors.scaffoldBackground,
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
-          if (state is LoginLoadingState)
-          {
+          if (state is LoginLoadingState) {
             showLoading();
-          }else{
+          } else {
             hideLoading();
           }
-          if(state is LoginNotValidateState)
-          {
-              autovalidateMode=AutovalidateMode.always;
-          }else if(state is LoginValidateState)
-          {
-            loginEvent();
+          if (state is LoginNotValidateState) {
+            autovalidateMode = AutovalidateMode.always;
+          } else if (state is LoginValidateState) {
+            _loginEvent();
+          } else if (state is LoginSuccessfullyState) {
+            _saveUserInfoEvent(state.loginSuccessfulResponse);
+          } else if (state is UserInfoSavedState) {
+            _navToHomeScreenEvent();
+          } else if (state is NavToHomeScreenState) {
+            _navigateBasedOnUserType(state, context);
+          } else if (state is LoginErrorState) {
+            showFeedbackMessage(state.errorMessage);
           }
         },
         child: buildLoginWidget(context),
       ),
     );
   }
-
-
 
   ///////////////////////////////////////////////////////////
   //////////////////// Widget methods ///////////////////////
@@ -80,7 +92,7 @@ class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
   Widget buildLoginWidget(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 64),
+        padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 64.h),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -119,14 +131,12 @@ class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
     return Flexible(
       child: AppButtonWithGradientColors(
         onTap: () {
-          validateLoginEvent();
+          _validateLoginEvent();
         },
         text: context.translate(LocalizationKeys.login),
       ),
     );
   }
-
-
 
   Widget _loginFormWidget() {
     return Form(
@@ -150,9 +160,11 @@ class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
       ),
     );
   }
+
   ///////////////////////////////////////////////////////////
   //////////////////// Helper methods ///////////////////////
   ///////////////////////////////////////////////////////////
+  LoginBloc get currentBloc => context.read<LoginBloc>();
 
   void _idNumberSaved(String? value) {
     _idNumber = value!;
@@ -161,13 +173,51 @@ class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
   void _passwordSaved(String? value) {
     _password = value!;
   }
-    void loginEvent() {
-    currentBloc.add(LoginWithIdNumberAndPasswordEvent(password: _password, identificationNumber: _idNumber));
-  }
-    void validateLoginEvent() {
-     currentBloc.add(ValidateIdNumberAndPasswordEvent(loginFormKey: loginFormKey));
+
+  void _saveUserInfoEvent(LoginSuccessfulResponse loginSuccessfulResponse) {
+    currentBloc.add(
+      SaveUserInfoEvent(loginSuccessfulResponse: loginSuccessfulResponse),
+    );
   }
 
-  LoginBloc get currentBloc => context.read<LoginBloc>();
-  
+  void _navToHomeScreenEvent() {
+    currentBloc.add(NavToHomeScreenEvent());
+  }
+
+  void _loginEvent() {
+    currentBloc.add(
+      LoginWithIdNumberAndPasswordEvent(
+        password: _password,
+        identificationNumber: _idNumber,
+      ),
+    );
+  }
+
+  void _validateLoginEvent() {
+    currentBloc.add(
+      ValidateIdNumberAndPasswordEvent(loginFormKey: loginFormKey),
+    );
+  }
+
+  void _navigateBasedOnUserType(
+    NavToHomeScreenState state,
+    BuildContext context,
+  ) {
+    final String type = state.type;
+    if (type == UserType.donor.name || type == UserType.patient.name) {
+      Navigator.of(
+        context,
+      ).pushNamedAndRemoveUntil(HomeUserScreen.routeName, ((route) => false));
+    } else if (type == UserType.ministry.name) {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        MinistryHomeScreen.routeName,
+        ((route) => false),
+      );
+    } else if (type == UserType.hospital.name) {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        HospitalDashboardScreen.routeName,
+        ((route) => false),
+      );
+    }
+  }
 }

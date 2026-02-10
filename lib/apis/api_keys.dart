@@ -22,10 +22,12 @@ class ApiKeys {
   /// URLs
   static const baseUrlProduction = "";
 
-  static const apiKeyUrl = "api";
-  static const apiVersion = "v1";
-  static const baseApiUrl = '/$apiKeyUrl';
-  static const loginUrl = '$baseApiUrl/login';
+  // static const apiKeyUrl = "api";
+  // static const apiVersion = "v1";
+  // static const baseApiUrl = '/$apiKeyUrl';
+  static const baseUrl = 'https://web-production-00d08.up.railway.app/api';
+
+  static const loginUrl = '$baseUrl/login/';
 
   static String get currentEnvironmentUrl =>
       isDevMode() ? ApiKeys.baseUrlProduction : ApiKeys.baseUrlProduction;

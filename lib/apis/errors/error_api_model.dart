@@ -82,7 +82,7 @@ class ErrorApiModel {
         error.response?.data as Map<String, dynamic>;
     return ErrorApiModel(
       code: error.response?.statusCode ?? 1007,
-      message: extractedData["message"],
+      message: extractedData["Message"],
       isMessageLocalizationKey: false,
     );
   }
