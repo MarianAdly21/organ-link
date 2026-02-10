@@ -145,7 +145,7 @@ class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
       child: Column(
         children: [
           AppTextFormField(
-            title: context.translate(LocalizationKeys.identificationNumber),
+            title: context.translate(LocalizationKeys.nationalId),
             onSaved: _idNumberSaved,
             validator: (value) => textValidator(context, value),
             //textInputAction: TextInputAction.next,

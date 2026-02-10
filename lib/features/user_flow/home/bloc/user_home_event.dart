@@ -7,14 +7,14 @@ sealed class UserHomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class GetHomeUserDateEvent extends UserHomeEvent {}
 
-class GetHomeUserDateEvent extends UserHomeEvent{
-  final int id;
+class NavToMedicalDetailsScreenEvent extends UserHomeEvent {}
 
- const GetHomeUserDateEvent({required this.id});
-}
-class NavToMedicalDetailsScreenEvent extends UserHomeEvent{}
-class NavToCaseFollowUpScreenEvent extends UserHomeEvent{}
-class NavToHospitalInfoScreenEvent extends UserHomeEvent{}
-class NavToNotificationScreenEvent extends UserHomeEvent{}
-class NavToSettingScreenEvent extends UserHomeEvent{}
+class NavToCaseFollowUpScreenEvent extends UserHomeEvent {}
+
+class NavToHospitalInfoScreenEvent extends UserHomeEvent {}
+
+class NavToNotificationScreenEvent extends UserHomeEvent {}
+
+class NavToSettingScreenEvent extends UserHomeEvent {}

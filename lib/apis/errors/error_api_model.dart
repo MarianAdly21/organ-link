@@ -39,6 +39,7 @@ class ErrorApiModel {
         codeError = 1013;
         break;
       case DioExceptionType.connectionError:
+        codeError = 1015;
         break;
       case DioExceptionType.unknown:
         if (dioError.message?.contains("SocketException") ?? false) {
