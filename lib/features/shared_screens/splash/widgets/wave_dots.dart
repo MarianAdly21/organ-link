@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 class WaveDots extends StatefulWidget {
@@ -60,7 +58,7 @@ class _WaveDotsState extends State<WaveDots>
     return Transform.translate(
       offset: Offset(0, offsetY),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.w),
+        margin: EdgeInsets.symmetric(horizontal: 8),
         width: 12,
         height: 12,
         decoration: BoxDecoration(

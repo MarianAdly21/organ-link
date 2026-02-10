@@ -30,7 +30,7 @@ class AppRouter {
 
   static final routes = {
     SplashScreen.routeName: (ctx) => const SplashScreen(),
-    LoginScreen.routName: (ctx) => const LoginScreen(),
+    LoginScreen.routeName: (ctx) => const LoginScreen(),
     HomeUserScreen.routeName: (ctx) => const HomeUserScreen(),
     MedicalDetailsScreen.routeName: (ctx) => const MedicalDetailsScreen(),
     CaseFollowUpScreen.routeName: (ctx) => const CaseFollowUpScreen(),

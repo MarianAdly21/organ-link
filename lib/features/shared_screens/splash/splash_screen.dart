@@ -6,14 +6,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
+import 'package:organ_link/features/hospital_flow/hospital_dashboard/screen/hospital_dashboard_screen.dart';
+import 'package:organ_link/features/ministry_flow/ministry_home/screen/ministry_home_screen.dart';
+import 'package:organ_link/features/shared_screens/enum/user_type.dart';
 import 'package:organ_link/features/shared_screens/login/screen/login_screen.dart';
 import 'package:organ_link/features/shared_screens/splash/widgets/wave_dots.dart';
+import 'package:organ_link/features/user_flow/home/screen/home_user_screen.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
-
-enum Type { patient, donor, ministry, hospital }
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -44,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 88, right: 88, top: 140),
+          padding: EdgeInsets.only(left: 88.w, right: 88.w, top: 140.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
@@ -98,18 +100,33 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _navigationPage() async {
     final String? type = await preferencesManager.getType();
-    if (type == Type.donor.name || type == Type.patient.name) {
-    } else if (type == Type.ministry.name) {
-    } else if (type == Type.hospital.name) {
+    // if(type !=null){
+    // final userType = UserType.values.byName(type);
+    // }
+    if (type == UserType.donor.name || type == UserType.patient.name) {
+      _navToHomeUserScreen();
+    } else if (type == UserType.ministry.name) {
+      _navToMinistryHomeScreen();
+    } else if (type == UserType.hospital.name) {
+      _navToHospitalHomeScreen();
     } else if (type == null) {
       _navigatorToLoginScreen();
     }
   }
 
-  void _navigatorToLoginScreen() async {
-    await Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const LoginScreen()),
-    );
+  void _navToHospitalHomeScreen() {
+    Navigator.of(context).pushNamed(HospitalDashboardScreen.routeName);
+  }
+
+  void _navToMinistryHomeScreen() {
+    Navigator.of(context).pushNamed(MinistryHomeScreen.routeName);
+  }
+
+  void _navToHomeUserScreen() {
+    Navigator.of(context).pushNamed(HomeUserScreen.routeName);
+  }
+
+  void _navigatorToLoginScreen() {
+    Navigator.of(context).pushNamed(LoginScreen.routeName);
   }
 }

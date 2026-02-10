@@ -103,7 +103,10 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
           enabled: widget.enable,
           initialValue: widget.initialValue,
           obscureText: obscure,
-          style: context.textTheme.bodyMedium,
+          style: context.textTheme.labelMedium!.copyWith(
+          color: AppColors.blackText,
+        ),
+          //context.textTheme.bodyMedium,
           controller: widget.controller,
           autofillHints: widget.autofillHints,
           inputFormatters: widget.inputFormatters,
@@ -162,6 +165,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
           maxLength: widget.maxLength,
           maxLengthEnforcement: MaxLengthEnforcement.enforced,
           textAlign: widget.textAlign!,
+          cursorColor: AppColors.blackText,
         ),
       ],
     );

@@ -88,12 +88,12 @@ class PreferencesManager {
     return await PreferencesUtils.getInt(PreferencesKeys.expiresIn.name);
   }
 
-  Future<void> setId(String data) async {
-    await PreferencesUtils.setString(PreferencesKeys.id.name, data);
+  Future<void> setId(int data) async {
+    await PreferencesUtils.setInt(PreferencesKeys.id.name, data);
   }
 
-  Future<String?> getId() async {
-    return await PreferencesUtils.getString(PreferencesKeys.id.name);
+  Future<int?> getId() async {
+    return await PreferencesUtils.getInt(PreferencesKeys.id.name);
   }
 
   Future<void> setTokenData(

@@ -12,25 +12,46 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginRepository loginRepository;
   LoginBloc(this.loginRepository) : super(LoginInitial()) {
     on<ValidateIdNumberAndPasswordEvent>(validateLoginEvent);
+    on<LoginWithIdNumberAndPasswordEvent>(loginEvent);
+    on<SaveUserInfoEvent>(_saveUserInfoEvent);
+    on<NavToHomeScreenEvent>(_navToHomeScreenEvent);
 
-   on<LoginWithIdNumberAndPasswordEvent>(loginEvent);
   }
 
-  FutureOr<void> loginEvent(LoginWithIdNumberAndPasswordEvent event,Emitter<LoginState> emit) async {
-     emit(LoginLoadingState());
-     emit(await loginRepository.loginWithIdNumberAndPassword(identificationNumber: event.identificationNumber, password: event.password));
-   }
+  FutureOr<void> loginEvent(
+    LoginWithIdNumberAndPasswordEvent event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(LoginLoadingState());
+    emit(
+      await loginRepository.loginWithIdNumberAndPassword(
+        identificationNumber: event.identificationNumber,
+        password: event.password,
+      ),
+    );
+  }
 
-  FutureOr<void> validateLoginEvent(ValidateIdNumberAndPasswordEvent event,Emitter<LoginState> emit) { 
-    if(event.loginFormKey.currentState?.validate()??false)
-    {
+  FutureOr<void> validateLoginEvent(
+    ValidateIdNumberAndPasswordEvent event,
+    Emitter<LoginState> emit,
+  ) {
+    if (event.loginFormKey.currentState?.validate() ?? false) {
       event.loginFormKey.currentState!.save();
       emit(LoginValidateState());
-    } else{
+    } else {
       emit(LoginNotValidateState());
-
     }
   }
+
+FutureOr<void> _saveUserInfoEvent(
+      SaveUserInfoEvent event, Emitter<LoginState> emit) async {
+    emit(LoginLoadingState());
+   emit(await loginRepository.saveUserInfo(event.loginSuccessfulResponse));
+  }
+
+  FutureOr<void> _navToHomeScreenEvent(
+      NavToHomeScreenEvent event, Emitter<LoginState> emit) async {
+    emit(LoginLoadingState());
+   emit(await loginRepository.navToHomeScreen());
+  }
 }
-
-
