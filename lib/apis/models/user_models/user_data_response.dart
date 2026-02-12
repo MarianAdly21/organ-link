@@ -1,4 +1,6 @@
 import 'package:organ_link/apis/models/user_models/chronic_diseases_api_model.dart';
+import 'package:organ_link/apis/models/user_models/hospital_api_details.dart';
+import 'package:organ_link/apis/models/user_models/supervisor_doctor_api_details.dart';
 
 class UserDataResponse {
   final String fullName;
@@ -12,12 +14,21 @@ class UserDataResponse {
   // final String upcomingAppointments;
   final List<ChronicDiseasesApiModel> chronicDiseasesList;
   //final List<MedicalTestApiModel> medicalTestList;
+  final HospitalApiDetails hospitalDetails;
+  final SupervisorDoctorApiDetails supervisorDoctorDetails;
 
   UserDataResponse({
     required this.fullName,
     required this.type,
     required this.identificationNumber,
-    required this.currentState, required this.age, required this.medicalFileNumber, required this.organ, required this.bloodType, required this.chronicDiseasesList,
+    required this.currentState,
+    required this.age,
+    required this.medicalFileNumber,
+    required this.organ,
+    required this.bloodType,
+    required this.chronicDiseasesList,
+    required this.hospitalDetails,
+    required this.supervisorDoctorDetails,
   });
   factory UserDataResponse.formJson(Map<String, dynamic> json) {
     return UserDataResponse(
@@ -42,6 +53,13 @@ class UserDataResponse {
       //     : List<MedicalTestApiModel>.from(
       //         json[""]!.map((x) => MedicalTestApiModel.formJson(x)),
       //       ),
+      hospitalDetails: HospitalApiDetails.formJson(
+        json["hospital_detail"] as Map<String, dynamic>,
+      ),
+      supervisorDoctorDetails: SupervisorDoctorApiDetails.formJson(
+        json["supervisor_doctor_detail"] as Map<String, dynamic>,
+      ),
     );
   }
 }
+
