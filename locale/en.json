@@ -210,7 +210,7 @@
   "progress_summary": "Progress Summary",
   "completed_steps": "Completed Steps",
   "in_progress": "In Progress",
-  "years": "years",
+  "year": "year",
   "patients": "Patients",
   "surgeries": "Surgeries",
   "surgery_record": "Surgery Record",
@@ -259,5 +259,6 @@
   "participating_hospitals_list": "Participating Hospitals List",
   "hospital_registered_in_system": "Hospital Registered in the System",
   "search_for_hospital": "Search for a hospital...",
-  "need": "Needs"
+  "need": "Needs",
+  "no_chronic_diseases_recorded":"No chronic diseases recorded"
 }

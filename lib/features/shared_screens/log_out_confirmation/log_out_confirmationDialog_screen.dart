@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
+import 'package:organ_link/features/shared_screens/login/screen/login_screen.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LogoutConfirmationDialogScreen extends BaseDialogWidget {
   const LogoutConfirmationDialogScreen({super.key});
@@ -50,7 +52,11 @@ class _LogoutConfirmationDialogScreenState
             SizedBox(width: 16.w),
             _dialogBtn(
               text: LocalizationKeys.confirmLogout,
-              onTap: () {},
+              onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.clear();
+                _navToLoginScreen();
+              },
               backgroundColor: AppColors.backgroundForLogoutButton,
               textColor: Colors.white,
             ),
@@ -58,6 +64,10 @@ class _LogoutConfirmationDialogScreenState
         ),
       ],
     );
+  }
+
+  void _navToLoginScreen() {
+    Navigator.pushNamed(context, LoginScreen.routeName);
   }
 
   Widget _dialogBtn({

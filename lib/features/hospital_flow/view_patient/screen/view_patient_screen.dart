@@ -107,7 +107,7 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
         children: [
           _infoRowText(
             text:
-                "${context.translate(LocalizationKeys.age)}: $age ${context.translate(LocalizationKeys.years)}",
+                "${context.translate(LocalizationKeys.age)}: $age ${context.translate(LocalizationKeys.year)}",
           ),
           _infoRowText(
             text:

@@ -224,7 +224,7 @@ class LocalizationKeys {
   static const progressSummary = "progress_summary";
   static const completedSteps = "completed_steps";
   static const inProgress = "in_progress";
-  static const years = "years";
+  static const year = "year";
   static const surgeries = "surgeries";
   static const surgeryRecord = "surgery_record";
   static const organTransplantFollowUp = "organ_transplant_follow_up";
@@ -284,4 +284,5 @@ class LocalizationKeys {
   static const equipmentDevices = "equipment_devices";
   static const quantity = "quantity";
   static const nationalId = "national_id";
+  static const noChronicDiseasesRecorded = "no_chronic_diseases_recorded";
 }
