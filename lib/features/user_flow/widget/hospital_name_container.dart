@@ -16,21 +16,19 @@ class HospitalNameContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContainerWithShadow(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(hospitalName, style: context.textTheme.bodyLarge),
-            SizedBox(height: 10.h),
-            Text(
-              hospitalLocation,
-              style: context.textTheme.labelMedium!.copyWith(
-                color: AppColors.grayText,
-              ),
+      contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(hospitalName, style: context.textTheme.bodyLarge),
+          SizedBox(height: 10.h),
+          Text(
+            hospitalLocation,
+            style: context.textTheme.labelMedium!.copyWith(
+              color: AppColors.grayText,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
