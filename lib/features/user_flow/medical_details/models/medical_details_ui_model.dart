@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/user_models/medical_details/medical_details_api_model.dart';
+import 'package:organ_link/apis/models/user_models/user_data_response.dart';
 import 'package:organ_link/features/user_flow/medical_details/models/chronic_diseases_ui_model.dart';
 import 'package:organ_link/features/user_flow/medical_details/models/medical_test_ui_model.dart';
 
@@ -25,7 +25,7 @@ class MedicalDetailsUiModel {
     required this.upcomingAppointments,
   });
 
-  factory MedicalDetailsUiModel.fromApiModel(MedicalDetailsApiModel e) {
+  factory MedicalDetailsUiModel.fromApiModel(UserDataResponse e) {
     return MedicalDetailsUiModel(
       fullName: e.fullName,
       type: e.type,

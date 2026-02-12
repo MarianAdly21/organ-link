@@ -7,7 +7,7 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
-import 'package:organ_link/apis/managers/user_manager/medical_details_api_manager.dart';
+import 'package:organ_link/apis/managers/user_manager/user_api_manager.dart';
 import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_bloc.dart';
 import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_repository.dart';
 import 'package:organ_link/features/user_flow/medical_details/models/medical_details_ui_model.dart';
@@ -32,9 +32,10 @@ class MedicalDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MedicalDetailsBloc(
+
         MedicalDetailsRepository(
-          medicalDetailsApiManager: MedicalDetailsApiManager(
-            dioApiManager: GetIt.I<DioApiManager>(),
+          userApiManager: UserApiManager(
+             GetIt.I<DioApiManager>(),
           ),
           preferencesManager: GetIt.I<PreferencesManager>(),
         ),

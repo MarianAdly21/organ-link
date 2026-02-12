@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/user_models/medical_details/medical_test_api_model.dart';
+import 'package:organ_link/apis/models/user_models/medical_test_api_model.dart';
 
 class MedicalTestUiModel {
   final String testName;

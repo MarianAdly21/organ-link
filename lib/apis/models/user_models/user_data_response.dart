@@ -1,8 +1,10 @@
-import 'package:organ_link/apis/models/user_models/medical_details/chronic_diseases_api_model.dart';
+import 'package:organ_link/apis/models/user_models/chronic_diseases_api_model.dart';
 
-class MedicalDetailsApiModel {
+class UserDataResponse {
   final String fullName;
   final String type;
+  final String identificationNumber;
+  final String currentState;
   final DateTime age;
   final String medicalFileNumber;
   final String organ;
@@ -11,22 +13,18 @@ class MedicalDetailsApiModel {
   final List<ChronicDiseasesApiModel> chronicDiseasesList;
   //final List<MedicalTestApiModel> medicalTestList;
 
-  MedicalDetailsApiModel({
+  UserDataResponse({
     required this.fullName,
     required this.type,
-    required this.age,
-    required this.medicalFileNumber,
-    required this.organ,
-    required this.bloodType,
-    //required this.upcomingAppointments,
-    required this.chronicDiseasesList,
-    // required this.medicalTestList,
+    required this.identificationNumber,
+    required this.currentState, required this.age, required this.medicalFileNumber, required this.organ, required this.bloodType, required this.chronicDiseasesList,
   });
-
-  factory MedicalDetailsApiModel.formJson(Map<String, dynamic> json) {
-    return MedicalDetailsApiModel(
+  factory UserDataResponse.formJson(Map<String, dynamic> json) {
+    return UserDataResponse(
       fullName: json["full_name"] as String,
       type: json["role"] as String,
+      identificationNumber: json["medical_record_number"] as String,
+      currentState: json["status"] as String,
       age: DateTime.parse(json["birthdate"]),
       medicalFileNumber: json["medical_record_number"] as String,
       organ: json["organ_needed"] as String,
