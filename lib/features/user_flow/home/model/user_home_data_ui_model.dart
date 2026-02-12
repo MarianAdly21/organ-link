@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/user_Home/user_home_data_response.dart';
+import 'package:organ_link/apis/models/user_models/user_Home/user_home_data_response.dart';
 
 class UserHomeDataUiModel {
   final String name;
