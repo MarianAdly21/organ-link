@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/managers/user_manager/user_home_api_manager.dart';
+import 'package:organ_link/apis/managers/user_manager/user_api_manager.dart';
 import 'package:organ_link/features/user_flow/home/bloc/user_home_bloc.dart';
 import 'package:organ_link/features/user_flow/home/model/user_home_data_ui_model.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
@@ -8,7 +8,7 @@ abstract class BaseUserHomeRepository {
 }
 
 class UserHomeRepository implements BaseUserHomeRepository {
-  final UserHomeApiManager userHomeApiManager;
+  final UserApiManager userHomeApiManager;
   final PreferencesManager preferencesManager;
 
   UserHomeRepository({
@@ -19,7 +19,7 @@ class UserHomeRepository implements BaseUserHomeRepository {
   Future<UserHomeState> getUserHomeData() async {
     late UserHomeState userHomeState;
     final int? id = await preferencesManager.getId();
-    await userHomeApiManager.userHomeApi(
+    await userHomeApiManager.getUserDataApi(
       id!,
       (response) {
         final model = UserHomeDataUiModel.fromApiModel(response);

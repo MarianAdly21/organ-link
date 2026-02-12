@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/user_models/medical_details/chronic_diseases_api_model.dart';
+import 'package:organ_link/apis/models/user_models/chronic_diseases_api_model.dart';
 
 class ChronicDiseasesUiModel {
   //final int id;

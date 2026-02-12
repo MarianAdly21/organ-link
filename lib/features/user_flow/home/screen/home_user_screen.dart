@@ -7,7 +7,7 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
-import 'package:organ_link/apis/managers/user_manager/user_home_api_manager.dart';
+import 'package:organ_link/apis/managers/user_manager/user_api_manager.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_up_screen.dart';
 import 'package:organ_link/features/user_flow/home/bloc/user_home_bloc.dart';
@@ -36,7 +36,7 @@ class HomeUserScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => UserHomeBloc(
         UserHomeRepository(
-          userHomeApiManager: UserHomeApiManager(GetIt.I<DioApiManager>()),
+          userHomeApiManager: UserApiManager(GetIt.I<DioApiManager>()),
           preferencesManager: GetIt.I<PreferencesManager>(),
         ),
       ),

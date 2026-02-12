@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/user_models/user_Home/user_home_data_response.dart';
+import 'package:organ_link/apis/models/user_models/user_data_response.dart';
 
 class UserHomeDataUiModel {
   final String name;
@@ -12,7 +12,7 @@ class UserHomeDataUiModel {
     required this.identificationNumber,
     required this.currentState,
   });
-  factory UserHomeDataUiModel.fromApiModel(UserHomeDataResponse e) {
+  factory UserHomeDataUiModel.fromApiModel(UserDataResponse e) {
     return UserHomeDataUiModel(
       name: e.fullName,
       type: e.type,

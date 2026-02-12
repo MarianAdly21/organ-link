@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/managers/user_manager/medical_details_api_manager.dart';
+import 'package:organ_link/apis/managers/user_manager/user_api_manager.dart';
 import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_bloc.dart';
 import 'package:organ_link/features/user_flow/medical_details/models/medical_details_ui_model.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
@@ -8,11 +8,11 @@ abstract class BaseMedicalDetailsRepository {
 }
 
 class MedicalDetailsRepository implements BaseMedicalDetailsRepository {
-  final MedicalDetailsApiManager medicalDetailsApiManager;
+  final UserApiManager userApiManager;
   final PreferencesManager preferencesManager;
 
   MedicalDetailsRepository({
-    required this.medicalDetailsApiManager,
+    required this.userApiManager,
     required this.preferencesManager,
   });
 
@@ -20,7 +20,7 @@ class MedicalDetailsRepository implements BaseMedicalDetailsRepository {
   Future<MedicalDetailsState> getMedicalDetailsData() async {
     late MedicalDetailsState medicalDetailsState;
     final int? id = await preferencesManager.getId();
-    await medicalDetailsApiManager.medicalDetailsDataApi(
+    await userApiManager.getUserDataApi(
       id!,
       (response) {
         final model = MedicalDetailsUiModel.fromApiModel(response);
