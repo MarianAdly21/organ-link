@@ -32,11 +32,8 @@ class MedicalDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MedicalDetailsBloc(
-
         MedicalDetailsRepository(
-          userApiManager: UserApiManager(
-             GetIt.I<DioApiManager>(),
-          ),
+          userApiManager: UserApiManager(GetIt.I<DioApiManager>()),
           preferencesManager: GetIt.I<PreferencesManager>(),
         ),
       ),
@@ -99,6 +96,7 @@ class _MedicalDetailsScreenWithBlocState
         body: Column(
           children: [
             _personalInfoCard(),
+
             _chronicDiseasesCard(),
             if (medicalDetailsUiModel.medicalTestList.isNotEmpty)
               _medicalTestCard(),
@@ -180,7 +178,8 @@ class _MedicalDetailsScreenWithBlocState
                 ),
                 _personalInfoColumn(
                   title: LocalizationKeys.age,
-                  subTitle: "${calculateAge(medicalDetailsUiModel.age)} year",
+                  subTitle:
+                      "${calculateAge(medicalDetailsUiModel.age)} ${context.translate(LocalizationKeys.year)}",
                 ),
                 _personalInfoColumn(
                   title: LocalizationKeys.bloodType,
@@ -203,9 +202,15 @@ class _MedicalDetailsScreenWithBlocState
         runSpacing: 8.h,
         children: List.generate(
           medicalDetailsUiModel.chronicDiseasesList.length,
-          (index) => _diseaseCard(
-            disease: medicalDetailsUiModel.chronicDiseasesList[index].name,
-          ),
+          (index) => medicalDetailsUiModel.chronicDiseasesList.isNotEmpty
+              ? _diseaseCard(
+                  disease:
+                      medicalDetailsUiModel.chronicDiseasesList[index].name,
+                )
+              : Text(
+                  context.translate(LocalizationKeys.noChronicDiseasesRecorded),
+                  style: context.textTheme.labelLarge,
+                ),
         ),
       ),
     );

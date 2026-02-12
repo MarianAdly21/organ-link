@@ -56,10 +56,10 @@ class _SettingsScreenState
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          HospitalNameContainer(
-            hospitalName: "Qasr El Aini Hospital",
-            hospitalLocation: "Cairo",
-          ),
+          // HospitalNameContainer(
+          //   hospitalName: "Qasr El Aini Hospital",
+          //   hospitalLocation: "Cairo",
+          // ),
           DataSection(
             paddingAroundContainer: EdgeInsets.symmetric(vertical: 0),
             title: context.translate(LocalizationKeys.appAbout),

@@ -28,7 +28,7 @@
   "organ_donation_management_system": "نظام إدارة التبرع بالأعضاء",
   "use_your_identification_number": "استخدم رقم التعريف الخاص بك",
   "identification_number": "رقم التعريف",
-   "national_id": "الرقم القومى",
+  "national_id": "الرقم القومى",
   "password": "كلمة المرور",
   "login": "تسجيل الدخول",
   "hospital_information": "معلومات المستشفى",
@@ -211,7 +211,7 @@
   "progress_summary": "ملخص التقدم",
   "completed_steps": "الخطوات المكتملة",
   "in_progress": "قيد التنفيذ",
-  "years": "سنوات",
+  "year": "سنه",
   "patients": "المرضي",
   "surgeries": "العمليات",
   "surgery_record": "سجل العمليات",
@@ -268,5 +268,6 @@
   "recent_operations": "العمليات الأخيرة",
   "patient_age": "عمر المريض",
   "equipment_devices": "الأجهزة والمعدات",
-  "quantity": "العدد"
+  "quantity": "العدد",
+  "no_chronic_diseases_recorded": "لا توجد أمراض مزمنة مسجلة"
 }
