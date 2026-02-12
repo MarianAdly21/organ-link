@@ -1,58 +1,117 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/user_manager/medical_details_api_manager.dart';
+import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_bloc.dart';
+import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_repository.dart';
+import 'package:organ_link/features/user_flow/medical_details/models/medical_details_ui_model.dart';
+import 'package:organ_link/features/user_flow/medical_details/models/medical_test_ui_model.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/notice_container.dart';
+import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/empty/empty_widgets.dart';
+import 'package:organ_link/utils/feedback/feedback_message.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
-class MedicalDetailsScreen extends BaseStatefulScreenWidget {
+class MedicalDetailsScreen extends StatelessWidget {
   const MedicalDetailsScreen({super.key});
   static String routeName = "/medical-details-screen";
 
   @override
-  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _MedicalDetailsScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => MedicalDetailsBloc(
+        MedicalDetailsRepository(
+          medicalDetailsApiManager: MedicalDetailsApiManager(
+            dioApiManager: GetIt.I<DioApiManager>(),
+          ),
+          preferencesManager: GetIt.I<PreferencesManager>(),
+        ),
+      ),
+      child: MedicalDetailsScreenWithBloc(),
+    );
+  }
 }
 
-class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
+class MedicalDetailsScreenWithBloc extends BaseStatefulScreenWidget {
+  const MedicalDetailsScreenWithBloc({super.key});
+
+  @override
+  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
+      _MedicalDetailsScreenWithBlocState();
+}
+
+class _MedicalDetailsScreenWithBlocState
+    extends BaseScreenState<MedicalDetailsScreenWithBloc> {
+  @override
+  void initState() {
+    _currentBloc.add(GetMedicalDetailsDataEvent());
+    super.initState();
+  }
+
+  late MedicalDetailsUiModel medicalDetailsUiModel;
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: _buildBody(),
+      body: BlocConsumer<MedicalDetailsBloc, MedicalDetailsState>(
+        listener: (context, state) {
+          if (state is MedicalDetailsLoadingState) {
+            showLoading();
+          } else {
+            hideLoading();
+          }
+          if (state is MedicalDetailsDataLoadedSuccessfullyState) {
+            medicalDetailsUiModel = state.medicalDetailsUiModel;
+          } else if (state is MedicalDetailsErrorState) {
+            showFeedbackMessage(state.errorMessage);
+          }
+        },
+        buildWhen: (previous, current) =>
+            current is MedicalDetailsDataLoadedSuccessfullyState,
+        builder: (context, state) => _buildBody(state),
+      ),
     );
   }
   ///////////////////////////////////////////////////////////
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget _buildBody() {
-    return BaseBodyScaffold(
-      title: context.translate(LocalizationKeys.medicalDetailsScreen),
-      onBackTap: () {
-        Navigator.pop(context);
-      },
-      body: Column(
-        children: [
-          _personalInfoCard(),
-          _chronicDiseasesCard(),
-          _medicalTestCard(),
-          _upcomingAppointmentCard(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: NoticeContainer(notice: LocalizationKeys.hospitalDataNote),
-          ),
-        ],
-      ),
-    );
+  Widget _buildBody(MedicalDetailsState state) {
+    if (state is MedicalDetailsDataLoadedSuccessfullyState) {
+      return BaseBodyScaffold(
+        title: context.translate(LocalizationKeys.medicalDetailsScreen),
+        onBackTap: () {
+          Navigator.pop(context);
+        },
+        body: Column(
+          children: [
+            _personalInfoCard(),
+            _chronicDiseasesCard(),
+            if (medicalDetailsUiModel.medicalTestList.isNotEmpty)
+              _medicalTestCard(),
+            _upcomingAppointmentCard(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: NoticeContainer(notice: LocalizationKeys.hospitalDataNote),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return EmptyWidget();
+    }
   }
 
   Widget _baseOfCard({
@@ -62,24 +121,23 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
     double? verticalPaddingOfDivider,
   }) {
     return ContainerWithShadow(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              context.translate(titleOfCard),
-              style: context.textTheme.bodyLarge,
+      padding: EdgeInsets.symmetric(vertical: 16.w),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.translate(titleOfCard),
+            style: context.textTheme.bodyLarge,
+          ),
+          Padding(
+            padding: padding ?? EdgeInsets.all(0),
+            child: CustomDividerWidget(
+              verticalPadding: verticalPaddingOfDivider ?? 0,
             ),
-            Padding(
-              padding: padding ?? EdgeInsets.all(0),
-              child: CustomDividerWidget(
-                verticalPadding: verticalPaddingOfDivider ?? 0,
-              ),
-            ),
-            body,
-          ],
-        ),
+          ),
+          body,
+        ],
       ),
     );
   }
@@ -97,15 +155,15 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
               children: [
                 _personalInfoColumn(
                   title: LocalizationKeys.fullName,
-                  subTitle: "Mariana Adly Labib",
+                  subTitle: medicalDetailsUiModel.fullName,
                 ),
                 _personalInfoColumn(
                   title: LocalizationKeys.type,
-                  subTitle: "female",
+                  subTitle: medicalDetailsUiModel.type,
                 ),
                 _personalInfoColumn(
                   title: LocalizationKeys.requiredOrgan,
-                  subTitle: "Kidney",
+                  subTitle: medicalDetailsUiModel.organ,
                 ),
               ],
             ),
@@ -117,15 +175,15 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
               children: [
                 _personalInfoColumn(
                   title: LocalizationKeys.medicalFileNumber,
-                  subTitle: "MF-2025-1117",
+                  subTitle: medicalDetailsUiModel.medicalFileNumber,
                 ),
                 _personalInfoColumn(
                   title: LocalizationKeys.age,
-                  subTitle: "21 year",
+                  subTitle: "${calculateAge(medicalDetailsUiModel.age)} year",
                 ),
                 _personalInfoColumn(
                   title: LocalizationKeys.bloodType,
-                  subTitle: "A+",
+                  subTitle: medicalDetailsUiModel.bloodType,
                 ),
               ],
             ),
@@ -142,7 +200,12 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
       body: Wrap(
         spacing: 16.w,
         runSpacing: 8.h,
-        children: List.generate(6, (index) => _diseaseCard(disease: "السكري")),
+        children: List.generate(
+          medicalDetailsUiModel.chronicDiseasesList.length,
+          (index) => _diseaseCard(
+            disease: medicalDetailsUiModel.chronicDiseasesList[index].name,
+          ),
+        ),
       ),
     );
   }
@@ -168,15 +231,17 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
       body: ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: 2,
+        itemCount: medicalDetailsUiModel.medicalTestList.length,
         itemBuilder: (context, index) {
-          return _medicalTest();
+          return _medicalTest(
+            model: medicalDetailsUiModel.medicalTestList[index],
+          );
         },
       ),
     );
   }
 
-  Widget _medicalTest() {
+  Widget _medicalTest({required MedicalTestUiModel model}) {
     return ContainerWithShadow(
       height: 85.h,
       borderSideColor: Color(0xff00C951),
@@ -194,13 +259,14 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Complete Blood Count (CBC)",
+                    model.testName,
                     style: context.textTheme.bodyMedium!.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   SizedBox(height: 9.h),
                   Text(
+                    // model.date
                     "October 16, 2025 ",
                     style: context.textTheme.labelSmall!.copyWith(
                       fontWeight: FontWeight.w400,
@@ -226,14 +292,13 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                   child: Text(
-                    "Done",
+                    model.status,
 
                     /// change based on condition
                     style: context.textTheme.labelMedium!.copyWith(
                       color: AppColors.medicalTestDoneText,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      // height: 1.2,
                     ),
                   ),
                 ),
@@ -279,7 +344,7 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    "25 November 2025",
+                    medicalDetailsUiModel.upcomingAppointments,
                     style: context.textTheme.bodyLarge,
                   ),
                 ),
@@ -324,4 +389,21 @@ class _MedicalDetailsScreenState extends BaseScreenState<MedicalDetailsScreen> {
       ),
     );
   }
+
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper method ////////////////////////
+  ///////////////////////////////////////////////////////////
+
+  int calculateAge(DateTime birthDate) {
+    DateTime today = DateTime.now();
+    int age = today.year - birthDate.year;
+    if (today.month < birthDate.month ||
+        (today.month == birthDate.month && today.day < birthDate.day)) {
+      age--;
+    }
+
+    return age;
+  }
+
+  MedicalDetailsBloc get _currentBloc => context.read<MedicalDetailsBloc>();
 }

@@ -28,7 +28,10 @@ class UserHomeRepository implements BaseUserHomeRepository {
         );
       },
       (error) {
-        userHomeState = UserHomeErrorState(errorMessage: error.message, codeError: error.code);
+        userHomeState = UserHomeErrorState(
+          errorMessage: error.message,
+          codeError: error.code,
+        );
       },
     );
     return userHomeState;

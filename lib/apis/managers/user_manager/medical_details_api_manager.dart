@@ -2,25 +2,26 @@ import 'package:dio/dio.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/api_keys.dart';
 import 'package:organ_link/apis/errors/error_api_model.dart';
-import 'package:organ_link/apis/models/user_models/user_Home/user_home_data_response.dart';
+import 'package:organ_link/apis/models/user_models/medical_details/medical_details_api_model.dart';
 
-class UserHomeApiManager {
+class MedicalDetailsApiManager {
   final DioApiManager dioApiManager;
 
-  UserHomeApiManager(this.dioApiManager);
-  Future<void> userHomeApi(
+  MedicalDetailsApiManager({required this.dioApiManager});
+
+   Future<void> medicalDetailsDataApi(
     int id,
-    void Function(UserHomeDataResponse) success,
+    void Function(MedicalDetailsApiModel) success,
     void Function(ErrorApiModel) fail,
   ) async {
     await dioApiManager.dio
-        .get(ApiKeys.getHomeUserUrl(id))
+        .get(ApiKeys.getMedicalDetailsUrl(id))
         .then((response) {
           final Map<String, dynamic> extractedData =
               response.data as Map<String, dynamic>;
-          final UserHomeDataResponse homeDataResponse =
-              UserHomeDataResponse.formJson(extractedData);
-          success(homeDataResponse);
+          final MedicalDetailsApiModel medicalDataResponse =
+              MedicalDetailsApiModel.formJson(extractedData);
+          success(medicalDataResponse);
         })
         .onError((DioException error, stackTrace) {
           fail(ErrorApiModel.fromDioError(error));
