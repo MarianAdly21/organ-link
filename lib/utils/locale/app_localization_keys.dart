@@ -286,4 +286,5 @@ class LocalizationKeys {
   static const nationalId = "national_id";
   static const noChronicDiseasesRecorded = "no_chronic_diseases_recorded";
   static const from = "from";
+  static const hours = "hours";
 }

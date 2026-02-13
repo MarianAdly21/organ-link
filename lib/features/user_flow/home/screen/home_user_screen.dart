@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
@@ -130,7 +131,9 @@ class _HomeUserScreenWithBlocState
         ),
       );
     } else if (state is UserHomeErrorState && state.codeError == 1015) {
-      return Center(child: Text("Please Check The Internet${state.errorMessage}"));
+      return Center(
+        child: Text("Please Check The Internet${state.errorMessage}"),
+      );
     } else {
       return EmptyWidget();
     }
@@ -345,7 +348,7 @@ class _HomeUserScreenWithBlocState
             ),
             SizedBox(height: 16.h),
             Text(
-              "${context.translate(LocalizationKeys.lastUpdate)}: date",
+              "${context.translate(LocalizationKeys.lastUpdate)}  ${DateFormat('yyyy-MM-dd').format(userHomeDataUiModel.lastUpdate)}",
               style: context.textTheme.bodySmall!.copyWith(
                 color: AppColors.grayText,
                 fontWeight: FontWeight.w400,

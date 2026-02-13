@@ -43,7 +43,7 @@
   "patient": "Patient",
   "current_status": "Current Status",
   "under_review": "Under Review",
-  "last_update": "Last update",
+  "last_update": "Last update:",
   "contact_us": "Contact Us",
   "location": "Location",
   "open_in_maps": "Open in maps",
@@ -261,5 +261,6 @@
   "search_for_hospital": "Search for a hospital...",
   "need": "Needs",
   "no_chronic_diseases_recorded": "No chronic diseases recorded",
-  "from": "from"
+  "from": "from",
+  "hours": "Hours"
 }

@@ -5,12 +5,14 @@ class UserHomeDataUiModel {
   final String type;
   final String identificationNumber;
   final String currentState;
+  final DateTime lastUpdate;
 
   UserHomeDataUiModel({
     required this.name,
     required this.type,
     required this.identificationNumber,
     required this.currentState,
+    required this.lastUpdate,
   });
   factory UserHomeDataUiModel.fromApiModel(UserDataResponse e) {
     return UserHomeDataUiModel(
@@ -18,14 +20,7 @@ class UserHomeDataUiModel {
       type: e.type,
       identificationNumber: e.identificationNumber,
       currentState: e.currentState,
+      lastUpdate: e.lastUpdate,
     );
   }
-  // factory UserHomeDataUiModel.empty() {
-  //   return UserHomeDataUiModel(
-  //     name: "",
-  //     type: "",
-  //     identificationNumber: "",
-  //     currentState: "",
-  //   );
-  // }
 }

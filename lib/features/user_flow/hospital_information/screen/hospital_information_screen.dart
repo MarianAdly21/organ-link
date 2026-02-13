@@ -155,27 +155,24 @@ class _HospitalInformationScreenWithBlocState
                     DataRowWithDivider(
                       divider: true,
                       title: context.translate(LocalizationKeys.name),
-                      subTitle:"doctorName"
-                      //  hospitalInformationUiModel
-                      //     .supervisorDoctorUiModel
-                      //     .doctorName,
+                      subTitle: hospitalInformationUiModel
+                          .supervisorDoctorUiModel
+                          .doctorName,
                     ),
                     DataRowWithDivider(
                       divider: true,
                       title: context.translate(LocalizationKeys.specialty),
-                      subTitle: "specialty"
-                      // hospitalInformationUiModel
-                      //     .supervisorDoctorUiModel
-                      //     .specialty,
+                      subTitle: hospitalInformationUiModel
+                          .supervisorDoctorUiModel
+                          .specialty,
                     ),
                     DataRowWithDivider(
                       title: context.translate(
                         LocalizationKeys.clinicPhoneNumber,
                       ),
-                      subTitle: "phone"
-                      // hospitalInformationUiModel
-                      //     .supervisorDoctorUiModel
-                      //     .phone,
+                      subTitle: hospitalInformationUiModel
+                          .supervisorDoctorUiModel
+                          .phone,
                     ),
                   ],
                 ),

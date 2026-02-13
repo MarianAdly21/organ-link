@@ -43,7 +43,7 @@
   "patient": "مريض",
   "current_status": "الحالة الحالية",
   "under_review": "تحت المتابعة",
-  "last_update": "آخر تحديث: ",
+  "last_update": "آخر تحديث:",
   "contact_us": "تواصل معنا",
   "location": "الموقع",
   "open_in_maps": "فتح في الخرائط",
@@ -270,5 +270,6 @@
   "equipment_devices": "الأجهزة والمعدات",
   "quantity": "العدد",
   "no_chronic_diseases_recorded": "لا توجد أمراض مزمنة مسجلة",
-  "from": "من"
+  "from": "من",
+  "hours":"ساعات"
 }
