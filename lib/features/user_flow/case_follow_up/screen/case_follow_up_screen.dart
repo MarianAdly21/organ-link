@@ -6,6 +6,7 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/models/step_ui_model.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/widget/gradient_progress_bar.dart';
+import 'package:organ_link/features/user_flow/procedure_scheduling/screen/procedure_scheduling_screen.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/notice_container.dart';
 import 'package:organ_link/features/widgets/app_base_progress.dart';
@@ -53,7 +54,7 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
     StepUiModel(
       stepTitle: LocalizationKeys.transplantProcedure,
       stepDescription: LocalizationKeys.transplantProcedureDescription,
-      isDone: true,
+      isDone: false,
     ),
   ];
   bool isScheduling = true;
@@ -93,7 +94,11 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
           isScheduling
               ? AppButtonWithGradientColors(
                   text: context.translate(LocalizationKeys.procedureScheduling),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(
+                      context,
+                    ).pushNamed(ProcedureSchedulingScreen.routeName);
+                  },
                 )
               : SizedBox.shrink(),
           SizedBox(height: 32.h),

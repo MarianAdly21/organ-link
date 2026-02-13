@@ -3,7 +3,7 @@ import 'package:organ_link/apis/models/user_models/medical_test_api_model.dart';
 class MedicalTestUiModel {
   final String testName;
   final String status;
-  final String date;
+  final DateTime date;
 
   MedicalTestUiModel({
     required this.testName,

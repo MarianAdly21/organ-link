@@ -15,7 +15,7 @@ import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class ProcedureSchedulingScreen extends BaseStatelessWidget {
   const ProcedureSchedulingScreen({super.key});
-
+  static const routeName = "/procedure-scheduling-screen";
   @override
   Widget baseBuild(BuildContext context) {
     return Scaffold(
@@ -31,7 +31,9 @@ class ProcedureSchedulingScreen extends BaseStatelessWidget {
   Widget _buildBody(BuildContext context) {
     return BaseBodyScaffold(
       title: context.translate(LocalizationKeys.scheduleProcedure),
-      onBackTap: () {},
+      onBackTap: () {
+        Navigator.pop(context);
+      },
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -208,34 +210,31 @@ class ProcedureSchedulingScreen extends BaseStatelessWidget {
 
   Widget _transplantStatusMessage(BuildContext context) {
     return ContainerWithShadow(
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.h),
-        child: Column(
-          children: [
-            SvgPicture.asset(
-              AppAssetPaths.inProgressIcon,
-              // width: 28.w,
-              // height: 28.w,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Text(
-                context.translate(LocalizationKeys.procedureScheduled),
-                style: context.textTheme.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+      contentPadding: EdgeInsets.symmetric(vertical: 16.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SvgPicture.asset(AppAssetPaths.inProgressIcon),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              textAlign: TextAlign.center,
+              context.translate(LocalizationKeys.procedureScheduled),
+              style: context.textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w600,
               ),
             ),
-            Text(
-              softWrap: true,
-              overflow: TextOverflow.visible,
-              context.translate(LocalizationKeys.allSetWeAreWithYou),
-              style: context.textTheme.labelMedium!.copyWith(
-                color: AppColors.grayText,
-              ),
+          ),
+          Text(
+            softWrap: true,
+            overflow: TextOverflow.visible,
+            textAlign: TextAlign.center,
+            context.translate(LocalizationKeys.allSetWeAreWithYou),
+            style: context.textTheme.labelMedium!.copyWith(
+              color: AppColors.grayText,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

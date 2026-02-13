@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
@@ -96,7 +97,6 @@ class _MedicalDetailsScreenWithBlocState
         body: Column(
           children: [
             _personalInfoCard(),
-
             _chronicDiseasesCard(),
             if (medicalDetailsUiModel.medicalTestList.isNotEmpty)
               _medicalTestCard(),
@@ -272,8 +272,8 @@ class _MedicalDetailsScreenWithBlocState
                   ),
                   SizedBox(height: 9.h),
                   Text(
-                    // model.date
-                    "October 16, 2025 ",
+                    DateFormat('yyyy-MM-dd').format(model.date)  
+                    ,
                     style: context.textTheme.labelSmall!.copyWith(
                       fontWeight: FontWeight.w400,
                       color: AppColors.blackText,
@@ -349,10 +349,14 @@ class _MedicalDetailsScreenWithBlocState
                 SizedBox(height: 9.h),
                 FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: Text(
-                    medicalDetailsUiModel.upcomingAppointments,
-                    style: context.textTheme.bodyLarge,
-                  ),
+                  child: medicalDetailsUiModel.upcomingAppointments != null
+                      ? Text(
+                          DateFormat(
+                            'yyyy-MM-dd',
+                          ).format(medicalDetailsUiModel.upcomingAppointments!),
+                          style: context.textTheme.bodyLarge,
+                        )
+                      : SizedBox.shrink(),
                 ),
               ],
             ),

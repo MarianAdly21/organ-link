@@ -6,13 +6,15 @@ import 'package:organ_link/res/app_colors.dart';
 class NotificationItem extends StatelessWidget {
   const NotificationItem({
     super.key,
-    required this.color,
     required this.title,
     required this.content,
+    required this.date,
+    required this.color,
   });
   final Color color;
   final String title;
   final String content;
+  final String date;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,7 +52,7 @@ class NotificationItem extends StatelessWidget {
                 ),
                 SizedBox(width: 24.w),
                 Text(
-                  "15 oct 2025",
+                  date,
                   style: context.textTheme.labelLarge!.copyWith(
                     color: AppColors.notificationContentAndDate,
                     fontSize: 13,

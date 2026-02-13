@@ -4,18 +4,18 @@ import 'package:organ_link/features/user_flow/hospital_information/models/superv
 
 class HospitalInformationUiModel {
   final HospitalDetailsUiModel hospitalUiModel;
-  final SupervisorDoctorUiModel supervisorDoctorUiModel;
+ // final SupervisorDoctorUiModel supervisorDoctorUiModel;
 
   HospitalInformationUiModel({
     required this.hospitalUiModel,
-    required this.supervisorDoctorUiModel,
+    //required this.supervisorDoctorUiModel,
   });
   factory HospitalInformationUiModel.fromApiModel(UserDataResponse e) {
     return HospitalInformationUiModel(
       hospitalUiModel: HospitalDetailsUiModel.fromApiModel(e.hospitalDetails),
-      supervisorDoctorUiModel: SupervisorDoctorUiModel.fromApiModel(
-        e.supervisorDoctorDetails,
-      ),
+      // supervisorDoctorUiModel: SupervisorDoctorUiModel.fromApiModel(
+      // //  e.supervisorDoctorDetails,
+      // ),
     );
   }
 }

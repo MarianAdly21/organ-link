@@ -25,11 +25,11 @@ class ApiKeys {
   // static const apiKeyUrl = "api";
   // static const apiVersion = "v1";
   // static const baseApiUrl = '/$apiKeyUrl';
-  static const baseUrl = 'https://web-production-5fe10.up.railway.app/api';
+  static const baseUrl = 'https://web-production-02e1b.up.railway.app/api';
 
   static const loginUrl = '$baseUrl/login/';
   static String getHomeUserUrl(int id)=>  '$baseUrl/users/$id';
-  static String getMedicalDetailsUrl(int id)=>  '$baseUrl/users/$id';
+  static String getMedicalDetailsUrl(int id)=> '$baseUrl/users/$id';
  // static const homeUserUrl = '$baseUrl/users';
 
   static String get currentEnvironmentUrl =>
