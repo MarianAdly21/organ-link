@@ -260,5 +260,6 @@
   "hospital_registered_in_system": "Hospital Registered in the System",
   "search_for_hospital": "Search for a hospital...",
   "need": "Needs",
-  "no_chronic_diseases_recorded":"No chronic diseases recorded"
+  "no_chronic_diseases_recorded": "No chronic diseases recorded",
+  "from": "from"
 }

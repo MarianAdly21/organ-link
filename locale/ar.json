@@ -269,5 +269,6 @@
   "patient_age": "عمر المريض",
   "equipment_devices": "الأجهزة والمعدات",
   "quantity": "العدد",
-  "no_chronic_diseases_recorded": "لا توجد أمراض مزمنة مسجلة"
+  "no_chronic_diseases_recorded": "لا توجد أمراض مزمنة مسجلة",
+  "from": "من"
 }

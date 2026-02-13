@@ -285,4 +285,5 @@ class LocalizationKeys {
   static const quantity = "quantity";
   static const nationalId = "national_id";
   static const noChronicDiseasesRecorded = "no_chronic_diseases_recorded";
+  static const from = "from";
 }

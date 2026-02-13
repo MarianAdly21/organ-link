@@ -199,25 +199,36 @@ class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
     );
   }
 
+  // void _navigateBasedOnUserType(
+  //   NavToHomeScreenState state,
+  //   BuildContext context,
+  // ) {
+  //   final String type = state.type;
+  //   if (type == UserType.donor.name || type == UserType.patient.name) {
+  //     Navigator.of(
+  //       context,
+  //     ).pushNamedAndRemoveUntil(HomeUserScreen.routeName, ((route) => false));
+  //   } else if (type == UserType.ministry.name) {
+  //     Navigator.of(context).pushNamedAndRemoveUntil(
+  //       MinistryHomeScreen.routeName,
+  //       ((route) => false),
+  //     );
+  //   } else if (type == UserType.hospital.name) {
+  //     Navigator.of(context).pushNamedAndRemoveUntil(
+  //       HospitalDashboardScreen.routeName,
+  //       ((route) => false),
+  //     );
+  //   }
+  // }
+
   void _navigateBasedOnUserType(
     NavToHomeScreenState state,
     BuildContext context,
   ) {
-    final String type = state.type;
-    if (type == UserType.donor.name || type == UserType.patient.name) {
-      Navigator.of(
-        context,
-      ).pushNamedAndRemoveUntil(HomeUserScreen.routeName, ((route) => false));
-    } else if (type == UserType.ministry.name) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        MinistryHomeScreen.routeName,
-        ((route) => false),
-      );
-    } else if (type == UserType.hospital.name) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        HospitalDashboardScreen.routeName,
-        ((route) => false),
-      );
-    }
+    final userType = state.type.toUserType();
+
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil(userType.homeRoute, (route) => false);
   }
 }
