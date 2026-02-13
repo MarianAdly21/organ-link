@@ -152,10 +152,10 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
             ],
           ),
           SizedBox(height: 24.h),
-          GradientProgressBar(value: 3 / 6),
+          GradientProgressBar(value: progressValue),
           SizedBox(height: 8.h),
           Text(
-            '3 from 6',
+            '$completedSteps ${context.translate(LocalizationKeys.from)} ${steps.length}',
             style: context.textTheme.labelMedium!.copyWith(
               color: AppColors.grayText,
               fontWeight: FontWeight.w400,
@@ -256,4 +256,10 @@ class _CaseFollowUpScreenState extends BaseScreenState<CaseFollowUpScreen> {
       ),
     );
   }
+
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper method ////////////////////////
+  ///////////////////////////////////////////////////////////
+  int get completedSteps => steps.where((step) => step.isDone).length;
+  double get progressValue => completedSteps / steps.length;
 }
