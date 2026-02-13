@@ -130,7 +130,7 @@ class _HomeUserScreenWithBlocState
         ),
       );
     } else if (state is UserHomeErrorState && state.codeError == 1015) {
-      return Center(child: Text("Please Check The Internet"));
+      return Center(child: Text("Please Check The Internet${state.errorMessage}"));
     } else {
       return EmptyWidget();
     }

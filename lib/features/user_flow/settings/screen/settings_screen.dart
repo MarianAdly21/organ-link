@@ -7,7 +7,6 @@ import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/shared_screens/log_out_confirmation/log_out_confirmationDialog_screen.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
-import 'package:organ_link/features/user_flow/widget/hospital_name_container.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/features/widgets/data_section.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
@@ -16,19 +15,16 @@ import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 import 'package:organ_link/utils/locale/locale_cubit.dart';
 
-
-
 class SettingsScreen extends BaseStatefulScreenWidget {
   const SettingsScreen({super.key});
-    static const routeName = "/settings-screen";
+  static const routeName = "/settings-screen";
 
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
       _SettingsScreenState();
 }
 
-class _SettingsScreenState
-    extends BaseScreenState<SettingsScreen> {
+class _SettingsScreenState extends BaseScreenState<SettingsScreen> {
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
@@ -99,7 +95,7 @@ class _SettingsScreenState
                   locale: 'en',
                   onTap: _englishItemOnTap,
                 ),
-                
+
                 _languageItemWidget(
                   appLocale: appLocale,
                   language: 'عربي',
@@ -149,7 +145,7 @@ class _SettingsScreenState
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric( vertical:7.h),
+        padding: EdgeInsets.symmetric(vertical: 7.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -161,28 +157,34 @@ class _SettingsScreenState
               ),
             ),
             appLocale == locale
-                ? const Icon(Icons.check_box, size:26,color: AppColors.blackText,)
-                : const Icon(Icons.check_box_outline_blank, size: 26 ,color: AppColors.blackText),
+                ? const Icon(
+                    Icons.check_box,
+                    size: 26,
+                    color: AppColors.blackText,
+                  )
+                : const Icon(
+                    Icons.check_box_outline_blank,
+                    size: 26,
+                    color: AppColors.blackText,
+                  ),
           ],
         ),
       ),
     );
   }
 
- 
-
   ///////////////////////////////////////////////////////////
   /////////////////// Helper Method ////////////////////////
   ///////////////////////////////////////////////////////////
 
   //SettingsBloc get currentBloc => context.read<SettingsBloc>();
-   void _arabicItemOnTap() {
-  //  _selectArabicLanguageEvent();
+  void _arabicItemOnTap() {
+    //  _selectArabicLanguageEvent();
     _changeToArabicEvent();
   }
 
   void _englishItemOnTap() {
-   // _selectEnglishLanguageEvent();
+    // _selectEnglishLanguageEvent();
     _changeToEnglishEvent();
   }
 
@@ -201,6 +203,7 @@ class _SettingsScreenState
   void _changeToArabicEvent() {
     BlocProvider.of<LocaleCubit>(context).changeLocale(LocaleApp.ar);
   }
+
   Future<void> _logoutConfirmation() {
     return showAppDialog(
       context: context,

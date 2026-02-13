@@ -1,7 +1,7 @@
 class MedicalTestApiModel {
   final String testName;
   final String status;
-  final String date;
+  final DateTime date;
 
   MedicalTestApiModel({
     required this.testName,
@@ -10,9 +10,9 @@ class MedicalTestApiModel {
   });
   factory MedicalTestApiModel.formJson(Map<String, dynamic> json) {
     return MedicalTestApiModel(
-      testName: json[""],
-      status: json[""],
-      date: json[""],
+      testName: json["report_type"],
+      status: json["state"],
+      date: DateTime.parse(json["created_at"]),
     );
   }
 }

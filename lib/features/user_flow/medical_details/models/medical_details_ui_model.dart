@@ -9,7 +9,7 @@ class MedicalDetailsUiModel {
   final String medicalFileNumber;
   final String organ;
   final String bloodType;
-  final String upcomingAppointments;
+  final DateTime? upcomingAppointments;
   final List<ChronicDiseasesUiModel> chronicDiseasesList;
   final List<MedicalTestUiModel> medicalTestList;
 
@@ -36,11 +36,10 @@ class MedicalDetailsUiModel {
       chronicDiseasesList: e.chronicDiseasesList
           .map((e) => ChronicDiseasesUiModel.fromApiModel(e))
           .toList(),
-      medicalTestList:[],
-      //  e.medicalTestList
-      //     .map((e) => MedicalTestUiModel.fromApiModel(e))
-      //     .toList(),
-      upcomingAppointments: "25 نوفمبر 2025",
+      medicalTestList: e.medicalTestList
+          .map((e) => MedicalTestUiModel.fromApiModel(e))
+          .toList(),
+      upcomingAppointments: e.upcomingAppointments,
     );
   }
 }

@@ -22,6 +22,7 @@ import 'package:organ_link/features/user_flow/home/screen/home_user_screen.dart'
 import 'package:organ_link/features/user_flow/hospital_information/screen/hospital_information_screen.dart';
 import 'package:organ_link/features/user_flow/medical_details/screens/medical_details_screen.dart';
 import 'package:organ_link/features/user_flow/notification/screens/notification_screen.dart';
+import 'package:organ_link/features/user_flow/procedure_scheduling/screen/procedure_scheduling_screen.dart';
 import 'package:organ_link/features/user_flow/settings/screen/settings_screen.dart';
 
 class AppRouter {
@@ -57,5 +58,7 @@ class AppRouter {
         const MinistryNotificationDetailsScreen(),
     MinistrySettingsScreen.routeName: (ctx) => const MinistrySettingsScreen(),
     AddNewUserScreen.routeName: (ctx) => const AddNewUserScreen(),
+    ProcedureSchedulingScreen.routeName: (ctx) =>
+        const ProcedureSchedulingScreen(),
   };
 }
