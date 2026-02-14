@@ -28,6 +28,10 @@ class MatchingDataLoadedSuccessfullyState extends MatchingState {
 }
 
 class NavToMatchingDetailsScreenState extends MatchingState {
+  final int matchId;
+
+  const NavToMatchingDetailsScreenState({required this.matchId});
+
   @override
   List<Object> get props => [identityHashCode(this)];
 }

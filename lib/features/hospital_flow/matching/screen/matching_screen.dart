@@ -26,6 +26,7 @@ import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/empty/empty_widgets.dart';
+import 'package:organ_link/utils/feedback/feedback_message.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class MatchingScreen extends StatelessWidget {
@@ -58,35 +59,6 @@ class MatchingScreenWithBloc extends BaseStatefulScreenWidget {
 class _MatchingScreenWithBlocState
     extends BaseScreenState<MatchingScreenWithBloc> {
   late List<MatchingUiModel> matchingList;
-
-  // ///demo data
-  // List<MatchingUiModel> matchingList = [
-  //   MatchingUiModel(
-  //     patientName: "أحمد محمد العلي",
-  //     requestStatus: "تمت المطابقة",
-  //     status: "جاهز",
-  //     requestDate: "2025-10-15",
-  //     donorName: "سارة أحمد",
-  //     requestId: "12354",
-  //     organType: "كلى",
-  //     matchPercentage: "%95",
-  //     donorBloodType: "A+",
-  //     aiMessage: "تم العثور علي متبرع متطابق",
-  //   ),
-  //   MatchingUiModel(
-  //     patientName: "خالد سعيد",
-  //     requestStatus: "تحت المراجعة",
-  //     status: "انتظار",
-  //     requestDate: "2025-10-15",
-  //     requestId: "12354",
-  //     organType: "كلى",
-  //     donorName: "أحمد محمود",
-  //     matchPercentage: "%78",
-  //     donorBloodType: "A+",
-  //     aiMessage: "تم العثور علي متبرع متطابق",
-  //   ),
-  // ];
-
   @override
   void initState() {
     super.initState();
@@ -108,7 +80,9 @@ class _MatchingScreenWithBlocState
           if (state is MatchingDataLoadedSuccessfullyState) {
             matchingList = state.matchingList;
           } else if (state is NavToMatchingDetailsScreenState) {
-            Navigator.of(context).pushNamed(MatchingDetailsScreen.routeName);
+            _navToMatchingDetailsScreen(state);
+          }else if(state is MatchingErrorState){
+            showFeedbackMessage(state.errorMessage);
           }
         },
         buildWhen: (previous, current) =>
@@ -131,7 +105,19 @@ class _MatchingScreenWithBlocState
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [_headerWidget(), _requestList()],
+            children: [
+              _headerWidget(),
+              matchingList.isNotEmpty
+                  ? _requestList()
+                  : Center(
+                      child: Text(
+                        context.translate(
+                          LocalizationKeys.noMatchingSurgeriesAtTheMoment,
+                        ),
+                        style: context.textTheme.bodyMedium,
+                      ),
+                    ),
+            ],
           ),
         ),
       );
@@ -144,15 +130,6 @@ class _MatchingScreenWithBlocState
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  // Widget _buildBody() {
-  //   return SingleChildScrollView(
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.stretch,
-  //       children: [_headerWidget(), _requestList()],
-  //     ),
-  //   );
-  // }
-
   Widget _headerWidget() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -160,7 +137,7 @@ class _MatchingScreenWithBlocState
         TitleAndSubtitleCustomWidget(
           title: context.translate(LocalizationKeys.matchingRequests),
           subTitle: context.translate(
-            LocalizationKeys.followuponAIMatchingRequests,
+            LocalizationKeys.followUponAIMatchingRequests,
           ),
         ),
         Padding(
@@ -171,19 +148,19 @@ class _MatchingScreenWithBlocState
               CustomOverViewContainer(
                 isGradient: true,
                 text: context.translate(LocalizationKeys.totalRequests),
-                count: "1000",
+                count: matchingList.length.toString(),
               ),
               CustomOverViewContainer(
                 text: context.translate(LocalizationKeys.underMatching),
-                count: "5",
+                count: "0",
               ),
               CustomOverViewContainer(
                 text: context.translate(LocalizationKeys.underAnalysis),
-                count: "100",
+                count: "0",
               ),
               CustomOverViewContainer(
                 text: context.translate(LocalizationKeys.underReview),
-                count: "100",
+                count: "0",
               ),
             ],
           ),
@@ -261,9 +238,11 @@ class _MatchingScreenWithBlocState
                   AppButtonWithGradientColors(
                     text: context.translate(LocalizationKeys.details),
                     onTap: () {
-                      Navigator.of(
-                        context,
-                      ).pushNamed(MatchingDetailsScreen.routeName);
+                      _currentBloc.add(
+                        NavToMatchingDetailsScreenEvent(
+                          matchId: matchingList[index].matchId,
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -364,6 +343,14 @@ class _MatchingScreenWithBlocState
           textColor: mapMatchingStatus(matchingList[index].status).textColor,
         ),
       ],
+    );
+  }
+
+  void _navToMatchingDetailsScreen(NavToMatchingDetailsScreenState state) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => MatchingDetailsScreen(matchId: state.matchId),
+      ),
     );
   }
 }

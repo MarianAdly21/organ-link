@@ -26,6 +26,6 @@ class MatchingBloc extends Bloc<MatchingEvent, MatchingState> {
     NavToMatchingDetailsScreenEvent event,
     Emitter<MatchingState> emit,
   ) {
-    emit(NavToMatchingDetailsScreenState());
+    emit(NavToMatchingDetailsScreenState(matchId: event.matchId));
   }
 }

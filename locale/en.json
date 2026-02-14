@@ -262,5 +262,9 @@
   "need": "Needs",
   "no_chronic_diseases_recorded": "No chronic diseases recorded",
   "from": "from",
-  "hours": "Hours"
+  "hours": "Hours",
+  "no_matching_surgeries_at_the_moment": "No matching surgeries at the moment",
+  "matching_details": "Matching Details",
+  "request_status": "Request Status",
+  "ai_result": "AI Result"
 }

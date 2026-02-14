@@ -9,4 +9,8 @@ sealed class MatchingEvent extends Equatable {
 
 class GetMatchingDataEvent extends MatchingEvent {}
 
-class NavToMatchingDetailsScreenEvent extends MatchingEvent {}
+class NavToMatchingDetailsScreenEvent extends MatchingEvent {
+  final int matchId;
+
+  const NavToMatchingDetailsScreenEvent({required this.matchId});
+}

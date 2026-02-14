@@ -5,6 +5,7 @@ class MatchingUiModel {
   final String donorName;
   final String donorBloodType;
   final String patientOrgan;
+  final int matchId;
   final DateTime requestMatchingDate;
   final String? matchPercentage;
   final String matchingNumber;
@@ -23,6 +24,7 @@ class MatchingUiModel {
     required this.aiStatus,
     required this.status,
     required this.aiResult,
+    required this.matchId
   });
   factory MatchingUiModel.fromApiModel(MatchingApiModel e) {
     return MatchingUiModel(
@@ -37,6 +39,7 @@ class MatchingUiModel {
       aiStatus: e.aiStatus,
       status: e.status,
       aiResult: e.aiResult,
+      matchId: e.matchId
     );
   }
 }

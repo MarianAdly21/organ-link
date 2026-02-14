@@ -271,5 +271,9 @@
   "quantity": "العدد",
   "no_chronic_diseases_recorded": "لا توجد أمراض مزمنة مسجلة",
   "from": "من",
-  "hours":"ساعات"
+  "hours": "ساعات",
+  "no_matching_surgeries_at_the_moment": "لا توجد عمليات مطابقة في الوقت الحالي",
+  "matching_details": "تفاصيل التطابق",
+  "request_status": "حالة الطلب",
+  "ai_result": "نتيجة الذكاء الاصطناعي"
 }
