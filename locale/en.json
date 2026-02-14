@@ -119,9 +119,11 @@
   "search_by_name_or_mrn": "Search by Name or Medical Number",
   "all_organs": "All Organs",
   "all_cases": "All Cases",
-  "patient_title": "Patient",
+  "patient_title": "Patients",
   "patient_details": "Patient Details",
   "donor_details": "Donor Details",
+  "patients_list": "Patients List",
+  "donors_list": "Donors List",
   "file_number": "File number: ",
   "city": "City",
   "medical_information": "Medical Information",
@@ -266,5 +268,6 @@
   "no_matching_surgeries_at_the_moment": "No matching surgeries at the moment",
   "matching_details": "Matching Details",
   "request_status": "Request Status",
-  "ai_result": "AI Result"
+  "ai_result": "AI Result",
+  "donor_title": "Donors"
 }

@@ -16,7 +16,7 @@ import 'package:organ_link/features/hospital_flow/hospital_setting/screen/hospit
 import 'package:organ_link/features/hospital_flow/matching/screen/matching_screen.dart';
 import 'package:organ_link/features/hospital_flow/notification_screen/screen/hospital_notification_screen.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/screen/surgeries_screen.dart';
-import 'package:organ_link/features/hospital_flow/view_patient/screen/view_patient_screen.dart';
+import 'package:organ_link/features/hospital_flow/view_patient_or_donor/screen/view_patient_or_donor_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/hospital_app_bar_base.dart';
 import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
@@ -420,9 +420,15 @@ class _HospitalDashboardScreenWithBlocState
   void _navToViewPatientOrDonorScreen(
     NavToViewPatientOrDonorScreenState state,
   ) {
-    Navigator.of(
-      context,
-    ).pushNamed(ViewPatientScreen.routeName, arguments: state.type);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ViewPatientOrDonorScreen(type: state.type),
+      ),
+    );
+
+    // Navigator.of(
+    //   context,
+    // ).pushNamed(ViewPatientOrDonorScreen.routeName, arguments: state.type);
   }
 
   void _navToSurgeriesScreenEvent() {

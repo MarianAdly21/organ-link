@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
+import 'package:organ_link/features/hospital_flow/enum/nav_type.dart';
+import 'package:organ_link/features/hospital_flow/patient_details/screen/patient_details_screen.dart';
+import 'package:organ_link/features/hospital_flow/view_patient_or_donor/bloc/view_patient_or_donor_bloc.dart';
+import 'package:organ_link/features/hospital_flow/view_patient_or_donor/bloc/view_patient_or_donor_repository.dart';
+import 'package:organ_link/features/hospital_flow/view_patient_or_donor/models/patient_or_donor_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_search_custom_widget.dart';
@@ -11,68 +20,126 @@ import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_cus
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/text_field/custom_drop_down_form_filed_widget.dart';
+import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/empty/empty_widgets.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
-class ViewPatientScreen extends BaseStatefulScreenWidget {
-  const ViewPatientScreen({super.key});
-  static const routeName = "/view-patient-screen";
+class ViewPatientOrDonorScreen extends StatelessWidget {
+  const ViewPatientOrDonorScreen({super.key, required this.type});
+  final NavType type;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ViewPatientOrDonorBloc(
+        ViewPatientOrDonorRepository(
+          hospitalApiManager: HospitalApiManager(
+            dioApiManager: GetIt.I<DioApiManager>(),
+          ),
+          preferencesManager: GetIt.I<PreferencesManager>(),
+        ),
+      ),
+      child: ViewPatientOrDonorScreenWithBloc(type: type),
+    );
+  }
+}
+
+class ViewPatientOrDonorScreenWithBloc extends BaseStatefulScreenWidget {
+  const ViewPatientOrDonorScreenWithBloc({super.key, required this.type});
+  //static const routeName = "/view-patient-screen";
+  final NavType type;
 
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _ViewPatientScreenState();
+      _ViewPatientOrDonorScreenWithBlocState();
 }
 
-class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
+class _ViewPatientOrDonorScreenWithBlocState
+    extends BaseScreenState<ViewPatientOrDonorScreenWithBloc> {
+  late List<PatientOrDonorUiModel> modelList;
+  late bool isDonor;
+  @override
+  void initState() {
+    isDonor = (widget.type == NavType.donor);
+    _getViewPatientOrDonorDataEvent();
+    super.initState();
+  }
+
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: _buildBody(),
+      body: BlocConsumer<ViewPatientOrDonorBloc, ViewPatientOrDonorState>(
+        listener: (context, state) {
+          if (state is ViewPatientOrDonorLoadingState) {
+            showLoading();
+          } else {
+            hideLoading();
+          }
+          if (state is ViewPatientOrDonorDataLoadedSuccessfullyState) {
+            modelList = state.donorOrPatientList;
+          } else if (state is NavToDetailsScreenState) {
+            _navToDetailsScreen();
+          }
+        },
+        buildWhen: (previous, current) =>
+            current is ViewPatientOrDonorDataLoadedSuccessfullyState,
+        builder: (context, state) {
+          return _buildBody(state);
+        },
+      ),
     );
   }
+
   ///////////////////////////////////////////////////////////
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget _buildBody() {
-    return AppBaseBodyScaffold(
-      titleOfScreen: LocalizationKeys.patientTitle,
-      backTap: () {
-        Navigator.pop(context);
-      },
-      body: Column(
-        children: [
-          _searchSection(),
-          Expanded(
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Text(
-                    "${context.translate(LocalizationKeys.patients)} (6)",
+  Widget _buildBody(ViewPatientOrDonorState state) {
+    if (state is ViewPatientOrDonorDataLoadedSuccessfullyState) {
+      return AppBaseBodyScaffold(
+        titleOfScreen: isDonor
+            ? LocalizationKeys.donorTitle
+            : LocalizationKeys.patientTitle,
+        backTap: () {
+          Navigator.pop(context);
+        },
+        body: Column(
+          children: [
+            _searchSection(),
+            Expanded(
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Text(
+                      "${isDonor ? context.translate(LocalizationKeys.donors) : context.translate(LocalizationKeys.patients)} (6)",
 
-                    /// conut==> 6 from back and text patients changes based on pateint or donor
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.blackText,
+                      /// conut==> 6 from back and text patients changes based on pateint or donor
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.blackText,
+                      ),
                     ),
                   ),
-                ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(childCount: 5, (
-                    context,
-                    index,
-                  ) {
-                    return _cardItem();
-                  }),
-                ),
-              ],
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(childCount: 5, (
+                      context,
+                      index,
+                    ) {
+                      return _cardItem();
+                    }),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    } else {
+      return EmptyWidget();
+    }
   }
 
   Widget _cardItem() {
@@ -88,7 +155,9 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
           SizedBox(height: 16.h),
           AppButtonWithGradientColors(
             text: context.translate(LocalizationKeys.details),
-            onTap: () {},
+            onTap: () {
+              navToDetailsScreen();
+            },
           ),
         ],
       ),
@@ -154,7 +223,9 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TitleAndSubtitleCustomWidget(
-          title: context.translate(LocalizationKeys.patientList),
+          title: isDonor
+              ? context.translate(LocalizationKeys.donorsList)
+              : context.translate(LocalizationKeys.patientsList),
           subTitle: context.translate(
             LocalizationKeys.transplantPatientsManagement,
           ),
@@ -221,5 +292,22 @@ class _ViewPatientScreenState extends BaseScreenState<ViewPatientScreen> {
         child: child,
       ),
     );
+  }
+
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper method ////////////////////////
+  ///////////////////////////////////////////////////////////
+  ViewPatientOrDonorBloc get _currentBloc =>
+      context.read<ViewPatientOrDonorBloc>();
+  void navToDetailsScreen() {
+    _currentBloc.add(NavToDetailsScreenEvent());
+  }
+
+  void _navToDetailsScreen() {
+    Navigator.of(context).pushNamed(PatientDetailsScreen.routeName);
+  }
+
+  void _getViewPatientOrDonorDataEvent() {
+    _currentBloc.add(GetViewPatientOrDonorDataEvent(type: widget.type));
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/widgets/base_stateless_widget.dart';
-import 'package:organ_link/features/hospital_flow/view_patient/helper_method/get_priority.dart';
-import 'package:organ_link/features/hospital_flow/view_patient/helper_method/get_status.dart';
+import 'package:organ_link/features/hospital_flow/view_patient_or_donor/helper_method/get_priority.dart';
+import 'package:organ_link/features/hospital_flow/view_patient_or_donor/helper_method/get_status.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 
 class StatusRowWidget extends BaseStatelessWidget {

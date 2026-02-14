@@ -130,6 +130,11 @@ class LocalizationKeys {
   static const allOrgans = "all_organs";
   static const allCases = "all_cases";
   static const patientTitle = "patient_title";
+  static const donorTitle = "donor_title";
+  static const patientsList= "patients_list";
+ static const donorsList= "donors_list";
+  static const patientsDetails = "patients_details";
+  static const donorsDetails = "donors_details";
   static const patientDetails = "patient_details";
   static const donorDetails = "donor_details";
   static const fileNumber = "file_number";

@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
+import 'package:organ_link/_core/extensions/screen_sizer_extension.dart';
 import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/upload_files/screen/upload_report_confarmation_screen.dart';
@@ -45,16 +46,21 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
   Widget _buildBody() {
     return AppBaseBodyScaffold(
       titleOfScreen: LocalizationKeys.reportNewTitle,
-      backTap: () {},
+      backTap: () {
+        Navigator.pop(context);
+      },
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _headerWidget(),
-            _reportDetailsSection(),
-            _importantNotes(),
-            _btnRow(),
-          ],
+        child: Padding(
+          padding:  EdgeInsets.symmetric(vertical:10.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _headerWidget(),
+              _reportDetailsSection(),
+              _importantNotes(),
+              _btnRow(),
+            ],
+          ),
         ),
       ),
     );
@@ -154,7 +160,7 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 8.h, bottom: 24.h),
+         margin: EdgeInsets.only(top: 8.h, bottom: 24.h,left:4.w, right: 4.w),
           height: 56.h,
           decoration: BoxDecoration(
             boxShadow: [
@@ -273,7 +279,8 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
   Widget _headerWidget() {
     return ContainerWithShadow(
       borderRadius: 24,
-      padding: EdgeInsets.only(top: 0, bottom: 24.h),
+      width: context.width,
+      padding: EdgeInsets.only(top: 4.h, bottom: 24.h, left: 2.w, right: 2.w),
       contentPadding: EdgeInsets.symmetric(vertical: 16.h),
       child: Column(
         children: [
@@ -302,7 +309,6 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
   Widget _uploadFileSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-
       children: [
         Text(
           context.translate(LocalizationKeys.fileLabel),
@@ -311,9 +317,10 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
           ),
         ),
         ContainerWithShadow(
-          height: 150,
-          padding: EdgeInsets.only(top: 8.h, bottom: 24.h),
-          contentPadding: EdgeInsets.symmetric(vertical: 16),
+          height: 150.h,
+          width: context.width,
+          padding: EdgeInsets.only(top: 8.h, bottom: 24.h,left: 2.w, right: 2.w),
+          contentPadding: EdgeInsets.symmetric(vertical: 16.h),
           child: GestureDetector(
             onTap: () {
               pick();
@@ -322,7 +329,7 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
               children: [
                 SvgPicture.asset(AppAssetPaths.uploadIcon),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 8, top: 16),
+                  padding:  EdgeInsets.only(bottom: 8.h, top: 16.h),
                   child: Text(
                     context.translate(LocalizationKeys.pickFile),
                     style: context.textTheme.labelMedium!.copyWith(
