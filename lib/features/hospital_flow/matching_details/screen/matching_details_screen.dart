@@ -1,29 +1,98 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
+import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
+import 'package:organ_link/features/hospital_flow/matching_details/bloc/matching_details_bloc.dart';
+import 'package:organ_link/features/hospital_flow/matching_details/bloc/matching_details_repository.dart';
+import 'package:organ_link/features/hospital_flow/matching_details/models/matching_details_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/empty/empty_widgets.dart';
+import 'package:organ_link/utils/feedback/feedback_message.dart';
+import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
-class MatchingDetailsScreen extends BaseStatefulScreenWidget {
-  const MatchingDetailsScreen({super.key});
-  static const routeName = "/matching-details-screen";
+class MatchingDetailsScreen extends StatelessWidget {
+  const MatchingDetailsScreen({super.key, required this.matchId});
+  final int matchId;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => MatchingDetailsBloc(
+        MatchingDetailsRepository(
+          hospitalApiManager: HospitalApiManager(
+            dioApiManager: GetIt.I<DioApiManager>(),
+          ),
+        ),
+      ),
+      child: MatchingDetailsScreenWithBloc(matchId: matchId),
+    );
+  }
+}
+
+class MatchingDetailsScreenWithBloc extends BaseStatefulScreenWidget {
+  const MatchingDetailsScreenWithBloc({super.key, required this.matchId});
+  final int matchId;
 
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _MatchingDetailsScreenState();
+      _MatchingDetailsScreenWithBlocState();
 }
 
-class _MatchingDetailsScreenState
-    extends BaseScreenState<MatchingDetailsScreen> {
+class _MatchingDetailsScreenWithBlocState
+    extends BaseScreenState<MatchingDetailsScreenWithBloc> {
+  late MatchingDetailsUiModel matchingDetailsUiModel;
+  @override
+  void initState() {
+    _getData();
+    super.initState();
+  }
+
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: AppBaseBodyScaffold(
-        titleOfScreen: "Matching Details",
+      body: BlocConsumer<MatchingDetailsBloc, MatchingDetailsState>(
+        listener: (context, state) {
+          if (state is MatchingDetailsLoadingState) {
+            showLoading();
+          } else {
+            hideLoading();
+          }
+          if (state is MatchingDetailsDataLoadedSuccessfullyState) {
+            matchingDetailsUiModel = state.matchingDetailsUiModel;
+          } else if (state is MatchingDetailsErrorState) {
+            showFeedbackMessage(state.errorMessage);
+          }
+        },
+        buildWhen: (previous, current) =>
+            current is MatchingDetailsDataLoadedSuccessfullyState,
+
+        builder: (context, state) {
+          return _buildBody(state);
+        },
+      ),
+    );
+  }
+
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper widget ////////////////////////
+  ///////////////////////////////////////////////////////////
+
+  Widget _buildBody(MatchingDetailsState state) {
+    if (state is MatchingDetailsDataLoadedSuccessfullyState) {
+      return AppBaseBodyScaffold(
+        titleOfScreen: context.translate(
+          LocalizationKeys.matchingDetailsScreen,
+        ),
         backTap: () {
           Navigator.pop(context);
         },
@@ -31,56 +100,63 @@ class _MatchingDetailsScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ContainerWithShadow(
-                //height: 258.h,
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 24.h,
-                  horizontal: 16.w,
+              _patientInfo(),
+              if (matchingDetailsUiModel.requestStatus != "لم يتم العثور") ...[
+                Text(
+                  context.translate(LocalizationKeys.aiResult),
+                  style: context.textTheme.bodyMedium!.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    DataRowWithDivider(
-                      divider: true,
-                      title: "اسم المريض",
-                      subTitle: "أحمد محمد العلي",
-                    ),
-                    DataRowWithDivider(
-                      divider: true,
-                      title: "رقم الملف",
-                      subTitle: "P001",
-                    ),
-                    DataRowWithDivider(
-                      divider: true,
-                      title: "العضو المطلوب",
-                      subTitle: "كلي",
-                    ),
-                    DataRowWithDivider(
-                      divider: true,
-                      title: "تاريخ الطلب",
-                      subTitle: "2025-10-2",
-                    ),
-                    DataRowWithDivider(
-                      title: "حالة الطلب",
-                      subTitle: "تمت المطابقة",
-                    ),
-                  ],
-                ),
-              ),
-              Text(
-                "نتيجة الذكاء الاصطناعي",
-                style: context.textTheme.bodyMedium!.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              _matchingResultAi(),
-              _waitingAiResultContainer(),
-
-              /// if
+                matchingDetailsUiModel.requestStatus == "قيد التحليل"
+                    ? _waitingAiResultContainer()
+                    : _matchingResultAi(),
+              ],
             ],
           ),
         ),
+      );
+    } else {
+      return EmptyWidget();
+    }
+  }
+
+  Widget _patientInfo() {
+    return ContainerWithShadow(
+      contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          DataRowWithDivider(
+            divider: true,
+            title: context.translate(LocalizationKeys.patientName),
+            subTitle: matchingDetailsUiModel.patientName,
+          ),
+          DataRowWithDivider(
+            divider: true,
+            title: context.translate(LocalizationKeys.fileNumber),
+            subTitle: matchingDetailsUiModel.patientFileNum,
+          ),
+          DataRowWithDivider(
+            divider: true,
+            title: context.translate(LocalizationKeys.requiredOrgan),
+            subTitle: matchingDetailsUiModel.organ,
+          ),
+          DataRowWithDivider(
+            divider: true,
+            title: context.translate(LocalizationKeys.requestDate),
+            subTitle: DateFormat(
+              "dd-MM-yyyy",
+            ).format(matchingDetailsUiModel.requestDate),
+          ),
+          DataRowWithDivider(
+            isImportant:
+                matchingDetailsUiModel.requestStatus == "لم يتم العثور",
+            title: context.translate(LocalizationKeys.requestStatus),
+            subTitle: matchingDetailsUiModel.requestStatus,
+          ),
+        ],
       ),
     );
   }
@@ -94,26 +170,26 @@ class _MatchingDetailsScreenState
           DataRowWithDivider(
             divider: true,
             dividerColor: AppColors.matchingDataUserDivider,
-            title: "اسم المتبرع",
-            subTitle: "سارة أحمد",
+            title: context.translate(LocalizationKeys.donorName),
+            subTitle: matchingDetailsUiModel.donorName,
           ),
           DataRowWithDivider(
             divider: true,
             dividerColor: AppColors.matchingDataUserDivider,
-            title: "رقم الملف",
-            subTitle: "P001",
+            title: context.translate(LocalizationKeys.fileNumber),
+            subTitle: matchingDetailsUiModel.donorFileNum,
           ),
           DataRowWithDivider(
             divider: true,
             dividerColor: AppColors.matchingDataUserDivider,
-            title: "فصيلة الدم",
-            subTitle: "+A",
+            title: context.translate(LocalizationKeys.bloodType),
+            subTitle: matchingDetailsUiModel.donorBloodType,
           ),
           DataRowWithDivider(
             isImportant: true,
             dividerColor: AppColors.matchingDataUserDivider,
-            title: "نسبة التطابق",
-            subTitle: "%95",
+            title: context.translate(LocalizationKeys.matchPercentage),
+            subTitle: matchingDetailsUiModel.matchPercentage ?? "10%",
             importantTextColor: AppColors.matchingParentage,
           ),
         ],
@@ -134,5 +210,14 @@ class _MatchingDetailsScreenState
         ),
       ),
     );
+  }
+
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper method ////////////////////////
+  ///////////////////////////////////////////////////////////
+  MatchingDetailsBloc get _currentBloc => context.read<MatchingDetailsBloc>();
+
+  void _getData() {
+    _currentBloc.add(GetMatchingDetailsDataEvent(matchId: widget.matchId));
   }
 }

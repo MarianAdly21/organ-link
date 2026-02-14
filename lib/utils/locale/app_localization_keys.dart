@@ -235,7 +235,7 @@ class LocalizationKeys {
   static const donor = "donor";
   static const details = "details";
   static const matching = "matching";
-  static const followuponAIMatchingRequests = "ai_matching_follow_up";
+  static const followUponAIMatchingRequests = "ai_matching_follow_up";
   static const totalRequests = "total_requests";
   static const underMatching = "under_matching";
   static const underAnalysis = "under_analysis";
@@ -287,4 +287,9 @@ class LocalizationKeys {
   static const noChronicDiseasesRecorded = "no_chronic_diseases_recorded";
   static const from = "from";
   static const hours = "hours";
+  static const noMatchingSurgeriesAtTheMoment =
+      "no_matching_surgeries_at_the_moment";
+  static const matchingDetailsScreen = "matching_details";
+  static const requestStatus = "request_status";
+  static const aiResult = "ai_result";
 }

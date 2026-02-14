@@ -9,6 +9,7 @@ class MatchingApiModel {
   final String aiStatus;
   final String status;
   final String aiResult;
+  final int matchId;
 
   MatchingApiModel({
     required this.patientName,
@@ -21,6 +22,7 @@ class MatchingApiModel {
     required this.aiStatus,
     required this.status,
     required this.aiResult,
+    required this.matchId,
   });
 
   factory MatchingApiModel.formJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class MatchingApiModel {
       requestMatchingDate: DateTime.parse(json["created_at"]),
       matchPercentage: json["match_percentage"],
       // matchingNumber: json[""],
+      matchId: json["id"],
       matchingNumber: "MR001",
       aiStatus:json["status"] ,
       // status: json[""],

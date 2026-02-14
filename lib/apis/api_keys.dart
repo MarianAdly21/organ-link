@@ -28,9 +28,10 @@ class ApiKeys {
   static const baseUrl = 'https://web-production-02e1b.up.railway.app/api';
 
   static const loginUrl = '$baseUrl/login/';
-  static String getHomeUserUrl(int id)=>  '$baseUrl/users/$id';
-  static String getHospitalUrl(int id)=>  '$baseUrl/hospitals/$id';
- // static const homeUserUrl = '$baseUrl/users';
+  static String getHomeUserUrl(int id) => '$baseUrl/users/$id';
+  static String getHospitalUrl(int id) => '$baseUrl/hospitals/$id';
+  static String getMatchingDetailsUrl(int id) => '$baseUrl/organ-matching/$id';
+  // static const homeUserUrl = '$baseUrl/users';
 
   static String get currentEnvironmentUrl =>
       isDevMode() ? ApiKeys.baseUrlProduction : ApiKeys.baseUrlProduction;

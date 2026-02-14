@@ -43,7 +43,7 @@ class AppRouter {
     ViewPatientScreen.routeName: (ctx) => const ViewPatientScreen(),
     PatientDetailsScreen.routeName: (ctx) => const PatientDetailsScreen(),
     MatchingScreen.routeName: (ctx) => const MatchingScreen(),
-    MatchingDetailsScreen.routeName: (ctx) => const MatchingDetailsScreen(),
+  //  MatchingDetailsScreen.routeName: (ctx) => const MatchingDetailsScreen(),
     SurgeriesScreen.routeName: (ctx) => const SurgeriesScreen(),
     SurgeryDetailsScreen.routeName: (ctx) => const SurgeryDetailsScreen(),
     HospitalNotificationScreen.routeName: (ctx) =>
