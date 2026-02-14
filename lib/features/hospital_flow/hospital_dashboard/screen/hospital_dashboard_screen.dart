@@ -174,7 +174,7 @@ class _HospitalDashboardScreenWithBlocState
           TitleAndSubtitleCustomWidget(
             title: context.translate(LocalizationKeys.dashboard),
             subTitle:
-                " ${context.translate(LocalizationKeys.welcomeMessage)} مستشفى القصر العيني",
+                " ${context.translate(LocalizationKeys.welcomeMessage)} ${hospitalDashboardUiModel.hospitalName}",
           ),
           _dashboardSection(),
           _quickActionsSection(),

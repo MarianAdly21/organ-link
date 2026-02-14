@@ -103,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // if(type !=null){
     // final userType = UserType.values.byName(type);
     // }
-    if (type == UserType.donor.name || type == UserType.patient.name) {
+    if (type == UserType.user.name ) {
       _navToHomeUserScreen();
     } else if (type == UserType.ministry.name) {
       _navToMinistryHomeScreen();
