@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
+import 'package:organ_link/features/hospital_flow/enum/nav_type.dart';
+import 'package:organ_link/features/hospital_flow/hospital_dashboard/bloc/hospital_dashboard_bloc.dart';
+import 'package:organ_link/features/hospital_flow/hospital_dashboard/bloc/hospital_dashboard_repository.dart';
+import 'package:organ_link/features/hospital_flow/hospital_dashboard/models/hospital_dashboard_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/hospital_setting/screen/hospital_setting.dart';
 import 'package:organ_link/features/hospital_flow/matching/screen/matching_screen.dart';
 import 'package:organ_link/features/hospital_flow/notification_screen/screen/hospital_notification_screen.dart';
@@ -14,47 +22,109 @@ import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_cus
 import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/custom_notification_icon.dart';
+import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/empty/empty_widgets.dart';
+import 'package:organ_link/utils/feedback/feedback_message.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
-class HospitalDashboardScreen extends BaseStatefulScreenWidget {
+class HospitalDashboardScreen extends StatelessWidget {
   const HospitalDashboardScreen({super.key});
   static const routeName = "/hospital-dashboard-screen";
 
   @override
-  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _HospitalDashboardScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => HospitalDashboardBloc(
+        HospitalDashboardRepository(
+          hospitalApiManager: HospitalApiManager(
+            dioApiManager: GetIt.I<DioApiManager>(),
+          ),
+          preferencesManager: GetIt.I<PreferencesManager>(),
+        ),
+      ),
+      child: const HospitalDashboardScreenWithBloc(),
+    );
+  }
 }
 
-class _HospitalDashboardScreenState
-    extends BaseScreenState<HospitalDashboardScreen> {
+class HospitalDashboardScreenWithBloc extends BaseStatefulScreenWidget {
+  const HospitalDashboardScreenWithBloc({super.key});
+
+  @override
+  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
+      _HospitalDashboardScreenWithBlocState();
+}
+
+class _HospitalDashboardScreenWithBlocState
+    extends BaseScreenState<HospitalDashboardScreenWithBloc> {
+  late HospitalDashboardUiModel hospitalDashboardUiModel;
+  @override
+  void initState() {
+    super.initState();
+    _currentBloc.add(GetHospitalDashboardDataEvent());
+  }
+
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: _buildBody(),
+      body: BlocConsumer<HospitalDashboardBloc, HospitalDashboardState>(
+        listener: (context, state) {
+          if (state is HospitalDashboardLoadingState) {
+            showLoading();
+          } else {
+            hideLoading();
+          }
+          if (state is HospitalDashboardDataLoadedSuccessfullyState) {
+            hospitalDashboardUiModel = state.hospitalDashboardUiModel;
+          } else if (state is NavToMatchingScreenState) {
+            _navToMatchingScreen();
+          } else if (state is NavToSurgeriesScreenState) {
+            _navToSurgeriesScreen();
+          } else if (state is NavToHospitalSettingScreenState) {
+            _navToHospitalSettingScreen();
+          } else if (state is NavToHospitalNotificationScreenState) {
+            _navToHospitalNotificationScreen();
+          } else if (state is NavToViewPatientOrDonorScreenState) {
+            _navToViewPatientOrDonorScreen(state);
+          } else if (state is HospitalDashboardErrorState) {
+            showFeedbackMessage(state.errorMessage);
+          }
+        },
+        buildWhen: (previous, current) =>
+            current is HospitalDashboardDataLoadedSuccessfullyState,
+        builder: (context, state) {
+          return _buildBody(state);
+        },
+      ),
     );
   }
+
   ///////////////////////////////////////////////////////////
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget _buildBody() {
-    return SafeArea(
-      child: Column(
-        children: [
-          _appBar(),
-          Expanded(child: SingleChildScrollView(child: _bodyContent())),
-        ],
-      ),
-    );
+  Widget _buildBody(HospitalDashboardState state) {
+    if (state is HospitalDashboardDataLoadedSuccessfullyState) {
+      return SafeArea(
+        child: Column(
+          children: [
+            _appBar(),
+            Expanded(child: SingleChildScrollView(child: _bodyContent())),
+          ],
+        ),
+      );
+    } else {
+      return EmptyWidget();
+    }
   }
 
   Widget _appBar() {
     return HospitalAppBarBase(
       child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 16.w),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -65,7 +135,7 @@ class _HospitalDashboardScreenState
                 children: [
                   FittedBox(
                     child: Text(
-                      "مستشفى القصر العيني",
+                      hospitalDashboardUiModel.hospitalName,
                       style: context.textTheme.bodyLarge!.copyWith(
                         color: AppColors.blackText,
                       ),
@@ -73,7 +143,7 @@ class _HospitalDashboardScreenState
                   ),
                   SizedBox(height: 9.h),
                   Text(
-                    "القاهرة",
+                    hospitalDashboardUiModel.hospitalCity,
                     style: context.textTheme.labelMedium!.copyWith(
                       color: AppColors.blackText,
                     ),
@@ -85,9 +155,7 @@ class _HospitalDashboardScreenState
               padding: const EdgeInsetsDirectional.only(start: 24),
               child: CustomNotificationIcon(
                 onTap: () {
-                  Navigator.of(
-                    context,
-                  ).pushNamed(HospitalNotificationScreen.routeName);
+                  _navToHospitalNotificationScreenEvent();
                 },
               ),
             ),
@@ -129,7 +197,7 @@ class _HospitalDashboardScreenState
             children: [
               _quickActionsBtn(
                 onTap: () {
-                  Navigator.of(context).pushNamed(ViewPatientScreen.routeName);
+                  _navToPatientOrDonorEvent(NavType.donor);
                 },
                 text: LocalizationKeys.viewDonors,
                 backgroundColor: AppColors.seconderColor,
@@ -137,7 +205,7 @@ class _HospitalDashboardScreenState
               SizedBox(width: 16.w),
               _quickActionsBtn(
                 onTap: () {
-                  Navigator.of(context).pushNamed(ViewPatientScreen.routeName);
+                  _navToPatientOrDonorEvent(NavType.patient);
                 },
                 text: LocalizationKeys.viewPatients,
                 backgroundColor: AppColors.mainColor,
@@ -149,7 +217,7 @@ class _HospitalDashboardScreenState
           children: [
             _quickActionsBtn(
               onTap: () {
-                Navigator.of(context).pushNamed(SurgeriesScreen.routeName);
+                _navToSurgeriesScreenEvent();
               },
               text: LocalizationKeys.operations,
               backgroundColor: Color(0xffFF0004),
@@ -157,7 +225,7 @@ class _HospitalDashboardScreenState
             SizedBox(width: 16.w),
             _quickActionsBtn(
               onTap: () {
-                Navigator.of(context).pushNamed(MatchingScreen.routeName);
+                _navToMatchingScreenEvent();
               },
               text: LocalizationKeys.compatibilityRequests,
               backgroundColor: AppColors.grayText,
@@ -172,7 +240,7 @@ class _HospitalDashboardScreenState
   Widget _settingBtn() {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(HospitalSetting.routeName);
+        _currentBloc.add(NavToHospitalSettingScreenEvent());
       },
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16.h),
@@ -242,7 +310,7 @@ class _HospitalDashboardScreenState
                 child: _mainCard(
                   icon: AppAssetPaths.heartIcon,
                   title: LocalizationKeys.registeredDonor,
-                  count: "24",
+                  count: hospitalDashboardUiModel.donorsCount.toString(),
                   subTitle2:
                       "+3${context.translate(LocalizationKeys.thisMonthCount)}",
                 ),
@@ -252,7 +320,7 @@ class _HospitalDashboardScreenState
                 child: _mainCard(
                   icon: AppAssetPaths.peopleIcon,
                   title: LocalizationKeys.patientWaitingForTransplant,
-                  count: "24",
+                  count: hospitalDashboardUiModel.patientsCount.toString(),
                   subTitle2:
                       "+3${context.translate(LocalizationKeys.thisMonthCount)}",
                 ),
@@ -266,7 +334,7 @@ class _HospitalDashboardScreenState
                 child: _mainCard(
                   icon: AppAssetPaths.notesBookIcon,
                   title: LocalizationKeys.matchingRequests,
-                  count: "126578",
+                  count: hospitalDashboardUiModel.totalMatches.toString(),
                   subTitle2:
                       "3${context.translate(LocalizationKeys.underAnalysisCount)}",
                 ),
@@ -276,7 +344,7 @@ class _HospitalDashboardScreenState
                 child: _mainCard(
                   icon: AppAssetPaths.voltageIcon,
                   title: LocalizationKeys.ongoingOperations,
-                  count: "56", //from back
+                  count: hospitalDashboardUiModel.totalSurgeries.toString(),
                   subTitle2:
                       "3${context.translate(LocalizationKeys.ongoingOperationsCount)}",
                 ),
@@ -334,5 +402,50 @@ class _HospitalDashboardScreenState
         ),
       ),
     );
+  }
+
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper method ////////////////////////
+  ///////////////////////////////////////////////////////////
+  HospitalDashboardBloc get _currentBloc =>
+      context.read<HospitalDashboardBloc>();
+  void _navToHospitalSettingScreen() {
+    Navigator.of(context).pushNamed(HospitalSetting.routeName);
+  }
+
+  void _navToHospitalNotificationScreenEvent() {
+    _currentBloc.add(NavToHospitalNotificationScreenEvent());
+  }
+
+  void _navToViewPatientOrDonorScreen(
+    NavToViewPatientOrDonorScreenState state,
+  ) {
+    Navigator.of(
+      context,
+    ).pushNamed(ViewPatientScreen.routeName, arguments: state.type);
+  }
+
+  void _navToSurgeriesScreenEvent() {
+    _currentBloc.add(NavToSurgeriesScreenEvent());
+  }
+
+  void _navToMatchingScreenEvent() {
+    _currentBloc.add(NavToMatchingScreenEvent());
+  }
+
+  void _navToHospitalNotificationScreen() {
+    Navigator.of(context).pushNamed(HospitalNotificationScreen.routeName);
+  }
+
+  void _navToSurgeriesScreen() {
+    Navigator.of(context).pushNamed(SurgeriesScreen.routeName);
+  }
+
+  void _navToMatchingScreen() {
+    Navigator.of(context).pushNamed(MatchingScreen.routeName);
+  }
+
+  void _navToPatientOrDonorEvent(NavType type) {
+    _currentBloc.add(NavToViewPatientOrDonorScreenEvent(type: type));
   }
 }
