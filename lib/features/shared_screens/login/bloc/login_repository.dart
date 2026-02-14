@@ -46,7 +46,7 @@ class LoginRepository implements BaseLoginRepository {
   @override
   Future<LoginState> saveUserInfo(LoginSuccessfulResponse loginSuccessfulResponse)async {
     late LoginState loginState;
-   await preferencesManager.setType(loginSuccessfulResponse.role);
+   await preferencesManager.setType(loginSuccessfulResponse.type);
    await preferencesManager.setId(loginSuccessfulResponse.id);
     loginState=UserInfoSavedState();
     return loginState;

@@ -9,7 +9,7 @@ class LoginSendModelApi {
 
   FormData toMap() {
     return FormData.fromMap({
-      "national_id": identificationNumber,
+      "identifier": identificationNumber,
       "password": password,
     });
   }

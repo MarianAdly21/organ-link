@@ -122,7 +122,7 @@ class _OrganLinkState extends State<OrganLink> {
                       navigatorKey: AppRouter.mainNavigatorKey,
 
                       routes: AppRouter.routes,
-                      home: HospitalDashboardScreen(),
+                      home: SplashScreen(),
                     ),
                   );
                 },
