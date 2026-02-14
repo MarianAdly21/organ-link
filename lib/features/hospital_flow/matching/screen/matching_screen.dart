@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/extensions/screen_sizer_extension.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
 import 'package:organ_link/features/hospital_flow/enum/matching_status.dart';
 import 'package:organ_link/features/hospital_flow/extension/matching_status_ui.dart';
+import 'package:organ_link/features/hospital_flow/matching/bloc/matching_bloc.dart';
+import 'package:organ_link/features/hospital_flow/matching/bloc/matching_repository.dart';
 import 'package:organ_link/features/hospital_flow/matching/models/matching_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/matching_details/screen/matching_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
@@ -16,71 +23,135 @@ import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/custom_over_view_container.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
+import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/empty/empty_widgets.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
-class MatchingScreen extends BaseStatefulScreenWidget {
+class MatchingScreen extends StatelessWidget {
   const MatchingScreen({super.key});
   static const routeName = "/matching-screen";
+
   @override
-  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _MatchingScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => MatchingBloc(
+        MatchingRepository(
+          hospitalApiManager: HospitalApiManager(
+            dioApiManager: GetIt.I<DioApiManager>(),
+          ),
+          preferencesManager: GetIt.I<PreferencesManager>(),
+        ),
+      ),
+      child: MatchingScreenWithBloc(),
+    );
+  }
 }
 
-class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
-  ///demo data
-  List<MatchingUiModel> matchingList = [
-    MatchingUiModel(
-      patientName: "أحمد محمد العلي",
-      requestStatus: "تمت المطابقة",
-      status: "جاهز",
-      requestDate: "2025-10-15",
-      donorName: "سارة أحمد",
-      requestId: "12354",
-      organType: "كلى",
-      matchPercentage: "%95",
-      donorBloodType: "A+",
-      aiMessage: "تم العثور علي متبرع متطابق",
-    ),
-    MatchingUiModel(
-      patientName: "خالد سعيد",
-      requestStatus: "تحت المراجعة",
-      status: "انتظار",
-      requestDate: "2025-10-15",
-      requestId: "12354",
-      organType: "كلى",
-      donorName: "أحمد محمود",
-      matchPercentage: "%78",
-      donorBloodType: "A+",
-      aiMessage: "تم العثور علي متبرع متطابق",
-    ),
-  ];
+class MatchingScreenWithBloc extends BaseStatefulScreenWidget {
+  const MatchingScreenWithBloc({super.key});
+  @override
+  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
+      _MatchingScreenWithBlocState();
+}
+
+class _MatchingScreenWithBlocState
+    extends BaseScreenState<MatchingScreenWithBloc> {
+  late List<MatchingUiModel> matchingList;
+
+  // ///demo data
+  // List<MatchingUiModel> matchingList = [
+  //   MatchingUiModel(
+  //     patientName: "أحمد محمد العلي",
+  //     requestStatus: "تمت المطابقة",
+  //     status: "جاهز",
+  //     requestDate: "2025-10-15",
+  //     donorName: "سارة أحمد",
+  //     requestId: "12354",
+  //     organType: "كلى",
+  //     matchPercentage: "%95",
+  //     donorBloodType: "A+",
+  //     aiMessage: "تم العثور علي متبرع متطابق",
+  //   ),
+  //   MatchingUiModel(
+  //     patientName: "خالد سعيد",
+  //     requestStatus: "تحت المراجعة",
+  //     status: "انتظار",
+  //     requestDate: "2025-10-15",
+  //     requestId: "12354",
+  //     organType: "كلى",
+  //     donorName: "أحمد محمود",
+  //     matchPercentage: "%78",
+  //     donorBloodType: "A+",
+  //     aiMessage: "تم العثور علي متبرع متطابق",
+  //   ),
+  // ];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentBloc.add(GetMatchingDataEvent());
+  }
+
+  MatchingBloc get _currentBloc => context.read<MatchingBloc>();
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: AppBaseBodyScaffold(
+      body: BlocConsumer<MatchingBloc, MatchingState>(
+        listener: (context, state) {
+          if (state is MatchingLoadingState) {
+            showLoading();
+          } else {
+            hideLoading();
+          }
+          if (state is MatchingDataLoadedSuccessfullyState) {
+            matchingList = state.matchingList;
+          } else if (state is NavToMatchingDetailsScreenState) {
+            Navigator.of(context).pushNamed(MatchingDetailsScreen.routeName);
+          }
+        },
+        buildWhen: (previous, current) =>
+            current is MatchingDataLoadedSuccessfullyState,
+
+        builder: (context, state) {
+          return _buildBody(state);
+        },
+      ),
+    );
+  }
+
+  Widget _buildBody(MatchingState state) {
+    if (state is MatchingDataLoadedSuccessfullyState) {
+      return AppBaseBodyScaffold(
         titleOfScreen: context.translate(LocalizationKeys.matching),
         backTap: () {
           Navigator.pop(context);
         },
-        body: _buildBody(),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [_headerWidget(), _requestList()],
+          ),
+        ),
+      );
+    } else {
+      return EmptyWidget();
+    }
   }
 
   ///////////////////////////////////////////////////////////
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget _buildBody() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [_headerWidget(), _requestList()],
-      ),
-    );
-  }
+  // Widget _buildBody() {
+  //   return SingleChildScrollView(
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.stretch,
+  //       children: [_headerWidget(), _requestList()],
+  //     ),
+  //   );
+  // }
 
   Widget _headerWidget() {
     return Column(
@@ -151,24 +222,28 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
                   DataRowWithDivider(
                     divider: true,
                     title: context.translate(LocalizationKeys.organ),
-                    subTitle: matchingList[index].organType,
+                    subTitle: matchingList[index].patientOrgan,
                   ),
                   DataRowWithDivider(
                     divider: true,
                     title: context.translate(LocalizationKeys.requestDate),
-                    subTitle: matchingList[index].requestDate,
+                    subTitle: DateFormat(
+                      "dd/MM/yyyy",
+                    ).format(matchingList[index].requestMatchingDate),
                   ),
-                  DataRowWithDivider(
-                    title: context.translate(LocalizationKeys.matchPercentage),
-                    subTitle: matchingList[index].matchPercentage,
-                  ),
+                  if (matchingList[index].matchPercentage != null)
+                    DataRowWithDivider(
+                      title: context.translate(
+                        LocalizationKeys.matchPercentage,
+                      ),
+                      subTitle: matchingList[index].matchPercentage!,
+                    ),
 
                   /// notes: the divider and container appears based on condition
-                  if (matchingList[index].requestStatus != null) ...[
+                  if (matchingList[index].matchPercentage != null) ...[
                     CustomDividerWidget(indent: 24.w, endIndent: 24.w),
                     _resultMatching(index),
-                    if (matchingList[index].requestStatus ==
-                        "لم يتم العثور") ...[
+                    if (matchingList[index].status == "لم يتم العثور") ...[
                       ContainerWithBackground(
                         isCentered: true,
                         width: context.width,
@@ -211,7 +286,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            matchingList[index].aiMessage,
+            matchingList[index].aiResult,
 
             ///message from back
             style: context.textTheme.bodyMedium!.copyWith(
@@ -239,11 +314,11 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
               ),
               ContainerWithBackground(
                 backgroundColor: mapMatchingStatus(
-                  matchingList[index].requestStatus!,
+                  matchingList[index].status,
                 ).backgroundColor,
-                text: matchingList[index].requestStatus!,
+                text: matchingList[index].status,
                 textColor: mapMatchingStatus(
-                  matchingList[index].requestStatus!,
+                  matchingList[index].status,
                 ).textColor,
               ),
             ],
@@ -272,7 +347,7 @@ class _MatchingScreenState extends BaseScreenState<MatchingScreen> {
             Padding(
               padding: EdgeInsets.only(top: 8.h),
               child: Text(
-                "${context.translate(LocalizationKeys.requestId)}: ${matchingList[index].requestId}",
+                "${context.translate(LocalizationKeys.requestId)}: ${matchingList[index].matchingNumber}",
                 style: context.textTheme.labelMedium!.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
