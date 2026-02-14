@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
+import 'package:organ_link/_core/extensions/screen_sizer_extension.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/features/hospital_flow/patient_details/widget/gradient_text.dart';
+import 'package:organ_link/features/hospital_flow/upload_files/screen/upload_files_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/hospital_flow/widget/status_row_widget.dart';
@@ -36,7 +38,9 @@ class _PatientDetailsScreenState extends BaseScreenState<PatientDetailsScreen> {
       backgroundColor: AppColors.scaffoldBackground,
       body: AppBaseBodyScaffold(
         titleOfScreen: context.translate(LocalizationKeys.patientDetails),
-        backTap: () {},
+        backTap: () {
+          Navigator.pop(context);
+        },
         body: _buildBody(),
       ),
     );
@@ -325,7 +329,9 @@ class _PatientDetailsScreenState extends BaseScreenState<PatientDetailsScreen> {
         ),
       ),
       child: AppElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_)=>UploadFilesScreen() ));
+        },
         color: Colors.white,
         label: Center(
           child: GradientText(
@@ -516,8 +522,8 @@ class _PatientDetailsScreenState extends BaseScreenState<PatientDetailsScreen> {
 
   Widget _headerInfoWidget() {
     return ContainerWithShadow(
-      padding: EdgeInsets.zero,
-      // height: 118.h,
+      padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 4.h),
+      width: context.width,
       contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
       child: Column(
         children: [

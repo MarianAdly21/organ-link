@@ -1,4 +1,4 @@
-import 'package:organ_link/features/hospital_flow/view_patient/models/status_display_model.dart';
+import 'package:organ_link/features/hospital_flow/view_patient_or_donor/models/status_display_model.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 StatusDisplayModel getStatus(String statue)
