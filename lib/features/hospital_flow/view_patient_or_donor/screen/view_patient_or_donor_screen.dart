@@ -17,12 +17,15 @@ import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.
 import 'package:organ_link/features/hospital_flow/widget/app_search_custom_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/status_row_widget.dart';
 import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
+import 'package:organ_link/features/shared_screens/method/calculate_age.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/features/widgets/text_field/custom_drop_down_form_filed_widget.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/empty/empty_widgets.dart';
+import 'package:organ_link/utils/feedback/feedback_message.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class ViewPatientOrDonorScreen extends StatelessWidget {
@@ -81,12 +84,24 @@ class _ViewPatientOrDonorScreenWithBlocState
             modelList = state.donorOrPatientList;
           } else if (state is NavToDetailsScreenState) {
             _navToDetailsScreen();
+          } else if (state is ViewPatientOrDonorErrorState &&
+              state.codeError != 1015) {
+            showFeedbackMessage(state.errorMessage);
           }
         },
         buildWhen: (previous, current) =>
-            current is ViewPatientOrDonorDataLoadedSuccessfullyState,
+            current is ViewPatientOrDonorDataLoadedSuccessfullyState ||
+            current is ViewPatientOrDonorErrorState,
         builder: (context, state) {
-          return _buildBody(state);
+          return AppBaseBodyScaffold(
+            titleOfScreen: isDonor
+                ? LocalizationKeys.donorTitle
+                : LocalizationKeys.patientTitle,
+            backTap: () {
+              Navigator.pop(context);
+            },
+            body: _buildBody(state),
+          );
         },
       ),
     );
@@ -98,60 +113,61 @@ class _ViewPatientOrDonorScreenWithBlocState
 
   Widget _buildBody(ViewPatientOrDonorState state) {
     if (state is ViewPatientOrDonorDataLoadedSuccessfullyState) {
-      return AppBaseBodyScaffold(
-        titleOfScreen: isDonor
-            ? LocalizationKeys.donorTitle
-            : LocalizationKeys.patientTitle,
-        backTap: () {
-          Navigator.pop(context);
-        },
-        body: Column(
-          children: [
-            _searchSection(),
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Text(
-                      "${isDonor ? context.translate(LocalizationKeys.donors) : context.translate(LocalizationKeys.patients)} (6)",
-
-                      /// conut==> 6 from back and text patients changes based on pateint or donor
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.blackText,
-                      ),
+      return Column(
+        children: [
+          _searchSection(),
+          Expanded(
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Text(
+                    "${isDonor ? context.translate(LocalizationKeys.donors) : context.translate(LocalizationKeys.patients)} (${modelList.length})",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.blackText,
                     ),
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(childCount: 5, (
-                      context,
-                      index,
-                    ) {
-                      return _cardItem();
-                    }),
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: modelList.length,
+                    (context, index) {
+                      return _cardItem(index);
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       );
+    } else if (state is ViewPatientOrDonorErrorState &&
+        state.codeError == 1015) {
+      return InternetErrorWidget();
     } else {
       return EmptyWidget();
     }
   }
 
-  Widget _cardItem() {
+  Widget _cardItem(int index) {
     return ContainerWithShadow(
       padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 2),
       contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _nameAndId(name: "أحمد محمد العلي", id: "100p"),
-          _infoRow(age: '12', bloodType: 'A+', organ: 'كلي'),
-          StatusRowWidget(priority: "أولوية عالية", status: "جاهز"),
+          _nameAndId(name: modelList[index].fullName, id: "100p"),
+          _infoRow(
+            age:
+                "${calculateAge(modelList[index].age)} ${context.translate(LocalizationKeys.year)}",
+            bloodType: modelList[index].bloodType,
+            organ: modelList[index].organ,
+          ),
+          StatusRowWidget(
+            priority: modelList[index].priority,
+            status: modelList[index].status,
+          ),
           SizedBox(height: 16.h),
           AppButtonWithGradientColors(
             text: context.translate(LocalizationKeys.details),

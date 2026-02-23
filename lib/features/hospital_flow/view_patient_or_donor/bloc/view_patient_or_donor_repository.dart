@@ -16,9 +16,9 @@ class ViewPatientOrDonorRepository implements BaseViewPatientOrDonorRepository {
   @override
   Future<ViewPatientOrDonorState> getViewPatientData() async {
     late ViewPatientOrDonorState viewPatientOrDonorState;
-    // final int? id = await preferencesManager.getId();
+     final int? id = await preferencesManager.getId();
     await hospitalApiManager.getHospitalDataApi(
-      1,
+      id!,
       (response) {
         final model = response.patientList
             .map((x) => PatientOrDonorUiModel.fromApiModel(x))
@@ -40,9 +40,9 @@ class ViewPatientOrDonorRepository implements BaseViewPatientOrDonorRepository {
   @override
   Future<ViewPatientOrDonorState> getViewDonorData() async {
     late ViewPatientOrDonorState viewPatientOrDonorState;
-    // final int? id = await preferencesManager.getId();
+     final int? id = await preferencesManager.getId();
     await hospitalApiManager.getHospitalDataApi(
-      1,
+      id!,
       (response) {
         final model = response.donorList
             .map((x) => PatientOrDonorUiModel.fromApiModel(x))

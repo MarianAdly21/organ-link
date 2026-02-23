@@ -6,7 +6,7 @@ class PatientOrDonorUiModel {
   final String bloodType;
   final String organ;
   final String status;
-  final String? priority;
+  final String priority;
   //final String? healthStatus;
 
   PatientOrDonorUiModel({

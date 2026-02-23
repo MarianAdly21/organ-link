@@ -269,5 +269,6 @@
   "matching_details": "Matching Details",
   "request_status": "Request Status",
   "ai_result": "AI Result",
-  "donor_title": "Donors"
+  "donor_title": "Donors",
+  "plz_check_internet": "Please check the internet"
 }
