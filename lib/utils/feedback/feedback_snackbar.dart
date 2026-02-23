@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 SnackBar createSnackBar(String message) {
   return SnackBar(
-    duration: const Duration(seconds: 2),
+    duration: const Duration(seconds:3),
     content: Text(message),
   );
 }

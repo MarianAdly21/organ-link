@@ -10,6 +10,7 @@ import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/user_manager/user_api_manager.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
+import 'package:organ_link/features/shared_screens/widgets/internet_error_widget.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/screen/case_follow_up_screen.dart';
 import 'package:organ_link/features/user_flow/home/bloc/user_home_bloc.dart';
 import 'package:organ_link/features/user_flow/home/bloc/user_home_repository.dart';
@@ -131,9 +132,7 @@ class _HomeUserScreenWithBlocState
         ),
       );
     } else if (state is UserHomeErrorState && state.codeError == 1015) {
-      return Center(
-        child: Text("Please Check The Internet${state.errorMessage}"),
-      );
+      return InternetErrorWidget();
     } else {
       return EmptyWidget();
     }

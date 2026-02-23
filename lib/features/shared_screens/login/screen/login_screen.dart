@@ -9,12 +9,9 @@ import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/auth_api_manager.dart';
 import 'package:organ_link/apis/models/auth/login/login_successful_response.dart';
-import 'package:organ_link/features/hospital_flow/hospital_dashboard/screen/hospital_dashboard_screen.dart';
-import 'package:organ_link/features/ministry_flow/ministry_home/screen/ministry_home_screen.dart';
 import 'package:organ_link/features/shared_screens/enum/user_type.dart';
 import 'package:organ_link/features/shared_screens/login/bloc/login_bloc.dart';
 import 'package:organ_link/features/shared_screens/login/bloc/login_repository.dart';
-import 'package:organ_link/features/user_flow/home/screen/home_user_screen.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/text_field/app_text_form_filed_widget.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
@@ -77,7 +74,11 @@ class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
           } else if (state is NavToHomeScreenState) {
             _navigateBasedOnUserType(state, context);
           } else if (state is LoginErrorState) {
-            showFeedbackMessage(state.errorMessage);
+            state.codeError == 1015
+                ? showFeedbackMessage(
+                    context.translate(LocalizationKeys.plzCheckInternet),
+                  )
+                : showFeedbackMessage(state.errorMessage);
           }
         },
         child: buildLoginWidget(context),

@@ -6,7 +6,7 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/user_manager/user_api_manager.dart';
-import 'package:organ_link/features/shared_screens/empty_notification_widget.dart';
+import 'package:organ_link/features/shared_screens/screens/empty_notification_widget.dart';
 import 'package:organ_link/features/user_flow/notification/bloc/notification_user_bloc.dart';
 import 'package:organ_link/features/user_flow/notification/bloc/notification_user_repository.dart';
 import 'package:organ_link/features/user_flow/notification/models/notification_user_ui_model.dart';
