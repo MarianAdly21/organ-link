@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:organ_link/features/hospital_flow/view_patient_or_donor/models/status_display_model.dart';
 import 'package:organ_link/res/app_colors.dart';
 
@@ -33,8 +34,8 @@ StatusDisplayModel getStatus(String statue)
     default:
       return StatusDisplayModel(
         status: statue,
-        backgroundColor:AppColors.transparent,
-        textColor: AppColors.transparent,
+        backgroundColor:AppColors.grayText,
+        textColor: Colors.white,
       );
 
   }

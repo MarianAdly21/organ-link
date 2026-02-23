@@ -9,6 +9,7 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/user_manager/user_api_manager.dart';
+import 'package:organ_link/features/shared_screens/method/calculate_age.dart';
 import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_bloc.dart';
 import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_repository.dart';
 import 'package:organ_link/features/user_flow/medical_details/models/medical_details_ui_model.dart';
@@ -403,17 +404,6 @@ class _MedicalDetailsScreenWithBlocState
   ///////////////////////////////////////////////////////////
   /////////////////// Helper method ////////////////////////
   ///////////////////////////////////////////////////////////
-
-  int calculateAge(DateTime birthDate) {
-    DateTime today = DateTime.now();
-    int age = today.year - birthDate.year;
-    if (today.month < birthDate.month ||
-        (today.month == birthDate.month && today.day < birthDate.day)) {
-      age--;
-    }
-
-    return age;
-  }
 
   MedicalDetailsBloc get _currentBloc => context.read<MedicalDetailsBloc>();
 }

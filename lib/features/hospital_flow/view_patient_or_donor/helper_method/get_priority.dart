@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:organ_link/features/hospital_flow/view_patient_or_donor/models/priority_display_model.dart';
 import 'package:organ_link/res/app_colors.dart';
 
@@ -9,15 +10,15 @@ PriorityDisplayModel getPriority(String priority) {
         backgroundColor: AppColors.highPriorityTextBG,
         textColor: AppColors.highPriorityText,
       );
-    case "متوسطة":
+    case "اولوليه متوسطة":
      return PriorityDisplayModel(
-        priority: "متوسطة",
+        priority: "اولوليه متوسطة",
         backgroundColor: AppColors.midPriorityText,
         textColor: AppColors.midPriorityTextBG,
       );
-    case "منخفضة":
+    case "اولوليه منخفضة":
       return PriorityDisplayModel(
-        priority: "منخفضة",
+        priority: "اولوليه منخفضة",
         backgroundColor: AppColors.readyTextBG,
         textColor: AppColors.readyText,
       );
@@ -25,7 +26,7 @@ PriorityDisplayModel getPriority(String priority) {
       return PriorityDisplayModel(
         priority: priority,
         backgroundColor: AppColors.grayText,
-        textColor: AppColors.grayText,
+        textColor: Colors.white,
       );
       
   }
