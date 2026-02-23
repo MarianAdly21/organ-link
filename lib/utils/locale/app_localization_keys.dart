@@ -298,4 +298,5 @@ class LocalizationKeys {
   static const requestStatus = "request_status";
   static const aiResult = "ai_result";
   static const plzCheckInternet = "plz_check_internet";
+  static const noSurgeriesAvailable = "no_surgeries_available";
 }

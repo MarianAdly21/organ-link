@@ -43,9 +43,9 @@ class AppRouter {
     // ViewPatientOrDonorScreen.routeName: (ctx) => const ViewPatientOrDonorScreen(),
     PatientDetailsScreen.routeName: (ctx) => const PatientDetailsScreen(),
     MatchingScreen.routeName: (ctx) => const MatchingScreen(),
-  //  MatchingDetailsScreen.routeName: (ctx) => const MatchingDetailsScreen(),
+    //  MatchingDetailsScreen.routeName: (ctx) => const MatchingDetailsScreen(),
     SurgeriesScreen.routeName: (ctx) => const SurgeriesScreen(),
-    SurgeryDetailsScreen.routeName: (ctx) => const SurgeryDetailsScreen(),
+    //SurgeryDetailsScreen.routeName: (ctx) => const SurgeryDetailsScreen(),
     HospitalNotificationScreen.routeName: (ctx) =>
         const HospitalNotificationScreen(),
     HospitalSetting.routeName: (ctx) => const HospitalSetting(),

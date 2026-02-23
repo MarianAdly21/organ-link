@@ -15,8 +15,9 @@ import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class SurgeryDetailsScreen extends BaseStatefulScreenWidget {
-  const SurgeryDetailsScreen({super.key});
+  const SurgeryDetailsScreen({super.key, required this.id});
   static const String routeName = "/surgery-details-screen";
+  final int id;
 
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
