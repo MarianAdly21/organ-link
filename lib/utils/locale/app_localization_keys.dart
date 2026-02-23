@@ -131,8 +131,8 @@ class LocalizationKeys {
   static const allCases = "all_cases";
   static const patientTitle = "patient_title";
   static const donorTitle = "donor_title";
-  static const patientsList= "patients_list";
- static const donorsList= "donors_list";
+  static const patientsList = "patients_list";
+  static const donorsList = "donors_list";
   static const patientsDetails = "patients_details";
   static const donorsDetails = "donors_details";
   static const patientDetails = "patient_details";
@@ -297,4 +297,5 @@ class LocalizationKeys {
   static const matchingDetailsScreen = "matching_details";
   static const requestStatus = "request_status";
   static const aiResult = "ai_result";
+  static const plzCheckInternet = "plz_check_internet";
 }

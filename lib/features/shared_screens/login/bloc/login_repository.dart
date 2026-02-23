@@ -37,7 +37,7 @@ class LoginRepository implements BaseLoginRepository {
         loginState = LoginSuccessfullyState(loginSuccessfulResponse: response);
       },
       (error) {
-        loginState = LoginErrorState(errorMessage: error.message);
+        loginState = LoginErrorState(errorMessage: error.message,codeError: error.code);
       },
     );
     return loginState;

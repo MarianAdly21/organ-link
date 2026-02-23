@@ -278,5 +278,6 @@
   "no_matching_surgeries_at_the_moment": "لا توجد عمليات مطابقة في الوقت الحالي",
   "matching_details": "تفاصيل التطابق",
   "request_status": "حالة الطلب",
-  "ai_result": "نتيجة الذكاء الاصطناعي"
+  "ai_result": "نتيجة الذكاء الاصطناعي",
+  "plz_check_internet": "من فضلك تحقق من الاتصال بالإنترنت"
 }

@@ -97,7 +97,7 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
     return Container(
       margin: EdgeInsets.only(bottom: 40.h),
       padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
-      height: 90.h,
+    //  height: 90.h,
       decoration: BoxDecoration(
         color: AppColors.importantInfContainerBG,
         borderRadius: BorderRadius.circular(16),
@@ -317,7 +317,7 @@ class _UploadFilesScreenState extends BaseScreenState<UploadFilesScreen> {
           ),
         ),
         ContainerWithShadow(
-          height: 150.h,
+         // height: 150.h,
           width: context.width,
           padding: EdgeInsets.only(top: 8.h, bottom: 24.h,left: 2.w, right: 2.w),
           contentPadding: EdgeInsets.symmetric(vertical: 16.h),
