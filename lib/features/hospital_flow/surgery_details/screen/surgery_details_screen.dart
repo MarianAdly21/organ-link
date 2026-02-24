@@ -1,60 +1,107 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
 import 'package:organ_link/features/hospital_flow/enum/operation_status.dart';
 import 'package:organ_link/features/hospital_flow/extension/operation_status_ui.dart';
+import 'package:organ_link/features/hospital_flow/surgery_details/bloc/surgery_details_bloc.dart';
+import 'package:organ_link/features/hospital_flow/surgery_details/bloc/surgery_details_repository.dart';
 import 'package:organ_link/features/hospital_flow/surgery_details/models/surgery_details_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/features/widgets/data_row_with_status_container_widget.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/empty/empty_widgets.dart';
+import 'package:organ_link/utils/feedback/feedback_message.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
-class SurgeryDetailsScreen extends BaseStatefulScreenWidget {
+class SurgeryDetailsScreen extends StatelessWidget {
   const SurgeryDetailsScreen({super.key, required this.id});
   static const String routeName = "/surgery-details-screen";
+  final int id;
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => SurgeryDetailsBloc(
+        SurgeryDetailsRepository(
+          hospitalApiManager: HospitalApiManager(
+            dioApiManager: GetIt.I<DioApiManager>(),
+          ),
+        ),
+      ),
+      child: SurgeryDetailsScreenWithBloc(id: id),
+    );
+  }
+}
+
+class SurgeryDetailsScreenWithBloc extends BaseStatefulScreenWidget {
+  const SurgeryDetailsScreenWithBloc({super.key, required this.id});
   final int id;
 
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _SurgeryDetailsScreenState();
+      _SurgeryDetailsScreenWithBlocState();
 }
 
-class _SurgeryDetailsScreenState extends BaseScreenState<SurgeryDetailsScreen> {
-  final SurgeryDetailsUiModel surgeryDetailsUiModel = SurgeryDetailsUiModel(
-    surgeryNumber: "Op001",
-    organType: "كلى",
-    responsibleSurgeon: "د. عبدالله خالد",
-    department: "الجراحة - عيادة الكلي",
-    date: "15-02-2025",
-    surgeryStatus: "جارية",
-    patientName: "أحمد محمد العلي",
-    patientFileNumber: "P001",
-    donorName: "سارة أحمد",
-    donorNameFileNumber: "D001",
-  );
+class _SurgeryDetailsScreenWithBlocState
+    extends BaseScreenState<SurgeryDetailsScreenWithBloc> {
+  late final SurgeryDetailsUiModel surgeryDetailsUiModel;
+  @override
+  void initState() {
+    super.initState();
+    _currentBloc.add(GetSurgeryDetailsDataEvent(id: widget.id));
+  }
+
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: _buildBody(),
+      body: AppBaseBodyScaffold(
+        titleOfScreen: LocalizationKeys.surgeryDetails,
+        backTap: () {
+          Navigator.pop(context);
+        },
+        body: BlocConsumer<SurgeryDetailsBloc, SurgeryDetailsState>(
+          listener: (context, state) {
+            if (state is SurgeryDetailsLoadingState) {
+              showLoading();
+            } else {
+              hideLoading();
+            }
+            if (state is SurgeryDetailsDataLoadedSuccessfullyState) {
+              surgeryDetailsUiModel = state.surgeryDetailsUiModel;
+            } else if (state is NavToDonorDetailsScreenState) {
+            } else if (state is NavToDonorDetailsScreenState) {
+            } else if (state is SurgeryDetailsErrorState &&
+                state.codeError != 1015) {
+              showFeedbackMessage(state.errorMessage);
+            }
+          },
+          buildWhen: (previous, current) =>
+              current is SurgeryDetailsDataLoadedSuccessfullyState ||
+              current is SurgeryDetailsErrorState,
+          builder: (context, state) {
+            return _buildBody(state);
+          },
+        ),
+      ),
     );
   }
   ///////////////////////////////////////////////////////////
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget _buildBody() {
-    return AppBaseBodyScaffold(
-      titleOfScreen: LocalizationKeys.surgeryDetails,
-      backTap: () {
-        Navigator.pop(context);
-      },
-      body: SingleChildScrollView(
+  Widget _buildBody(SurgeryDetailsState state) {
+    if (state is SurgeryDetailsDataLoadedSuccessfullyState) {
+      return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -77,8 +124,13 @@ class _SurgeryDetailsScreenState extends BaseScreenState<SurgeryDetailsScreen> {
             if (surgeryDetailsUiModel.date != null) ...[_infoNoticeCard()],
           ],
         ),
-      ),
-    );
+      );
+    } else if (state is SurgeryDetailsErrorState && state.codeError == 1015) {
+      return  Text(state.errorMessage);
+      //InternetErrorWidget();
+    } else {
+      return EmptyWidget();
+    }
   }
 
   Widget _surgeryInfoSection() {
@@ -210,4 +262,9 @@ class _SurgeryDetailsScreenState extends BaseScreenState<SurgeryDetailsScreen> {
       ),
     );
   }
+
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper method ////////////////////////
+  ///////////////////////////////////////////////////////////
+  SurgeryDetailsBloc get _currentBloc => context.read<SurgeryDetailsBloc>();
 }

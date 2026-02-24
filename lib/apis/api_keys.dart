@@ -31,6 +31,7 @@ class ApiKeys {
   static String getHomeUserUrl(int id) => '$baseUrl/users/$id';
   static String getHospitalUrl(int id) => '$baseUrl/hospitals/$id';
   static String getMatchingDetailsUrl(int id) => '$baseUrl/organ-matching/$id';
+  static String getSurgerDetailsUrl(int id) => '$baseUrl/surgeries/$id';
   // static const homeUserUrl = '$baseUrl/users';
 
   static String get currentEnvironmentUrl =>

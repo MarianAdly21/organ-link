@@ -111,7 +111,7 @@ class _SurgeriesScreenWithBlocState
             } else if (state is NavToSurgeryDetailsScreenState) {
               _navToMatchingDetailsScreen(state);
             } else if (state is SurgeriesErrorState &&
-                state.codeError == 1015) {
+                state.codeError !=1015) {
               showFeedbackMessage(state.errorMessage);
             }
           },
