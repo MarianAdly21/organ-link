@@ -111,7 +111,7 @@ class _SurgeriesScreenWithBlocState
             } else if (state is NavToSurgeryDetailsScreenState) {
               _navToMatchingDetailsScreen(state);
             } else if (state is SurgeriesErrorState &&
-                state.codeError !=1015) {
+                state.codeError !=1016) {
               showFeedbackMessage(state.errorMessage);
             }
           },
@@ -138,7 +138,7 @@ class _SurgeriesScreenWithBlocState
           children: [_headerWidget(), _surgeriesList()],
         ),
       );
-    } else if (state is SurgeriesErrorState && state.codeError == 1015) {
+    } else if (state is SurgeriesErrorState && state.codeError == 1016) {
       return InternetErrorWidget();
     } else {
       return EmptyWidget();

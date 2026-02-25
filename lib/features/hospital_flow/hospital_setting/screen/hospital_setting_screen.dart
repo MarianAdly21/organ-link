@@ -86,7 +86,7 @@ class _HospitalSettingScreenWithBlocState
               hospitalInformationSettingUiModel =
                   state.hospitalInformationSettingUiModel;
             } else if (state is HospitalSettingErrorState &&
-                state.codeError != 1015) {
+                state.codeError != 1016) {
               showFeedbackMessage(state.errorMessage);
             }
           },
@@ -165,7 +165,7 @@ class _HospitalSettingScreenWithBlocState
           ],
         ),
       );
-    } else if (state is HospitalSettingErrorState && state.codeError == 1015) {
+    } else if (state is HospitalSettingErrorState && state.codeError == 1016) {
       return InternetErrorWidget();
     } else {
       return EmptyWidget();

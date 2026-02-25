@@ -74,7 +74,7 @@ class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
           } else if (state is NavToHomeScreenState) {
             _navigateBasedOnUserType(state, context);
           } else if (state is LoginErrorState) {
-            state.codeError == 1015
+            state.codeError == 1016
                 ? showFeedbackMessage(
                     context.translate(LocalizationKeys.plzCheckInternet),
                   )
