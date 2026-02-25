@@ -85,8 +85,8 @@ class _CustomMinistryFormWidgetState extends State<CustomMinistryFormWidget> {
   }) {
     return AppTextFormField(
       title: context.translate(title),
-      enableBorderColor: AppColors.enableBorderColorStting,
-      fillColor: AppColors.filledColorenable,
+      enableBorderColor: AppColors.enableBorderColorSetting,
+      fillColor: AppColors.filledColorEnable,
       titleColor: AppColors.grayText,
       hintText: hintText,
       hintTextStyle: context.textTheme.labelMedium!.copyWith(

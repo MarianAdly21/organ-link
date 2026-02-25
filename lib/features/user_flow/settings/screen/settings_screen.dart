@@ -176,29 +176,18 @@ class _SettingsScreenState extends BaseScreenState<SettingsScreen> {
   ///////////////////////////////////////////////////////////
   /////////////////// Helper Method ////////////////////////
   ///////////////////////////////////////////////////////////
-
-  //SettingsBloc get currentBloc => context.read<SettingsBloc>();
   void _arabicItemOnTap() {
     //  _selectArabicLanguageEvent();
     _changeToArabicEvent();
   }
 
   void _englishItemOnTap() {
-    // _selectEnglishLanguageEvent();
     _changeToEnglishEvent();
   }
-
-  // void _selectEnglishLanguageEvent() {
-  //   currentBloc.add(SelectEnglishLanguageEvent());
-  // }
 
   void _changeToEnglishEvent() {
     BlocProvider.of<LocaleCubit>(context).changeLocale(LocaleApp.en);
   }
-
-  // void _selectArabicLanguageEvent() {
-  //   currentBloc.add(SelectArabicLanguageEvent());
-  // }
 
   void _changeToArabicEvent() {
     BlocProvider.of<LocaleCubit>(context).changeLocale(LocaleApp.ar);

@@ -19,9 +19,9 @@ class MatchingRepository implements BaseMatchingRepository {
   @override
   Future<MatchingState> getMatchingList() async {
     late MatchingState matchingState;
-    // final int? id = await preferencesManager.getId();
+     final int? id = await preferencesManager.getId();
     await hospitalApiManager.getHospitalDataApi(
-      1,
+      id!,
       (response) {
         final model = response.matchingList
             .map((x) => MatchingUiModel.fromApiModel(x))
