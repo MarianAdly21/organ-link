@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
+import 'package:organ_link/features/hospital_flow/hospital_setting/bloc/hospital_setting_bloc.dart';
+import 'package:organ_link/features/hospital_flow/hospital_setting/bloc/hospital_setting_repository.dart';
+import 'package:organ_link/features/hospital_flow/hospital_setting/model/hospital_information_setting_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
@@ -12,20 +19,53 @@ import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
+import 'package:organ_link/features/widgets/data_section.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/features/widgets/log_out_Widget.dart';
 import 'package:organ_link/features/widgets/text_field/app_text_form_filed_widget.dart';
+import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/empty/empty_widgets.dart';
+import 'package:organ_link/utils/feedback/feedback_message.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
+import 'package:organ_link/utils/locale/locale_cubit.dart';
 
-class HospitalSetting extends BaseStatefulScreenWidget {
-  const HospitalSetting({super.key});
+class HospitalSettingScreen extends StatelessWidget {
+  const HospitalSettingScreen({super.key});
   static const routeName = "/hospital-setting";
+
   @override
-  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
-      _HospitalSettingState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => HospitalSettingBloc(
+        HospitalSettingRepository(
+          hospitalApiManager: HospitalApiManager(
+            dioApiManager: GetIt.I<DioApiManager>(),
+          ),
+          preferencesManager: GetIt.I<PreferencesManager>(),
+        ),
+      ),
+      child: HospitalSettingScreenWithBloc(),
+    );
+  }
 }
 
-class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
+class HospitalSettingScreenWithBloc extends BaseStatefulScreenWidget {
+  const HospitalSettingScreenWithBloc({super.key});
+  @override
+  BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
+      _HospitalSettingScreenWithBlocState();
+}
+
+class _HospitalSettingScreenWithBlocState
+    extends BaseScreenState<HospitalSettingScreenWithBloc> {
+  late HospitalInformationSettingUiModel hospitalInformationSettingUiModel;
+  @override
+  void initState() {
+    _currentBloc.add(GetHospitalSettingDataEvent());
+    super.initState();
+  }
+
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
@@ -35,7 +75,32 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
         backTap: () {
           Navigator.pop(context);
         },
-        body: _buildBody(context),
+        body: BlocConsumer<HospitalSettingBloc, HospitalSettingState>(
+          listener: (context, state) {
+            if (state is HospitalSettingLoadingState) {
+              showLoading();
+            } else {
+              hideLoading();
+            }
+            if (state is HospitalSettingLoadedSuccessfullyState) {
+              hospitalInformationSettingUiModel =
+                  state.hospitalInformationSettingUiModel;
+            } else if (state is HospitalSettingErrorState &&
+                state.codeError != 1015) {
+              showFeedbackMessage(state.errorMessage);
+            }
+          },
+          buildWhen: (previous, current) =>
+              current is HospitalSettingLoadedSuccessfullyState ||
+              current is HospitalSettingErrorState,
+          builder: (context, state) {
+            return _buildBody(
+              context,
+              state,
+              appLocale: context.appLocale.currentLocaleCode(),
+            );
+          },
+        ),
       ),
     );
   }
@@ -43,36 +108,68 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget _buildBody(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TitleAndSubtitleCustomWidget(
-            title: context.translate(LocalizationKeys.settingsInformation),
-            subTitle: context.translate(
-              LocalizationKeys.manageHospitalAccountInfo,
+  Widget _buildBody(
+    BuildContext context,
+    HospitalSettingState state, {
+    required String appLocale,
+  }) {
+    if (state is HospitalSettingLoadedSuccessfullyState) {
+      return SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TitleAndSubtitleCustomWidget(
+              title: context.translate(LocalizationKeys.settingsInformation),
+              subTitle: context.translate(
+                LocalizationKeys.manageHospitalAccountInfo,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 24.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _hospitalInfoSection(),
-                _systemInformation(),
-                LogOutWidget(
-                  onPressed: () {
-                    _logoutConfirmation();
-                  },
-                  text: context.translate(LocalizationKeys.logout),
-                ),
-              ],
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 24.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _hospitalInfoSection(),
+                  _systemInformation(),
+                  DataSection(
+                    title: context.translate(LocalizationKeys.language),
+                    body: Column(
+                      children: [
+                        CustomDividerWidget(verticalPadding: 8),
+                        SizedBox(height: 16.h),
+                        _languageItemWidget(
+                          appLocale: appLocale,
+                          language: 'English',
+                          locale: 'en',
+                          onTap: _englishItemOnTap,
+                        ),
+
+                        _languageItemWidget(
+                          appLocale: appLocale,
+                          language: 'عربي',
+                          locale: 'ar',
+                          onTap: _arabicItemOnTap,
+                        ),
+                      ],
+                    ),
+                  ),
+                  LogOutWidget(
+                    onPressed: () {
+                      _logoutConfirmation();
+                    },
+                    text: context.translate(LocalizationKeys.logout),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    } else if (state is HospitalSettingErrorState && state.codeError == 1015) {
+      return InternetErrorWidget();
+    } else {
+      return EmptyWidget();
+    }
   }
 
   Widget _systemInformation() {
@@ -156,7 +253,7 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
           CustomDividerWidget(),
           _textField(
             title: context.translate(LocalizationKeys.hospitalName),
-            hintText: "مستشفى القصر العيني  ",
+            hintText: hospitalInformationSettingUiModel.hospitalName,
           ),
           Row(
             children: [
@@ -167,7 +264,7 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
                       title: context.translate(
                         LocalizationKeys.registrationNumber,
                       ),
-                      hintText: "HSP-2024-001",
+                      hintText: hospitalInformationSettingUiModel.licenseNumber,
                     ),
                     _textField(
                       title: context.translate(LocalizationKeys.numberOfBeds),
@@ -182,12 +279,12 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
                   children: [
                     _textField(
                       title: context.translate(LocalizationKeys.city),
-                      hintText: "القاهرة",
+                      hintText: hospitalInformationSettingUiModel.hospitalCity,
                     ),
                     _textField(
                       isEnable: true,
                       title: context.translate(LocalizationKeys.phoneNumber),
-                      hintText: "012222222",
+                      hintText: hospitalInformationSettingUiModel.phone,
                     ),
                   ],
                 ),
@@ -197,7 +294,7 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
           _textField(
             isEnable: true,
             title: context.translate(LocalizationKeys.email),
-            hintText: "m2005@gamialh",
+            hintText: hospitalInformationSettingUiModel.email,
           ),
           Padding(
             padding: EdgeInsets.only(top: 16.h, bottom: 24.h),
@@ -206,13 +303,13 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
               onTap: () {},
             ),
           ),
-          _notic(),
+          _notice(),
         ],
       ),
     );
   }
 
-  Widget _notic() {
+  Widget _notice() {
     return ContainerWithBackground(
       isCentered: true,
       contentPadding: EdgeInsets.symmetric(vertical: 9.h, horizontal: 16.w),
@@ -233,9 +330,9 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
         enable: isEnable ?? false,
         title: title,
         enableBorderColor: isEnable == true
-            ? AppColors.enableBorderColorStting
+            ? AppColors.enableBorderColorSetting
             : null,
-        fillColor: isEnable == true ? AppColors.filledColorenable : null,
+        fillColor: isEnable == true ? AppColors.filledColorEnable : null,
         titleColor: AppColors.grayText,
         hintText: hintText,
         hintTextStyle: context.textTheme.labelMedium!.copyWith(
@@ -245,9 +342,62 @@ class _HospitalSettingState extends BaseScreenState<HospitalSetting> {
     );
   }
 
+  Widget _languageItemWidget({
+    required String appLocale,
+    required String language,
+    required void Function() onTap,
+    required String locale,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 7.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              language,
+              style: context.textTheme.headlineMedium!.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            appLocale == locale
+                ? const Icon(
+                    Icons.check_box,
+                    size: 26,
+                    color: AppColors.blackText,
+                  )
+                : const Icon(
+                    Icons.check_box_outline_blank,
+                    size: 26,
+                    color: AppColors.blackText,
+                  ),
+          ],
+        ),
+      ),
+    );
+  }
+
   ///////////////////////////////////////////////////////////
   /////////////////// Helper Method ////////////////////////
   ///////////////////////////////////////////////////////////
+  HospitalSettingBloc get _currentBloc => context.read<HospitalSettingBloc>();
+  void _arabicItemOnTap() {
+    _changeToArabicEvent();
+  }
+
+  void _englishItemOnTap() {
+    _changeToEnglishEvent();
+  }
+
+  void _changeToEnglishEvent() {
+    BlocProvider.of<LocaleCubit>(context).changeLocale(LocaleApp.en);
+  }
+
+  void _changeToArabicEvent() {
+    BlocProvider.of<LocaleCubit>(context).changeLocale(LocaleApp.ar);
+  }
 
   Future<void> _logoutConfirmation() {
     return showAppDialog(

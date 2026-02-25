@@ -279,8 +279,8 @@ class AppColors {
     alpha: 0.25,
   );
 
-  static const enableBorderColorStting = _periwinkleA;
-  static const filledColorenable = _aliceBlue;
+  static const enableBorderColorSetting = _periwinkleA;
+  static const filledColorEnable = _aliceBlue;
   static const alegend1 = _fruitSaladApprox;
   static const alegend2 = _orangePeelApprox;
   static const alegend3 = _oPomegranateApprox;

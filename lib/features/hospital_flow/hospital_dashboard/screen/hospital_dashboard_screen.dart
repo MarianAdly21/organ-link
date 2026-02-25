@@ -12,7 +12,7 @@ import 'package:organ_link/features/hospital_flow/enum/nav_type.dart';
 import 'package:organ_link/features/hospital_flow/hospital_dashboard/bloc/hospital_dashboard_bloc.dart';
 import 'package:organ_link/features/hospital_flow/hospital_dashboard/bloc/hospital_dashboard_repository.dart';
 import 'package:organ_link/features/hospital_flow/hospital_dashboard/models/hospital_dashboard_ui_model.dart';
-import 'package:organ_link/features/hospital_flow/hospital_setting/screen/hospital_setting.dart';
+import 'package:organ_link/features/hospital_flow/hospital_setting/screen/hospital_setting_screen.dart';
 import 'package:organ_link/features/hospital_flow/matching/screen/matching_screen.dart';
 import 'package:organ_link/features/hospital_flow/notification_screen/screen/hospital_notification_screen.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/screen/surgeries_screen.dart';
@@ -410,7 +410,7 @@ class _HospitalDashboardScreenWithBlocState
   HospitalDashboardBloc get _currentBloc =>
       context.read<HospitalDashboardBloc>();
   void _navToHospitalSettingScreen() {
-    Navigator.of(context).pushNamed(HospitalSetting.routeName);
+    Navigator.of(context).pushNamed(HospitalSettingScreen.routeName);
   }
 
   void _navToHospitalNotificationScreenEvent() {

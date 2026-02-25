@@ -5,6 +5,9 @@ import 'package:organ_link/apis/models/hospital/surgery_api_model.dart';
 class HospitalDataResponse {
   final String hospitalName;
   final String hospitalCity;
+  final String licenseNumber;
+  final String phone;
+  final String email;
   final int totalMatches;
   final int totalSurgeries;
   final int patientsCount;
@@ -25,6 +28,9 @@ class HospitalDataResponse {
     required this.patientList,
     required this.donorList,
     required this.surgeriesList,
+    required this.licenseNumber,
+    required this.phone,
+    required this.email,
   });
   factory HospitalDataResponse.formJson(Map<String, dynamic> json) {
     return HospitalDataResponse(
@@ -46,6 +52,9 @@ class HospitalDataResponse {
       surgeriesList: (json["surgeries"] as List? ?? [])
           .map((x) => SurgeryApiModel.fromJson(x))
           .toList(),
+      licenseNumber: json["license_number"],
+      phone: json["phone"],
+      email: json["email"],
     );
   }
 }
