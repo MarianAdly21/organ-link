@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:organ_link/apis/errors/error_api_helper.dart';
 import 'package:organ_link/apis/errors/locale_dio_exceptions.dart';
@@ -41,7 +39,7 @@ class ErrorApiModel {
         codeError = 1013;
         break;
       case DioExceptionType.connectionError:
-        codeError = 1015;
+        codeError = 1016;
         break;
       case DioExceptionType.unknown:
         if (dioError.message?.contains("SocketException") ?? false) {
@@ -85,7 +83,7 @@ class ErrorApiModel {
         error.response?.data as Map<String, dynamic>;
     return ErrorApiModel(
       code: error.response?.statusCode ?? 1007,
-      message: extractedData["Message"],
+      message: extractedData["non_field_errors"],
       isMessageLocalizationKey: false,
     );
   }

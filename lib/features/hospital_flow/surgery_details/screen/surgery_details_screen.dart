@@ -81,7 +81,7 @@ class _SurgeryDetailsScreenWithBlocState
             } else if (state is NavToDonorDetailsScreenState) {
             } else if (state is NavToDonorDetailsScreenState) {
             } else if (state is SurgeryDetailsErrorState &&
-                state.codeError != 1015) {
+                state.codeError != 1016) {
               showFeedbackMessage(state.errorMessage);
             }
           },
@@ -125,7 +125,7 @@ class _SurgeryDetailsScreenWithBlocState
           ],
         ),
       );
-    } else if (state is SurgeryDetailsErrorState && state.codeError == 1015) {
+    } else if (state is SurgeryDetailsErrorState && state.codeError == 1016) {
       return  Text(state.errorMessage);
       //InternetErrorWidget();
     } else {

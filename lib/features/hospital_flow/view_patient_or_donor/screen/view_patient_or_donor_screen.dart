@@ -85,7 +85,7 @@ class _ViewPatientOrDonorScreenWithBlocState
           } else if (state is NavToDetailsScreenState) {
             _navToDetailsScreen();
           } else if (state is ViewPatientOrDonorErrorState &&
-              state.codeError != 1015) {
+              state.codeError != 1016) {
             showFeedbackMessage(state.errorMessage);
           }
         },
@@ -143,7 +143,7 @@ class _ViewPatientOrDonorScreenWithBlocState
         ],
       );
     } else if (state is ViewPatientOrDonorErrorState &&
-        state.codeError == 1015) {
+        state.codeError == 1016) {
       return InternetErrorWidget();
     } else {
       return EmptyWidget();

@@ -89,7 +89,7 @@ class _HomeUserScreenWithBlocState
             Navigator.of(context).pushNamed(CaseFollowUpScreen.routeName);
           } else if (state is NavToMedicalDetailsScreenState) {
             Navigator.of(context).pushNamed(MedicalDetailsScreen.routeName);
-          } else if (state is UserHomeErrorState && state.codeError != 1015) {
+          } else if (state is UserHomeErrorState && state.codeError != 1016) {
             showFeedbackMessage(state.errorMessage);
           }
         },
@@ -131,7 +131,7 @@ class _HomeUserScreenWithBlocState
           ),
         ),
       );
-    } else if (state is UserHomeErrorState && state.codeError == 1015) {
+    } else if (state is UserHomeErrorState && state.codeError == 1016) {
       return InternetErrorWidget();
     } else {
       return EmptyWidget();
