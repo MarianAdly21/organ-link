@@ -4,6 +4,7 @@ import 'package:organ_link/apis/api_keys.dart';
 import 'package:organ_link/apis/errors/error_api_model.dart';
 import 'package:organ_link/apis/models/hospital/hospital_data_response.dart';
 import 'package:organ_link/apis/models/hospital/matching_details_api_model.dart';
+import 'package:organ_link/apis/models/hospital/patient_or_donor_details_api_model.dart';
 import 'package:organ_link/apis/models/hospital/surger_details_api_model.dart';
 
 class HospitalApiManager {
@@ -76,4 +77,27 @@ class HospitalApiManager {
           fail(ErrorApiModel.identifyError(error: error));
         });
   }
+  Future<void> getPatientOrDonorDetailsDataApi(
+    int id,
+    void Function(PatientOrDonorDetailsApiModel) success,
+    void Function(ErrorApiModel) fail,
+  ) async {
+    await dioApiManager.dio
+        .get(ApiKeys.getUserDataUrl(id))
+        .then((response) {
+          final Map<String, dynamic> extractedData =
+              response.data as Map<String, dynamic>;
+          final PatientOrDonorDetailsApiModel patientOrDonorDetailsApiModel =
+              PatientOrDonorDetailsApiModel.formJson(extractedData);
+          success(patientOrDonorDetailsApiModel);
+        })
+        .onError((DioException error, stackTrace) {
+          fail(ErrorApiModel.fromDioError(error));
+        })
+        .catchError((error) {
+          fail(ErrorApiModel.identifyError(error: error));
+        });
+  }
+
+
 }

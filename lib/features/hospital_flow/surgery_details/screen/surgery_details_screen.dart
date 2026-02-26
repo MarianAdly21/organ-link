@@ -126,8 +126,7 @@ class _SurgeryDetailsScreenWithBlocState
         ),
       );
     } else if (state is SurgeryDetailsErrorState && state.codeError == 1016) {
-      return  Text(state.errorMessage);
-      //InternetErrorWidget();
+      return InternetErrorWidget();
     } else {
       return EmptyWidget();
     }
@@ -163,7 +162,7 @@ class _SurgeryDetailsScreenWithBlocState
             title: context.translate(LocalizationKeys.date),
             subTitle: surgeryDetailsUiModel.date ?? "",
           ),
-          DataRowWithStatusContianerWidget(
+          DataRowWithStatusContainerWidget(
             title: LocalizationKeys.surgeryStatus,
             subTitle: surgeryDetailsUiModel.surgeryStatus,
             backgroundColor: mapOperationStatus(
@@ -196,7 +195,7 @@ class _SurgeryDetailsScreenWithBlocState
           ),
           SizedBox(height: 24.h),
           AppButtonWithGradientColors(
-            text: context.translate(LocalizationKeys.goToPatientFile),
+            text: context.translate(LocalizationKeys.goToDonorFile),
             onTap: () {},
           ),
         ],

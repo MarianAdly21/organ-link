@@ -17,6 +17,7 @@ import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/features/widgets/data_section.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
@@ -63,24 +64,32 @@ class _ProcedureSchedulingScreenWithBlocState
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: BlocConsumer<ScheduleProcedureBloc, ScheduleProcedureState>(
-        listener: (context, state) {
-          if (state is ScheduleProcedureLoadingState) {
-            showLoading();
-          } else {
-            hideLoading();
-          }
-          if (state is ScheduleProcedureErrorState) {
-            showFeedbackMessage(state.errorMessage);
-          } else if (state is ScheduleProcedureDataLoadedSuccessfullyState) {
-            scheduleProcedureUiModel = state.scheduleProcedureUiModel;
-          }
+      body: BaseBodyScaffold(
+        title: context.translate(LocalizationKeys.scheduleProcedure),
+        onBackTap: () {
+          Navigator.pop(context);
         },
-        buildWhen: (previous, current) =>
-            current is ScheduleProcedureDataLoadedSuccessfullyState,
-        builder: (context, state) {
-          return _buildBody(state);
-        },
+        body: BlocConsumer<ScheduleProcedureBloc, ScheduleProcedureState>(
+          listener: (context, state) {
+            if (state is ScheduleProcedureLoadingState) {
+              showLoading();
+            } else {
+              hideLoading();
+            }
+            if (state is ScheduleProcedureErrorState &&
+                state.codeError != 1016) {
+              showFeedbackMessage(state.errorMessage);
+            } else if (state is ScheduleProcedureDataLoadedSuccessfullyState) {
+              scheduleProcedureUiModel = state.scheduleProcedureUiModel;
+            }
+          },
+          buildWhen: (previous, current) =>
+              current is ScheduleProcedureDataLoadedSuccessfullyState ||
+              current is ScheduleProcedureErrorState,
+          builder: (context, state) {
+            return _buildBody(state);
+          },
+        ),
       ),
     );
   }
@@ -91,87 +100,73 @@ class _ProcedureSchedulingScreenWithBlocState
 
   Widget _buildBody(ScheduleProcedureState state) {
     if (state is ScheduleProcedureDataLoadedSuccessfullyState) {
-      return BaseBodyScaffold(
-        title: context.translate(LocalizationKeys.scheduleProcedure),
-        onBackTap: () {
-          Navigator.pop(context);
-        },
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _transplantStatusMessage(),
-            _procedureInfo(),
-            _dataSectionWithName(
-              context,
-              padding: EdgeInsets.only(top: 24.h),
-              title: LocalizationKeys.procedureLocation,
-              subTitle: scheduleProcedureUiModel.hospitalName,
-              body: Column(
-                children: [
-                  CustomDividerWidget(verticalPadding: 8.h),
-                  SizedBox(height: 16.h),
-                  DataRowWithDivider(
-                    divider: true,
-                    title: context.translate(LocalizationKeys.operatingRoom),
-                    subTitle: scheduleProcedureUiModel.operationRoom,
-                  ),
-                  DataRowWithDivider(
-                    title: context.translate(LocalizationKeys.arrivalTime),
-                    subTitle: "قبل الموعد المحدد بساعتين (8 ص)",
-                  ),
-                ],
-              ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _transplantStatusMessage(),
+          _procedureInfo(),
+          _dataSectionWithName(
+            context,
+            padding: EdgeInsets.only(top: 24.h),
+            title: LocalizationKeys.procedureLocation,
+            subTitle: scheduleProcedureUiModel.hospitalName,
+            body: Column(
+              children: [
+                CustomDividerWidget(verticalPadding: 8.h),
+                SizedBox(height: 16.h),
+                DataRowWithDivider(
+                  divider: true,
+                  title: context.translate(LocalizationKeys.operatingRoom),
+                  subTitle: scheduleProcedureUiModel.operationRoom,
+                ),
+                DataRowWithDivider(
+                  title: context.translate(LocalizationKeys.arrivalTime),
+                  subTitle: "قبل الموعد المحدد بساعتين (8 ص)",
+                ),
+              ],
             ),
-            _dataSectionWithName(
-              context,
-              padding: EdgeInsets.symmetric(vertical: 0),
-              title: LocalizationKeys.medicalTeam,
-              subTitle: context.translate(LocalizationKeys.expertTeam),
-              body: Column(
-                children: [
-                  CustomDividerWidget(verticalPadding: 8.h),
-                  SizedBox(height: 16.h),
-                  DataRowWithDivider(
-                    divider: true,
-                    title: scheduleProcedureUiModel.doctorName,
-                    titleStyle: context.textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textColor,
-                    ),
-                    subTitle: scheduleProcedureUiModel.doctorSpecialty,
-                    subTitleStyle: context.textTheme.labelMedium!.copyWith(
-                      color: AppColors.grayText,
-                    ),
+          ),
+          _dataSectionWithName(
+            context,
+            padding: EdgeInsets.symmetric(vertical: 0),
+            title: LocalizationKeys.medicalTeam,
+            subTitle: context.translate(LocalizationKeys.expertTeam),
+            body: Column(
+              children: [
+                CustomDividerWidget(verticalPadding: 8.h),
+                SizedBox(height: 16.h),
+                DataRowWithDivider(
+                  divider: true,
+                  title: scheduleProcedureUiModel.doctorName,
+                  titleStyle: context.textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textColor,
                   ),
-                  // DataRowWithDivider(
-                  //   divider: true,
-                  //   title: "د. سارة محمد",
-                  //   titleStyle: context.textTheme.bodyMedium!.copyWith(
-                  //     fontWeight: FontWeight.w600,
-                  //     color: AppColors.textColor,
-                  //   ),
-                  //   subTitle: "جراح مساعد",
-                  //   subTitleStyle: context.textTheme.labelMedium!.copyWith(
-                  //     color: AppColors.grayText,
-                  //   ),
-                  // ),
-                  DataRowWithDivider(
-                    title: "د. سارة محمد",
-                    titleStyle: context.textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textColor,
-                    ),
-                    subTitle: "جراح مساعد",
-                    subTitleStyle: context.textTheme.labelMedium!.copyWith(
-                      color: AppColors.grayText,
-                    ),
+                  subTitle: scheduleProcedureUiModel.doctorSpecialty,
+                  subTitleStyle: context.textTheme.labelMedium!.copyWith(
+                    color: AppColors.grayText,
                   ),
-                ],
-              ),
+                ),
+
+                DataRowWithDivider(
+                  title: "د. سارة محمد",
+                  titleStyle: context.textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textColor,
+                  ),
+                  subTitle: "جراح مساعد",
+                  subTitleStyle: context.textTheme.labelMedium!.copyWith(
+                    color: AppColors.grayText,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       );
+    } else if (state is ScheduleProcedureErrorState &&
+        state.codeError == 1016) {
+      return InternetErrorWidget();
     } else {
       return EmptyWidget();
     }

@@ -22,6 +22,7 @@ import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_cus
 import 'package:organ_link/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/custom_notification_icon.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
@@ -89,12 +90,14 @@ class _HospitalDashboardScreenWithBlocState
             _navToHospitalNotificationScreen();
           } else if (state is NavToViewPatientOrDonorScreenState) {
             _navToViewPatientOrDonorScreen(state);
-          } else if (state is HospitalDashboardErrorState) {
+          } else if (state is HospitalDashboardErrorState &&
+              state.codeError != 1016) {
             showFeedbackMessage(state.errorMessage);
           }
         },
         buildWhen: (previous, current) =>
-            current is HospitalDashboardDataLoadedSuccessfullyState,
+            current is HospitalDashboardDataLoadedSuccessfullyState ||
+            current is HospitalDashboardErrorState,
         builder: (context, state) {
           return _buildBody(state);
         },
@@ -116,6 +119,9 @@ class _HospitalDashboardScreenWithBlocState
           ],
         ),
       );
+    } else if (state is HospitalDashboardErrorState &&
+        state.codeError == 1016) {
+      return InternetErrorWidget();
     } else {
       return EmptyWidget();
     }

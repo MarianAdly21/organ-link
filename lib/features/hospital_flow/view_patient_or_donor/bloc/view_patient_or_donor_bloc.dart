@@ -20,7 +20,7 @@ class ViewPatientOrDonorBloc
   }
 
   FutureOr<void> _navToDetailsScreenEvent(NavToDetailsScreenEvent event, Emitter<ViewPatientOrDonorState> emit) {
-    emit(NavToDetailsScreenState());
+    emit(NavToDetailsScreenState(id: event.id));
   }
 
   FutureOr<void> _getList(

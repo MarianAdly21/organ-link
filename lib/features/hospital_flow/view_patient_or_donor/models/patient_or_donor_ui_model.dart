@@ -7,6 +7,7 @@ class PatientOrDonorUiModel {
   final String organ;
   final String status;
   final String priority;
+  final int id;
   //final String? healthStatus;
 
   PatientOrDonorUiModel({
@@ -16,7 +17,8 @@ class PatientOrDonorUiModel {
     required this.organ,
     required this.status,
     required this.priority,
-   // required this.healthStatus,
+    required this.id,
+    // required this.healthStatus,
   });
   factory PatientOrDonorUiModel.fromApiModel(PatientOrDonorApiModel e) {
     return PatientOrDonorUiModel(
@@ -26,7 +28,8 @@ class PatientOrDonorUiModel {
       organ: e.organ,
       status: e.status,
       priority: e.priority,
-     // healthStatus: e.healthStatus,
+      id: e.id,
+      // healthStatus: e.healthStatus,
     );
   }
 }

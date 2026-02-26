@@ -15,6 +15,7 @@ import 'package:organ_link/features/user_flow/widget/hospital_name_container.dar
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/features/widgets/data_section.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/empty/empty_widgets.dart';
@@ -60,22 +61,31 @@ class _HospitalInformationScreenWithBlocState
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: BlocConsumer<HospitalInformationBloc, HospitalInformationState>(
-        listener: (context, state) {
-          if (state is HospitalInformationLoadingState) {
-            showLoading();
-          } else {
-            hideLoading();
-          }
-          if (state is HospitalInformationErrorState) {
-            showFeedbackMessage(state.errorMessage);
-          } else if (state is HospitalInformationDataLoadedSuccessfullyState) {
-            hospitalInformationUiModel = state.hospitalInformationUiModel;
-          }
+      body: BaseBodyScaffold(
+        title: context.translate(LocalizationKeys.contactUs),
+        onBackTap: () {
+          Navigator.pop(context);
         },
-        buildWhen: (previous, current) =>
-            current is HospitalInformationDataLoadedSuccessfullyState,
-        builder: (context, state) => _buildBody(state),
+        body: BlocConsumer<HospitalInformationBloc, HospitalInformationState>(
+          listener: (context, state) {
+            if (state is HospitalInformationLoadingState) {
+              showLoading();
+            } else {
+              hideLoading();
+            }
+            if (state is HospitalInformationErrorState &&
+                state.codeError != 1016) {
+              showFeedbackMessage(state.errorMessage);
+            } else if (state
+                is HospitalInformationDataLoadedSuccessfullyState) {
+              hospitalInformationUiModel = state.hospitalInformationUiModel;
+            }
+          },
+          buildWhen: (previous, current) =>
+              current is HospitalInformationDataLoadedSuccessfullyState ||
+              current is HospitalInformationErrorState,
+          builder: (context, state) => _buildBody(state),
+        ),
       ),
     );
   }
@@ -86,119 +96,114 @@ class _HospitalInformationScreenWithBlocState
 
   Widget _buildBody(HospitalInformationState state) {
     if (state is HospitalInformationDataLoadedSuccessfullyState) {
-      return BaseBodyScaffold(
-        title: context.translate(LocalizationKeys.contactUs),
-        onBackTap: () {
-          Navigator.pop(context);
-        },
-        body: Padding(
-          padding: EdgeInsets.only(bottom: 24.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              HospitalNameContainer(
-                hospitalName:
-                    hospitalInformationUiModel.hospitalUiModel.hospitalName,
-                hospitalLocation:
-                    hospitalInformationUiModel.hospitalUiModel.city,
+      return Padding(
+        padding: EdgeInsets.only(bottom: 24.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            HospitalNameContainer(
+              hospitalName:
+                  hospitalInformationUiModel.hospitalUiModel.hospitalName,
+              hospitalLocation: hospitalInformationUiModel.hospitalUiModel.city,
+            ),
+            DataSection(
+              paddingAroundContainer: EdgeInsets.symmetric(vertical: 0),
+              title: context.translate(LocalizationKeys.location),
+              titleOfButton: context.translate(LocalizationKeys.openInMaps),
+              onTap: () {},
+              body: Text(
+                hospitalInformationUiModel.hospitalUiModel.location,
+                style: context.textTheme.labelMedium!.copyWith(
+                  color: AppColors.grayText,
+                ),
               ),
-              DataSection(
-                paddingAroundContainer: EdgeInsets.symmetric(vertical: 0),
-                title: context.translate(LocalizationKeys.location),
-                titleOfButton: context.translate(LocalizationKeys.openInMaps),
-                onTap: () {},
-                body: Text(
-                  hospitalInformationUiModel.hospitalUiModel.location,
-                  style: context.textTheme.labelMedium!.copyWith(
-                    color: AppColors.grayText,
+            ),
+            DataSection(
+              title: context.translate(LocalizationKeys.contactInformation),
+              titleOfButton: context.translate(LocalizationKeys.callNow),
+              body: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomDividerWidget(verticalPadding: 8),
+                  SizedBox(height: 16.h),
+                  DataRowWithDivider(
+                    divider: true,
+                    title: context.translate(LocalizationKeys.mainPhone),
+                    subTitle:
+                        hospitalInformationUiModel.hospitalUiModel.minaPhone,
                   ),
-                ),
+                  DataRowWithDivider(
+                    isImportant: true,
+                    divider: true,
+                    title: context.translate(LocalizationKeys.emergency),
+                    subTitle: hospitalInformationUiModel
+                        .hospitalUiModel
+                        .emergencyPhone,
+                  ),
+                  DataRowWithDivider(
+                    title: context.translate(LocalizationKeys.email),
+                    subTitle: hospitalInformationUiModel.hospitalUiModel.email,
+                  ),
+                ],
               ),
-              DataSection(
-                title: context.translate(LocalizationKeys.contactInformation),
-                titleOfButton: context.translate(LocalizationKeys.callNow),
-                body: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CustomDividerWidget(verticalPadding: 8),
-                    SizedBox(height: 16.h),
-                    DataRowWithDivider(
-                      divider: true,
-                      title: context.translate(LocalizationKeys.mainPhone),
-                      subTitle:
-                          hospitalInformationUiModel.hospitalUiModel.minaPhone,
+            ),
+            DataSection(
+              paddingAroundContainer: EdgeInsets.symmetric(vertical: 0),
+              title: context.translate(LocalizationKeys.attendingPhysician),
+              body: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomDividerWidget(verticalPadding: 8),
+                  SizedBox(height: 16.h),
+                  DataRowWithDivider(
+                    divider: true,
+                    title: context.translate(LocalizationKeys.name),
+                    subTitle: hospitalInformationUiModel
+                        .supervisorDoctorUiModel
+                        .doctorName,
+                  ),
+                  DataRowWithDivider(
+                    divider: true,
+                    title: context.translate(LocalizationKeys.specialty),
+                    subTitle: hospitalInformationUiModel
+                        .supervisorDoctorUiModel
+                        .specialty,
+                  ),
+                  DataRowWithDivider(
+                    title: context.translate(
+                      LocalizationKeys.clinicPhoneNumber,
                     ),
-                    DataRowWithDivider(
-                      isImportant: true,
-                      divider: true,
-                      title: context.translate(LocalizationKeys.emergency),
-                      subTitle: hospitalInformationUiModel
-                          .hospitalUiModel
-                          .emergencyPhone,
-                    ),
-                    DataRowWithDivider(
-                      title: context.translate(LocalizationKeys.email),
-                      subTitle:
-                          hospitalInformationUiModel.hospitalUiModel.email,
-                    ),
-                  ],
-                ),
+                    subTitle: hospitalInformationUiModel
+                        .supervisorDoctorUiModel
+                        .phone,
+                  ),
+                ],
               ),
-              DataSection(
-                paddingAroundContainer: EdgeInsets.symmetric(vertical: 0),
-                title: context.translate(LocalizationKeys.attendingPhysician),
-                body: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CustomDividerWidget(verticalPadding: 8),
-                    SizedBox(height: 16.h),
-                    DataRowWithDivider(
-                      divider: true,
-                      title: context.translate(LocalizationKeys.name),
-                      subTitle: hospitalInformationUiModel
-                          .supervisorDoctorUiModel
-                          .doctorName,
-                    ),
-                    DataRowWithDivider(
-                      divider: true,
-                      title: context.translate(LocalizationKeys.specialty),
-                      subTitle: hospitalInformationUiModel
-                          .supervisorDoctorUiModel
-                          .specialty,
-                    ),
-                    DataRowWithDivider(
-                      title: context.translate(
-                        LocalizationKeys.clinicPhoneNumber,
-                      ),
-                      subTitle: hospitalInformationUiModel
-                          .supervisorDoctorUiModel
-                          .phone,
-                    ),
-                  ],
-                ),
-              ),
-              DataSection(
-                title: context.translate(LocalizationKeys.workingHours),
-                body: Column(
-                  children: [
-                    CustomDividerWidget(verticalPadding: 8.h),
-                    Center(
-                      child: Text(
-                        hospitalInformationUiModel.hospitalUiModel.workingHours,
-                        style: context.textTheme.bodyMedium!.copyWith(
-                          color: AppColors.blackText,
-                          fontWeight: FontWeight.w600,
-                        ),
+            ),
+            DataSection(
+              title: context.translate(LocalizationKeys.workingHours),
+              body: Column(
+                children: [
+                  CustomDividerWidget(verticalPadding: 8.h),
+                  Center(
+                    child: Text(
+                      hospitalInformationUiModel.hospitalUiModel.workingHours,
+                      style: context.textTheme.bodyMedium!.copyWith(
+                        color: AppColors.blackText,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              _infoNoticeCard(),
-            ],
-          ),
+            ),
+            _infoNoticeCard(),
+          ],
         ),
       );
+    } else if (state is HospitalInformationErrorState &&
+        state.codeError == 1016) {
+      return InternetErrorWidget();
     } else {
       return EmptyWidget();
     }

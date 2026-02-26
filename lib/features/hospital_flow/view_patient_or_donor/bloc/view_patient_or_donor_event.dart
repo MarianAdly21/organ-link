@@ -13,4 +13,8 @@ class GetViewPatientOrDonorDataEvent extends ViewPatientOrDonorEvent {
   const GetViewPatientOrDonorDataEvent({required this.type});
 }
 
-class NavToDetailsScreenEvent extends ViewPatientOrDonorEvent {}
+class NavToDetailsScreenEvent extends ViewPatientOrDonorEvent {
+  final int id;
+
+  const NavToDetailsScreenEvent({required this.id});
+}

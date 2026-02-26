@@ -33,4 +33,7 @@ class ViewPatientOrDonorDataLoadedSuccessfullyState
 class NavToDetailsScreenState extends ViewPatientOrDonorState {
   @override
   List<Object> get props => [identityHashCode(this)];
+  final int id;
+
+  const NavToDetailsScreenState({required this.id});
 }

@@ -8,7 +8,7 @@ import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
 import 'package:organ_link/features/hospital_flow/enum/nav_type.dart';
-import 'package:organ_link/features/hospital_flow/patient_details/screen/patient_details_screen.dart';
+import 'package:organ_link/features/hospital_flow/patient_or_donor_details/screen/patient_or_donor_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/view_patient_or_donor/bloc/view_patient_or_donor_bloc.dart';
 import 'package:organ_link/features/hospital_flow/view_patient_or_donor/bloc/view_patient_or_donor_repository.dart';
 import 'package:organ_link/features/hospital_flow/view_patient_or_donor/models/patient_or_donor_ui_model.dart';
@@ -83,7 +83,7 @@ class _ViewPatientOrDonorScreenWithBlocState
           if (state is ViewPatientOrDonorDataLoadedSuccessfullyState) {
             modelList = state.donorOrPatientList;
           } else if (state is NavToDetailsScreenState) {
-            _navToDetailsScreen();
+            _navToDetailsScreen(state.id);
           } else if (state is ViewPatientOrDonorErrorState &&
               state.codeError != 1016) {
             showFeedbackMessage(state.errorMessage);
@@ -159,8 +159,7 @@ class _ViewPatientOrDonorScreenWithBlocState
         children: [
           _nameAndId(name: modelList[index].fullName, id: "100p"),
           _infoRow(
-            age:
-                "${calculateAge(modelList[index].age)} ${context.translate(LocalizationKeys.year)}",
+            age: "${calculateAge(modelList[index].age)}",
             bloodType: modelList[index].bloodType,
             organ: modelList[index].organ,
           ),
@@ -172,7 +171,7 @@ class _ViewPatientOrDonorScreenWithBlocState
           AppButtonWithGradientColors(
             text: context.translate(LocalizationKeys.details),
             onTap: () {
-              navToDetailsScreen();
+              _navToDetailsScreenEvent(modelList[index].id);
             },
           ),
         ],
@@ -315,12 +314,14 @@ class _ViewPatientOrDonorScreenWithBlocState
   ///////////////////////////////////////////////////////////
   ViewPatientOrDonorBloc get _currentBloc =>
       context.read<ViewPatientOrDonorBloc>();
-  void navToDetailsScreen() {
-    _currentBloc.add(NavToDetailsScreenEvent());
+  void _navToDetailsScreenEvent(int id) {
+    _currentBloc.add(NavToDetailsScreenEvent(id: id));
   }
 
-  void _navToDetailsScreen() {
-    Navigator.of(context).pushNamed(PatientDetailsScreen.routeName);
+  void _navToDetailsScreen(int id) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => PatientOrDonorDetailsScreen(id: id)));
   }
 
   void _getViewPatientOrDonorDataEvent() {

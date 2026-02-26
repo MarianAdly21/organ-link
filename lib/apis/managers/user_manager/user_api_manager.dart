@@ -14,7 +14,7 @@ class UserApiManager {
     void Function(ErrorApiModel) fail,
   ) async {
     await dioApiManager.dio
-        .get(ApiKeys.getHomeUserUrl(id))
+        .get(ApiKeys.getUserDataUrl(id))
         .then((response) {
           final Map<String, dynamic> extractedData =
               response.data as Map<String, dynamic>;

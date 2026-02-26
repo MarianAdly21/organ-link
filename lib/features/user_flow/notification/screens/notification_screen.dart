@@ -12,6 +12,7 @@ import 'package:organ_link/features/user_flow/notification/bloc/notification_use
 import 'package:organ_link/features/user_flow/notification/models/notification_user_ui_model.dart';
 import 'package:organ_link/features/user_flow/notification/widget/notification_item.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/empty/empty_widgets.dart';
@@ -57,24 +58,32 @@ class _NotificationScreenWithBlocState
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: BlocConsumer<NotificationUserBloc, NotificationUserState>(
-        listener: (context, state) {
-          if (state is NotificationUserLoadingState) {
-            showLoading();
-          } else {
-            hideLoading();
-          }
-          if (state is NotificationUserErrorState) {
-            showFeedbackMessage(state.errorMessage);
-          } else if (state is NotificationUserDataLoadedSuccessfullyState) {
-            notificationUserUiModel = state.notificationUserUiModel;
-          }
+      body: BaseBodyScaffold(
+        title: context.translate(LocalizationKeys.notificationScreen),
+        onBackTap: () {
+          Navigator.pop(context);
         },
-        buildWhen: (previous, current) =>
-            current is NotificationUserDataLoadedSuccessfullyState,
-        builder: (context, state) {
-          return _buildBody(state);
-        },
+        body: BlocConsumer<NotificationUserBloc, NotificationUserState>(
+          listener: (context, state) {
+            if (state is NotificationUserLoadingState) {
+              showLoading();
+            } else {
+              hideLoading();
+            }
+            if (state is NotificationUserErrorState &&
+                state.codeError != 1016) {
+              showFeedbackMessage(state.errorMessage);
+            } else if (state is NotificationUserDataLoadedSuccessfullyState) {
+              notificationUserUiModel = state.notificationUserUiModel;
+            }
+          },
+          buildWhen: (previous, current) =>
+              current is NotificationUserDataLoadedSuccessfullyState ||
+              current is NotificationUserErrorState,
+          builder: (context, state) {
+            return _buildBody(state);
+          },
+        ),
       ),
     );
   }
@@ -84,29 +93,27 @@ class _NotificationScreenWithBlocState
 
   Widget _buildBody(NotificationUserState state) {
     if (state is NotificationUserDataLoadedSuccessfullyState) {
-      return BaseBodyScaffold(
-        title: context.translate(LocalizationKeys.notificationScreen),
-        onBackTap: () {
-          Navigator.pop(context);
-        },
-        body: notificationUserUiModel.isEmpty
-            ? EmptyNotificationScreen()
-            : ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: notificationUserUiModel.length,
-                itemBuilder: (context, index) {
-                  return NotificationItem(
-                    color: notificationUserUiModel[index].notificationType== "" ?AppColors.notificationImportantItemBG : AppColors.notificationItemBG,
-                    title: notificationUserUiModel[index].messageTitle,
-                    content: notificationUserUiModel[index].messageContent,
-                    date: DateFormat(
-                      'dd/MM/yyyy',
-                    ).format(notificationUserUiModel[index].date),
-                  );
-                },
-              ),
-      );
+      return notificationUserUiModel.isEmpty
+          ? EmptyNotificationScreen()
+          : ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: notificationUserUiModel.length,
+              itemBuilder: (context, index) {
+                return NotificationItem(
+                  color: notificationUserUiModel[index].notificationType == ""
+                      ? AppColors.notificationImportantItemBG
+                      : AppColors.notificationItemBG,
+                  title: notificationUserUiModel[index].messageTitle,
+                  content: notificationUserUiModel[index].messageContent,
+                  date: DateFormat(
+                    'dd/MM/yyyy',
+                  ).format(notificationUserUiModel[index].date),
+                );
+              },
+            );
+    } else if (state is NotificationUserErrorState && state.codeError == 1016) {
+      return InternetErrorWidget();
     } else {
       return EmptyWidget();
     }

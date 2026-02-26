@@ -6,8 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/app_router.dart';
-import 'package:organ_link/features/hospital_flow/hospital_dashboard/screen/hospital_dashboard_screen.dart';
-import 'package:organ_link/features/ministry_flow/ministry_home/screen/ministry_home_screen.dart';
 import 'package:organ_link/features/shared_screens/splash/splash_screen.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:get_it/get_it.dart';

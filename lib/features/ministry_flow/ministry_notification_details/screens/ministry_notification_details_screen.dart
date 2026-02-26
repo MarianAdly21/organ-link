@@ -203,7 +203,7 @@ class _MinistryNotificationDetailsScreenState
             ),
           ),
           CustomDividerWidget(verticalPadding: 24),
-          DataRowWithStatusContianerWidget(
+          DataRowWithStatusContainerWidget(
             title: "الحالة",
             subTitle: "متابعة التحقيق",
             backgroundColor: AppColors.medicalTestDoneBG,

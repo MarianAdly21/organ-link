@@ -10,7 +10,7 @@ import 'package:organ_link/features/ministry_flow/add_users/screen/add_new_user_
 import 'package:organ_link/features/ministry_flow/widgets/custom_ministry_form_widget.dart';
 import 'package:organ_link/features/ministry_flow/widgets/info_tile_with_status_custom_widget.dart';
 import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
-import 'package:organ_link/features/shared_screens/log_out_confirmation/log_out_confirmationDialog_screen.dart';
+import 'package:organ_link/features/shared_screens/log_out_confirmation/log_out_confirmation_dialog_screen.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
@@ -115,7 +115,7 @@ class _MinistrySettingsScreenState
         ),
         Padding(
           padding: EdgeInsets.only(top: 16.h),
-          child: DataRowWithStatusContianerWidget(
+          child: DataRowWithStatusContainerWidget(
             statusIsCentered: true,
             divider: true,
             title: LocalizationKeys.job,
@@ -254,7 +254,7 @@ class _MinistrySettingsScreenState
   Future<void> _logoutConfirmation() {
     return showAppDialog(
       context: context,
-      dialogWidget: LogoutConfirmationDialogScreen(),
+      dialogWidget: LogOutConfirmationDialogScreen(),
       shouldPopCallback: () {
         return true;
       },

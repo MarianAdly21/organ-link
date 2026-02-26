@@ -85,7 +85,7 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreen> {
         ),
         SizedBox(height: 16.h),
         AppSearchCustomWidget(
-          hintText: context.translate(LocalizationKeys.searchforHospital),
+          hintText: context.translate(LocalizationKeys.searchForHospital),
           onChanged: (value) {},
         ),
       ],

@@ -9,16 +9,16 @@ import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LogoutConfirmationDialogScreen extends BaseDialogWidget {
-  const LogoutConfirmationDialogScreen({super.key});
+class LogOutConfirmationDialogScreen extends BaseDialogWidget {
+  const LogOutConfirmationDialogScreen({super.key});
 
   @override
   BaseDialogState<BaseDialogWidget> baseDialogCreateState() =>
-      _LogoutConfirmationDialogScreenState();
+      _LogOutConfirmationDialogScreenState();
 }
 
-class _LogoutConfirmationDialogScreenState
-    extends BaseDialogState<LogoutConfirmationDialogScreen> {
+class _LogOutConfirmationDialogScreenState
+    extends BaseDialogState<LogOutConfirmationDialogScreen> {
   @override
   Widget baseDialogBuild(BuildContext context) {
     return Column(
@@ -53,8 +53,8 @@ class _LogoutConfirmationDialogScreenState
             _dialogBtn(
               text: LocalizationKeys.confirmLogout,
               onTap: () async {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.clear();
+                final pref = await SharedPreferences.getInstance();
+                await pref.clear();
                 _navToLoginScreen();
               },
               backgroundColor: AppColors.backgroundForLogoutButton,
