@@ -23,6 +23,7 @@ import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/custom_over_view_container.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/empty/empty_widgets.dart';
@@ -81,12 +82,13 @@ class _MatchingScreenWithBlocState
             matchingList = state.matchingList;
           } else if (state is NavToMatchingDetailsScreenState) {
             _navToMatchingDetailsScreen(state);
-          }else if(state is MatchingErrorState){
+          } else if (state is MatchingErrorState && state.codeError != 1016) {
             showFeedbackMessage(state.errorMessage);
           }
         },
         buildWhen: (previous, current) =>
-            current is MatchingDataLoadedSuccessfullyState,
+            current is MatchingDataLoadedSuccessfullyState ||
+            current is MatchingErrorState,
 
         builder: (context, state) {
           return _buildBody(state);
@@ -121,6 +123,8 @@ class _MatchingScreenWithBlocState
           ),
         ),
       );
+    } else if (state is MatchingErrorState && state.codeError == 1016) {
+      return InternetErrorWidget();
     } else {
       return EmptyWidget();
     }

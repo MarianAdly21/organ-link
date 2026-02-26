@@ -14,6 +14,7 @@ import 'package:organ_link/features/hospital_flow/matching_details/models/matchi
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/empty/empty_widgets.dart';
 import 'package:organ_link/utils/feedback/feedback_message.dart';
@@ -69,13 +70,14 @@ class _MatchingDetailsScreenWithBlocState
           }
           if (state is MatchingDetailsDataLoadedSuccessfullyState) {
             matchingDetailsUiModel = state.matchingDetailsUiModel;
-          } else if (state is MatchingDetailsErrorState) {
+          } else if (state is MatchingDetailsErrorState &&
+              state.codeError != 1016) {
             showFeedbackMessage(state.errorMessage);
           }
         },
         buildWhen: (previous, current) =>
-            current is MatchingDetailsDataLoadedSuccessfullyState,
-
+            current is MatchingDetailsDataLoadedSuccessfullyState ||
+            current is MatchingDetailsErrorState,
         builder: (context, state) {
           return _buildBody(state);
         },
@@ -117,6 +119,8 @@ class _MatchingDetailsScreenWithBlocState
           ),
         ),
       );
+    } else if (state is MatchingDetailsErrorState && state.codeError == 1016) {
+      return InternetErrorWidget();
     } else {
       return EmptyWidget();
     }
@@ -135,7 +139,7 @@ class _MatchingDetailsScreenWithBlocState
           ),
           DataRowWithDivider(
             divider: true,
-            title: context.translate(LocalizationKeys.fileNumber),
+            title: context.translate(LocalizationKeys.fileNumberWithoutColumn),
             subTitle: matchingDetailsUiModel.patientFileNum,
           ),
           DataRowWithDivider(
@@ -176,7 +180,7 @@ class _MatchingDetailsScreenWithBlocState
           DataRowWithDivider(
             divider: true,
             dividerColor: AppColors.matchingDataUserDivider,
-            title: context.translate(LocalizationKeys.fileNumber),
+            title: context.translate(LocalizationKeys.fileNumberWithoutColumn),
             subTitle: matchingDetailsUiModel.donorFileNum,
           ),
           DataRowWithDivider(

@@ -18,6 +18,7 @@ import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/features/widgets/notice_container.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
@@ -65,22 +66,30 @@ class _MedicalDetailsScreenWithBlocState
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: BlocConsumer<MedicalDetailsBloc, MedicalDetailsState>(
-        listener: (context, state) {
-          if (state is MedicalDetailsLoadingState) {
-            showLoading();
-          } else {
-            hideLoading();
-          }
-          if (state is MedicalDetailsDataLoadedSuccessfullyState) {
-            medicalDetailsUiModel = state.medicalDetailsUiModel;
-          } else if (state is MedicalDetailsErrorState) {
-            showFeedbackMessage(state.errorMessage);
-          }
+      body: BaseBodyScaffold(
+        title: context.translate(LocalizationKeys.medicalDetailsScreen),
+        onBackTap: () {
+          Navigator.pop(context);
         },
-        buildWhen: (previous, current) =>
-            current is MedicalDetailsDataLoadedSuccessfullyState,
-        builder: (context, state) => _buildBody(state),
+        body: BlocConsumer<MedicalDetailsBloc, MedicalDetailsState>(
+          listener: (context, state) {
+            if (state is MedicalDetailsLoadingState) {
+              showLoading();
+            } else {
+              hideLoading();
+            }
+            if (state is MedicalDetailsDataLoadedSuccessfullyState) {
+              medicalDetailsUiModel = state.medicalDetailsUiModel;
+            } else if (state is MedicalDetailsErrorState &&
+                state.codeError != 1016) {
+              showFeedbackMessage(state.errorMessage);
+            }
+          },
+          buildWhen: (previous, current) =>
+              current is MedicalDetailsDataLoadedSuccessfullyState ||
+              current is MedicalDetailsErrorState,
+          builder: (context, state) => _buildBody(state),
+        ),
       ),
     );
   }
@@ -90,25 +99,21 @@ class _MedicalDetailsScreenWithBlocState
 
   Widget _buildBody(MedicalDetailsState state) {
     if (state is MedicalDetailsDataLoadedSuccessfullyState) {
-      return BaseBodyScaffold(
-        title: context.translate(LocalizationKeys.medicalDetailsScreen),
-        onBackTap: () {
-          Navigator.pop(context);
-        },
-        body: Column(
-          children: [
-            _personalInfoCard(),
-            _chronicDiseasesCard(),
-            if (medicalDetailsUiModel.medicalTestList.isNotEmpty)
-              _medicalTestCard(),
-            _upcomingAppointmentCard(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: NoticeContainer(notice: LocalizationKeys.hospitalDataNote),
-            ),
-          ],
-        ),
+      return Column(
+        children: [
+          _personalInfoCard(),
+          _chronicDiseasesCard(),
+          if (medicalDetailsUiModel.medicalTestList.isNotEmpty)
+            _medicalTestCard(),
+          _upcomingAppointmentCard(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: NoticeContainer(notice: LocalizationKeys.hospitalDataNote),
+          ),
+        ],
       );
+    } else if (state is MedicalDetailsErrorState && state.codeError == 1016) {
+      return InternetErrorWidget();
     } else {
       return EmptyWidget();
     }
@@ -273,8 +278,7 @@ class _MedicalDetailsScreenWithBlocState
                   ),
                   SizedBox(height: 9.h),
                   Text(
-                    DateFormat('yyyy-MM-dd').format(model.date)  
-                    ,
+                    DateFormat('yyyy-MM-dd').format(model.date),
                     style: context.textTheme.labelSmall!.copyWith(
                       fontWeight: FontWeight.w400,
                       color: AppColors.blackText,

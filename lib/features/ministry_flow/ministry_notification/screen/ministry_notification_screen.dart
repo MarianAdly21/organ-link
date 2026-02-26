@@ -30,12 +30,12 @@ class _MinistryNotificationScreenState
   final List<DashboardMinistryUiModel> dashboardList = [
     DashboardMinistryUiModel(
       icon: AppAssetPaths.newNotificationIcon,
-      title: LocalizationKeys.newAlarts,
+      title: LocalizationKeys.newAlerts,
       count: "24",
     ),
     DashboardMinistryUiModel(
       icon: AppAssetPaths.folderNotificationIcon,
-      title: LocalizationKeys.totalAlarts,
+      title: LocalizationKeys.totalAlerts,
       count: "24",
     ),
     DashboardMinistryUiModel(

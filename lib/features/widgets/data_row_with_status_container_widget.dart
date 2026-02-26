@@ -6,8 +6,8 @@ import 'package:organ_link/features/hospital_flow/widget/container_with_backgrou
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/res/app_colors.dart';
 
-class DataRowWithStatusContianerWidget extends StatelessWidget {
-  const DataRowWithStatusContianerWidget({
+class DataRowWithStatusContainerWidget extends StatelessWidget {
+  const DataRowWithStatusContainerWidget({
     super.key,
     required this.title,
     required this.subTitle,

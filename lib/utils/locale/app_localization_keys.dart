@@ -181,7 +181,8 @@ class LocalizationKeys {
   static const patientName = "patient_name";
   static const fileNumberWithoutColumn = "file_number_without_column";
   static const donorName = "donor_name";
-  static const goToPatientFile = "Go to Patient File";
+  static const goToPatientFile = "go_to_patient_file";
+  static const goToDonorFile = "go_to_donor_file";
   static const unread = "unread";
   static const totalNotification = "total_notifications";
   static const urgent = "urgent";
@@ -195,9 +196,9 @@ class LocalizationKeys {
   static const allImportantAlerts = "all_important_alerts";
   static const viewDetails = "view_details";
   static const investigationFollowUp = "investigation_follow_up";
-  static const totalAlarts = "total_alerts";
+  static const totalAlerts = "total_alerts";
   static const resolved = "resolved";
-  static const newAlarts = "new_alarts";
+  static const newAlerts = "new_alerts";
   static const underInvestigation = "under_investigation";
   static const profileInformation = "profile_information";
   static const updatePersonalData = "update_personal_data";
@@ -273,12 +274,12 @@ class LocalizationKeys {
   static const organTransplantDistribution = "organ_transplant_distribution";
   static const monthlyOperations = "monthly_operations";
   static const operationsLastSixMonths = "operations_last_6_months";
-  static const totalOpertions = "total_operations";
+  static const totalOperations = "total_operations";
   static const successfulOperationCount = "successful_operations_count";
 
   static const participatingHospitalsList = "participating_hospitals_list";
   static const hospitalRegisteredInSystem = "hospital_registered_in_system";
-  static const searchforHospital = "search_for_hospital";
+  static const searchForHospital = "search_for_hospital";
   static const needs = "needs";
 
   static const hospitalDetails = "hospital_details";
@@ -299,4 +300,7 @@ class LocalizationKeys {
   static const aiResult = "ai_result";
   static const plzCheckInternet = "plz_check_internet";
   static const noSurgeriesAvailable = "no_surgeries_available";
+  static const availableOrgan = "available_organ";
+  static const noReportsAvailable = "no_reports_available";
+  static const noDataAvailable = "no_data_available";
 }

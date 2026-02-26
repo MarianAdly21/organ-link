@@ -100,7 +100,7 @@ class MonthlyOperationsChart extends StatelessWidget {
           children: [
             LegendItem(
               color: AppColors.seconderColor,
-              text: context.translate(LocalizationKeys.totalOpertions),
+              text: context.translate(LocalizationKeys.totalOperations),
             ),
             SizedBox(width: 16),
             LegendItem(

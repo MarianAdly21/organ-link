@@ -5,7 +5,7 @@ import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
-import 'package:organ_link/features/shared_screens/log_out_confirmation/log_out_confirmationDialog_screen.dart';
+import 'package:organ_link/features/shared_screens/log_out_confirmation/log_out_confirmation_dialog_screen.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
 import 'package:organ_link/features/widgets/data_section.dart';
@@ -196,7 +196,7 @@ class _SettingsScreenState extends BaseScreenState<SettingsScreen> {
   Future<void> _logoutConfirmation() {
     return showAppDialog(
       context: context,
-      dialogWidget: LogoutConfirmationDialogScreen(),
+      dialogWidget: LogOutConfirmationDialogScreen(),
       shouldPopCallback: () {
         return true;
       },
