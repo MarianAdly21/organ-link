@@ -10,16 +10,13 @@ sealed class SurgeryDetailsEvent extends Equatable {
 class GetSurgeryDetailsDataEvent extends SurgeryDetailsEvent {
   final int id;
 
-const  GetSurgeryDetailsDataEvent({required this.id});
+  const GetSurgeryDetailsDataEvent({required this.id});
 }
 
-class NavToPatientDetailsScreenEvent extends SurgeryDetailsEvent {
+class NavToPatientOrDonorDetailsScreenEvent extends SurgeryDetailsEvent {
   final int id;
+  final NavType type;
 
-  const NavToPatientDetailsScreenEvent({required this.id});
-}
-class NavToDonorDetailsScreenEvent extends SurgeryDetailsEvent {
-  final int id;
 
-  const NavToDonorDetailsScreenEvent({required this.id});
+  const NavToPatientOrDonorDetailsScreenEvent({required this.id, required this.type});
 }

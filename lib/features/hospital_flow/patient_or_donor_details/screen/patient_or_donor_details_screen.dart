@@ -11,6 +11,7 @@ import 'package:organ_link/_core/extensions/screen_sizer_extension.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
+import 'package:organ_link/features/hospital_flow/enum/nav_type.dart';
 import 'package:organ_link/features/hospital_flow/patient_or_donor_details/bloc/patient_or_donor_details_bloc.dart';
 import 'package:organ_link/features/hospital_flow/patient_or_donor_details/bloc/patient_or_donor_details_repository.dart';
 import 'package:organ_link/features/hospital_flow/patient_or_donor_details/models/patient_or_donor_details_ui_model.dart';
@@ -34,8 +35,13 @@ import 'package:organ_link/utils/locale/app_localization_keys.dart';
 import 'package:timelines_plus/timelines_plus.dart';
 
 class PatientOrDonorDetailsScreen extends StatelessWidget {
-  const PatientOrDonorDetailsScreen({super.key, required this.id});
+  const PatientOrDonorDetailsScreen({
+    super.key,
+    required this.id,
+    required this.type,
+  });
   final int id;
+  final NavType type;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -46,14 +52,20 @@ class PatientOrDonorDetailsScreen extends StatelessWidget {
           ),
         ),
       ),
-      child: PatientOrDonorDetailsScreenWithBloc(id: id),
+      child: PatientOrDonorDetailsScreenWithBloc(id: id, type: type),
     );
   }
 }
 
 class PatientOrDonorDetailsScreenWithBloc extends BaseStatefulScreenWidget {
-  const PatientOrDonorDetailsScreenWithBloc({super.key, required this.id});
+  const PatientOrDonorDetailsScreenWithBloc({
+    super.key,
+    required this.id,
+    required this.type,
+  });
   final int id;
+  final NavType type;
+
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
       _PatientOrDonorDetailsScreenWithBlocState();
@@ -73,7 +85,11 @@ class _PatientOrDonorDetailsScreenWithBlocState
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: AppBaseBodyScaffold(
-        titleOfScreen: context.translate(LocalizationKeys.patientDetails),
+        titleOfScreen: context.translate(
+          widget.type == NavType.donor
+              ? LocalizationKeys.donorDetails
+              : LocalizationKeys.patientDetails,
+        ),
         backTap: () {
           Navigator.pop(context);
         },

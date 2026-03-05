@@ -22,9 +22,9 @@ class SurgeriesErrorState extends SurgeriesState {
 class SurgeriesLoadingState extends SurgeriesState {}
 
 class SurgeriesDataLoadedSuccessfullyState extends SurgeriesState {
-  final List<SurgeryUiModel> surgeriesList;
+  final SurgeryUiModel surgeries;
+const  SurgeriesDataLoadedSuccessfullyState({required this.surgeries});
 
-  const SurgeriesDataLoadedSuccessfullyState({required this.surgeriesList});
 }
 
 class NavToSurgeryDetailsScreenState extends SurgeriesState {

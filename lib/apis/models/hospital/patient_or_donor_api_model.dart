@@ -5,6 +5,7 @@ class PatientOrDonorApiModel {
   final String organ;
   final String status;
   final String priority;
+  final String medicalRecordNumber;
   final int id;
   // final String healthStatus;
 
@@ -16,6 +17,7 @@ class PatientOrDonorApiModel {
     required this.status,
     required this.priority,
     required this.id,
+    required this.medicalRecordNumber,
     //required this.healthStatus,
   });
   factory PatientOrDonorApiModel.formJson(Map<String, dynamic> json) {
@@ -25,8 +27,9 @@ class PatientOrDonorApiModel {
       bloodType: json["blood_type"],
       organ: json["organ_needed"] ?? json["organ_available"],
       status: json["status"],
-      priority: json["priority"]?["level"] ?? "أولوية عالية",
+      priority: json["priority"]?["level"] ?? "Demo Priority",
       id: json["id"],
+      medicalRecordNumber: json["medical_record_number"],
     );
   }
 }

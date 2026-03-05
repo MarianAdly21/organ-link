@@ -230,8 +230,8 @@ class _MinistryNotificationDetailsScreenState
       gradientBackgroundColor: [
         /// change based on its status
         /// status==> تم الحل
-        AppColors.resolveStatusContainerBGMinistryAlart,
-        AppColors.resolveStatusContainerBGMinistryAlart,
+        AppColors.resolveStatusContainerBGMinistryAlert,
+        AppColors.resolveStatusContainerBGMinistryAlert,
 
         /// status==> خطر
         //  AppColors.dangerStatusContainerBGMinistryAlart1,
@@ -245,9 +245,9 @@ class _MinistryNotificationDetailsScreenState
       body: Column(
         children: [
           ContainerWithBackground(
-            backgroundColor: AppColors.resolveStatusBGMinistryAlart,
+            backgroundColor: AppColors.resolveStatusBGMinistryAlert,
             text: "text",
-            textColor: AppColors.statusTextInMinistryAlart,
+            textColor: AppColors.statusTextInMinistryAlert,
           ),
           SizedBox(height: 16.h),
           Text(

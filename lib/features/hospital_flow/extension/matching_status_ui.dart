@@ -12,7 +12,7 @@ extension MatchingStatusUi on MatchingStatus {
       case MatchingStatus.pending:
         return AppColors.pendingText;
       case MatchingStatus.notFound:
-        return AppColors.notFoundtext;
+        return AppColors.notFoundText;
       case MatchingStatus.underReview:
         return AppColors.pendingText;
     }

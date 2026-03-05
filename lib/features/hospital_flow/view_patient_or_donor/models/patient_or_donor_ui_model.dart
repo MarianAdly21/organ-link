@@ -7,6 +7,7 @@ class PatientOrDonorUiModel {
   final String organ;
   final String status;
   final String priority;
+  final String medicalRecordNumber;
   final int id;
   //final String? healthStatus;
 
@@ -18,6 +19,7 @@ class PatientOrDonorUiModel {
     required this.status,
     required this.priority,
     required this.id,
+    required this.medicalRecordNumber,
     // required this.healthStatus,
   });
   factory PatientOrDonorUiModel.fromApiModel(PatientOrDonorApiModel e) {
@@ -29,6 +31,7 @@ class PatientOrDonorUiModel {
       status: e.status,
       priority: e.priority,
       id: e.id,
+      medicalRecordNumber: e.medicalRecordNumber,
       // healthStatus: e.healthStatus,
     );
   }

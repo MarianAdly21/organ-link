@@ -21,11 +21,11 @@ class _NotificationFilterBarState extends State<NotificationFilterBar> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
       decoration: BoxDecoration(
-        color: AppColors.notificationFilterContianerBGColor,
+        color: AppColors.notificationFilterContainerBGColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.notificationFilterContianerShadow,
+            color: AppColors.notificationFilterContainerShadow,
             blurRadius: 4,
           ),
         ],

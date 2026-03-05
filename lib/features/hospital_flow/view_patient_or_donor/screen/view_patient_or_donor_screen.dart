@@ -157,7 +157,10 @@ class _ViewPatientOrDonorScreenWithBlocState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _nameAndId(name: modelList[index].fullName, id: "100p"),
+          _nameAndId(
+            name: modelList[index].fullName,
+            id: modelList[index].medicalRecordNumber,
+          ),
           _infoRow(
             age: "${calculateAge(modelList[index].age)}",
             bloodType: modelList[index].bloodType,
@@ -319,9 +322,11 @@ class _ViewPatientOrDonorScreenWithBlocState
   }
 
   void _navToDetailsScreen(int id) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => PatientOrDonorDetailsScreen(id: id)));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => PatientOrDonorDetailsScreen(id: id, type: widget.type),
+      ),
+    );
   }
 
   void _getViewPatientOrDonorDataEvent() {

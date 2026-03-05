@@ -184,7 +184,7 @@ class AppColors {
   static const filterResetAllButtonText = _nobel;
   static const filterDropDownMenu = _white;
 
-  /// multi selecte drop down
+  /// multi select drop down
   static const multiDropDownSelectedItemIcon = _bluish;
   static const multiDropDownBorder = _hintOfRed;
   static const multiDropDownFocusBorder = _cloudBurst;
@@ -274,8 +274,8 @@ class AppColors {
   static const notCardBorder = _periwinkle;
 
   /// Notifications screen
-  static const notificationFilterContianerBGColor = _athensGray;
-  static final notificationFilterContianerShadow = _mineShaft.withValues(
+  static const notificationFilterContainerBGColor = _athensGray;
+  static final notificationFilterContainerShadow = _mineShaft.withValues(
     alpha: 0.25,
   );
 
@@ -288,16 +288,16 @@ class AppColors {
   static const notificationBGHospitalForEachOne = _cosmos;
   static const notificationContentHospitalForEachOne = _rusticRedApprox;
   static const followUpInvestigation = _titanWhite;
-  static const statusTextInMinistryAlart = _white;
-  static const resolveStatusContainerBGMinistryAlart = _white;
+  static const statusTextInMinistryAlert = _white;
+  static const resolveStatusContainerBGMinistryAlert = _white;
   static const generalContainerBGMinistry = _white;
-  static const resolveStatusBGMinistryAlart = _jacksonsPurpleApprox;
-  static const dangerStatusContainerBGMinistryAlart1 = _pinkApprox;
-  static const dangerStatusContainerBGMinistryAlart2 = _fairPinkApprox;
-  static const dangerStatusBGMinistryAlart = _redApprox;
-  static const warningStatusContainerBGMinistryAlart1 = _butterMilkApprox;
-  static const warningStatusContainerBGMinistryAlart2 = _orchidWhiteApprox;
-  static const warningStatusBGMinistryAlart = _goldDropApprox;
+  static const resolveStatusBGMinistryAlert = _jacksonsPurpleApprox;
+  static const dangerStatusContainerBGMinistryAlert1 = _pinkApprox;
+  static const dangerStatusContainerBGMinistryAlert2 = _fairPinkApprox;
+  static const dangerStatusBGMinistryAlert = _redApprox;
+  static const warningStatusContainerBGMinistryAlert1 = _butterMilkApprox;
+  static const warningStatusContainerBGMinistryAlert2 = _orchidWhiteApprox;
+  static const warningStatusBGMinistryAlert = _goldDropApprox;
 
   ////  Ministry settings
   static const nameInSettingsScreen = _white;
@@ -309,5 +309,5 @@ class AppColors {
   static const pendingText = _goldDropApprox;
   static const pendingBG = _buttermilkApprox;
   static const notFoundBG = _cosmosApprox;
-  static const notFoundtext = _brightRedApprox;
+  static const notFoundText = _brightRedApprox;
 }

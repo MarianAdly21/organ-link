@@ -13,8 +13,8 @@ PriorityDisplayModel getPriority(String priority) {
     case "اولوليه متوسطة":
      return PriorityDisplayModel(
         priority: "اولوليه متوسطة",
-        backgroundColor: AppColors.midPriorityText,
-        textColor: AppColors.midPriorityTextBG,
+        backgroundColor: AppColors.midPriorityTextBG,
+        textColor: AppColors.midPriorityText,
       );
     case "اولوليه منخفضة":
       return PriorityDisplayModel(
