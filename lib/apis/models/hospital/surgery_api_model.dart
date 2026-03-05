@@ -1,34 +1,30 @@
+import 'package:organ_link/apis/models/hospital/surgery_list_api_model.dart';
+
 class SurgeryApiModel {
-  final String surgeryName;
-  final String surgeryNumber;
-  final String surgeryState;
-  final String patientName;
-  final String donorName;
-  final String department;
-  final String date;
-  final int id;
+  final List<SurgeryListApiModel> surgeryList;
+  final int scheduledSurgeriesCount;
+  final int ongoingSurgeriesCount;
+  final int completedSurgeriesCount;
+  final int underReviewSurgeriesCount;
 
   SurgeryApiModel({
-    required this.surgeryName,
-    required this.surgeryNumber,
-    required this.surgeryState,
-    required this.patientName,
-    required this.donorName,
-    required this.department,
-    required this.date,
-    required this.id,
+    required this.surgeryList,
+    required this.scheduledSurgeriesCount,
+    required this.ongoingSurgeriesCount,
+    required this.completedSurgeriesCount,
+    required this.underReviewSurgeriesCount,
   });
-
   factory SurgeryApiModel.fromJson(Map<String, dynamic> json) {
     return SurgeryApiModel(
-      surgeryName: json["surgery_name"],
-      surgeryNumber: json["surgery_number"],
-      surgeryState: json["status"],
-      patientName: json["organ_matching_detail"]["patient_detail"]["full_name"],
-      donorName: json["organ_matching_detail"]["donor_detail"]["full_name"],
-      department: json["department"],
-      date: json["scheduled_date"],
-      id: json["id"],
+      scheduledSurgeriesCount: json["scheduled_surgeries_count"],
+      ongoingSurgeriesCount: json["ongoing_surgeries_count"],
+      completedSurgeriesCount: json["completed_surgeries_count"],
+      underReviewSurgeriesCount: json["under_review_surgeries_count"],
+
+      surgeryList: (json["surgeries"] as List? ?? [])
+          .map((x) => SurgeryListApiModel.fromJson(x))
+          .toList(),
     );
   }
 }
+

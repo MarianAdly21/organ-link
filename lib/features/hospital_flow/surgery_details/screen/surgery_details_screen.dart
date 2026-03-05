@@ -7,8 +7,10 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
+import 'package:organ_link/features/hospital_flow/enum/nav_type.dart';
 import 'package:organ_link/features/hospital_flow/enum/operation_status.dart';
 import 'package:organ_link/features/hospital_flow/extension/operation_status_ui.dart';
+import 'package:organ_link/features/hospital_flow/patient_or_donor_details/screen/patient_or_donor_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/surgery_details/bloc/surgery_details_bloc.dart';
 import 'package:organ_link/features/hospital_flow/surgery_details/bloc/surgery_details_repository.dart';
 import 'package:organ_link/features/hospital_flow/surgery_details/models/surgery_details_ui_model.dart';
@@ -78,8 +80,15 @@ class _SurgeryDetailsScreenWithBlocState
             }
             if (state is SurgeryDetailsDataLoadedSuccessfullyState) {
               surgeryDetailsUiModel = state.surgeryDetailsUiModel;
-            } else if (state is NavToDonorDetailsScreenState) {
-            } else if (state is NavToDonorDetailsScreenState) {
+            } else if (state is NavToPatientOrDonorDetailsScreenState) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => PatientOrDonorDetailsScreen(
+                    id: state.id,
+                    type: state.type,
+                  ),
+                ),
+              );
             } else if (state is SurgeryDetailsErrorState &&
                 state.codeError != 1016) {
               showFeedbackMessage(state.errorMessage);
@@ -196,7 +205,12 @@ class _SurgeryDetailsScreenWithBlocState
           SizedBox(height: 24.h),
           AppButtonWithGradientColors(
             text: context.translate(LocalizationKeys.goToDonorFile),
-            onTap: () {},
+            onTap: () {
+              _navToPatientOrDonorDetailsScreenEvent(
+                id: surgeryDetailsUiModel.donorId,
+                type: NavType.donor,
+              );
+            },
           ),
         ],
       ),
@@ -222,7 +236,12 @@ class _SurgeryDetailsScreenWithBlocState
           SizedBox(height: 24.h),
           AppButtonWithGradientColors(
             text: context.translate(LocalizationKeys.goToPatientFile),
-            onTap: () {},
+            onTap: () {
+              _navToPatientOrDonorDetailsScreenEvent(
+                id: surgeryDetailsUiModel.patientId,
+                type: NavType.patient,
+              );
+            },
           ),
         ],
       ),
@@ -244,11 +263,13 @@ class _SurgeryDetailsScreenWithBlocState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                context.translate("ملاحظات"),
+                context.translate(LocalizationKeys.notes),
                 style: context.textTheme.bodyMedium,
               ),
               Text(
-                context.translate("العملية محددة في الساعة 08:00 صباحا"),
+                "العملية محددة في الساعة 08:00 صباحا",
+
+                /// from back
                 style: context.textTheme.labelMedium!.copyWith(
                   color: AppColors.seconderColor,
                   fontWeight: FontWeight.w400,
@@ -266,4 +287,10 @@ class _SurgeryDetailsScreenWithBlocState
   /////////////////// Helper method ////////////////////////
   ///////////////////////////////////////////////////////////
   SurgeryDetailsBloc get _currentBloc => context.read<SurgeryDetailsBloc>();
+  void _navToPatientOrDonorDetailsScreenEvent({
+    required int id,
+    required NavType type,
+  }) {
+    _currentBloc.add(NavToPatientOrDonorDetailsScreenEvent(id: id, type: type));
+  }
 }

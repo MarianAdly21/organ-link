@@ -12,6 +12,7 @@ import 'package:organ_link/features/hospital_flow/extension/operation_status_ui.
 import 'package:organ_link/features/hospital_flow/surgeries/bloc/surgeries_bloc.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/bloc/surgeries_repository.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/models/counter_ui_model.dart';
+import 'package:organ_link/features/hospital_flow/surgeries/models/surgery_list_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/models/surgery_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/surgery_details/screen/surgery_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
@@ -59,26 +60,27 @@ class SurgeriesScreenWithBloc extends BaseStatefulScreenWidget {
 
 class _SurgeriesScreenWithBlocState
     extends BaseScreenState<SurgeriesScreenWithBloc> {
-  late List<SurgeryUiModel> surgeriesList;
-  List<CounterUiModel> counters = [
+  late SurgeryUiModel surgeries;
+  late List<SurgeryListUiModel> surgeryList;
+  List<CounterUiModel> get counters => [
     CounterUiModel(
       counterName: LocalizationKeys.underReview,
-      count: 0,
+      count: surgeries.underReviewSurgeriesCount,
       color: Color(0xffFFF2DC),
     ),
     CounterUiModel(
       counterName: LocalizationKeys.completed,
-      count: 0,
+      count: surgeries.completedSurgeriesCount,
       color: Color(0xffDEFFDF),
     ),
     CounterUiModel(
       counterName: LocalizationKeys.ongoing,
-      count: 0,
+      count: surgeries.ongoingSurgeriesCount,
       color: Color(0xffE6F4FF),
     ),
     CounterUiModel(
       counterName: LocalizationKeys.scheduled,
-      count: 1,
+      count: surgeries.scheduledSurgeriesCount,
       color: Color(0xffFCE4FF),
     ),
   ];
@@ -105,11 +107,12 @@ class _SurgeriesScreenWithBlocState
               hideLoading();
             }
             if (state is SurgeriesDataLoadedSuccessfullyState) {
-              surgeriesList = state.surgeriesList;
+              surgeries = state.surgeries;
+              surgeryList = surgeries.surgeryList;
             } else if (state is NavToSurgeryDetailsScreenState) {
               _navToMatchingDetailsScreen(state);
             } else if (state is SurgeriesErrorState &&
-                state.codeError !=1016) {
+                state.codeError != 1016) {
               showFeedbackMessage(state.errorMessage);
             }
           },
@@ -172,7 +175,7 @@ class _SurgeriesScreenWithBlocState
   }
 
   Widget _surgeriesList() {
-    return surgeriesList.isEmpty
+    return surgeryList.isEmpty
         ? Center(
             child: Text(
               context.translate(LocalizationKeys.noSurgeriesAvailable),
@@ -197,11 +200,11 @@ class _SurgeriesScreenWithBlocState
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: surgeriesList.length,
+                itemCount: surgeryList.length,
                 itemBuilder: (context, index) {
                   return ContainerWithShadow(
                     borderSideColor: mapOperationStatus(
-                      surgeriesList[index].surgeryState,
+                      surgeries.surgeryList[index].surgeryState,
                     ).sideColor,
                     padding: EdgeInsets.symmetric(vertical: 12.h),
                     contentPadding: EdgeInsets.symmetric(
@@ -215,21 +218,21 @@ class _SurgeriesScreenWithBlocState
                         DataRowWithDivider(
                           divider: true,
                           title: context.translate(LocalizationKeys.patient),
-                          subTitle: surgeriesList[index].patientName,
+                          subTitle: surgeryList[index].patientName,
                         ),
                         DataRowWithDivider(
                           divider: true,
                           title: context.translate(LocalizationKeys.donor),
-                          subTitle: surgeriesList[index].donorName,
+                          subTitle: surgeryList[index].donorName,
                         ),
                         DataRowWithDivider(
                           divider: true,
                           title: context.translate(LocalizationKeys.department),
-                          subTitle: surgeriesList[index].department,
+                          subTitle: surgeryList[index].department,
                         ),
                         DataRowWithDivider(
                           title: context.translate(LocalizationKeys.date),
-                          subTitle: surgeriesList[index].date,
+                          subTitle: surgeryList[index].date,
                         ),
                         CustomDividerWidget(indent: 24.w, endIndent: 24.w),
                         SizedBox(height: 16.h),
@@ -238,7 +241,7 @@ class _SurgeriesScreenWithBlocState
                           onTap: () {
                             _currentBloc.add(
                               NavToSurgeryDetailsScreenEvent(
-                                id: surgeriesList[index].id,
+                                id: surgeryList[index].id,
                               ),
                             );
                           },
@@ -261,7 +264,7 @@ class _SurgeriesScreenWithBlocState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              surgeriesList[index].surgeryName,
+              surgeryList[index].surgeryName,
               style: context.textTheme.bodyMedium!.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -271,7 +274,7 @@ class _SurgeriesScreenWithBlocState
             Padding(
               padding: EdgeInsets.only(top: 8.h),
               child: Text(
-                "${context.translate(LocalizationKeys.surgeryNumber)}:${surgeriesList[index].surgeryNumber}",
+                "${context.translate(LocalizationKeys.surgeryNumber)}:${surgeryList[index].surgeryNumber}",
                 style: context.textTheme.labelMedium!.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
@@ -282,9 +285,9 @@ class _SurgeriesScreenWithBlocState
         ),
         ContainerWithBackground(
           backgroundColor: mapOperationStatus(
-            surgeriesList[index].surgeryState,
+            surgeryList[index].surgeryState,
           ).badgeBackground,
-          text: surgeriesList[index].surgeryState,
+          text: surgeryList[index].surgeryState,
         ),
       ],
     );

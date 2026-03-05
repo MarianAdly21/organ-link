@@ -1,36 +1,29 @@
 import 'package:organ_link/apis/models/hospital/surgery_api_model.dart';
+import 'package:organ_link/features/hospital_flow/surgeries/models/surgery_list_ui_model.dart';
 
 class SurgeryUiModel {
-  final String surgeryName;
-  final String surgeryNumber;
-  final String patientName;
-  final String donorName;
-  final String department;
-  final String date;
-  final String surgeryState;
-final int id;
+  final List<SurgeryListUiModel> surgeryList;
+  final int scheduledSurgeriesCount;
+  final int ongoingSurgeriesCount;
+  final int completedSurgeriesCount;
+  final int underReviewSurgeriesCount;
 
   SurgeryUiModel({
-    required this.surgeryName,
-    required this.surgeryNumber,
-    required this.surgeryState,
-    required this.patientName,
-    required this.donorName,
-    required this.department,
-    required this.date,
-    required this.id,
+    required this.surgeryList,
+    required this.scheduledSurgeriesCount,
+    required this.ongoingSurgeriesCount,
+    required this.completedSurgeriesCount,
+    required this.underReviewSurgeriesCount,
   });
-
   factory SurgeryUiModel.fromApiModel(SurgeryApiModel e) {
     return SurgeryUiModel(
-      surgeryName: e.surgeryName,
-      surgeryNumber: e.surgeryNumber,
-      patientName: e.patientName,
-      donorName: e.donorName,
-      department: e.department,
-      date: e.date,
-      surgeryState: e.surgeryState,
-      id: e.id
+      surgeryList: (e.surgeryList)
+          .map((x) => SurgeryListUiModel.fromApiModel(x))
+          .toList(),
+      scheduledSurgeriesCount: e.scheduledSurgeriesCount,
+      ongoingSurgeriesCount: e.ongoingSurgeriesCount,
+      completedSurgeriesCount: e.completedSurgeriesCount,
+      underReviewSurgeriesCount: e.underReviewSurgeriesCount,
     );
   }
 }

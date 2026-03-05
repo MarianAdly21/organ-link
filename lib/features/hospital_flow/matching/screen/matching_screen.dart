@@ -233,7 +233,7 @@ class _MatchingScreenWithBlocState
                         text: "لم يتم العثور علي متبرع متطابق",
                         textStyle: context.textTheme.bodyMedium!.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: AppColors.notFoundtext,
+                          color: AppColors.notFoundText,
                         ),
                       ),
                     ],

@@ -16,7 +16,6 @@ class AppAssetPaths {
   static const String calendarIcon = "assets/icons/calendar_icon.svg";
   static const String cloudDoneIcon = "assets/icons/cloud_done_icon.svg";
   static const String hourglassIcon = "assets/icons/hour_glass_icon.svg";
-  static const String nextIconIcon = "assets/icons/next_icon.svg";
   static const String inProgressIcon = "assets/icons/in_progress_icon.svg";
   static const String alarmClockIcon = "assets/icons/alarm_clock_icon.svg";
   static const String stopSwitchIcon = "assets/icons/stop_swatch_icon.svg";
@@ -47,7 +46,7 @@ class AppAssetPaths {
 
   static const donorsIcon = "assets/icons/donors_icon.svg";
   static const hospitalsIcon = "assets/icons/hospitals_icon.svg";
-  static const operationsDoneIcon = "assets/icons/opertions_done_icon.svg";
+  static const operationsDoneIcon = "assets/icons/operations_done_icon.svg";
   static const patientIcon = "assets/icons/patient_icon.svg";
   static const emailIcon = "assets/icons/email_icon.svg";
   static const callIcon = "assets/icons/call_icon.svg";

@@ -303,4 +303,5 @@ class LocalizationKeys {
   static const availableOrgan = "available_organ";
   static const noReportsAvailable = "no_reports_available";
   static const noDataAvailable = "no_data_available";
+  static const notes = "notes";
 }

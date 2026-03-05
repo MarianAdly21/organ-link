@@ -96,8 +96,8 @@ class _MinistryNotificationScreenState
                   gradientBackgroundColor: [
                     /// change based on its status
                     /// status==> تم الحل
-                    AppColors.resolveStatusContainerBGMinistryAlart,
-                    AppColors.resolveStatusContainerBGMinistryAlart,
+                    AppColors.resolveStatusContainerBGMinistryAlert,
+                    AppColors.resolveStatusContainerBGMinistryAlert,
 
                     /// status==> خطر
                     //  AppColors.dangerStatusContainerBGMinistryAlart1,
@@ -117,8 +117,8 @@ class _MinistryNotificationScreenState
                     children: [
                       InfoTileWithStatusCustomWidget(
                         textColor: AppColors.textColor,
-                        textStatusColor: AppColors.statusTextInMinistryAlart,
-                        statusBGColor: AppColors.resolveStatusBGMinistryAlart,
+                        textStatusColor: AppColors.statusTextInMinistryAlert,
+                        statusBGColor: AppColors.resolveStatusBGMinistryAlert,
 
                         /// change the color based on its status
                         title: alarts[index].alartTitel,

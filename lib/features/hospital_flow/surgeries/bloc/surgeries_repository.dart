@@ -22,12 +22,8 @@ class SurgeriesRepository implements BaseSurgeriesRepository {
     await hospitalApiManager.getHospitalDataApi(
       id!,
       (response) {
-        final model = response.surgeriesList
-            .map((x) => SurgeryUiModel.fromApiModel(x))
-            .toList();
-        surgeriesState = SurgeriesDataLoadedSuccessfullyState(
-          surgeriesList: model,
-        );
+        final model = SurgeryUiModel.fromApiModel(response.surgeryApiModel);
+        surgeriesState = SurgeriesDataLoadedSuccessfullyState(surgeries: model);
       },
       (error) {
         surgeriesState = SurgeriesErrorState(

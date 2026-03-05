@@ -26,16 +26,10 @@ class SurgeryDetailsDataLoadedSuccessfullyState extends SurgeryDetailsState {
   const SurgeryDetailsDataLoadedSuccessfullyState({required this.surgeryDetailsUiModel});
 }
 
-class NavToPatientDetailsScreenState extends SurgeryDetailsState {
+class NavToPatientOrDonorDetailsScreenState extends SurgeryDetailsState {
   final int id;
-  const NavToPatientDetailsScreenState({required this.id});
-
-  @override
-  List<Object> get props => [identityHashCode(this)];
-}
-class NavToDonorDetailsScreenState extends SurgeryDetailsState {
-  final int id;
-  const NavToDonorDetailsScreenState({required this.id});
+  final NavType type;
+  const NavToPatientOrDonorDetailsScreenState({required this.id, required this.type});
 
   @override
   List<Object> get props => [identityHashCode(this)];

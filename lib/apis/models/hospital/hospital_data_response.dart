@@ -12,10 +12,15 @@ class HospitalDataResponse {
   final int totalSurgeries;
   final int patientsCount;
   final int donorsCount;
+  // final int scheduledSurgeriesCount;
+  // final int ongoingSurgeriesCount;
+  // final int completedSurgeriesCount;
+  // final int underReviewSurgeriesCount;
   final List<MatchingApiModel> matchingList;
   final List<PatientOrDonorApiModel> patientList;
   final List<PatientOrDonorApiModel> donorList;
-  final List<SurgeryApiModel> surgeriesList;
+  //final List surgeriesList;
+  final SurgeryApiModel surgeryApiModel;
 
   HospitalDataResponse({
     required this.hospitalName,
@@ -27,10 +32,15 @@ class HospitalDataResponse {
     required this.matchingList,
     required this.patientList,
     required this.donorList,
-    required this.surgeriesList,
+   // required this.surgeriesList,
     required this.licenseNumber,
     required this.phone,
     required this.email,
+    // required this.scheduledSurgeriesCount,
+    // required this.ongoingSurgeriesCount,
+    // required this.completedSurgeriesCount,
+    // required this.underReviewSurgeriesCount,
+    required this.surgeryApiModel,
   });
   factory HospitalDataResponse.formJson(Map<String, dynamic> json) {
     return HospitalDataResponse(
@@ -49,12 +59,11 @@ class HospitalDataResponse {
       donorList: (json["donors"] as List? ?? [])
           .map((x) => PatientOrDonorApiModel.formJson(x))
           .toList(),
-      surgeriesList: (json["surgeries"] as List? ?? [])
-          .map((x) => SurgeryApiModel.fromJson(x))
-          .toList(),
+     // surgeriesList: json["surgeries"] as List? ?? [],
       licenseNumber: json["license_number"],
       phone: json["phone"],
       email: json["email"],
+       surgeryApiModel: SurgeryApiModel.fromJson(json),
     );
   }
 }
