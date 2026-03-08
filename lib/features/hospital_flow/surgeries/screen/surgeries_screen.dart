@@ -288,6 +288,9 @@ class _SurgeriesScreenWithBlocState
             surgeryList[index].surgeryState,
           ).badgeBackground,
           text: surgeryList[index].surgeryState,
+          textColor:mapOperationStatus(
+            surgeryList[index].surgeryState,
+          ).textColor ,
         ),
       ],
     );

@@ -4,7 +4,7 @@ MatchingStatus mapMatchingStatus(String status) {
   switch (status) {
     case 'جاهز':
       return MatchingStatus.ready;
-    case 'تجاهز':
+    case 'انتظار':
       return MatchingStatus.pending;
     case 'تحت المراجعة':
       return MatchingStatus.underReview;

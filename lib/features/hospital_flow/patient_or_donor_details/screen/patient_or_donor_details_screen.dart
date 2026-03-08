@@ -11,7 +11,9 @@ import 'package:organ_link/_core/extensions/screen_sizer_extension.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
+import 'package:organ_link/features/hospital_flow/enum/medical_test_status.dart';
 import 'package:organ_link/features/hospital_flow/enum/nav_type.dart';
+import 'package:organ_link/features/hospital_flow/extension/medical_test_status_ui.dart';
 import 'package:organ_link/features/hospital_flow/patient_or_donor_details/bloc/patient_or_donor_details_bloc.dart';
 import 'package:organ_link/features/hospital_flow/patient_or_donor_details/bloc/patient_or_donor_details_repository.dart';
 import 'package:organ_link/features/hospital_flow/patient_or_donor_details/models/patient_or_donor_details_ui_model.dart';
@@ -180,7 +182,7 @@ class _PatientOrDonorDetailsScreenWithBlocState
   Widget _medicalTestItem({required MedicalTestUiModel test}) {
     return ContainerWithShadow(
       contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 17.w),
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 2.w),
       background: AppColors.reportContainerBG,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -203,8 +205,11 @@ class _PatientOrDonorDetailsScreenWithBlocState
             ],
           ),
           ContainerWithBackground(
-            backgroundColor: AppColors.readyTextBG,
+            backgroundColor: mapMedicalTestStatus(
+              test.testType,
+            ).badgeBackground,
             text: test.testType,
+            textColor: mapMedicalTestStatus(test.testType).textColor,
           ),
         ],
       ),
@@ -237,15 +242,76 @@ class _PatientOrDonorDetailsScreenWithBlocState
           CustomDividerWidget(verticalPadding: 24.h),
           _infoSection(
             title: context.translate(LocalizationKeys.medicalHistory),
-            list: patientOrDonorDetailsUiModel.medicalHistory,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: patientOrDonorDetailsUiModel.medicalHistory.isEmpty
+                  ? [
+                      _dotWithText(
+                        text: context.translate(
+                          LocalizationKeys.noDataAvailable,
+                        ),
+                      ),
+                    ]
+                  : List.generate(
+                      patientOrDonorDetailsUiModel.medicalHistory.length,
+                      (index) {
+                        return _dotWithText(
+                          text: patientOrDonorDetailsUiModel
+                              .medicalHistory[index],
+                        );
+                      },
+                    ),
+            ),
           ),
           _infoSection(
             title: context.translate(LocalizationKeys.allergies),
-            list: patientOrDonorDetailsUiModel.allergies,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: patientOrDonorDetailsUiModel.allergiesList.isEmpty
+                  ? [
+                      _dotWithText(
+                        text: context.translate(
+                          LocalizationKeys.noDataAvailable,
+                        ),
+                      ),
+                    ]
+                  : List.generate(
+                      patientOrDonorDetailsUiModel.allergiesList.length,
+                      (index) {
+                        return _dotWithText(
+                          text: patientOrDonorDetailsUiModel
+                              .allergiesList[index]
+                              .name,
+                        );
+                      },
+                    ),
+            ),
           ),
           _infoSection(
             title: context.translate(LocalizationKeys.currentMedications),
-            list: patientOrDonorDetailsUiModel.currentMedications,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children:
+                  patientOrDonorDetailsUiModel.currentMedicationsList.isEmpty
+                  ? [
+                      _dotWithText(
+                        text: context.translate(
+                          LocalizationKeys.noDataAvailable,
+                        ),
+                      ),
+                    ]
+                  : List.generate(
+                      patientOrDonorDetailsUiModel
+                          .currentMedicationsList
+                          .length,
+                      (index) {
+                        return _dotWithText(
+                          text:
+                              "${patientOrDonorDetailsUiModel.currentMedicationsList[index].name}: ${patientOrDonorDetailsUiModel.currentMedicationsList[index].frequencyPerDay} ${patientOrDonorDetailsUiModel.currentMedicationsList[index].note}",
+                        );
+                      },
+                    ),
+            ),
             divider: false,
           ),
         ],
@@ -543,9 +609,44 @@ class _PatientOrDonorDetailsScreenWithBlocState
     );
   }
 
+  // Widget _infoSection({
+  //   required String title,
+  //   required List list,
+  //   bool divider = true,
+  // }) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.stretch,
+  //     children: [
+  //       Text(
+  //         title,
+  //         style: TextStyle(
+  //           color: AppColors.textColor,
+  //           fontSize: 16,
+  //           fontWeight: FontWeight.w600,
+  //         ),
+  //       ),
+  //       SizedBox(height: 8.h),
+  //       Column(
+  //         crossAxisAlignment: CrossAxisAlignment.stretch,
+  //         children: list.isEmpty
+  //             ? [
+  //                 _dotWithText(
+  //                   text: context.translate(LocalizationKeys.noDataAvailable),
+  //                 ),
+  //               ]
+  //             : List.generate(list.length, (index) {
+  //                 return _dotWithText(text: list[index]);
+  //               }),
+  //       ),
+  //       divider
+  //           ? CustomDividerWidget(endIndent: 24.w, indent: 24.w)
+  //           : SizedBox.shrink(),
+  //     ],
+  //   );
+  // }
   Widget _infoSection({
     required String title,
-    required List list,
+    required Widget body,
     bool divider = true,
   }) {
     return Column(
@@ -560,18 +661,7 @@ class _PatientOrDonorDetailsScreenWithBlocState
           ),
         ),
         SizedBox(height: 8.h),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: list.isEmpty
-              ? [
-                  _dotWithText(
-                    text: context.translate(LocalizationKeys.noDataAvailable),
-                  ),
-                ]
-              : List.generate(list.length, (index) {
-                  return _dotWithText(text: list[index]);
-                }),
-        ),
+        body,
         divider
             ? CustomDividerWidget(endIndent: 24.w, indent: 24.w)
             : SizedBox.shrink(),

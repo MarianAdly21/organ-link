@@ -9,6 +9,8 @@ import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/user_manager/user_api_manager.dart';
+import 'package:organ_link/features/hospital_flow/enum/medical_test_status.dart';
+import 'package:organ_link/features/hospital_flow/extension/medical_test_status_ui.dart';
 import 'package:organ_link/features/shared_screens/method/calculate_age.dart';
 import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_bloc.dart';
 import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_repository.dart';
@@ -256,7 +258,7 @@ class _MedicalDetailsScreenWithBlocState
   Widget _medicalTest({required MedicalTestUiModel model}) {
     return ContainerWithShadow(
       height: 85.h,
-      borderSideColor: Color(0xff00C951),
+      borderSideColor: mapMedicalTestStatus(model.status).textColor,
       padding: EdgeInsets.only(bottom: 16.h),
       background: AppColors.medicalTestContainerBG,
       contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
@@ -295,7 +297,7 @@ class _MedicalDetailsScreenWithBlocState
             width: 53.w,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: AppColors.medicalTestDoneBG,
+              color: mapMedicalTestStatus(model.status).badgeBackground,
             ),
             child: Center(
               child: FittedBox(
@@ -304,10 +306,8 @@ class _MedicalDetailsScreenWithBlocState
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                   child: Text(
                     model.status,
-
-                    /// change based on condition
                     style: context.textTheme.labelMedium!.copyWith(
-                      color: AppColors.medicalTestDoneText,
+                      color: mapMedicalTestStatus(model.status).textColor,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
