@@ -18,3 +18,19 @@ class NavToDetailsScreenEvent extends ViewPatientOrDonorEvent {
 
   const NavToDetailsScreenEvent({required this.id});
 }
+
+class SearchByNamePatientOrDonorEvent extends ViewPatientOrDonorEvent {
+  final String query;
+
+  const SearchByNamePatientOrDonorEvent({required this.query});
+}
+
+class SearchByOrganOrStatusPatientOrDonorEvent extends ViewPatientOrDonorEvent {
+  final String organ;
+  final String status;
+
+  const SearchByOrganOrStatusPatientOrDonorEvent({
+    this.organ = '',
+    this.status = '',
+  });
+}
