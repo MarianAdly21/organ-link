@@ -4,7 +4,7 @@ class MatchingApiModel {
   final String donorBloodType;
   final String patientOrgan;
   final DateTime requestMatchingDate;
-  final String? matchPercentage;
+  final double? matchPercentage;
   final String matchingNumber;
   final String aiStatus;
   final String status;
@@ -29,7 +29,7 @@ class MatchingApiModel {
     return MatchingApiModel(
       patientName: json["patient_detail"]["full_name"],
       donorName: json["donor_detail"]["full_name"],
-      donorBloodType: json["donor_detail"]["blood_type"],
+      donorBloodType: json["donor_detail"]["blood_type"] ??"demo B" ,
       patientOrgan: json["organ_type"],
       requestMatchingDate: DateTime.parse(json["created_at"]),
       matchPercentage: json["match_percentage"],

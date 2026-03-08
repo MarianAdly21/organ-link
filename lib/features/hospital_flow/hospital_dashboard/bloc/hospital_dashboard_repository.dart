@@ -18,9 +18,9 @@ class HospitalDashboardRepository implements BaseHospitalDashboardRepository {
   @override
   Future<HospitalDashboardState> getHospitalDashboardData() async {
     late HospitalDashboardState hospitalDashboardState;
-    // final int? id = await preferencesManager.getId();
+     final int? id = await preferencesManager.getId();
     await hospitalApiManager.getHospitalDataApi(
-      1,
+     id!,
       (response) {
         final model = HospitalDashboardUiModel.fromApiModel(response);
         hospitalDashboardState = HospitalDashboardDataLoadedSuccessfullyState(

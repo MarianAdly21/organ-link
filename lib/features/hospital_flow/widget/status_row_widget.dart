@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/widgets/base_stateless_widget.dart';
-import 'package:organ_link/features/hospital_flow/view_patient_or_donor/helper_method/get_priority.dart';
-import 'package:organ_link/features/hospital_flow/view_patient_or_donor/helper_method/get_status.dart';
+import 'package:organ_link/features/hospital_flow/enum/patient_or_donor_status.dart';
+import 'package:organ_link/features/hospital_flow/extension/patient_or_donor_status_ui.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 
 class StatusRowWidget extends BaseStatelessWidget {
@@ -20,15 +20,15 @@ class StatusRowWidget extends BaseStatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ContainerWithBackground(
-          backgroundColor: getPriority(priority).backgroundColor,
-          textColor: getPriority(priority).textColor,
-          text: getPriority(priority).priority,
+          backgroundColor: mapPatientOrDonorStatus(priority).badgeBackground,
+          textColor: mapPatientOrDonorStatus(priority).textColor,
+          text: priority,
         ),
         SizedBox(width: 16.w),
         ContainerWithBackground(
-          backgroundColor: getStatus(status).backgroundColor,
-          textColor: getStatus(status).textColor,
-          text: getStatus(status).status,
+          backgroundColor: mapPatientOrDonorStatus(status).badgeBackground,
+          textColor: mapPatientOrDonorStatus(status).textColor,
+          text:status,
         ),
       ],
     );

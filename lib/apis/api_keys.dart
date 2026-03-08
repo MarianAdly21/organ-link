@@ -22,17 +22,13 @@ class ApiKeys {
   /// URLs
   static const baseUrlProduction = "";
 
-  // static const apiKeyUrl = "api";
-  // static const apiVersion = "v1";
-  // static const baseApiUrl = '/$apiKeyUrl';
-  static const baseUrl = 'https://web-production-02e1b.up.railway.app/api';
+  static const baseUrl = 'https://web-production-1ef5b.up.railway.app/api';
 
   static const loginUrl = '$baseUrl/login/';
   static String getUserDataUrl(int id) => '$baseUrl/users/$id';
   static String getHospitalUrl(int id) => '$baseUrl/hospitals/$id';
   static String getMatchingDetailsUrl(int id) => '$baseUrl/organ-matching/$id';
   static String getSurgerDetailsUrl(int id) => '$baseUrl/surgeries/$id';
-  // static const homeUserUrl = '$baseUrl/users';
 
   static String get currentEnvironmentUrl =>
       isDevMode() ? ApiKeys.baseUrlProduction : ApiKeys.baseUrlProduction;

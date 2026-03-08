@@ -16,7 +16,7 @@ class MedicalTestApiModel {
       testName: json["report_type"],
       status: json["state"],
       date: DateTime.parse(json["created_at"]),
-      testType: "تحاليل",
+      testType: json["report_type"],
     );
   }
 }

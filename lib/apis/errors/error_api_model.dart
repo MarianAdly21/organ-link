@@ -83,7 +83,7 @@ class ErrorApiModel {
         error.response?.data as Map<String, dynamic>;
     return ErrorApiModel(
       code: error.response?.statusCode ?? 1007,
-      message: extractedData["non_field_errors"],
+      message: extractedData["message"],
       isMessageLocalizationKey: false,
     );
   }

@@ -1,4 +1,6 @@
 import 'package:organ_link/apis/models/hospital/patient_or_donor_details_api_model.dart';
+import 'package:organ_link/features/hospital_flow/patient_or_donor_details/models/allergies_ui_model.dart';
+import 'package:organ_link/features/hospital_flow/patient_or_donor_details/models/current_medications_ui_model.dart';
 import 'package:organ_link/features/shared_screens/method/calculate_age.dart';
 import 'package:organ_link/features/user_flow/medical_details/models/medical_test_ui_model.dart';
 
@@ -17,8 +19,8 @@ class PatientOrDonorDetailsUiModel {
   final String role;
   final String organ;
   final List<String> medicalHistory;
-  final List<String> allergies;
-  final List<String> currentMedications;
+  final List<AllergiesUiModel> allergiesList;
+  final List<CurrentMedicationsUiModel> currentMedicationsList;
   // final List<String> vitalSigns;
   final List<MedicalTestUiModel> reportAndInvestigations;
 
@@ -36,8 +38,8 @@ class PatientOrDonorDetailsUiModel {
     required this.role,
     required this.organ,
     required this.medicalHistory,
-    required this.allergies,
-    required this.currentMedications,
+    required this.allergiesList,
+    required this.currentMedicationsList,
     required this.reportAndInvestigations,
   });
   factory PatientOrDonorDetailsUiModel.fromApiModel(
@@ -57,8 +59,12 @@ class PatientOrDonorDetailsUiModel {
       role: e.role,
       organ: e.organ,
       medicalHistory: e.medicalHistory,
-      allergies: e.allergies,
-      currentMedications: e.currentMedications,
+      allergiesList: e.allergies
+          .map((x) => AllergiesUiModel.fromApiModel(x))
+          .toList(),
+      currentMedicationsList: e.currentMedicationsList
+          .map((x) => CurrentMedicationsUiModel.fromApiModel(x))
+          .toList(),
       reportAndInvestigations: e.reportAndInvestigations
           .map((x) => MedicalTestUiModel.fromApiModel(x))
           .toList(),

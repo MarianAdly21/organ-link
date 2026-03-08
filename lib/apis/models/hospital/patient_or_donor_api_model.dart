@@ -25,7 +25,7 @@ class PatientOrDonorApiModel {
       fullName: json["full_name"],
       age: DateTime.parse(json["birthdate"]),
       bloodType: json["blood_type"],
-      organ: json["organ_needed"] ?? json["organ_available"],
+     organ: json["organ_needed"] ?? json["organ_available"],
       status: json["status"],
       priority: json["priority"]?["level"] ?? "Demo Priority",
       id: json["id"],

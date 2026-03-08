@@ -35,9 +35,9 @@ class SurgerDetailsApiModel {
       date: json["scheduled_date"],
       surgeryStatus: json["status"],
       patientName: json["organ_matching_detail"]["patient_detail"]["full_name"],
-      patientFileNumber: "p001",
+      patientFileNumber: "Demop001",
       donorName: json["organ_matching_detail"]["donor_detail"]["full_name"],
-      donorNameFileNumber: "p004",
+      donorNameFileNumber: "Demop001",
       patientId: json["organ_matching_detail"]["patient_detail"]["id"],
       donorId: json["organ_matching_detail"]["donor_detail"]["id"],
     );

@@ -63,7 +63,7 @@ class HospitalDataResponse {
       licenseNumber: json["license_number"],
       phone: json["phone"],
       email: json["email"],
-       surgeryApiModel: SurgeryApiModel.fromJson(json),
+      surgeryApiModel: SurgeryApiModel.fromJson(json),
     );
   }
 }

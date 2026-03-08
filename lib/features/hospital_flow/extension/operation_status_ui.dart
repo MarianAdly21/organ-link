@@ -18,4 +18,8 @@ extension OperationStatusUI on OperationStatus {
   Color get badgeBackground {
     return sideColor.withValues(alpha: 0.15);
   }
+
+  Color get textColor {
+    return sideColor;
+  }
 }

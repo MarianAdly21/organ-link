@@ -1,3 +1,5 @@
+import 'package:organ_link/apis/models/hospital/allergies_api_model.dart';
+import 'package:organ_link/apis/models/hospital/current_medications_api_model.dart';
 import 'package:organ_link/apis/models/user_models/medical_test_api_model.dart';
 
 class PatientOrDonorDetailsApiModel {
@@ -15,8 +17,8 @@ class PatientOrDonorDetailsApiModel {
   final String role;
   final String organ;
   final List<String> medicalHistory;
-  final List<String> allergies;
-  final List<String> currentMedications;
+  final List<AllergiesApiModel> allergies;
+  final List<CurrentMedicationsApiModel> currentMedicationsList;
   // final List<String> vitalSigns;
   final List<MedicalTestApiModel> reportAndInvestigations;
 
@@ -36,7 +38,7 @@ class PatientOrDonorDetailsApiModel {
     required this.organ,
     required this.medicalHistory,
     required this.allergies,
-    required this.currentMedications,
+    required this.currentMedicationsList,
     required this.reportAndInvestigations,
   });
   factory PatientOrDonorDetailsApiModel.formJson(Map<String, dynamic> json) {
@@ -45,22 +47,23 @@ class PatientOrDonorDetailsApiModel {
       fileNumber: json["medical_record_number"],
       status: json["status"],
       priority: json["priority"]?["level"] ?? "Demo Priority",
-      //json[""],
       // healthyStatus: json[""],
       age: DateTime.parse(json["birthdate"]),
       gender: json["gender"],
       bloodType: json["blood_type"],
-      phoneNumber:json[""],
-      //json[""],
-      email: "user@gamil.com",
-      //json[""],
-      city: "العاشر من رمضان",
-      //json[""],
+      phoneNumber: json["phone"],
+      email: json["email"],
+      city: json["city"],
       role: json["role"],
-      organ: json["organ_needed"] ?? json["organ_available"],
+      organ: "demoOrgan",
+      //json["organ_needed"] ?? json["organ_available"],
       medicalHistory: medicalHistoryDemoList,
-      allergies: allergiesDemoList,
-      currentMedications: currentMedicationsDemoList,
+      allergies: (json["allergies"] as List? ?? [])
+          .map((x) => AllergiesApiModel.fromJson(x))
+          .toList(),
+      currentMedicationsList: (json["user_medicines"] as List? ?? [])
+          .map((x) => CurrentMedicationsApiModel.fromJson(x))
+          .toList(),
       reportAndInvestigations: (json["user_reports"] as List? ?? [])
           .map((x) => MedicalTestApiModel.formJson(x))
           .toList(),
@@ -72,9 +75,4 @@ List<String> medicalHistoryDemoList = [
   "السكري من النوع الثاني",
   "ارتفاع ضغط الدم",
   "فشل كلوي مزمن",
-];
-List<String> allergiesDemoList = [" البنسلين"];
-List<String> currentMedicationsDemoList = [
-  "إنسولين: 3 مرات يومياً",
-  "أدوية الضغط - مرة واحدة يومياً",
 ];

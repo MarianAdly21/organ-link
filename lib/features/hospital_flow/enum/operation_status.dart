@@ -6,7 +6,7 @@ OperationStatus mapOperationStatus(String status) {
       return OperationStatus.scheduled;
     case 'تمت بنجاح':
       return OperationStatus.completed;
-    case 'جارية':
+    case "جاريه":
       return OperationStatus.ongoing;
     case 'تحت المتابعة':
       return OperationStatus.underObservation;
