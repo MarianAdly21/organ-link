@@ -23,6 +23,8 @@ class ViewPatientOrDonorLoadingState extends ViewPatientOrDonorState {}
 
 class ViewPatientOrDonorDataLoadedSuccessfullyState
     extends ViewPatientOrDonorState {
+  @override
+  List<Object> get props => [identityHashCode(this)];
   final List<PatientOrDonorUiModel> donorOrPatientList;
 
   const ViewPatientOrDonorDataLoadedSuccessfullyState({

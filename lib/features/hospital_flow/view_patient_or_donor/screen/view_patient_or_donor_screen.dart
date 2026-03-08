@@ -50,7 +50,6 @@ class ViewPatientOrDonorScreen extends StatelessWidget {
 
 class ViewPatientOrDonorScreenWithBloc extends BaseStatefulScreenWidget {
   const ViewPatientOrDonorScreenWithBloc({super.key, required this.type});
-  //static const routeName = "/view-patient-screen";
   final NavType type;
 
   @override
@@ -61,6 +60,7 @@ class ViewPatientOrDonorScreenWithBloc extends BaseStatefulScreenWidget {
 class _ViewPatientOrDonorScreenWithBlocState
     extends BaseScreenState<ViewPatientOrDonorScreenWithBloc> {
   late List<PatientOrDonorUiModel> modelList;
+  //late List<PatientOrDonorUiModel> modelListSearch;
   late bool isDonor;
   @override
   void initState() {
@@ -82,6 +82,7 @@ class _ViewPatientOrDonorScreenWithBlocState
           }
           if (state is ViewPatientOrDonorDataLoadedSuccessfullyState) {
             modelList = state.donorOrPatientList;
+            // modelListSearch=state.donorOrPatientList;
           } else if (state is NavToDetailsScreenState) {
             _navToDetailsScreen(state.id);
           } else if (state is ViewPatientOrDonorErrorState &&
@@ -251,7 +252,10 @@ class _ViewPatientOrDonorScreenWithBlocState
         SizedBox(height: 16.h),
         AppSearchCustomWidget(
           hintText: LocalizationKeys.searchByNameOrMRN,
-          onChanged: (value) {},
+          onChanged: (value) {
+            // _search(value);
+            _currentBloc.add(SearchByNamePatientOrDonorEvent(query: value));
+          },
         ),
         _searchByOrganOrCaseSection(),
       ],
@@ -270,10 +274,15 @@ class _ViewPatientOrDonorScreenWithBlocState
                 color: AppColors.blackText,
               ),
               items: [
-                CustomDropDownItem(value: "كلي يمنى", key: "كلي"),
-                CustomDropDownItem(value: "كلي يسرى", key: "كلي"),
-                CustomDropDownItem(value: "كبد", key: "كبد"),
+                CustomDropDownItem(value: "كلي يمنى", key: ""),
+                CustomDropDownItem(value: "كلي يسرى", key: ""),
+                CustomDropDownItem(value: "كبد", key: ""),
               ],
+              onChanged: (value) {
+                _currentBloc.add(
+                  SearchByOrganOrStatusPatientOrDonorEvent(organ: value!.value),
+                );
+              },
             ),
           ),
           SizedBox(width: 16.w),
@@ -288,6 +297,13 @@ class _ViewPatientOrDonorScreenWithBlocState
                 CustomDropDownItem(value: "جاهز", key: ""),
                 CustomDropDownItem(value: "تمت المطابقة", key: ""),
               ],
+              onChanged: (value) {
+                _currentBloc.add(
+                  SearchByOrganOrStatusPatientOrDonorEvent(
+                    status: value!.value,
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -332,4 +348,22 @@ class _ViewPatientOrDonorScreenWithBlocState
   void _getViewPatientOrDonorDataEvent() {
     _currentBloc.add(GetViewPatientOrDonorDataEvent(type: widget.type));
   }
+
+  //   void _search(String query) {
+  //   if (query.isEmpty) {
+  //     setState(() {
+  //       modelListSearch = modelList;
+  //     });
+  //     return;
+  //   }
+  //   final searchLower = query.toLowerCase();
+  //   final filtered =
+  //       modelList.where((item) {
+  //         return item.fullName.toLowerCase().contains(searchLower) ||
+  //             item.medicalRecordNumber.toLowerCase().contains(searchLower);
+  //       }).toList();
+  //   setState(() {
+  //     modelListSearch = filtered;
+  //   });
+  // }
 }
