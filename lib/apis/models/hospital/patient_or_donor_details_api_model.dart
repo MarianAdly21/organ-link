@@ -6,8 +6,8 @@ class PatientOrDonorDetailsApiModel {
   final String fullName;
   final String fileNumber;
   final String status;
-  final String priority;
-  // final String healthyStatus;
+  final String? priority;
+  final String? healthyStatus;
   final DateTime age;
   final String gender;
   final String bloodType;
@@ -27,7 +27,7 @@ class PatientOrDonorDetailsApiModel {
     required this.fileNumber,
     required this.status,
     required this.priority,
-    // required this.healthyStatus,
+   required this.healthyStatus,
     required this.age,
     required this.gender,
     required this.bloodType,
@@ -46,8 +46,8 @@ class PatientOrDonorDetailsApiModel {
       fullName: json["full_name"],
       fileNumber: json["medical_record_number"],
       status: json["status"],
-      priority: json["priority"]?["level"] ?? "Demo Priority",
-      // healthyStatus: json[""],
+      priority: json["priority"]?["level"] ,
+      healthyStatus:json["DonerHealth"]?["level"],
       age: DateTime.parse(json["birthdate"]),
       gender: json["gender"],
       bloodType: json["blood_type"],
@@ -55,8 +55,7 @@ class PatientOrDonorDetailsApiModel {
       email: json["email"],
       city: json["city"],
       role: json["role"],
-      organ: "demoOrgan",
-      //json["organ_needed"] ?? json["organ_available"],
+      organ: json["organ_needed"] ?? json["organ_available"],
       medicalHistory: medicalHistoryDemoList,
       allergies: (json["allergies"] as List? ?? [])
           .map((x) => AllergiesApiModel.fromJson(x))

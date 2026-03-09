@@ -17,7 +17,6 @@ import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.
 import 'package:organ_link/features/hospital_flow/widget/app_search_custom_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/status_row_widget.dart';
 import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
-import 'package:organ_link/features/shared_screens/method/calculate_age.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/internet_error_widget.dart';
@@ -163,12 +162,13 @@ class _ViewPatientOrDonorScreenWithBlocState
             id: modelList[index].medicalRecordNumber,
           ),
           _infoRow(
-            age: "${calculateAge(modelList[index].age)}",
+            age:"${modelList[index].age}",
             bloodType: modelList[index].bloodType,
             organ: modelList[index].organ,
           ),
           StatusRowWidget(
-            priority: modelList[index].priority,
+            priority:
+                modelList[index].priority ?? modelList[index].healthStatus!,
             status: modelList[index].status,
           ),
           SizedBox(height: 16.h),

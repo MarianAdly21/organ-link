@@ -1,4 +1,5 @@
-class MatchingApiModel {
+
+class MatchListApiModel {
   final String patientName;
   final String donorName;
   final String donorBloodType;
@@ -11,7 +12,7 @@ class MatchingApiModel {
   final String aiResult;
   final int matchId;
 
-  MatchingApiModel({
+  MatchListApiModel({
     required this.patientName,
     required this.donorName,
     required this.donorBloodType,
@@ -25,21 +26,19 @@ class MatchingApiModel {
     required this.matchId,
   });
 
-  factory MatchingApiModel.formJson(Map<String, dynamic> json) {
-    return MatchingApiModel(
+  factory MatchListApiModel.formJson(Map<String, dynamic> json) {
+    return MatchListApiModel(
       patientName: json["patient_detail"]["full_name"],
       donorName: json["donor_detail"]["full_name"],
-      donorBloodType: json["donor_detail"]["blood_type"] ??"demo B" ,
+      donorBloodType: json["donor_detail"]["blood_type"],
       patientOrgan: json["organ_type"],
       requestMatchingDate: DateTime.parse(json["created_at"]),
       matchPercentage: json["match_percentage"],
-      // matchingNumber: json[""],
       matchId: json["id"],
-      matchingNumber: "MR001",
-      aiStatus:json["status"] ,
-      // status: json[""],
-      status: "جاهز",
-      aiResult:json["ai_result"] ?? "demo Ai result" ,
+      matchingNumber: json["request_number"],
+      aiStatus: json["status"],
+      status: "demoجاهز",
+      aiResult: json["ai_result"]["result"] ?? "demo Ai result",
     );
   }
 }

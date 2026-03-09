@@ -1,6 +1,6 @@
 import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
 import 'package:organ_link/features/hospital_flow/matching/bloc/matching_bloc.dart';
-import 'package:organ_link/features/hospital_flow/matching/models/matching_ui_model.dart';
+import 'package:organ_link/features/hospital_flow/matching/models/match_ui_model.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 
 abstract class BaseMatchingRepository {
@@ -18,15 +18,13 @@ class MatchingRepository implements BaseMatchingRepository {
   @override
   Future<MatchingState> getMatchingList() async {
     late MatchingState matchingState;
-     final int? id = await preferencesManager.getId();
+    final int? id = await preferencesManager.getId();
     await hospitalApiManager.getHospitalDataApi(
       id!,
       (response) {
-        final model = response.matchingList
-            .map((x) => MatchingUiModel.fromApiModel(x))
-            .toList();
+        final model = MatchUiModel.fromApiModel(response.matchApiModel);
         matchingState = MatchingDataLoadedSuccessfullyState(
-          matchingList: model,
+          matchUiModel: model,
         );
       },
       (error) {

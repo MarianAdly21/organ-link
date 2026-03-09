@@ -7,7 +7,7 @@ class MatchingDetailsApiModel {
   final String organ;
   final DateTime requestDate;
   final String requestStatus;
-  final String? matchPercentage;
+  final double? matchPercentage;
 
   MatchingDetailsApiModel({
     required this.donorName,
@@ -25,11 +25,9 @@ class MatchingDetailsApiModel {
     return MatchingDetailsApiModel(
       donorName: json["donor_detail"]["full_name"],
       donorBloodType: json["donor_detail"]["blood_type"],
-      // donorFileNum: json[""],
-      donorFileNum: "D001",
+      donorFileNum: json["donor_detail"]["medical_record_number"],
       patientName: json["patient_detail"]["full_name"],
-      //  patientFileNum: json[""],
-      patientFileNum: "P001",
+      patientFileNum: json["patient_detail"]["medical_record_number"],
       organ: json["organ_type"],
       requestDate: DateTime.parse(json["created_at"]),
       requestStatus: json["status"],

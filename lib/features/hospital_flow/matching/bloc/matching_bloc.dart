@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:organ_link/apis/models/hospital/match_api_model.dart';
 import 'package:organ_link/features/hospital_flow/matching/bloc/matching_repository.dart';
-import 'package:organ_link/features/hospital_flow/matching/models/matching_ui_model.dart';
+import 'package:organ_link/features/hospital_flow/matching/models/match_ui_model.dart';
 
 part 'matching_event.dart';
 part 'matching_state.dart';
