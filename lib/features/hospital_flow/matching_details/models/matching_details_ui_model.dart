@@ -9,7 +9,7 @@ class MatchingDetailsUiModel {
   final String organ;
   final DateTime requestDate;
   final String requestStatus;
-  final String? matchPercentage;
+  final double? matchPercentage;
 
   MatchingDetailsUiModel({
     required this.donorName,

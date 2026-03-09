@@ -20,7 +20,6 @@ class SurgeryApiModel {
       ongoingSurgeriesCount: json["ongoing_surgeries_count"],
       completedSurgeriesCount: json["completed_surgeries_count"],
       underReviewSurgeriesCount: json["under_review_surgeries_count"],
-
       surgeryList: (json["surgeries"] as List? ?? [])
           .map((x) => SurgeryListApiModel.fromJson(x))
           .toList(),

@@ -8,8 +8,8 @@ class PatientOrDonorDetailsUiModel {
   final String fullName;
   final String fileNumber;
   final String status;
-  final String priority;
-  // final String healthyStatus;
+  final String? priority;
+  final String? healthyStatus;
   final int age;
   final String gender;
   final String bloodType;
@@ -29,6 +29,7 @@ class PatientOrDonorDetailsUiModel {
     required this.fileNumber,
     required this.status,
     required this.priority,
+    required this.healthyStatus,
     required this.age,
     required this.gender,
     required this.bloodType,
@@ -50,6 +51,7 @@ class PatientOrDonorDetailsUiModel {
       fileNumber: e.fileNumber,
       status: e.status,
       priority: e.priority,
+      healthyStatus: e.healthyStatus,
       age: calculateAge(e.age),
       gender: e.gender,
       bloodType: e.bloodType,

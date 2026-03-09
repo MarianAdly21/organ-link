@@ -720,7 +720,9 @@ class _PatientOrDonorDetailsScreenWithBlocState
             ),
           ),
           StatusRowWidget(
-            priority: patientOrDonorDetailsUiModel.priority,
+            priority:
+                patientOrDonorDetailsUiModel.priority ??
+                patientOrDonorDetailsUiModel.healthyStatus!,
             status: patientOrDonorDetailsUiModel.status,
           ),
         ],

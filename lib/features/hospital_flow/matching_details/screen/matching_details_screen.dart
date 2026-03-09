@@ -193,7 +193,7 @@ class _MatchingDetailsScreenWithBlocState
             isImportant: true,
             dividerColor: AppColors.matchingDataUserDivider,
             title: context.translate(LocalizationKeys.matchPercentage),
-            subTitle: matchingDetailsUiModel.matchPercentage ?? "10%",
+            subTitle: "${matchingDetailsUiModel.matchPercentage}%",
             importantTextColor: AppColors.matchingParentage,
           ),
         ],

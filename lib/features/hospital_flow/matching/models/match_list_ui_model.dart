@@ -1,19 +1,19 @@
-import 'package:organ_link/apis/models/hospital/matching_api_model.dart';
+import 'package:organ_link/apis/models/hospital/match_list_api_model.dart';
 
-class MatchingUiModel {
+class MatchListUiModel {
   final String patientName;
   final String donorName;
   final String donorBloodType;
   final String patientOrgan;
-  final int matchId;
   final DateTime requestMatchingDate;
-  final String? matchPercentage;
+  final double? matchPercentage;
   final String matchingNumber;
   final String aiStatus;
   final String status;
   final String aiResult;
+  final int matchId;
 
-  MatchingUiModel({
+  MatchListUiModel({
     required this.patientName,
     required this.donorName,
     required this.donorBloodType,
@@ -24,22 +24,21 @@ class MatchingUiModel {
     required this.aiStatus,
     required this.status,
     required this.aiResult,
-    required this.matchId
+    required this.matchId,
   });
-  factory MatchingUiModel.fromApiModel(MatchingApiModel e) {
-    return MatchingUiModel(
+  factory MatchListUiModel.fromApiModel(MatchListApiModel e) {
+    return MatchListUiModel(
       patientName: e.patientName,
       donorName: e.donorName,
       donorBloodType: e.donorBloodType,
       patientOrgan: e.patientOrgan,
       requestMatchingDate: e.requestMatchingDate,
-      matchPercentage: "77 %",
-    //  matchPercentage: e.matchPercentage,
+      matchPercentage: e.matchPercentage,
       matchingNumber: e.matchingNumber,
       aiStatus: e.aiStatus,
       status: e.status,
       aiResult: e.aiResult,
-      matchId: e.matchId
+      matchId: e.matchId,
     );
   }
 }

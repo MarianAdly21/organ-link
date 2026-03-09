@@ -22,9 +22,9 @@ class MatchingErrorState extends MatchingState {
 class MatchingLoadingState extends MatchingState {}
 
 class MatchingDataLoadedSuccessfullyState extends MatchingState {
-  final List<MatchingUiModel> matchingList;
+final MatchUiModel matchUiModel;
 
-  const MatchingDataLoadedSuccessfullyState({required this.matchingList});
+const  MatchingDataLoadedSuccessfullyState({required this.matchUiModel});
 }
 
 class NavToMatchingDetailsScreenState extends MatchingState {

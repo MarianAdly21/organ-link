@@ -13,7 +13,7 @@ import 'package:organ_link/features/hospital_flow/enum/matching_status.dart';
 import 'package:organ_link/features/hospital_flow/extension/matching_status_ui.dart';
 import 'package:organ_link/features/hospital_flow/matching/bloc/matching_bloc.dart';
 import 'package:organ_link/features/hospital_flow/matching/bloc/matching_repository.dart';
-import 'package:organ_link/features/hospital_flow/matching/models/matching_ui_model.dart';
+import 'package:organ_link/features/hospital_flow/matching/models/match_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/matching_details/screen/matching_details_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
@@ -59,7 +59,7 @@ class MatchingScreenWithBloc extends BaseStatefulScreenWidget {
 
 class _MatchingScreenWithBlocState
     extends BaseScreenState<MatchingScreenWithBloc> {
-  late List<MatchingUiModel> matchingList;
+  late MatchUiModel matchUiModel;
   @override
   void initState() {
     super.initState();
@@ -79,7 +79,7 @@ class _MatchingScreenWithBlocState
             hideLoading();
           }
           if (state is MatchingDataLoadedSuccessfullyState) {
-            matchingList = state.matchingList;
+            matchUiModel = state.matchUiModel;
           } else if (state is NavToMatchingDetailsScreenState) {
             _navToMatchingDetailsScreen(state);
           } else if (state is MatchingErrorState && state.codeError != 1016) {
@@ -109,7 +109,7 @@ class _MatchingScreenWithBlocState
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _headerWidget(),
-              matchingList.isNotEmpty
+              matchUiModel.matchList.isNotEmpty
                   ? _requestList()
                   : Center(
                       child: Text(
@@ -152,19 +152,19 @@ class _MatchingScreenWithBlocState
               CustomOverViewContainer(
                 isGradient: true,
                 text: context.translate(LocalizationKeys.totalRequests),
-                count: matchingList.length.toString(),
+                count: "${matchUiModel.totalMatchesCount}",
               ),
               CustomOverViewContainer(
                 text: context.translate(LocalizationKeys.underMatching),
-                count: "0",
+                count: "${matchUiModel.underMatchingCount}",
               ),
               CustomOverViewContainer(
                 text: context.translate(LocalizationKeys.underAnalysis),
-                count: "0",
+                count: "${matchUiModel.underAnalysisMatchesCount}",
               ),
               CustomOverViewContainer(
                 text: context.translate(LocalizationKeys.underReview),
-                count: "0",
+                count: "${matchUiModel.underReviewMatchesCount}",
               ),
             ],
           ),
@@ -188,7 +188,7 @@ class _MatchingScreenWithBlocState
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: matchingList.length,
+          itemCount: matchUiModel.matchList.length,
           itemBuilder: (context, index) {
             return ContainerWithShadow(
               padding: EdgeInsets.symmetric(vertical: 12.h),
@@ -203,28 +203,31 @@ class _MatchingScreenWithBlocState
                   DataRowWithDivider(
                     divider: true,
                     title: context.translate(LocalizationKeys.organ),
-                    subTitle: matchingList[index].patientOrgan,
+                    subTitle: matchUiModel.matchList[index].patientOrgan,
                   ),
                   DataRowWithDivider(
                     divider: true,
                     title: context.translate(LocalizationKeys.requestDate),
                     subTitle: DateFormat(
                       "dd/MM/yyyy",
-                    ).format(matchingList[index].requestMatchingDate),
+                    ).format(matchUiModel.matchList[index].requestMatchingDate),
                   ),
-                  if (matchingList[index].matchPercentage != null)
+                  if (matchUiModel.matchList[index].matchPercentage != null)
                     DataRowWithDivider(
                       title: context.translate(
                         LocalizationKeys.matchPercentage,
                       ),
-                      subTitle: matchingList[index].matchPercentage!,
+                      subTitle:
+                          "${matchUiModel.matchList[index].matchPercentage!}%",
                     ),
 
                   /// notes: the divider and container appears based on condition
-                  if (matchingList[index].matchPercentage != null) ...[
+                  if (matchUiModel.matchList[index].matchPercentage !=
+                      null) ...[
                     CustomDividerWidget(indent: 24.w, endIndent: 24.w),
                     _resultMatching(index),
-                    if (matchingList[index].status == "لم يتم العثور") ...[
+                    if (matchUiModel.matchList[index].status ==
+                        "لم يتم العثور") ...[
                       ContainerWithBackground(
                         isCentered: true,
                         width: context.width,
@@ -244,7 +247,7 @@ class _MatchingScreenWithBlocState
                     onTap: () {
                       _currentBloc.add(
                         NavToMatchingDetailsScreenEvent(
-                          matchId: matchingList[index].matchId,
+                          matchId: matchUiModel.matchList[index].matchId,
                         ),
                       );
                     },
@@ -269,9 +272,7 @@ class _MatchingScreenWithBlocState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            matchingList[index].aiResult,
-
-            ///message from back
+            matchUiModel.matchList[index].aiResult,
             style: context.textTheme.bodyMedium!.copyWith(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -280,7 +281,7 @@ class _MatchingScreenWithBlocState
           ),
 
           Text(
-            "${context.translate(LocalizationKeys.donor)}: ${matchingList[index].donorName}",
+            "${context.translate(LocalizationKeys.donor)}: ${matchUiModel.matchList[index].donorName}",
             style: context.textTheme.labelMedium!.copyWith(
               color: AppColors.readyText,
             ),
@@ -290,18 +291,18 @@ class _MatchingScreenWithBlocState
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${context.translate(LocalizationKeys.bloodType)}: ${matchingList[index].donorBloodType} ",
+                "${context.translate(LocalizationKeys.bloodType)}: ${matchUiModel.matchList[index].donorBloodType} ",
                 style: context.textTheme.labelMedium!.copyWith(
                   color: AppColors.readyText,
                 ),
               ),
               ContainerWithBackground(
                 backgroundColor: mapMatchingStatus(
-                  matchingList[index].status,
+                  matchUiModel.matchList[index].aiStatus,
                 ).backgroundColor,
-                text: matchingList[index].status,
+                text: matchUiModel.matchList[index].aiStatus,
                 textColor: mapMatchingStatus(
-                  matchingList[index].status,
+                  matchUiModel.matchList[index].aiStatus,
                 ).textColor,
               ),
             ],
@@ -320,7 +321,7 @@ class _MatchingScreenWithBlocState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              matchingList[index].patientName,
+              matchUiModel.matchList[index].patientName,
               style: context.textTheme.bodyMedium!.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -330,7 +331,7 @@ class _MatchingScreenWithBlocState
             Padding(
               padding: EdgeInsets.only(top: 8.h),
               child: Text(
-                "${context.translate(LocalizationKeys.requestId)}: ${matchingList[index].matchingNumber}",
+                "${context.translate(LocalizationKeys.requestId)}: ${matchUiModel.matchList[index].matchingNumber}",
                 style: context.textTheme.labelMedium!.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
@@ -341,10 +342,12 @@ class _MatchingScreenWithBlocState
         ),
         ContainerWithBackground(
           backgroundColor: mapMatchingStatus(
-            matchingList[index].status,
+            matchUiModel.matchList[index].status,
           ).backgroundColor,
-          text: matchingList[index].status,
-          textColor: mapMatchingStatus(matchingList[index].status).textColor,
+          text: matchUiModel.matchList[index].status,
+          textColor: mapMatchingStatus(
+            matchUiModel.matchList[index].status,
+          ).textColor,
         ),
       ],
     );
