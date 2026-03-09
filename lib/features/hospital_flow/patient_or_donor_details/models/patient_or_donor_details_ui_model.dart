@@ -2,7 +2,8 @@ import 'package:organ_link/apis/models/hospital/patient_or_donor_details_api_mod
 import 'package:organ_link/features/hospital_flow/patient_or_donor_details/models/allergies_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/patient_or_donor_details/models/current_medications_ui_model.dart';
 import 'package:organ_link/features/shared_screens/method/calculate_age.dart';
-import 'package:organ_link/features/user_flow/medical_details/models/medical_test_ui_model.dart';
+import 'package:organ_link/features/shared_models/chronic_diseases_ui_model.dart';
+import 'package:organ_link/features/shared_models/medical_test_ui_model.dart';
 
 class PatientOrDonorDetailsUiModel {
   final String fullName;
@@ -18,7 +19,7 @@ class PatientOrDonorDetailsUiModel {
   final String city;
   final String role;
   final String organ;
-  final List<String> medicalHistory;
+  final List<ChronicDiseasesUiModel> medicalHistory;
   final List<AllergiesUiModel> allergiesList;
   final List<CurrentMedicationsUiModel> currentMedicationsList;
   // final List<String> vitalSigns;
@@ -60,7 +61,9 @@ class PatientOrDonorDetailsUiModel {
       city: e.city,
       role: e.role,
       organ: e.organ,
-      medicalHistory: e.medicalHistory,
+      medicalHistory: e.medicalHistory
+          .map((x) => ChronicDiseasesUiModel.fromApiModel(x))
+          .toList(),
       allergiesList: e.allergies
           .map((x) => AllergiesUiModel.fromApiModel(x))
           .toList(),

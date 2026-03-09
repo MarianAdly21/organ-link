@@ -1,6 +1,6 @@
-import 'package:organ_link/apis/models/user_models/chronic_diseases_api_model.dart';
+import 'package:organ_link/apis/models/shared_models/chronic_diseases_api_model.dart';
 import 'package:organ_link/apis/models/user_models/hospital_api_details.dart';
-import 'package:organ_link/apis/models/user_models/medical_test_api_model.dart';
+import 'package:organ_link/apis/models/shared_models/medical_test_api_model.dart';
 import 'package:organ_link/apis/models/user_models/notification_user_api_model.dart';
 import 'package:organ_link/apis/models/user_models/schedule_procedure_api_model.dart';
 import 'package:organ_link/apis/models/user_models/supervisor_doctor_api_details.dart';
@@ -63,7 +63,7 @@ class UserDataResponse {
       bloodType: json["blood_type"] as String,
       upcomingAppointments: lastAppointmentDate,
       chronicDiseasesList: (json["chronic_diseases"] as List? ?? [])
-          .map((x) => ChronicDiseasesApiModel.formJson(x))
+          .map((x) => ChronicDiseasesApiModel.fromJson(x))
           .toList(),
       medicalTestList: (json["user_reports"] as List? ?? [])
           .map((x) => MedicalTestApiModel.formJson(x))

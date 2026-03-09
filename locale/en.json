@@ -277,5 +277,9 @@
   "no_data_available": "No Data Available",
   "go_to_patient_file": "Go to Patient File",
   "go_to_donor_file": "Go to Donor File",
-  "notes": "Notes"
+  "notes": "Notes",
+  "since": "since",
+  "minute": "minute",
+  "hour": "hour",
+  "day": "day"
 }

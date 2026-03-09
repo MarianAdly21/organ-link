@@ -17,10 +17,8 @@ class EmptyNotificationScreen extends StatelessWidget {
           padding: EdgeInsets.only(top: 24.h, bottom: 48.h),
           child: SvgPicture.asset(AppAssetPaths.noNotificationImage),
         ),
-
         Text(
           context.translate(LocalizationKeys.emptyPageMessage),
-
           style: context.textTheme.bodyLarge,
         ),
       ],

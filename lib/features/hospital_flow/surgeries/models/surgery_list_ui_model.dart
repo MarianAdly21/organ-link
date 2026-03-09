@@ -9,6 +9,7 @@ class SurgeryListUiModel {
   final String date;
   final String surgeryState;
   final int id;
+  final int duration;
 
   SurgeryListUiModel({
     required this.surgeryName,
@@ -19,6 +20,7 @@ class SurgeryListUiModel {
     required this.department,
     required this.date,
     required this.id,
+    required this.duration,
   });
 
   factory SurgeryListUiModel.fromApiModel(SurgeryListApiModel e) {
@@ -31,6 +33,7 @@ class SurgeryListUiModel {
       date: e.date,
       surgeryState: e.surgeryState,
       id: e.id,
+      duration: e.duration,
     );
   }
 }

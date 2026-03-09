@@ -1,6 +1,6 @@
 import 'package:organ_link/apis/models/user_models/user_data_response.dart';
-import 'package:organ_link/features/user_flow/medical_details/models/chronic_diseases_ui_model.dart';
-import 'package:organ_link/features/user_flow/medical_details/models/medical_test_ui_model.dart';
+import 'package:organ_link/features/shared_models/chronic_diseases_ui_model.dart';
+import 'package:organ_link/features/shared_models/medical_test_ui_model.dart';
 
 class MedicalDetailsUiModel {
   final String fullName;

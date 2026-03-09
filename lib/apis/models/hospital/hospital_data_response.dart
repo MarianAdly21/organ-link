@@ -1,3 +1,4 @@
+import 'package:organ_link/apis/models/hospital/hospital_notification_api_model.dart';
 import 'package:organ_link/apis/models/hospital/match_api_model.dart';
 import 'package:organ_link/apis/models/hospital/patient_or_donor_api_model.dart';
 import 'package:organ_link/apis/models/hospital/surgery_api_model.dart';
@@ -16,6 +17,7 @@ class HospitalDataResponse {
   final List<PatientOrDonorApiModel> donorList;
   final SurgeryApiModel surgeryApiModel;
   final MatchApiModel matchApiModel;
+  final HospitalNotificationApiModel hospitalNotificationApiModel;
 
   HospitalDataResponse({
     required this.hospitalName,
@@ -31,6 +33,7 @@ class HospitalDataResponse {
     required this.phone,
     required this.email,
     required this.surgeryApiModel,
+    required this.hospitalNotificationApiModel,
   });
   factory HospitalDataResponse.formJson(Map<String, dynamic> json) {
     return HospitalDataResponse(
@@ -50,7 +53,8 @@ class HospitalDataResponse {
       phone: json["phone"],
       email: json["email"],
       surgeryApiModel: SurgeryApiModel.fromJson(json),
-      matchApiModel: MatchApiModel.fromJson(json)
+      matchApiModel: MatchApiModel.fromJson(json),
+      hospitalNotificationApiModel: HospitalNotificationApiModel.fromJson(json),
     );
   }
 }

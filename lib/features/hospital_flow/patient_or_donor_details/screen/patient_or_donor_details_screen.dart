@@ -22,7 +22,7 @@ import 'package:organ_link/features/hospital_flow/upload_files/screen/upload_fil
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/hospital_flow/widget/status_row_widget.dart';
-import 'package:organ_link/features/user_flow/medical_details/models/medical_test_ui_model.dart';
+import 'package:organ_link/features/shared_models/medical_test_ui_model.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_buttons.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
@@ -257,7 +257,7 @@ class _PatientOrDonorDetailsScreenWithBlocState
                       (index) {
                         return _dotWithText(
                           text: patientOrDonorDetailsUiModel
-                              .medicalHistory[index],
+                              .medicalHistory[index].name,
                         );
                       },
                     ),

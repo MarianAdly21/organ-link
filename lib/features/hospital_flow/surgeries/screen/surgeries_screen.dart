@@ -231,8 +231,13 @@ class _SurgeriesScreenWithBlocState
                           subTitle: surgeryList[index].department,
                         ),
                         DataRowWithDivider(
+                          divider: true,
                           title: context.translate(LocalizationKeys.date),
                           subTitle: surgeryList[index].date,
+                        ),
+                         DataRowWithDivider(
+                          title: context.translate(LocalizationKeys.duration),
+                          subTitle: "${surgeryList[index].duration} ${context.translate(LocalizationKeys.hours)}",
                         ),
                         CustomDividerWidget(indent: 24.w, endIndent: 24.w),
                         SizedBox(height: 16.h),

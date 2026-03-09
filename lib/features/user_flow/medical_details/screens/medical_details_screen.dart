@@ -15,7 +15,7 @@ import 'package:organ_link/features/shared_screens/method/calculate_age.dart';
 import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_bloc.dart';
 import 'package:organ_link/features/user_flow/medical_details/bloc/medical_details_repository.dart';
 import 'package:organ_link/features/user_flow/medical_details/models/medical_details_ui_model.dart';
-import 'package:organ_link/features/user_flow/medical_details/models/medical_test_ui_model.dart';
+import 'package:organ_link/features/shared_models/medical_test_ui_model.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
