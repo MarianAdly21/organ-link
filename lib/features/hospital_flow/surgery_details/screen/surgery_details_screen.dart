@@ -130,7 +130,7 @@ class _SurgeryDetailsScreenWithBlocState
               padding: const EdgeInsets.symmetric(horizontal: 2),
               child: _donorInfoSection(),
             ),
-            if (surgeryDetailsUiModel.date != null) ...[_infoNoticeCard()],
+           // if (surgeryDetailsUiModel.date != null) ...[_infoNoticeCard()],
           ],
         ),
       );
@@ -248,40 +248,39 @@ class _SurgeryDetailsScreenWithBlocState
     );
   }
 
-  Widget _infoNoticeCard() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 24.h),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(color: AppColors.notCardBorder),
-          color: AppColors.notCardBG,
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.translate(LocalizationKeys.notes),
-                style: context.textTheme.bodyMedium,
-              ),
-              Text(
-                "العملية محددة في الساعة 08:00 صباحا",
-
-                /// from back
-                style: context.textTheme.labelMedium!.copyWith(
-                  color: AppColors.seconderColor,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _infoNoticeCard() {
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(horizontal: 4, vertical: 24.h),
+  //     child: Container(
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(16.r),
+  //         border: Border.all(color: AppColors.notCardBorder),
+  //         color: AppColors.notCardBG,
+  //       ),
+  //       child: Padding(
+  //         padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             Text(
+  //               context.translate(LocalizationKeys.notes),
+  //               style: context.textTheme.bodyMedium,
+  //             ),
+  //             Text(
+  //               "العملية محددة في الساعة 08:00 صباحا",
+  //               /// from back
+  //               style: context.textTheme.labelMedium!.copyWith(
+  //                 color: AppColors.seconderColor,
+  //                 fontWeight: FontWeight.w400,
+  //                 fontSize: 13,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   ///////////////////////////////////////////////////////////
   /////////////////// Helper method ////////////////////////

@@ -304,4 +304,8 @@ class LocalizationKeys {
   static const noReportsAvailable = "no_reports_available";
   static const noDataAvailable = "no_data_available";
   static const notes = "notes";
+  static const since = "since";
+  static const minute = "minute";
+  static const hour = "hour";
+  static const day = "day";
 }

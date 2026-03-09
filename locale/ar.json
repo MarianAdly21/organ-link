@@ -285,5 +285,9 @@
   "no_data_available": "لا يوجد",
   "go_to_patient_file": "الانتقال لملف المريض",
   "go_to_donor_file": "الانتقال لملف المتبرع",
-  "notes": "ملاحظات"
+  "notes": "ملاحظات",
+  "since": "منذ",
+  "minute": "دقيقة",
+  "hour": "ساعة",
+  "day": "يوم"
 }

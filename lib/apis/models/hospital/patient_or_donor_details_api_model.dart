@@ -1,6 +1,7 @@
 import 'package:organ_link/apis/models/hospital/allergies_api_model.dart';
 import 'package:organ_link/apis/models/hospital/current_medications_api_model.dart';
-import 'package:organ_link/apis/models/user_models/medical_test_api_model.dart';
+import 'package:organ_link/apis/models/shared_models/chronic_diseases_api_model.dart';
+import 'package:organ_link/apis/models/shared_models/medical_test_api_model.dart';
 
 class PatientOrDonorDetailsApiModel {
   final String fullName;
@@ -16,7 +17,7 @@ class PatientOrDonorDetailsApiModel {
   final String city;
   final String role;
   final String organ;
-  final List<String> medicalHistory;
+  final List<ChronicDiseasesApiModel> medicalHistory;
   final List<AllergiesApiModel> allergies;
   final List<CurrentMedicationsApiModel> currentMedicationsList;
   // final List<String> vitalSigns;
@@ -56,7 +57,9 @@ class PatientOrDonorDetailsApiModel {
       city: json["city"],
       role: json["role"],
       organ: json["organ_needed"] ?? json["organ_available"],
-      medicalHistory: medicalHistoryDemoList,
+      medicalHistory:(json["chronic_diseases"] as List? ?? [])
+          .map((x) => ChronicDiseasesApiModel.fromJson(x))
+          .toList(),
       allergies: (json["allergies"] as List? ?? [])
           .map((x) => AllergiesApiModel.fromJson(x))
           .toList(),
@@ -69,9 +72,3 @@ class PatientOrDonorDetailsApiModel {
     );
   }
 }
-
-List<String> medicalHistoryDemoList = [
-  "السكري من النوع الثاني",
-  "ارتفاع ضغط الدم",
-  "فشل كلوي مزمن",
-];

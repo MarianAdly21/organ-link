@@ -37,8 +37,8 @@ class MatchListApiModel {
       matchId: json["id"],
       matchingNumber: json["request_number"],
       aiStatus: json["status"],
-      status: "demoجاهز",
-      aiResult: json["ai_result"]["result"] ?? "demo Ai result",
+      status: json["patient_detail"]["status"],
+      aiResult: json["ai_result"]?["result"] ?? "demo Ai result",
     );
   }
 }

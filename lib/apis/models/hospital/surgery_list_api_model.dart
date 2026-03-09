@@ -6,6 +6,7 @@ class SurgeryListApiModel {
   final String donorName;
   final String department;
   final String date;
+  final int duration;
   final int id;
 
   SurgeryListApiModel({
@@ -17,6 +18,7 @@ class SurgeryListApiModel {
     required this.department,
     required this.date,
     required this.id,
+    required this.duration,
   });
 
   factory SurgeryListApiModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class SurgeryListApiModel {
       donorName: json["organ_matching_detail"]["donor_detail"]["full_name"],
       department: json["department"],
       date: json["scheduled_date"],
+      duration: json["duration"],
       id: json["id"],
     );
   }
