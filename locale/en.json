@@ -144,6 +144,8 @@
   "report_details": "Report details",
   "report_type": "Report type",
   "choose_report_type": "Choose report type",
+  "report_name": "Report name",
+  "choose_report_name": "Choose report name",
   "exam_date": "Examination date",
   "day_month_year": "Day / Month / Year",
   "file_label": "File",
@@ -281,5 +283,6 @@
   "since": "since",
   "minute": "minute",
   "hour": "hour",
-  "day": "day"
+  "day": "day",
+  "please_fill_in_all_required_fields": "Please fill in all required fields"
 }

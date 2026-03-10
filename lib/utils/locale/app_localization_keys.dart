@@ -156,7 +156,9 @@ class LocalizationKeys {
   static const caseRecord = "case_record";
   static const reportDetails = "report_details";
   static const reportType = "report_type";
+  static const reportName = "report_name";
   static const chooseReportType = "choose_report_type";
+  static const chooseReportName = "choose_report_name";
   static const examDate = "exam_date";
   static const datMonthYear = "day_month_year";
   static const fileLabel = "file_label";
@@ -308,4 +310,6 @@ class LocalizationKeys {
   static const minute = "minute";
   static const hour = "hour";
   static const day = "day";
+  static const pleaseFillInAllRequiredFields =
+      "please_fill_in_all_required_fields";
 }

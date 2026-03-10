@@ -63,6 +63,13 @@ class PreferencesManager {
   Future<String?> getName() async {
     return await PreferencesUtils.getString(PreferencesKeys.name.name);
   }
+   Future<void> setToken(String data) async {
+    await PreferencesUtils.setString(PreferencesKeys.token.name, data);
+  }
+
+  Future<String?> getToken() async {
+    return await PreferencesUtils.getString(PreferencesKeys.token.name);
+  }
 
   Future<void> setUserImageUrl(String data) async {
     await PreferencesUtils.setString(PreferencesKeys.userImageUrl.name, data);
