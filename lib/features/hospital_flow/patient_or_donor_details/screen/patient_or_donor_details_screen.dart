@@ -257,7 +257,8 @@ class _PatientOrDonorDetailsScreenWithBlocState
                       (index) {
                         return _dotWithText(
                           text: patientOrDonorDetailsUiModel
-                              .medicalHistory[index].name,
+                              .medicalHistory[index]
+                              .name,
                         );
                       },
                     ),
@@ -472,9 +473,15 @@ class _PatientOrDonorDetailsScreenWithBlocState
         ),
         child: AppElevatedButton(
           onPressed: () {
-            Navigator.of(
-              context,
-            ).push(MaterialPageRoute(builder: (_) => UploadFilesScreen()));
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => UploadFilesScreen(
+                  userId: widget.id,
+                  fileNumber: patientOrDonorDetailsUiModel.fileNumber,
+                  name: patientOrDonorDetailsUiModel.fullName,
+                ),
+              ),
+            );
           },
           color: Colors.white,
           label: Center(

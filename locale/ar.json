@@ -145,6 +145,8 @@
   "report_details": "تفاصيل التقرير",
   "report_type": "نوع التقرير",
   "choose_report_type": "اختر نوع التقرير",
+  "report_name": "اسم التقرير",
+  "choose_report_name": "اختر اسم التقرير",
   "exam_date": "تاريخ الفحص",
   "day_month_year": "يوم / شهر / سنة",
   "file_label": "الملف",
@@ -289,5 +291,6 @@
   "since": "منذ",
   "minute": "دقيقة",
   "hour": "ساعة",
-  "day": "يوم"
+  "day": "يوم",
+  "please_fill_in_all_required_fields": "يرجى ملء جميع الحقول المطلوبة"
 }

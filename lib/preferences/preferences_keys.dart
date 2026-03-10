@@ -10,4 +10,5 @@ enum PreferencesKeys {
   email,
   isAllowNotifications,
   type,
+  token
 }

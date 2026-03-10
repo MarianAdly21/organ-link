@@ -48,6 +48,7 @@ class LoginRepository implements BaseLoginRepository {
     late LoginState loginState;
    await preferencesManager.setType(loginSuccessfulResponse.type);
    await preferencesManager.setId(loginSuccessfulResponse.id);
+   await preferencesManager.setToken(loginSuccessfulResponse.token);
     loginState=UserInfoSavedState();
     return loginState;
   }

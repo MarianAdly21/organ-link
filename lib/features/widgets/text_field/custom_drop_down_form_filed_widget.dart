@@ -87,17 +87,6 @@ class _CustomDropDownFormFiledWidgetState
           ),
           const SizedBox(height: 10),
         ],
-        // widget.title != null
-        //     ? Text(
-        //         widget.title!,
-        //         style: TextStyle(
-        //           color: AppColors.formFieldTitle,
-        //           fontSize: 14.sp,
-        //           fontWeight: FontWeight.w500,
-        //         ),
-        //       )
-        //  const EmptyWidget(),
-        // const SizedBox(height: 10),
         DropdownButtonFormField2<CustomDropDownItem>(
           decoration: InputDecoration(
             hintStyle:
