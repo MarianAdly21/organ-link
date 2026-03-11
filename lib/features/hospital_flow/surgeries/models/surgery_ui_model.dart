@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/hospital/surgery_api_model.dart';
+import 'package:organ_link/apis/models/hospital/surgeries/surgery_api_model.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/models/surgery_list_ui_model.dart';
 
 class SurgeryUiModel {

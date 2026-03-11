@@ -20,12 +20,10 @@ class HospitalNotificationRepository
   Future<HospitalNotificationState> getHospitalNotification() async {
     late HospitalNotificationState hospitalNotificationState;
     final int? id = await preferencesManager.getId();
-    await hospitalApiManager.getHospitalDataApi(
+    await hospitalApiManager.getHospitalNotificationDataApi(
       id!,
       (response) {
-        final model = HospitalNotificationUiModel.fromApiModel(
-          response.hospitalNotificationApiModel,
-        );
+        final model = HospitalNotificationUiModel.fromApiModel(response);
         hospitalNotificationState =
             HospitalNotificationDataLoadedSuccessfullyState(
               hospitalNotificationUiModel: model,

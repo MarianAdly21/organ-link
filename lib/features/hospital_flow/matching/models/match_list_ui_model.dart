@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/hospital/match_list_api_model.dart';
+import 'package:organ_link/apis/models/hospital/matches/match_list_api_model.dart';
 
 class MatchListUiModel {
   final String patientName;

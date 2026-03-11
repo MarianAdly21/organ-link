@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/hospital/hospital_notification_api_model.dart';
+import 'package:organ_link/apis/models/hospital/hospital_notification/hospital_notification_api_model.dart';
 import 'package:organ_link/features/hospital_flow/notification_screen/model/hospital_notification_list_ui_model.dart';
 
 class HospitalNotificationUiModel {

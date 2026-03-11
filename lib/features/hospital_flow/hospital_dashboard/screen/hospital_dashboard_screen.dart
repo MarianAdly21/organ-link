@@ -317,8 +317,8 @@ class _HospitalDashboardScreenWithBlocState
                   icon: AppAssetPaths.heartIcon,
                   title: LocalizationKeys.registeredDonor,
                   count: hospitalDashboardUiModel.donorsCount.toString(),
-                  subTitle2:
-                      "+3${context.translate(LocalizationKeys.thisMonthCount)}",
+                  // subTitle2:
+                  //     "+3${context.translate(LocalizationKeys.thisMonthCount)}",
                 ),
               ),
               SizedBox(width: 16),
@@ -327,8 +327,6 @@ class _HospitalDashboardScreenWithBlocState
                   icon: AppAssetPaths.peopleIcon,
                   title: LocalizationKeys.patientWaitingForTransplant,
                   count: hospitalDashboardUiModel.patientsCount.toString(),
-                  subTitle2:
-                      "+3${context.translate(LocalizationKeys.thisMonthCount)}",
                 ),
               ),
             ],
@@ -341,8 +339,6 @@ class _HospitalDashboardScreenWithBlocState
                   icon: AppAssetPaths.notesBookIcon,
                   title: LocalizationKeys.matchingRequests,
                   count: hospitalDashboardUiModel.totalMatches.toString(),
-                  subTitle2:
-                      "3${context.translate(LocalizationKeys.underAnalysisCount)}",
                 ),
               ),
               SizedBox(width: 16),
@@ -351,8 +347,6 @@ class _HospitalDashboardScreenWithBlocState
                   icon: AppAssetPaths.voltageIcon,
                   title: LocalizationKeys.ongoingOperations,
                   count: hospitalDashboardUiModel.totalSurgeries.toString(),
-                  subTitle2:
-                      "3${context.translate(LocalizationKeys.ongoingOperationsCount)}",
                 ),
               ),
             ],
@@ -366,7 +360,6 @@ class _HospitalDashboardScreenWithBlocState
     required String icon,
     required String title,
     required String count,
-    required String subTitle2,
   }) {
     return ContainerWithBlackShadow(
       height: 132.h,
@@ -395,15 +388,15 @@ class _HospitalDashboardScreenWithBlocState
                 ),
               ),
             ),
-            Text(
-              textAlign: TextAlign.center,
-              subTitle2,
-              style: context.textTheme.labelMedium!.copyWith(
-                fontWeight: FontWeight.w400,
-                fontSize: 13,
-                color: AppColors.grayText,
-              ),
-            ),
+            // Text(
+            //   textAlign: TextAlign.center,
+            //   subTitle2,
+            //   style: context.textTheme.labelMedium!.copyWith(
+            //     fontWeight: FontWeight.w400,
+            //     fontSize: 13,
+            //     color: AppColors.grayText,
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/hospital/patient_or_donor_api_model.dart';
+import 'package:organ_link/apis/models/hospital/patient_or_donor_list/patient_or_donor_api_model.dart';
 import 'package:organ_link/features/shared_screens/method/calculate_age.dart';
 
 class PatientOrDonorUiModel {

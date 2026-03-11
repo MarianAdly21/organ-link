@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/hospital/surgery_list_api_model.dart';
+import 'package:organ_link/apis/models/hospital/surgeries/surgery_list_api_model.dart';
 
 class SurgeryApiModel {
   final List<SurgeryListApiModel> surgeryList;

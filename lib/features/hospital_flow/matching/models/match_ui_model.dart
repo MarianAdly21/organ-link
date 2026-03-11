@@ -1,4 +1,4 @@
-import 'package:organ_link/apis/models/hospital/match_api_model.dart';
+import 'package:organ_link/apis/models/hospital/matches/match_api_model.dart';
 import 'package:organ_link/features/hospital_flow/matching/models/match_list_ui_model.dart';
 
 class MatchUiModel {

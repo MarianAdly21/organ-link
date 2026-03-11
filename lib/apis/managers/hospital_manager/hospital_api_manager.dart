@@ -3,9 +3,13 @@ import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/api_keys.dart';
 import 'package:organ_link/apis/errors/error_api_model.dart';
 import 'package:organ_link/apis/models/hospital/hospital_data_response.dart';
+import 'package:organ_link/apis/models/hospital/hospital_notification/hospital_notification_api_model.dart';
+import 'package:organ_link/apis/models/hospital/matches/match_api_model.dart';
 import 'package:organ_link/apis/models/hospital/matching_details_api_model.dart';
 import 'package:organ_link/apis/models/hospital/patient_or_donor_details_api_model.dart';
+import 'package:organ_link/apis/models/hospital/patient_or_donor_list/patient_or_donor_list_api_model.dart';
 import 'package:organ_link/apis/models/hospital/surger_details_api_model.dart';
+import 'package:organ_link/apis/models/hospital/surgeries/surgery_api_model.dart';
 
 class HospitalApiManager {
   final DioApiManager dioApiManager;
@@ -77,6 +81,7 @@ class HospitalApiManager {
           fail(ErrorApiModel.identifyError(error: error));
         });
   }
+
   Future<void> getPatientOrDonorDetailsDataApi(
     int id,
     void Function(PatientOrDonorDetailsApiModel) success,
@@ -99,5 +104,93 @@ class HospitalApiManager {
         });
   }
 
+  Future<void> getPatientsOrDonorsListApi(
+    int id,
+    void Function(PatientOrDonorListApiModel) success,
+    void Function(ErrorApiModel) fail,
+  ) async {
+    await dioApiManager.dio
+        .get(ApiKeys.getHospitalUrl(id))
+        .then((response) {
+          final Map<String, dynamic> extractedData =
+              response.data as Map<String, dynamic>;
+          final PatientOrDonorListApiModel patientOrDonorListApiModel =
+              PatientOrDonorListApiModel.formJson(extractedData);
+          success(patientOrDonorListApiModel);
+        })
+        .onError((DioException error, stackTrace) {
+          fail(ErrorApiModel.fromDioError(error));
+        })
+        .catchError((error) {
+          fail(ErrorApiModel.identifyError(error: error));
+        });
+  }
 
+  Future<void> getSurgeriesDataApi(
+    int id,
+    void Function(SurgeryApiModel) success,
+    void Function(ErrorApiModel) fail,
+  ) async {
+    await dioApiManager.dio
+        .get(ApiKeys.getHospitalUrl(id))
+        .then((response) {
+          final Map<String, dynamic> extractedData =
+              response.data as Map<String, dynamic>;
+          final SurgeryApiModel surgeryApiModel = SurgeryApiModel.fromJson(
+            extractedData,
+          );
+          success(surgeryApiModel);
+        })
+        .onError((DioException error, stackTrace) {
+          fail(ErrorApiModel.fromDioError(error));
+        })
+        .catchError((error) {
+          fail(ErrorApiModel.identifyError(error: error));
+        });
+  }
+
+  Future<void> getMatchesDataApi(
+    int id,
+    void Function(MatchApiModel) success,
+    void Function(ErrorApiModel) fail,
+  ) async {
+    await dioApiManager.dio
+        .get(ApiKeys.getHospitalUrl(id))
+        .then((response) {
+          final Map<String, dynamic> extractedData =
+              response.data as Map<String, dynamic>;
+          final MatchApiModel matchApiModel = MatchApiModel.fromJson(
+            extractedData,
+          );
+          success(matchApiModel);
+        })
+        .onError((DioException error, stackTrace) {
+          fail(ErrorApiModel.fromDioError(error));
+        })
+        .catchError((error) {
+          fail(ErrorApiModel.identifyError(error: error));
+        });
+  }
+
+  Future<void> getHospitalNotificationDataApi(
+    int id,
+    void Function(HospitalNotificationApiModel) success,
+    void Function(ErrorApiModel) fail,
+  ) async {
+    await dioApiManager.dio
+        .get(ApiKeys.getHospitalUrl(id))
+        .then((response) {
+          final Map<String, dynamic> extractedData =
+              response.data as Map<String, dynamic>;
+          final HospitalNotificationApiModel hospitalNotificationApiModel =
+              HospitalNotificationApiModel.fromJson(extractedData);
+          success(hospitalNotificationApiModel);
+        })
+        .onError((DioException error, stackTrace) {
+          fail(ErrorApiModel.fromDioError(error));
+        })
+        .catchError((error) {
+          fail(ErrorApiModel.identifyError(error: error));
+        });
+  }
 }

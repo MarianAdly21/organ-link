@@ -12,12 +12,15 @@ class ViewPatientOrDonorRepository implements BaseViewPatientOrDonorRepository {
   final HospitalApiManager hospitalApiManager;
   final PreferencesManager preferencesManager;
 
-  ViewPatientOrDonorRepository({required this.hospitalApiManager, required this.preferencesManager});
+  ViewPatientOrDonorRepository({
+    required this.hospitalApiManager,
+    required this.preferencesManager,
+  });
   @override
   Future<ViewPatientOrDonorState> getViewPatientData() async {
     late ViewPatientOrDonorState viewPatientOrDonorState;
-     final int? id = await preferencesManager.getId();
-    await hospitalApiManager.getHospitalDataApi(
+    final int? id = await preferencesManager.getId();
+    await hospitalApiManager.getPatientsOrDonorsListApi(
       id!,
       (response) {
         final model = response.patientList
@@ -40,8 +43,8 @@ class ViewPatientOrDonorRepository implements BaseViewPatientOrDonorRepository {
   @override
   Future<ViewPatientOrDonorState> getViewDonorData() async {
     late ViewPatientOrDonorState viewPatientOrDonorState;
-     final int? id = await preferencesManager.getId();
-    await hospitalApiManager.getHospitalDataApi(
+    final int? id = await preferencesManager.getId();
+    await hospitalApiManager.getPatientsOrDonorsListApi(
       id!,
       (response) {
         final model = response.donorList
@@ -58,7 +61,24 @@ class ViewPatientOrDonorRepository implements BaseViewPatientOrDonorRepository {
         );
       },
     );
+    // await hospitalApiManager.getHospitalDataApi(
+    //   id!,
+    //   (response) {
+    //     final model = response.donorList
+    //         .map((x) => PatientOrDonorUiModel.fromApiModel(x))
+    //         .toList();
+    //     viewPatientOrDonorState = ViewPatientOrDonorDataLoadedSuccessfullyState(
+    //       donorOrPatientList: model,
+    //     );
+    //   },
+    //   (error) {
+    //     viewPatientOrDonorState = ViewPatientOrDonorErrorState(
+    //       errorMessage: error.message,
+    //       codeError: error.code,
+    //     );
+    //   },
+    // );
+
     return viewPatientOrDonorState;
   }
-
 }
