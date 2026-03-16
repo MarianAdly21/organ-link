@@ -19,10 +19,10 @@ class MatchingRepository implements BaseMatchingRepository {
   Future<MatchingState> getMatchingList() async {
     late MatchingState matchingState;
     final int? id = await preferencesManager.getId();
-    await hospitalApiManager.getHospitalDataApi(
+    await hospitalApiManager.getMatchesDataApi(
       id!,
       (response) {
-        final model = MatchUiModel.fromApiModel(response.matchApiModel);
+        final model = MatchUiModel.fromApiModel(response);
         matchingState = MatchingDataLoadedSuccessfullyState(
           matchUiModel: model,
         );

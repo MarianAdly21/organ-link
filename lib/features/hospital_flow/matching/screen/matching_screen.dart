@@ -71,56 +71,56 @@ class _MatchingScreenWithBlocState
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      body: BlocConsumer<MatchingBloc, MatchingState>(
-        listener: (context, state) {
-          if (state is MatchingLoadingState) {
-            showLoading();
-          } else {
-            hideLoading();
-          }
-          if (state is MatchingDataLoadedSuccessfullyState) {
-            matchUiModel = state.matchUiModel;
-          } else if (state is NavToMatchingDetailsScreenState) {
-            _navToMatchingDetailsScreen(state);
-          } else if (state is MatchingErrorState && state.codeError != 1016) {
-            showFeedbackMessage(state.errorMessage);
-          }
+      body: AppBaseBodyScaffold(
+        titleOfScreen: context.translate(LocalizationKeys.matching),
+        backTap: () {
+          Navigator.pop(context);
         },
-        buildWhen: (previous, current) =>
-            current is MatchingDataLoadedSuccessfullyState ||
-            current is MatchingErrorState,
+        body: BlocConsumer<MatchingBloc, MatchingState>(
+          listener: (context, state) {
+            if (state is MatchingLoadingState) {
+              showLoading();
+            } else {
+              hideLoading();
+            }
+            if (state is MatchingDataLoadedSuccessfullyState) {
+              matchUiModel = state.matchUiModel;
+            } else if (state is NavToMatchingDetailsScreenState) {
+              _navToMatchingDetailsScreen(state);
+            } else if (state is MatchingErrorState && state.codeError != 1016) {
+              showFeedbackMessage(state.errorMessage);
+            }
+          },
+          buildWhen: (previous, current) =>
+              current is MatchingDataLoadedSuccessfullyState ||
+              current is MatchingErrorState,
 
-        builder: (context, state) {
-          return _buildBody(state);
-        },
+          builder: (context, state) {
+            return _buildBody(state);
+          },
+        ),
       ),
     );
   }
 
   Widget _buildBody(MatchingState state) {
     if (state is MatchingDataLoadedSuccessfullyState) {
-      return AppBaseBodyScaffold(
-        titleOfScreen: context.translate(LocalizationKeys.matching),
-        backTap: () {
-          Navigator.pop(context);
-        },
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _headerWidget(),
-              matchUiModel.matchList.isNotEmpty
-                  ? _requestList()
-                  : Center(
-                      child: Text(
-                        context.translate(
-                          LocalizationKeys.noMatchingSurgeriesAtTheMoment,
-                        ),
-                        style: context.textTheme.bodyMedium,
+      return SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _headerWidget(),
+            matchUiModel.matchList.isNotEmpty
+                ? _requestList()
+                : Center(
+                    child: Text(
+                      context.translate(
+                        LocalizationKeys.noMatchingSurgeriesAtTheMoment,
                       ),
+                      style: context.textTheme.bodyMedium,
                     ),
-            ],
-          ),
+                  ),
+          ],
         ),
       );
     } else if (state is MatchingErrorState && state.codeError == 1016) {

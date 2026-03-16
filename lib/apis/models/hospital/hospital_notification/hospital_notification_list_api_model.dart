@@ -15,7 +15,7 @@ class HospitalNotificationListApiModel {
     return HospitalNotificationListApiModel(
       title: json["message_title"],
       content: json["message"],
-      isUrgent: true,
+      isUrgent: json["urgent"],
       notificationTime: DateTime.parse(json["created_at"]),
     );
   }

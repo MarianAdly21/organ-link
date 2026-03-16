@@ -19,10 +19,10 @@ class SurgeriesRepository implements BaseSurgeriesRepository {
   Future<SurgeriesState> getSurgeriesList() async {
     late SurgeriesState surgeriesState;
     final int? id = await preferencesManager.getId();
-    await hospitalApiManager.getHospitalDataApi(
+    await hospitalApiManager.getSurgeriesDataApi(
       id!,
       (response) {
-        final model = SurgeryUiModel.fromApiModel(response.surgeryApiModel);
+        final model = SurgeryUiModel.fromApiModel(response);
         surgeriesState = SurgeriesDataLoadedSuccessfullyState(surgeries: model);
       },
       (error) {
