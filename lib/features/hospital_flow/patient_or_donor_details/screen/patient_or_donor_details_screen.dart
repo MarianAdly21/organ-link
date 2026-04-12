@@ -472,17 +472,7 @@ class _PatientOrDonorDetailsScreenWithBlocState
           ),
         ),
         child: AppElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => UploadFilesScreen(
-                  userId: widget.id,
-                  fileNumber: patientOrDonorDetailsUiModel.fileNumber,
-                  name: patientOrDonorDetailsUiModel.fullName,
-                ),
-              ),
-            );
-          },
+          onPressed: _navToUploadReportScreen,
           color: Colors.white,
           label: Center(
             child: GradientText(
@@ -616,41 +606,6 @@ class _PatientOrDonorDetailsScreenWithBlocState
     );
   }
 
-  // Widget _infoSection({
-  //   required String title,
-  //   required List list,
-  //   bool divider = true,
-  // }) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.stretch,
-  //     children: [
-  //       Text(
-  //         title,
-  //         style: TextStyle(
-  //           color: AppColors.textColor,
-  //           fontSize: 16,
-  //           fontWeight: FontWeight.w600,
-  //         ),
-  //       ),
-  //       SizedBox(height: 8.h),
-  //       Column(
-  //         crossAxisAlignment: CrossAxisAlignment.stretch,
-  //         children: list.isEmpty
-  //             ? [
-  //                 _dotWithText(
-  //                   text: context.translate(LocalizationKeys.noDataAvailable),
-  //                 ),
-  //               ]
-  //             : List.generate(list.length, (index) {
-  //                 return _dotWithText(text: list[index]);
-  //               }),
-  //       ),
-  //       divider
-  //           ? CustomDividerWidget(endIndent: 24.w, indent: 24.w)
-  //           : SizedBox.shrink(),
-  //     ],
-  //   );
-  // }
   Widget _infoSection({
     required String title,
     required Widget body,
@@ -742,4 +697,22 @@ class _PatientOrDonorDetailsScreenWithBlocState
   ///////////////////////////////////////////////////////////
   PatientOrDonorDetailsBloc get _currentBloc =>
       context.read<PatientOrDonorDetailsBloc>();
+
+  void _navToUploadReportScreen() {
+    Navigator.of(context)
+        .push(
+          MaterialPageRoute(
+            builder: (_) => UploadFilesScreen(
+              userId: widget.id,
+              fileNumber: patientOrDonorDetailsUiModel.fileNumber,
+              name: patientOrDonorDetailsUiModel.fullName,
+            ),
+          ),
+        )
+        .then((result) {
+          if (result == true) {
+            _currentBloc.add(GetPatientOrDonorDetailsDataEvent(id: widget.id));
+          }
+        });
+  }
 }

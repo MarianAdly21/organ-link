@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/api_keys.dart';
@@ -10,6 +12,8 @@ import 'package:organ_link/apis/models/hospital/patient_or_donor_details_api_mod
 import 'package:organ_link/apis/models/hospital/patient_or_donor_list/patient_or_donor_list_api_model.dart';
 import 'package:organ_link/apis/models/hospital/surger_details_api_model.dart';
 import 'package:organ_link/apis/models/hospital/surgeries/surgery_api_model.dart';
+import 'package:organ_link/apis/models/hospital/upload_file/upload_file_response.dart';
+import 'package:organ_link/apis/models/hospital/upload_file/upload_file_send_api_model.dart';
 
 class HospitalApiManager {
   final DioApiManager dioApiManager;
@@ -126,6 +130,28 @@ class HospitalApiManager {
         });
   }
 
+  //  Future<void> getPatientsOrDonorsListApi(
+  //     int id,
+  //     void Function(PatientOrDonorListApiModel) success,
+  //     void Function(ErrorApiModel) fail,
+  //   ) async {
+  //     await dioApiManager.dio
+  //         .get(ApiKeys.getHospitalUrl(id))
+  //         .then((response) {
+  //           final Map<String, dynamic> extractedData =
+  //               response.data as Map<String, dynamic>;
+  //           final PatientOrDonorListApiModel patientOrDonorListApiModel =
+  //               PatientOrDonorListApiModel.formJson(extractedData);
+  //           success(patientOrDonorListApiModel);
+  //         })
+  //         .onError((DioException error, stackTrace) {
+  //           fail(ErrorApiModel.fromDioError(error));
+  //         })
+  //         .catchError((error) {
+  //           fail(ErrorApiModel.identifyError(error: error));
+  //         });
+  //   }
+
   Future<void> getSurgeriesDataApi(
     int id,
     void Function(SurgeryApiModel) success,
@@ -187,6 +213,37 @@ class HospitalApiManager {
           success(hospitalNotificationApiModel);
         })
         .onError((DioException error, stackTrace) {
+          fail(ErrorApiModel.fromDioError(error));
+        })
+        .catchError((error) {
+          fail(ErrorApiModel.identifyError(error: error));
+        });
+  }
+
+  Future<void> uploadReportApi(
+    UploadFileSendApiModel uploadFileSendApiModel,
+    String token,
+    void Function(UploadFileResponse) success,
+    void Function(ErrorApiModel) fail,
+  ) async {
+    await dioApiManager.dio
+        .post(
+          "https://web-production-b0489.up.railway.app/api/UserReport/",
+         // ApiKeys.uploadUserReport,
+          data: await uploadFileSendApiModel.toFormData(),
+          options: Options(headers: {"Authorization": "Bearer $token"}),
+        )
+        .then((response) {
+          final Map<String, dynamic> extractedData =
+              response.data as Map<String, dynamic>;
+          final UploadFileResponse uploadFileResponse =
+              UploadFileResponse.fromJson(extractedData);
+          success(uploadFileResponse);
+        })
+        .onError((DioException error, stackTrace) {
+          log("ERROR DATA: ${error.response?.data}");
+          log("uploadUserReport: ${ApiKeys.uploadUserReport}");
+
           fail(ErrorApiModel.fromDioError(error));
         })
         .catchError((error) {

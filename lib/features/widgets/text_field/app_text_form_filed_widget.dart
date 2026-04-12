@@ -34,6 +34,7 @@ class AppTextFormField extends StatefulWidget {
   final BoxConstraints? prefixIconConstraints;
   final Color? fillColor;
   final Color? titleColor;
+ final InputBorder? enabledBorder;
 
   final List<TextInputFormatter>? inputFormatters;
 
@@ -67,7 +68,7 @@ class AppTextFormField extends StatefulWidget {
     this.textAlign = TextAlign.start,
     this.prefixIconConstraints,
     this.fillColor,
-    this.titleColor,
+    this.titleColor, this.enabledBorder,
   }) : assert(initialValue == null || controller == null);
 
   @override
@@ -129,7 +130,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(color: AppColors.transparent, width: 2),
             ),
-            enabledBorder: OutlineInputBorder(
+            enabledBorder:widget.enabledBorder?? OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
                 color: widget.enableBorderColor ?? AppColors.transparent,
@@ -172,12 +173,12 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   }
 
   OutlineInputBorder get textFormFieldErrorBorder => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
+    borderRadius: BorderRadius.circular(8),
     borderSide: const BorderSide(color: AppColors.formFieldProfileErrorIBorder),
   );
 
   OutlineInputBorder get textFormFieldFocusBorder => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
+    borderRadius: BorderRadius.circular(8),
     borderSide: const BorderSide(
       color: AppColors.formFieldFocusIBorder,
       width: 2,
@@ -185,7 +186,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   );
 
   OutlineInputBorder get textFormFieldFocusErrorBorder => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
+    borderRadius: BorderRadius.circular(8),
     borderSide: const BorderSide(
       color: AppColors.formFieldProfileErrorIBorder,
       width: 2,

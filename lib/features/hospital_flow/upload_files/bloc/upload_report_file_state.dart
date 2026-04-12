@@ -31,4 +31,8 @@ final class UploadReportFileNotValidatedState extends UploadReportFileState {
   List<Object> get props => [identityHashCode(this)];
 }
 
-final class UploadReportFileSuccessfullyState extends UploadReportFileState {}
+final class UploadReportFileSuccessfullyState extends UploadReportFileState {
+  final UploadFileResponseUi uploadFileResponseUi;
+
+ const UploadReportFileSuccessfullyState({required this.uploadFileResponseUi});
+}

@@ -88,7 +88,11 @@ class _MatchingScreenWithBlocState
             } else if (state is NavToMatchingDetailsScreenState) {
               _navToMatchingDetailsScreen(state);
             } else if (state is MatchingErrorState && state.codeError != 1016) {
-              showFeedbackMessage(state.errorMessage);
+              showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
+                state.errorMessage,
+              );
             }
           },
           buildWhen: (previous, current) =>

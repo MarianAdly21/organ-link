@@ -21,12 +21,13 @@ class UploadFileSendApiModel {
 
   Future<FormData> toFormData()async {
     return FormData.fromMap({
-      "report_type": reportType,
-      "report_name": reportName,
+     "report_type": reportType,
+     "report_title": reportName,
       "exam_date": examDate,
       "description": description,
       "report_file": await MultipartFile.fromFile(file.path),
-      "id": userId,
+      "patient": userId,
+      "state":"تحت الاجراء"
     }); 
   }
 }

@@ -24,7 +24,7 @@ PatientOrDonorStatus mapPatientOrDonorStatus(String status) {
       return PatientOrDonorStatus.ready;
     case "تم التبرع":
       return PatientOrDonorStatus.donationCompleted;
-    case "صحة جيده":
+    case "صحة جيدة":
       return PatientOrDonorStatus.goodHealth;
     case 'صحة ممتازة':
       return PatientOrDonorStatus.excellentHealth;
@@ -34,7 +34,7 @@ PatientOrDonorStatus mapPatientOrDonorStatus(String status) {
       return PatientOrDonorStatus.mediumPriority;
     case "أولوية عالية":
       return PatientOrDonorStatus.highPriority;
-    case "اولوليه منخفضه":
+    case "أولوية منخفضه":
       return PatientOrDonorStatus.lowPriority;
     default:
       return PatientOrDonorStatus.underReview;

@@ -40,7 +40,8 @@ class _LogoutConfirmationDialogScreenState
 
         AppButtonWithGradientColors(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pop(context,true);
+            Navigator.pop(context,true);
           },
           text: context.translate(LocalizationKeys.goHome),
         ),
