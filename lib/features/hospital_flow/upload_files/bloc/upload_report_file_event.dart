@@ -12,12 +12,14 @@ class ValidateReportDateEvent extends UploadReportFileEvent {
   final String? reportType;
   final String? reportName;
   final String? examDate;
+  //final GlobalKey<FormState> reportFormKey;
 
   const ValidateReportDateEvent({
     required this.reportFile,
     required this.reportType,
     required this.reportName,
     required this.examDate,
+  //  required this.reportFormKey,
   });
   @override
   List<Object> get props => [identityHashCode(this)];

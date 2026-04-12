@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:organ_link/apis/managers/auth_api_manager.dart';
 import 'package:organ_link/apis/models/auth/login/login_send_model.dart';
 import 'package:organ_link/apis/models/auth/login/login_successful_response.dart';
@@ -49,6 +51,7 @@ class LoginRepository implements BaseLoginRepository {
    await preferencesManager.setType(loginSuccessfulResponse.type);
    await preferencesManager.setId(loginSuccessfulResponse.id);
    await preferencesManager.setToken(loginSuccessfulResponse.token);
+   log("SAVED TOKEN: ${loginSuccessfulResponse.token}");
     loginState=UserInfoSavedState();
     return loginState;
   }

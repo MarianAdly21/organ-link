@@ -6,18 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/extensions/screen_sizer_extension.dart';
 import 'package:organ_link/_core/widgets/base_dialog_widget.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/hospital_manager/hospital_api_manager.dart';
 import 'package:organ_link/features/hospital_flow/upload_files/bloc/upload_report_file_bloc.dart';
+import 'package:organ_link/features/hospital_flow/upload_files/bloc/upload_report_file_repository.dart';
 import 'package:organ_link/features/hospital_flow/upload_files/model/upload_report_file_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/upload_files/screen/upload_report_confarmation_screen.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient_colors.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
+import 'package:organ_link/features/widgets/text_field/app_text_form_filed_widget.dart';
 import 'package:organ_link/features/widgets/text_field/custom_drop_down_form_filed_widget.dart';
+import 'package:organ_link/preferences/preferences_manager.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/feedback/feedback_message.dart';
@@ -38,7 +44,14 @@ class UploadFilesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UploadReportFileBloc(),
+      create: (context) => UploadReportFileBloc(
+        UploadReportFileRepository(
+          hospitalApiManager: HospitalApiManager(
+            dioApiManager: GetIt.I<DioApiManager>(),
+          ),
+          preferencesManager: GetIt.I<PreferencesManager>(),
+        ),
+      ),
       child: UploadFilesScreenWithBloc(
         userId: userId,
         fileNumber: fileNumber,
@@ -68,12 +81,11 @@ class _UploadFilesScreenWithBlocState
     with AppValidate {
   File? pickedFiles;
   final TextEditingController _dateController = TextEditingController();
+
   String? _reportType;
   String? _reportName;
   String? _examDate;
-  // late int _userId;
   String? _description;
-  // File? _file;
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
@@ -85,31 +97,26 @@ class _UploadFilesScreenWithBlocState
         },
         body: BlocConsumer<UploadReportFileBloc, UploadReportFileState>(
           listener: (context, state) {
-            if (state is UploadReportFileErrorState) {
+            if (state is UploadReportFileLoadingState) {
               showLoading();
             } else {
               hideLoading();
             }
             if (state is UploadReportFileValidatedState) {
-              _currentBloc.add(
-                UploadReportDataEvent(
-                  uploadReportFileUiModel: UploadReportFileUiModel(
-                    reportType: _reportType!,
-                    reportName: _reportName!,
-                    examDate: _examDate!,
-                    userId: widget.userId,
-                    description: _description,
-                    file: pickedFiles!,
-                  ),
-                ),
-              );
+              _uploadReportDataEvent();
             } else if (state is UploadReportFileSuccessfullyState) {
               _uploadReportConfirmation();
             } else if (state is UploadReportFileErrorState &&
                 state.codeError != 1016) {
-              showFeedbackMessage(state.errorMessage);
+              showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
+                state.errorMessage,
+              );
             } else if (state is UploadReportFileNotValidatedState) {
               showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
                 context.translate(
                   LocalizationKeys.pleaseFillInAllRequiredFields,
                 ),
@@ -151,15 +158,7 @@ class _UploadFilesScreenWithBlocState
         Expanded(
           child: AppButtonWithGradientColors(
             onTap: () {
-              _currentBloc.add(
-                ValidateReportDateEvent(
-                  reportFile: pickedFiles,
-                  reportType: _reportType,
-                  reportName: _reportName,
-                  examDate: _examDate,
-                ),
-              );
-              // _uploadReportConfirmation();
+              _validateReportDateEvent();
             },
             borderRadius: 8,
             text: context.translate(LocalizationKeys.uploadButton),
@@ -225,11 +224,29 @@ class _UploadFilesScreenWithBlocState
           ),
         ),
         _chooseReportType(),
-        _chooseReportName(),
+        _reportName == "اخري"
+            ? _textFormFiledReportName()
+            : _chooseReportName(),
         _examinationDate(),
         _uploadFileSection(),
         _additionalNotes(),
       ],
+    );
+  }
+
+  Widget _textFormFiledReportName() {
+    return AppTextFormField(
+      title: context.translate(LocalizationKeys.reportName),
+      hintText: context.translate(LocalizationKeys.chooseReportName),
+      fillColor: Colors.white,
+      contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 9.h),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColors.enabledAppFormFieldBorder),
+      ),
+      onChanged: (value) {
+        _reportName = value;
+      },
     );
   }
 
@@ -290,6 +307,9 @@ class _UploadFilesScreenWithBlocState
               ),
             ),
             onSaved: _onDescriptionSaved,
+            onChanged: (value) {
+              setState(() {});
+            },
           ),
         ),
       ],
@@ -349,8 +369,7 @@ class _UploadFilesScreenWithBlocState
                   ),
                 ),
                 onTap: _showDatePickerOnTap,
-                onSaved: _onExamDateSaved,
-                // validator: (value) => textValidator(context, value),
+                onChanged: _onExamDateChange,
               ),
             ),
           ),
@@ -374,8 +393,7 @@ class _UploadFilesScreenWithBlocState
         CustomDropDownItem(value: "تقرير طبي شامل", key: "تقرير طبي شامل"),
         CustomDropDownItem(value: "اخري", key: "اخري"),
       ],
-      onSaved: _onChooseReportNameSaved,
-      // validator: (value) => dropDownValidator(context, value),
+      onChanged: _onChooseReportNameChanged,
     );
   }
 
@@ -389,12 +407,11 @@ class _UploadFilesScreenWithBlocState
           color: AppColors.blackText,
         ),
         items: [
-          CustomDropDownItem(value: "أشعة", key: "أشعة"),
+          CustomDropDownItem(value: "أشعة", key:"اشعه"),
           CustomDropDownItem(value: "تحاليل", key: "تحاليل"),
           CustomDropDownItem(value: "تقرير طبي", key: "تقرير طبي"),
         ],
-        onSaved: _onChooseReportTypeSaved,
-        //  validator: (value) => dropDownValidator(context, value),
+        onChanged: _onChooseReportTypeChanged,
       ),
     );
   }
@@ -495,16 +512,46 @@ class _UploadFilesScreenWithBlocState
   ///////////////////////////////////////////////////////////
   /////////////////// Helper method ////////////////////////
   ///////////////////////////////////////////////////////////
-  void _onChooseReportTypeSaved(CustomDropDownItem? value) {
+
+  void _onChooseReportTypeChanged(CustomDropDownItem? value) {
     _reportType = value?.key;
+    setState(() {});
   }
 
-  void _onChooseReportNameSaved(CustomDropDownItem? value) {
-    _reportName = value?.key;
+  void _onChooseReportNameChanged(CustomDropDownItem? value) {
+    setState(() {
+      _reportName = value?.key;
+    });
   }
 
-  void _onExamDateSaved(String? newValue) {
-    _examDate = newValue;
+  void _onExamDateChange(String value) {
+    _examDate = value;
+  }
+
+  void _uploadReportDataEvent() {
+    _currentBloc.add(
+      UploadReportDataEvent(
+        uploadReportFileUiModel: UploadReportFileUiModel(
+          reportType: _reportType!,
+          reportName: _reportName!,
+          examDate: _examDate!,
+          userId: widget.userId,
+          description: _description,
+          file: pickedFiles!,
+        ),
+      ),
+    );
+  }
+
+  void _validateReportDateEvent() {
+    _currentBloc.add(
+      ValidateReportDateEvent(
+        reportFile: pickedFiles,
+        reportType: _reportType,
+        reportName: _reportName,
+        examDate: _examDate,
+      ),
+    );
   }
 
   void _onDescriptionSaved(String? newValue) {
@@ -554,6 +601,7 @@ class _UploadFilesScreenWithBlocState
     if (pickedDate != null) {
       _dateController.text =
           "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+      _examDate = _dateController.text;
     }
   }
 
