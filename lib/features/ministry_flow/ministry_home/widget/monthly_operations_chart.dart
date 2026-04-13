@@ -17,7 +17,8 @@ class MonthlyOperationsChart extends StatelessWidget {
           height: 300.h,
           child: BarChart(
             BarChartData(
-              maxY: 80,
+              maxY: getMaxY() + 10,
+            //  maxY: 80,
               gridData: FlGridData(
                 show: true,
                 drawHorizontalLine: true,
@@ -40,7 +41,8 @@ class MonthlyOperationsChart extends StatelessWidget {
                 leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    interval: 20,
+                   // interval: 20,
+                   interval: getMaxY() / 4,
                     reservedSize: 30,
                     getTitlesWidget: (value, meta) {
                       return Text(
@@ -159,4 +161,21 @@ class MonthlyOperation {
     required this.total,
     required this.success,
   });
+}
+
+
+
+double getMaxY() {
+  double maxValue = 0;
+
+  for (var item in data) {
+    if (item.total > maxValue) {
+      maxValue = item.total;
+    }
+    if (item.success > maxValue) {
+      maxValue = item.success;
+    }
+  }
+
+  return maxValue;
 }

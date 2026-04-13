@@ -1,5 +1,3 @@
-import 'package:organ_link/apis/models/hospital/hospital_notification/hospital_notification_api_model.dart';
-
 class HospitalDataResponse {
   final String hospitalName;
   final String hospitalCity;

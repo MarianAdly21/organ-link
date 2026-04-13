@@ -1,12 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organ_link/features/ministry_flow/ministry_home/models/organ_distribution_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/ministry_home/widget/legend_item.dart';
 import 'package:organ_link/res/app_colors.dart';
 
 class OrganDistributionChart extends StatelessWidget {
-  const OrganDistributionChart({super.key});
-
+  const OrganDistributionChart({super.key, required this.organDistributionList});
+final List<OrganDistributionUiModel> organDistributionList;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -15,9 +16,9 @@ class OrganDistributionChart extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            LegendItem(color: AppColors.alegend1, text: "كبد (40%)"),
-            LegendItem(color: AppColors.alegend2, text: "كلي يمنى (22%)"),
-            LegendItem(color: AppColors.alegend3, text: "كلي يسرى (22%)"),
+            LegendItem(color: AppColors.alegend1, text: "كبد (0%)"),
+            LegendItem(color: AppColors.alegend2, text: "${organDistributionList[0].organ} (${organDistributionList[0].percentage}%)"),
+            LegendItem(color: AppColors.alegend3, text: "كلي يسرى (0%)"),
           ],
         ),
         SizedBox(
@@ -27,9 +28,9 @@ class OrganDistributionChart extends StatelessWidget {
             PieChartData(
               centerSpaceRadius: 60.r,
               sections: [
-                _pieChartData(value: 40, color: AppColors.alegend1),
-                _pieChartData(value: 22, color: AppColors.alegend2),
-                _pieChartData(value: 16, color: AppColors.alegend3),
+                _pieChartData(value: 0, color: AppColors.alegend1),
+                _pieChartData(value:organDistributionList[0].percentage , color: AppColors.alegend2),
+                _pieChartData(value: 0, color: AppColors.alegend3),
               ],
             ),
           ),
