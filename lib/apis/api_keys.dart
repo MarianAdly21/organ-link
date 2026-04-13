@@ -30,6 +30,7 @@ class ApiKeys {
   static String getMatchingDetailsUrl(int id) => '$baseUrl/organ-matching/$id';
   static String getSurgerDetailsUrl(int id) => '$baseUrl/surgeries/$id';
   static String uploadUserReport = "$baseUrl/UserReport/";
+  static String ministryDashboardUrl = "$baseUrl/ministry/dashboard";
 
   static String get currentEnvironmentUrl =>
       isDevMode() ? ApiKeys.baseUrlProduction : ApiKeys.baseUrlProduction;
