@@ -16,8 +16,10 @@ import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
 class HospitalDetailsScreen extends BaseStatefulScreenWidget {
-  const HospitalDetailsScreen({super.key});
+  const HospitalDetailsScreen({super.key, required this.id});
   static const routeName = "/hospital-details-screen";
+    final int id;
+
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
       _HospitalDetailsScreenState();
@@ -224,17 +226,17 @@ class _HospitalDetailsScreenState
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        ConutContainer(
+        CountContainer(
           padding: EdgeInsetsDirectional.only(end: 16, start: 2.w),
           title: context.translate(LocalizationKeys.surgeries),
           count: "8758",
         ),
-        ConutContainer(
+        CountContainer(
           padding: EdgeInsetsDirectional.only(end: 16),
           title: context.translate(LocalizationKeys.donors),
           count: "567",
         ),
-        ConutContainer(
+        CountContainer(
           padding: EdgeInsetsDirectional.only(end: 2.w),
           title: context.translate(LocalizationKeys.patients),
           count: "123",
