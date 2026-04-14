@@ -1,3 +1,4 @@
+import 'package:organ_link/apis/models/ministry/ministry_dashboard/monthly_surgery_api_model.dart';
 import 'package:organ_link/apis/models/ministry/ministry_dashboard/organ_distribution_api_model.dart';
 
 class MinistryDashboardResponse {
@@ -6,6 +7,7 @@ class MinistryDashboardResponse {
   final int totalSurgeries;
   final int totalHospitals;
   final List<OrganDistributionApiModel> organDistribution;
+  final List<MonthlySurgeryApiModel> monthlySurgery;
 
   MinistryDashboardResponse({
     required this.totalPatient,
@@ -13,6 +15,7 @@ class MinistryDashboardResponse {
     required this.totalSurgeries,
     required this.totalHospitals,
     required this.organDistribution,
+    required this.monthlySurgery,
   });
 
   factory MinistryDashboardResponse.fromJson(Map<String, dynamic> json) {
@@ -23,6 +26,9 @@ class MinistryDashboardResponse {
       totalHospitals: json["total_hospitals"] as int,
       organDistribution: (json["organs_stats"] as List)
           .map((x) => OrganDistributionApiModel.fromJson(x))
+          .toList(),
+      monthlySurgery: (json["monthly_surgery_stats"] as List)
+          .map((x) => MonthlySurgeryApiModel.fromJson(x))
           .toList(),
     );
   }

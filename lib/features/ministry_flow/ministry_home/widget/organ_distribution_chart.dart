@@ -16,9 +16,9 @@ final List<OrganDistributionUiModel> organDistributionList;
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            LegendItem(color: AppColors.alegend1, text: "كبد (0%)"),
+            LegendItem(color: AppColors.alegend1, text: "${organDistributionList[2].organ} (${organDistributionList[2].percentage}%)"),
             LegendItem(color: AppColors.alegend2, text: "${organDistributionList[0].organ} (${organDistributionList[0].percentage}%)"),
-            LegendItem(color: AppColors.alegend3, text: "كلي يسرى (0%)"),
+            LegendItem(color: AppColors.alegend3, text: "${organDistributionList[1].organ} (${organDistributionList[1].percentage}%)"),
           ],
         ),
         SizedBox(
@@ -28,9 +28,9 @@ final List<OrganDistributionUiModel> organDistributionList;
             PieChartData(
               centerSpaceRadius: 60.r,
               sections: [
-                _pieChartData(value: 0, color: AppColors.alegend1),
+                _pieChartData(value: organDistributionList[2].percentage, color: AppColors.alegend1),
                 _pieChartData(value:organDistributionList[0].percentage , color: AppColors.alegend2),
-                _pieChartData(value: 0, color: AppColors.alegend3),
+                _pieChartData(value: organDistributionList[1].percentage, color: AppColors.alegend3),
               ],
             ),
           ),
