@@ -1,24 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/_core/widgets/base_stateful_screen_widget.dart';
+import 'package:organ_link/apis/_base/dio_api_manager.dart';
+import 'package:organ_link/apis/managers/ministry_manager/ministry_api_manager.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
+import 'package:organ_link/features/ministry_flow/hospital_details/bloc/hospital_details_bloc.dart';
+import 'package:organ_link/features/ministry_flow/hospital_details/bloc/hospital_details_repository.dart';
+import 'package:organ_link/features/ministry_flow/hospital_details/models/ministry_hospital_details_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/widgets/conut_container.dart';
 import 'package:organ_link/features/ministry_flow/widgets/info_tile_with_status_custom_widget.dart';
+import 'package:organ_link/features/shared_screens/method/calculate_age.dart';
 import 'package:organ_link/features/user_flow/case_follow_up/widget/gradient_progress_bar.dart';
 import 'package:organ_link/features/widgets/app_base_progress.dart';
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
+import 'package:organ_link/features/widgets/internet_error_widget.dart';
 import 'package:organ_link/res/app_asset_paths.dart';
 import 'package:organ_link/res/app_colors.dart';
+import 'package:organ_link/utils/empty/empty_widgets.dart';
+import 'package:organ_link/utils/feedback/feedback_message.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
 
-class HospitalDetailsScreen extends BaseStatefulScreenWidget {
+class HospitalDetailsScreen extends StatelessWidget {
   const HospitalDetailsScreen({super.key, required this.id});
   static const routeName = "/hospital-details-screen";
-    final int id;
+  final int id;
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => HospitalDetailsBloc(
+        HospitalDetailsRepository(
+          ministryApiManager: MinistryApiManager(
+            dioApiManager: GetIt.I<DioApiManager>(),
+          ),
+        ),
+      ),
+      child: HospitalDetailsScreenWithBloc(id: id),
+    );
+  }
+}
+
+class HospitalDetailsScreenWithBloc extends BaseStatefulScreenWidget {
+  const HospitalDetailsScreenWithBloc({super.key, required this.id});
+  final int id;
 
   @override
   BaseScreenState<BaseStatefulScreenWidget> baseScreenCreateState() =>
@@ -26,30 +56,78 @@ class HospitalDetailsScreen extends BaseStatefulScreenWidget {
 }
 
 class _HospitalDetailsScreenState
-    extends BaseScreenState<HospitalDetailsScreen> {
+    extends BaseScreenState<HospitalDetailsScreenWithBloc> {
+  late MinistryHospitalDetailsUiModel ministryHospitalDetailsUiModel;
+  @override
+  void initState() {
+    _currentBloc.add(GetHospitalDetailsDataEvent(id: widget.id));
+    super.initState();
+  }
+
+  HospitalDetailsBloc get _currentBloc => context.read<HospitalDetailsBloc>();
+
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: AppBaseBodyScaffold(
-        titleOfScreen: "Hospital Details",
+        titleOfScreen: context.translate(LocalizationKeys.hospitalDetails),
         backTap: () {
           Navigator.pop(context);
         },
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              _infoHospitalSection(),
-              _countRow(),
-              _progressCard(),
-              _hospitalNeedSection(),
-              _lastOperationsSection(),
-              _devicesAndEquipmentSection(),
-            ],
-          ),
+        body: BlocConsumer<HospitalDetailsBloc, HospitalDetailsState>(
+          listener: (context, state) {
+            if (state is HospitalDetailsLoadingState) {
+              showLoading();
+            } else {
+              hideLoading();
+            }
+            if (state is HospitalDetailsDataLoadedSuccessfullyState) {
+              ministryHospitalDetailsUiModel =
+                  state.ministryHospitalDetailsUiModel;
+            } else if (state is HospitalDetailsErrorState &&
+                state.codeError != 1016) {
+              showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
+                state.errorMessage,
+              );
+            }
+          },
+          buildWhen: (previous, current) =>
+              current is HospitalDetailsDataLoadedSuccessfullyState ||
+              current is HospitalDetailsErrorState,
+
+          builder: (context, state) {
+            return _buildBody(state);
+          },
         ),
       ),
     );
+  }
+  ///////////////////////////////////////////////////////////
+  /////////////////// Helper widget ////////////////////////
+  ///////////////////////////////////////////////////////////
+
+  Widget _buildBody(HospitalDetailsState state) {
+    if (state is HospitalDetailsDataLoadedSuccessfullyState) {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            _infoHospitalSection(),
+            _countRow(),
+            _progressCard(),
+            _hospitalNeedSection(),
+            _lastOperationsSection(),
+            _devicesAndEquipmentSection(),
+          ],
+        ),
+      );
+    } else if (state is HospitalDetailsErrorState && state.codeError == 1016) {
+      return InternetErrorWidget();
+    } else {
+      return EmptyWidget();
+    }
   }
 
   Widget _hospitalNeedSection() {
@@ -61,39 +139,60 @@ class _HospitalDetailsScreenState
         right: 16.w,
         bottom: 16.h,
       ),
-      sectionTitle: "احتياجات المستشفى",
+      sectionTitle: context.translate(LocalizationKeys.hospitalNeeds),
       titleColor: AppColors.textColor,
       child: Column(
         children: [
-          _hospitalNeedRow(organName: "كلي", needCount: "15"),
-          _hospitalNeedRow(organName: "كلي", needCount: "15"),
-          _hospitalNeedRow(organName: "كلي", needCount: "15"),
+          _hospitalNeedRow(
+            organName: ministryHospitalDetailsUiModel.organNeeds[0].organName,
+            needCount: ministryHospitalDetailsUiModel.organNeeds[0].organCount
+                .toString(),
+          ),
+          _hospitalNeedRow(
+            organName: ministryHospitalDetailsUiModel.organNeeds[1].organName,
+            needCount: ministryHospitalDetailsUiModel.organNeeds[1].organCount
+                .toString(),
+          ),
+          _hospitalNeedRow(
+            organName: ministryHospitalDetailsUiModel.organNeeds[2].organName,
+            needCount: ministryHospitalDetailsUiModel.organNeeds[2].organCount
+                .toString(),
+          ),
         ],
       ),
     );
   }
 
   Widget _lastOperationsSection() {
-    return ContainerWithShadow(
-      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 2.w),
-      contentPadding: EdgeInsets.only(
-        top: 24.h,
-        left: 16.w,
-        right: 16.w,
-        bottom: 16.h,
-      ),
-      sectionTitle: "العمليات الأخيرة",
-      titleColor: AppColors.textColor,
-      child: Column(
-        children: [
-          _lastOpertionsRow(
-            title: "كلي",
-            subtitle: "2025/1/28 | عمر المريض: سنة 45",
-            status: "ناجحة",
-          ),
-        ],
-      ),
-    );
+    return ministryHospitalDetailsUiModel.lastSurgeries.isEmpty
+        ? SizedBox.shrink()
+        : ContainerWithShadow(
+            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 2.w),
+            contentPadding: EdgeInsets.only(
+              top: 24.h,
+              left: 16.w,
+              right: 16.w,
+              bottom: 16.h,
+            ),
+            sectionTitle: context.translate(LocalizationKeys.lastSurgeries),
+            titleColor: AppColors.textColor,
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: ministryHospitalDetailsUiModel.lastSurgeries.length,
+              itemBuilder: (context, index) {
+                return _lastOperationsRow(
+                  title:
+                      ministryHospitalDetailsUiModel.lastSurgeries[index].organ,
+                  subtitle:
+                      "${context.translate(LocalizationKeys.patientAge)}:${calculateAge(ministryHospitalDetailsUiModel.lastSurgeries[index].age)} ${context.translate(LocalizationKeys.year)} | ${DateFormat('yyyy-MM-dd').format(ministryHospitalDetailsUiModel.lastSurgeries[index].date)}",
+                  status: ministryHospitalDetailsUiModel
+                      .lastSurgeries[index]
+                      .surgeryStatus,
+                );
+              },
+            ),
+          );
   }
 
   Widget _devicesAndEquipmentSection() {
@@ -109,14 +208,14 @@ class _HospitalDetailsScreenState
       titleColor: AppColors.textColor,
       child: Column(
         children: [
-          _lastOpertionsRow(
+          _lastOperationsRow(
             title: "MRI جهاز",
             subtitle: "العدد: 2",
             status: "متاح",
           ),
-          _lastOpertionsRow(
-            title: "MRI جهاز",
-            subtitle: "العدد: 2",
+          _lastOperationsRow(
+            title: "مختبر تحليل دم",
+            subtitle: "العدد: 5",
             status: "متاح",
           ),
         ],
@@ -144,7 +243,7 @@ class _HospitalDetailsScreenState
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  "$needCount حالة",
+                  "$needCount ${context.translate(LocalizationKeys.caseText)}",
                   style: context.textTheme.labelMedium!.copyWith(
                     fontWeight: FontWeight.w400,
                     fontSize: 13,
@@ -161,7 +260,7 @@ class _HospitalDetailsScreenState
     );
   }
 
-  Widget _lastOpertionsRow({
+  Widget _lastOperationsRow({
     required String title,
     required String subtitle,
     required String status,
@@ -199,7 +298,7 @@ class _HospitalDetailsScreenState
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      "نسبة النجاح",
+                      context.translate(LocalizationKeys.successRate),
                       style: context.textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
@@ -207,7 +306,7 @@ class _HospitalDetailsScreenState
                   ],
                 ),
                 Text(
-                  "55%",
+                  "${ministryHospitalDetailsUiModel.successPercentage.toInt()}%",
                   style: context.textTheme.labelMedium!.copyWith(
                     fontWeight: FontWeight.w400,
                   ),
@@ -215,7 +314,9 @@ class _HospitalDetailsScreenState
               ],
             ),
             SizedBox(height: 24.h),
-            GradientProgressBar(value: 3 / 6),
+            GradientProgressBar(
+              value: ministryHospitalDetailsUiModel.successPercentage,
+            ),
           ],
         ),
       ),
@@ -229,17 +330,17 @@ class _HospitalDetailsScreenState
         CountContainer(
           padding: EdgeInsetsDirectional.only(end: 16, start: 2.w),
           title: context.translate(LocalizationKeys.surgeries),
-          count: "8758",
+          count: ministryHospitalDetailsUiModel.totalSurgeries.toString(),
         ),
         CountContainer(
           padding: EdgeInsetsDirectional.only(end: 16),
           title: context.translate(LocalizationKeys.donors),
-          count: "567",
+          count: ministryHospitalDetailsUiModel.totalDonors.toString(),
         ),
         CountContainer(
           padding: EdgeInsetsDirectional.only(end: 2.w),
           title: context.translate(LocalizationKeys.patients),
-          count: "123",
+          count: ministryHospitalDetailsUiModel.totalPatients.toString(),
         ),
       ],
     );
@@ -252,9 +353,9 @@ class _HospitalDetailsScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InfoTileWithStatusCustomWidget(
-            title: "hospitalName",
-            status: "State",
-            subtitle: "city",
+            title: ministryHospitalDetailsUiModel.hospitalName,
+            status: ministryHospitalDetailsUiModel.hospitalStatus,
+            subtitle: ministryHospitalDetailsUiModel.hospitalLocation,
           ),
           CustomDividerWidget(),
           FittedBox(
@@ -262,16 +363,16 @@ class _HospitalDetailsScreenState
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 _infoColumn(
-                  text1: "مستشفي حكومي",
+                  text1: ministryHospitalDetailsUiModel.hospitalType,
                   icon1: AppAssetPaths.hospitalTypeIcon,
-                  text2: "01137498h907",
+                  text2: ministryHospitalDetailsUiModel.phone,
                   icon2: AppAssetPaths.callIcon,
                 ),
                 SizedBox(width: 46.w),
                 _infoColumn(
-                  text1: "Mdjh@gmailhdddhh.com",
+                  text1: ministryHospitalDetailsUiModel.email,
                   icon1: AppAssetPaths.emailIcon,
-                  text2: "Cario",
+                  text2: ministryHospitalDetailsUiModel.hospitalLocation,
                   icon2: AppAssetPaths.locationIcon,
                 ),
               ],

@@ -292,5 +292,7 @@
   "minute": "دقيقة",
   "hour": "ساعة",
   "day": "يوم",
+  "case": "حالة",
+  "last_surgeries": "العمليات الأخيرة",
   "please_fill_in_all_required_fields": "يرجى ملء جميع الحقول المطلوبة"
 }
