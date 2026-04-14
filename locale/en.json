@@ -268,6 +268,7 @@
   "from": "from",
   "hours": "Hours",
   "no_matching_surgeries_at_the_moment": "No matching surgeries at the moment",
+  "hospital_needs": "Hospital needs",
   "matching_details": "Matching Details",
   "request_status": "Request Status",
   "ai_result": "AI Result",
@@ -284,5 +285,10 @@
   "minute": "minute",
   "hour": "hour",
   "day": "day",
-  "please_fill_in_all_required_fields": "Please fill in all required fields"
+  "success_rate": "Success Rate",
+  "case": "case",
+  "patient_age": "patient age",
+  "last_surgeries": "Last Surgeries",
+  "please_fill_in_all_required_fields": "Please fill in all required fields",
+  "hospital_details": "Hospital Details"
 }

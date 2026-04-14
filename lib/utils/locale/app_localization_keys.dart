@@ -310,6 +310,9 @@ class LocalizationKeys {
   static const minute = "minute";
   static const hour = "hour";
   static const day = "day";
+  static const successRate = "success_rate";
+  static const caseText = "case";
+  static const lastSurgeries = "last_surgeries";
   static const pleaseFillInAllRequiredFields =
       "please_fill_in_all_required_fields";
 }

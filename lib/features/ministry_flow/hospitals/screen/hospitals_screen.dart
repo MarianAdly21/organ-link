@@ -12,10 +12,9 @@ import 'package:organ_link/features/hospital_flow/extension/hospital_status_ui.d
 import 'package:organ_link/features/hospital_flow/widget/app_base_body_scaffold.dart';
 import 'package:organ_link/features/hospital_flow/widget/app_search_custom_widget.dart';
 import 'package:organ_link/features/hospital_flow/widget/container_with_background.dart';
-import 'package:organ_link/features/ministry_flow/hospital_detailes/screen/hospital_details_screen.dart';
+import 'package:organ_link/features/ministry_flow/hospital_details/screen/hospital_details_screen.dart';
 import 'package:organ_link/features/ministry_flow/hospitals/bloc/hospital_list_bloc.dart';
 import 'package:organ_link/features/ministry_flow/hospitals/bloc/hospital_list_repository.dart';
-import 'package:organ_link/features/ministry_flow/hospitals/models/hospital_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/hospitals/models/hospitals_list_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/hospitals/models/organ_needs_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/widgets/conut_container.dart';
@@ -43,7 +42,7 @@ class HospitalsScreen extends StatelessWidget {
           ),
         ),
       ),
-      child: const HospitalsScreenWithBloc(),
+      child: HospitalsScreenWithBloc(),
     );
   }
 }
@@ -57,42 +56,11 @@ class HospitalsScreenWithBloc extends BaseStatefulScreenWidget {
 }
 
 class _HospitalsScreenState extends BaseScreenState<HospitalsScreenWithBloc> {
-  // final List<HospitalUiModel> demoData = [
-  //   HospitalUiModel(
-  //     hospitalName: "مستشفى القاهرة التخصصي",
-  //     hospitalState: "نشط",
-  //     city: "القاهرة",
-  //     patientsCount: 775,
-  //     donorsCount: 168,
-  //     operationsCount: 1934,
-  //     organNeeds: [
-  //       OrganNeedModel(organName: "كلي", count: 5),
-  //       OrganNeedModel(organName: "كبد", count: 5),
-  //       OrganNeedModel(organName: "رئة", count: 5),
-  //       OrganNeedModel(organName: "كلي", count: 5),
-  //     ],
-  //   ),
-  //   HospitalUiModel(
-  //     hospitalName: "مستشفى القاهرة التخصصي",
-  //     hospitalState: "نشط",
-  //     city: "القاهرة",
-  //     patientsCount: 775,
-  //     donorsCount: 168,
-  //     operationsCount: 1934,
-  //     organNeeds: [
-  //       OrganNeedModel(organName: "كلي", count: 5),
-  //       OrganNeedModel(organName: "كبد", count: 5),
-  //       OrganNeedModel(organName: "رئة", count: 5),
-  //       OrganNeedModel(organName: "كلي", count: 5),
-  //     ],
-  //   ),
-  // ];
-
   late HospitalsListUiModel hospitalsListUiModel;
   @override
   void initState() {
-    _currentBloc.add(GetHospitalListDataEvent());
     super.initState();
+    _currentBloc.add(GetHospitalListDataEvent());
   }
 
   @override
@@ -124,6 +92,9 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreenWithBloc> {
               );
             }
           },
+          buildWhen: (previous, current) =>
+              current is HospitalListDataLoadedSuccessfullyState ||
+              current is HospitalListErrorState,
           builder: (context, state) {
             return _buildBody(state);
           },
@@ -295,33 +266,6 @@ class _HospitalsScreenState extends BaseScreenState<HospitalsScreenWithBloc> {
       ),
     );
   }
-
-  // Widget _organNeedCountRow({
-  //   required OrganNeedsUiModel organNeedModel1,
-  //   required OrganNeedsUiModel organNeedModel2,
-  //   required Color color1,
-  //   required Color color2,
-  // }) {
-  //   return Padding(
-  //     padding: EdgeInsets.symmetric(vertical: 8.h),
-  //     child: Row(
-  //       children: [
-  //         _organNeedCount(
-  //           organNameAndCount:
-  //               " ${organNeedModel1.organName}: ${organNeedModel1.count}",
-  //           backgroundColor: color1,
-  //         ),
-  //         SizedBox(width: 16),
-  //         _organNeedCount(
-  //           organNameAndCount:
-  //               " ${organNeedModel2.organName}: ${organNeedModel2.count}",
-  //           backgroundColor: color2,
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Widget _organNeedCount({
     required String organNameAndCount,
     required Color backgroundColor,
