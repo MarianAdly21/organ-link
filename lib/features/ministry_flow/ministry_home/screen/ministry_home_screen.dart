@@ -150,6 +150,7 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreenWithBloc> {
       return EmptyWidget();
     }
   }
+
   ///////////////////////////////////////////////////////////
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
@@ -272,7 +273,9 @@ class _MinistryHomeState extends BaseScreenState<MinistryHomeScreenWithBloc> {
       padding: EdgeInsets.symmetric(vertical: 24.h),
       title: context.translate(LocalizationKeys.monthlyOperations),
       subTitle: context.translate(LocalizationKeys.operationsLastSixMonths),
-      body: MonthlyOperationsChart(),
+      body: MonthlyOperationsChart(
+       monthlySurgeriesList: ministryDashboardUiModel.monthlySurgery,
+      ),
     );
   }
 
