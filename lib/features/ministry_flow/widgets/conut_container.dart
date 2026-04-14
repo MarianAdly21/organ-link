@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
 import 'package:organ_link/features/widgets/container_with_black_shadow.dart';
 
-class ConutContainer extends StatelessWidget {
-  const ConutContainer({
+class CountContainer extends StatelessWidget {
+  const CountContainer({
     super.key,
     required this.title,
     required this.count,

@@ -5,7 +5,6 @@ import 'package:organ_link/features/hospital_flow/matching/screen/matching_scree
 import 'package:organ_link/features/hospital_flow/notification_screen/screen/hospital_notification_screen.dart';
 import 'package:organ_link/features/hospital_flow/surgeries/screen/surgeries_screen.dart';
 import 'package:organ_link/features/ministry_flow/add_users/screen/add_new_user_screen.dart';
-import 'package:organ_link/features/ministry_flow/hospital_detailes/screen/hospital_details_screen.dart';
 import 'package:organ_link/features/ministry_flow/hospitals/screen/hospitals_screen.dart';
 import 'package:organ_link/features/ministry_flow/ministry_home/screen/ministry_home_screen.dart';
 import 'package:organ_link/features/ministry_flow/ministry_notification/screen/ministry_notification_screen.dart';
@@ -47,7 +46,7 @@ class AppRouter {
     HospitalSettingScreen.routeName: (ctx) => const HospitalSettingScreen(),
     MinistryHomeScreen.routeName: (ctx) => const MinistryHomeScreen(),
     HospitalsScreen.routeName: (ctx) => const HospitalsScreen(),
-    HospitalDetailsScreen.routeName: (ctx) => const HospitalDetailsScreen(),
+    //HospitalDetailsScreen.routeName: (ctx) => const HospitalDetailsScreen(),
     MinistryNotificationScreen.routeName: (ctx) =>
         const MinistryNotificationScreen(),
     MinistryNotificationDetailsScreen.routeName: (ctx) =>

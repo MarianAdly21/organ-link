@@ -1,45 +1,38 @@
+import 'package:organ_link/apis/models/ministry/hospitals_list/hospital_api_model.dart';
+import 'package:organ_link/features/ministry_flow/hospitals/models/organ_needs_ui_model.dart';
+
 class HospitalUiModel {
   final String hospitalName;
-  final String hospitalState;
-  // final bool isActive;
-  final String city;
-  final int patientsCount;
+  final int hospitalId;
+  final String hospitalLocation;
+  final String hospitalStatus;
+  final int surgeriesCount;
   final int donorsCount;
-  final int operationsCount;
-  final List<OrganNeedModel> organNeeds;
+  final int patientsCount;
+  final List<OrganNeedsUiModel> organNeeds;
 
   HospitalUiModel({
     required this.hospitalName,
-    required this.hospitalState,
-    required this.city,
-    required this.patientsCount,
+    required this.hospitalLocation,
+    required this.hospitalStatus,
+    required this.surgeriesCount,
     required this.donorsCount,
-    required this.operationsCount,
+    required this.patientsCount,
     required this.organNeeds,
+    required this.hospitalId,
   });
-
-  factory HospitalUiModel.fromJson(Map<String, dynamic> json) {
+  factory HospitalUiModel.fromApiModel(HospitalApiModel e) {
     return HospitalUiModel(
-      hospitalName: json['name'],
-      city: json['city'],
-      hospitalState: json['is_active'],
-      patientsCount: json['patients_count'],
-      donorsCount: json['donors_count'],
-      operationsCount: json['operations_count'],
-      organNeeds: (json['organ_needs'] as List)
-          .map((e) => OrganNeedModel.fromJson(e))
+      hospitalName: e.hospitalName,
+      hospitalId: e.hospitalId,
+      hospitalLocation: e.hospitalLocation,
+      hospitalStatus: e.hospitalStatus,
+      surgeriesCount: e.surgeriesCount,
+      donorsCount: e.donorsCount,
+      patientsCount: e.patientsCount,
+      organNeeds: (e.organNeeds)
+          .map((e) => OrganNeedsUiModel.fromApiModel(e))
           .toList(),
     );
-  }
-}
-
-class OrganNeedModel {
-  final String organName;
-  final int count;
-
-  OrganNeedModel({required this.organName, required this.count});
-
-  factory OrganNeedModel.fromJson(Map<String, dynamic> json) {
-    return OrganNeedModel(organName: json['organ_name'], count: json['count']);
   }
 }
