@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organ_link/_core/extensions/extension_localization.dart';
 import 'package:organ_link/_core/extensions/extension_theme.dart';
@@ -15,9 +16,11 @@ import 'package:organ_link/features/widgets/app_buttons/app_button_with_gradient
 import 'package:organ_link/features/widgets/container_with_shadow.dart';
 import 'package:organ_link/features/widgets/custom_divider_widget.dart';
 import 'package:organ_link/features/widgets/data_row_with_status_container_widget.dart';
+import 'package:organ_link/features/widgets/data_section.dart';
 import 'package:organ_link/features/widgets/log_out_Widget.dart';
 import 'package:organ_link/res/app_colors.dart';
 import 'package:organ_link/utils/locale/app_localization_keys.dart';
+import 'package:organ_link/utils/locale/locale_cubit.dart';
 
 class MinistrySettingsScreen extends BaseStatefulScreenWidget {
   const MinistrySettingsScreen({super.key});
@@ -39,7 +42,7 @@ class _MinistrySettingsScreenState
         backTap: () {
           Navigator.pop(context);
         },
-        body: _buildBody(),
+        body: _buildBody(appLocale: context.appLocale.currentLocaleCode()),
       ),
     );
   }
@@ -47,13 +50,36 @@ class _MinistrySettingsScreenState
   /////////////////// Helper widget ////////////////////////
   ///////////////////////////////////////////////////////////
 
-  Widget _buildBody() {
+  Widget _buildBody({required String appLocale}) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _personalInfoSection(),
           _registeredUsers(),
+          DataSection(
+            title: context.translate(LocalizationKeys.language),
+            body: Column(
+              children: [
+                CustomDividerWidget(verticalPadding: 8),
+                SizedBox(height: 16.h),
+                _languageItemWidget(
+                  appLocale: appLocale,
+                  language: 'English',
+                  locale: 'en',
+                  onTap: _englishItemOnTap,
+                ),
+
+                _languageItemWidget(
+                  appLocale: appLocale,
+                  language: 'عربي',
+                  locale: 'ar',
+                  onTap: _arabicItemOnTap,
+                ),
+              ],
+            ),
+          ),
+
           LogOutWidget(
             text: context.translate(LocalizationKeys.logout),
             onPressed: () {
@@ -79,7 +105,7 @@ class _MinistrySettingsScreenState
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: 2,
+            itemCount: 1,
             itemBuilder: (context, index) {
               return _registeredUserInfo(
                 name: "د. أحمد محمود",
@@ -152,11 +178,14 @@ class _MinistrySettingsScreenState
     return Column(
       children: [
         CustomMinistryFormWidget(
-          /// المفروض ف بيانات موجوده و ممكن يحصل عليها تعديل
           fullNameTitle: LocalizationKeys.fullName,
+          fullNameHint: "د. أحمد محمود",
           phoneTitle: LocalizationKeys.phoneNumber,
+          phoneHint: "+201001234567",
           emailTitle: LocalizationKeys.email,
+          emailHint: "ahmed.mahmoud@moh.gov.eg",
           positionTitle: LocalizationKeys.position,
+          positionHint: "مسؤول النظام - وزارة الصحة",
         ),
 
         Padding(
@@ -250,6 +279,58 @@ class _MinistrySettingsScreenState
   ///////////////////////////////////////////////////////////
   /////////////////// Helper Method ////////////////////////
   ///////////////////////////////////////////////////////////
+  void _arabicItemOnTap() {
+    _changeToArabicEvent();
+  }
+
+  void _englishItemOnTap() {
+    _changeToEnglishEvent();
+  }
+
+  void _changeToEnglishEvent() {
+    BlocProvider.of<LocaleCubit>(context).changeLocale(LocaleApp.en);
+  }
+
+  void _changeToArabicEvent() {
+    BlocProvider.of<LocaleCubit>(context).changeLocale(LocaleApp.ar);
+  }
+
+  Widget _languageItemWidget({
+    required String appLocale,
+    required String language,
+    required void Function() onTap,
+    required String locale,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 7.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              language,
+              style: context.textTheme.headlineMedium!.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            appLocale == locale
+                ? const Icon(
+                    Icons.check_box,
+                    size: 26,
+                    color: AppColors.blackText,
+                  )
+                : const Icon(
+                    Icons.check_box_outline_blank,
+                    size: 26,
+                    color: AppColors.blackText,
+                  ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Future<void> _logoutConfirmation() {
     return showAppDialog(

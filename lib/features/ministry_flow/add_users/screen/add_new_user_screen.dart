@@ -51,7 +51,7 @@ class _AddNewUserScreenState extends BaseScreenState<AddNewUserScreen> {
           emailHint: context.translate(LocalizationKeys.enterEmail),
           positionTitle: LocalizationKeys.position,
           positionHint: context.translate(LocalizationKeys.whatIsYourPosition),
-          onChangedfullName: (value) {
+          onChangedFullName: (value) {
             _fullName = value;
           },
           onChangedPhone: (value) {
