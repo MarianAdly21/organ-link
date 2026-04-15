@@ -16,7 +16,6 @@ import 'package:organ_link/features/ministry_flow/ministry_notification/methods/
 import 'package:organ_link/features/ministry_flow/ministry_notification/models/ministry_notification_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/ministry_notification_details/screens/ministry_notification_details_screen.dart';
 import 'package:organ_link/features/ministry_flow/model/dashboard_ministry_ui_model.dart';
-import 'package:organ_link/features/ministry_flow/model/ministry_alart_ui_model.dart';
 import 'package:organ_link/features/ministry_flow/widgets/dashboard_ministry_widget.dart';
 import 'package:organ_link/features/ministry_flow/widgets/info_tile_with_status_custom_widget.dart';
 import 'package:organ_link/features/ministry_flow/widgets/title_and_subtitle_custom_widget.dart';
@@ -59,37 +58,7 @@ class MinistryNotificationScreenWithBloc extends BaseStatefulScreenWidget {
 class _MinistryNotificationScreenState
     extends BaseScreenState<MinistryNotificationScreenWithBloc> {
   late MinistryNotificationUiModel ministryNotificationUiModel;
-  // final List<DashboardMinistryUiModel> dashboardList = [
-  //   DashboardMinistryUiModel(
-  //     icon: AppAssetPaths.newNotificationIcon,
-  //     title: LocalizationKeys.newAlerts,
-  //     count: "24",
-  //   ),
-  //   DashboardMinistryUiModel(
-  //     icon: AppAssetPaths.folderNotificationIcon,
-  //     title: LocalizationKeys.totalAlerts,
-  //     count: "24",
-  //   ),
-  //   DashboardMinistryUiModel(
-  //     icon: AppAssetPaths.hospitalsIcon,
-  //     title: LocalizationKeys.resolved,
-  //     count: "12",
-  //   ),
-  //   DashboardMinistryUiModel(
-  //     icon: AppAssetPaths.hourglassIcon,
-  //     title: LocalizationKeys.underInvestigation,
-  //     count: "7",
-  //   ),
-  // ];
 
-  final List<MinistryAlartUiModel> alarts = [
-    MinistryAlartUiModel(
-      alartTitel: "لا يوجد تقارير عملية زراعة",
-      alartContent: "تم تسجيل عملية زراعة دون توثيق كامل للإجراءات المطلوبة",
-      alartStatus: "alartStatus",
-      hospitalName: "hospitalName",
-    ),
-  ];
   @override
   void initState() {
     super.initState();
@@ -220,7 +189,7 @@ class _MinistryNotificationScreenState
                           hospitalName: ministryNotificationUiModel
                               .alertList[index]
                               .hospitalName,
-                                date: ministryNotificationUiModel
+                          date: ministryNotificationUiModel
                               .alertList[index]
                               .createdAt,
                         ),
@@ -231,9 +200,12 @@ class _MinistryNotificationScreenState
                               Expanded(
                                 child: AppButtonWithGradientColors(
                                   onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                      MinistryNotificationDetailsScreen
-                                          .routeName,
+                                    _currentBloc.add(
+                                      NavToNotificationDetailsScreenEvent(
+                                        id: ministryNotificationUiModel
+                                            .alertList[index]
+                                            .id,
+                                      ),
                                     );
                                   },
                                   text: context.translate(
@@ -278,7 +250,10 @@ class _MinistryNotificationScreenState
     }
   }
 
-  Widget _hospitalNameAndDate({required String hospitalName,required String date}) {
+  Widget _hospitalNameAndDate({
+    required String hospitalName,
+    required String date,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -297,7 +272,7 @@ class _MinistryNotificationScreenState
         SizedBox(width: 16),
         Flexible(
           child: Text(
-           date,
+            date,
             style: context.textTheme.labelMedium!.copyWith(
               fontWeight: FontWeight.w400,
               fontSize: 13,
@@ -314,8 +289,10 @@ class _MinistryNotificationScreenState
   MinistryNotificationBloc get _currentBloc =>
       context.read<MinistryNotificationBloc>();
   void _navToDetailsScreen(int id) {
-    // Navigator.of(
-    //   context,
-    // ).push(MaterialPageRoute(builder: (_) => MinistryNotificationDetailsScreen(id: id)));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => MinistryNotificationDetailsScreen(id: id),
+      ),
+    );
   }
 }

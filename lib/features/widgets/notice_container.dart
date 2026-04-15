@@ -22,7 +22,6 @@ class NoticeContainer extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 26),
         height: height ?? 75.h,
-        // width: 311.w,
         decoration: BoxDecoration(
           color: AppColors.medicalTestContainerBG,
           gradient: LinearGradient(

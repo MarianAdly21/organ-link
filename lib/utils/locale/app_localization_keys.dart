@@ -313,6 +313,12 @@ class LocalizationKeys {
   static const successRate = "success_rate";
   static const caseText = "case";
   static const lastSurgeries = "last_surgeries";
+  static const alertDetails = "alert_details";
+  static const description = "description";
+  static const alertType = "alert_type";
+  static const creationDate = "creation_date";
+  static const priority = "priority";
+  static const hospitalNotifiedOnAction = "hospital_notified_on_action";
   static const pleaseFillInAllRequiredFields =
       "please_fill_in_all_required_fields";
 }

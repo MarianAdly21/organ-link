@@ -289,6 +289,12 @@
   "case": "case",
   "patient_age": "patient age",
   "last_surgeries": "Last Surgeries",
+  "alert_details": "Alert Details",
+  "description": "Description",
+  "creation_date": "creation date",
+  "priority": "priority",
+  "alert_type": "alert type",
+  "hospital_notified_on_action": "A notification will be sent to the hospital when any action is taken regarding this alert.",
   "please_fill_in_all_required_fields": "Please fill in all required fields",
   "hospital_details": "Hospital Details"
 }

@@ -33,6 +33,8 @@ class ApiKeys {
   static String ministryDashboardUrl = "$baseUrl/ministry/dashboard";
   static String hospitalDetailsUrl(int id) =>
       "$baseUrl/ministry/dashboard?hospital=$id";
+  static String ministryNotificationDetails(int id) =>
+      "$baseUrl/ministry/dashboard?alert=$id";
 
   static String get currentEnvironmentUrl =>
       isDevMode() ? ApiKeys.baseUrlProduction : ApiKeys.baseUrlProduction;

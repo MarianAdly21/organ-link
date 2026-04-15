@@ -8,7 +8,6 @@ import 'package:organ_link/features/ministry_flow/add_users/screen/add_new_user_
 import 'package:organ_link/features/ministry_flow/hospitals/screen/hospitals_screen.dart';
 import 'package:organ_link/features/ministry_flow/ministry_home/screen/ministry_home_screen.dart';
 import 'package:organ_link/features/ministry_flow/ministry_notification/screen/ministry_notification_screen.dart';
-import 'package:organ_link/features/ministry_flow/ministry_notification_details/screens/ministry_notification_details_screen.dart';
 import 'package:organ_link/features/ministry_flow/ministry_setting/screens/ministry_settings_screen.dart';
 import 'package:organ_link/features/shared_screens/login/screen/login_screen.dart';
 import 'package:organ_link/features/shared_screens/splash/splash_screen.dart';
@@ -49,8 +48,8 @@ class AppRouter {
     //HospitalDetailsScreen.routeName: (ctx) => const HospitalDetailsScreen(),
     MinistryNotificationScreen.routeName: (ctx) =>
         const MinistryNotificationScreen(),
-    MinistryNotificationDetailsScreen.routeName: (ctx) =>
-        const MinistryNotificationDetailsScreen(),
+    // MinistryNotificationDetailsScreen.routeName: (ctx) =>
+    //     const MinistryNotificationDetailsScreen(),
     MinistrySettingsScreen.routeName: (ctx) => const MinistrySettingsScreen(),
     AddNewUserScreen.routeName: (ctx) => const AddNewUserScreen(),
     ProcedureSchedulingScreen.routeName: (ctx) =>

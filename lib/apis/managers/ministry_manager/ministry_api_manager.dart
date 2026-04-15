@@ -6,6 +6,7 @@ import 'package:organ_link/apis/models/ministry/hospital_details/hospital_detail
 import 'package:organ_link/apis/models/ministry/hospitals_list/hospitals_list_api_model.dart';
 import 'package:organ_link/apis/models/ministry/ministry_dashboard/ministry_dashboard_response.dart';
 import 'package:organ_link/apis/models/ministry/ministry_notification/ministry_notification_api_model.dart';
+import 'package:organ_link/apis/models/ministry/ministry_notification/ministry_notification_api_details.dart';
 
 class MinistryApiManager {
   final DioApiManager dioApiManager;
@@ -84,6 +85,27 @@ class MinistryApiManager {
           final MinistryNotificationApiModel ministryNotificationApiModel =
               MinistryNotificationApiModel.fromJson(extractedData);
           success(ministryNotificationApiModel);
+        })
+        .onError((DioException error, stackTrace) {
+          fail(ErrorApiModel.fromDioError(error));
+        })
+        .catchError((error) {
+          fail(ErrorApiModel.identifyError(error: error));
+        });
+  }
+
+  Future<void> getMinistryNotificationDetailsData(
+    int id,
+    void Function(MinistryNotificationApiDetails) success,
+    void Function(ErrorApiModel) fail,
+  ) async {
+    await dioApiManager.dio
+        .get(ApiKeys.ministryNotificationDetails(id))
+        .then((response) {
+          final Map<String, dynamic> extractedData = response.data;
+          final MinistryNotificationApiDetails ministryNotificationDetails =
+              MinistryNotificationApiDetails.fromJson(extractedData);
+          success(ministryNotificationDetails);
         })
         .onError((DioException error, stackTrace) {
           fail(ErrorApiModel.fromDioError(error));

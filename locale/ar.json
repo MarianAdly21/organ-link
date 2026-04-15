@@ -294,5 +294,11 @@
   "day": "يوم",
   "case": "حالة",
   "last_surgeries": "العمليات الأخيرة",
+  "alert_details": "تفاصيل الإشعار",
+  "creation_date": "تاريخ الإنشاء",
+  "alert_type": "نوع الإشعار",
+  "description": "الوصف",
+  "hospital_notified_on_action": "سيتم إرسال إشعار للمستشفى عند اتخاذ أي إجراء بخصوص هذا التنبيه",
+  "priority": "الأولوية",
   "please_fill_in_all_required_fields": "يرجى ملء جميع الحقول المطلوبة"
 }
