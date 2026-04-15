@@ -15,7 +15,7 @@ class CustomMinistryFormWidget extends StatefulWidget {
     this.phoneHint,
     this.emailHint,
     this.positionHint,
-    this.onChangedfullName,
+    this.onChangedFullName,
     this.onChangedPhone,
     this.onChangedEmail,
     this.onChangedPosition,
@@ -25,7 +25,7 @@ class CustomMinistryFormWidget extends StatefulWidget {
   final String phoneTitle;
   final String emailTitle;
   final String positionTitle;
-  final void Function(String)? onChangedfullName;
+  final void Function(String)? onChangedFullName;
   final void Function(String)? onChangedPhone;
   final void Function(String)? onChangedEmail;
   final void Function(String)? onChangedPosition;
@@ -52,7 +52,7 @@ class _CustomMinistryFormWidgetState extends State<CustomMinistryFormWidget> {
             child: _textField(
               title: widget.fullNameTitle,
               hintText: widget.fullNameHint,
-              onChanged: widget.onChangedfullName,
+              onChanged: widget.onChangedFullName,
             ),
           ),
           _textField(
