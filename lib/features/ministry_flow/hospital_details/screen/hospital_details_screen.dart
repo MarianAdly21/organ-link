@@ -145,18 +145,15 @@ class _HospitalDetailsScreenState
         children: [
           _hospitalNeedRow(
             organName: ministryHospitalDetailsUiModel.organNeeds[0].organName,
-            needCount: ministryHospitalDetailsUiModel.organNeeds[0].organCount
-                .toString(),
+            needCount: ministryHospitalDetailsUiModel.organNeeds[0].organCount,
           ),
           _hospitalNeedRow(
             organName: ministryHospitalDetailsUiModel.organNeeds[1].organName,
-            needCount: ministryHospitalDetailsUiModel.organNeeds[1].organCount
-                .toString(),
+            needCount: ministryHospitalDetailsUiModel.organNeeds[1].organCount,
           ),
           _hospitalNeedRow(
             organName: ministryHospitalDetailsUiModel.organNeeds[2].organName,
-            needCount: ministryHospitalDetailsUiModel.organNeeds[2].organCount
-                .toString(),
+            needCount: ministryHospitalDetailsUiModel.organNeeds[2].organCount,
           ),
         ],
       ),
@@ -223,10 +220,7 @@ class _HospitalDetailsScreenState
     );
   }
 
-  Widget _hospitalNeedRow({
-    required String organName,
-    required String needCount,
-  }) {
+  Widget _hospitalNeedRow({required String organName, required int needCount}) {
     return Column(
       children: [
         Row(
@@ -252,7 +246,12 @@ class _HospitalDetailsScreenState
                 ),
               ],
             ),
-            GradientProgressBar(width: 139.w, value: 1 / 5),
+            GradientProgressBar(
+              width: 139.w,
+              value: ministryHospitalDetailsUiModel.totalNeeds != 0
+                  ? needCount / ministryHospitalDetailsUiModel.totalNeeds
+                  : 0,
+            ),
           ],
         ),
         CustomDividerWidget(),
