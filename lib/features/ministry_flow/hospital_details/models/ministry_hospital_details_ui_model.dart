@@ -12,6 +12,7 @@ class MinistryHospitalDetailsUiModel {
   final int totalPatients;
   final int totalDonors;
   final int totalSurgeries;
+  final int totalNeeds;
   final double successPercentage;
   final List<OrganNeedsUiModel> organNeeds;
   final List<LastSurgeriesUiModel> lastSurgeries;
@@ -29,9 +30,12 @@ class MinistryHospitalDetailsUiModel {
     required this.successPercentage,
     required this.organNeeds,
     required this.lastSurgeries,
+    required this.totalNeeds,
   });
 
-  factory MinistryHospitalDetailsUiModel.fromApiModel(HospitalDetailsApiModel e) {
+  factory MinistryHospitalDetailsUiModel.fromApiModel(
+    HospitalDetailsApiModel e,
+  ) {
     return MinistryHospitalDetailsUiModel(
       hospitalName: e.hospitalName,
       hospitalLocation: e.hospitalLocation,
@@ -49,6 +53,10 @@ class MinistryHospitalDetailsUiModel {
       lastSurgeries: e.lastSurgeries
           .map((x) => LastSurgeriesUiModel.fromApiModel(x))
           .toList(),
+      totalNeeds: e.organNeeds.fold(
+        0,
+        (sum, organNeeds) => sum + organNeeds.organCount,
+      ),
     );
   }
 }
