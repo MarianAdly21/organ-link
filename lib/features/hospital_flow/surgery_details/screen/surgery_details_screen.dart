@@ -91,7 +91,11 @@ class _SurgeryDetailsScreenWithBlocState
               );
             } else if (state is SurgeryDetailsErrorState &&
                 state.codeError != 1016) {
-              showFeedbackMessage(state.errorMessage);
+              showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
+                state.errorMessage,
+              );
             }
           },
           buildWhen: (previous, current) =>
@@ -130,7 +134,7 @@ class _SurgeryDetailsScreenWithBlocState
               padding: const EdgeInsets.symmetric(horizontal: 2),
               child: _donorInfoSection(),
             ),
-           // if (surgeryDetailsUiModel.date != null) ...[_infoNoticeCard()],
+            // if (surgeryDetailsUiModel.date != null) ...[_infoNoticeCard()],
           ],
         ),
       );

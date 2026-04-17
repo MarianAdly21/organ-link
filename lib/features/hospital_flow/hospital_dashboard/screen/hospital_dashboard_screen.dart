@@ -92,7 +92,11 @@ class _HospitalDashboardScreenWithBlocState
             _navToViewPatientOrDonorScreen(state);
           } else if (state is HospitalDashboardErrorState &&
               state.codeError != 1016) {
-            showFeedbackMessage(state.errorMessage);
+            showFeedbackMessage(
+              context: context,
+              feedbackStyle: FeedbackStyle.snackBar,
+              state.errorMessage,
+            );
           }
         },
         buildWhen: (previous, current) =>

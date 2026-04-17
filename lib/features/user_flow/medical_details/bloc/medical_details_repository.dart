@@ -20,7 +20,7 @@ class MedicalDetailsRepository implements BaseMedicalDetailsRepository {
   Future<MedicalDetailsState> getMedicalDetailsData() async {
     late MedicalDetailsState medicalDetailsState;
     final int? id = await preferencesManager.getId();
-    await userApiManager.getUserDataApi(
+    await userApiManager.getMedicalDetailsDataApi(
       id!,
       (response) {
         final model = MedicalDetailsUiModel.fromApiModel(response);

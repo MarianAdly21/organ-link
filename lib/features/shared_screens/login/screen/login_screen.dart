@@ -78,9 +78,15 @@ class _LoginScreenWithBlocState extends BaseScreenState<LoginScreenWithBloc>
           } else if (state is LoginErrorState) {
             state.codeError == 1016
                 ? showFeedbackMessage(
+                    context: context,
+                    feedbackStyle: FeedbackStyle.snackBar,
                     context.translate(LocalizationKeys.plzCheckInternet),
                   )
-                : showFeedbackMessage(state.errorMessage);
+                : showFeedbackMessage(
+                    context: context,
+                    feedbackStyle: FeedbackStyle.snackBar,
+                    state.errorMessage,
+                  );
           }
         },
         child: buildLoginWidget(context),

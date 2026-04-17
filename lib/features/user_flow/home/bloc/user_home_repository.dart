@@ -19,7 +19,7 @@ class UserHomeRepository implements BaseUserHomeRepository {
   Future<UserHomeState> getUserHomeData() async {
     late UserHomeState userHomeState;
     final int? id = await preferencesManager.getId();
-    await userHomeApiManager.getUserDataApi(
+    await userHomeApiManager.getUserHomeDataApi(
       id!,
       (response) {
         final model = UserHomeDataUiModel.fromApiModel(response);

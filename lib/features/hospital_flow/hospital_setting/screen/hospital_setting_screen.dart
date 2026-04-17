@@ -87,7 +87,11 @@ class _HospitalSettingScreenWithBlocState
                   state.hospitalInformationSettingUiModel;
             } else if (state is HospitalSettingErrorState &&
                 state.codeError != 1016) {
-              showFeedbackMessage(state.errorMessage);
+              showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
+                state.errorMessage,
+              );
             }
           },
           buildWhen: (previous, current) =>

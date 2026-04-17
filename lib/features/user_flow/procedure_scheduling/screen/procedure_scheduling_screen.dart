@@ -78,7 +78,11 @@ class _ProcedureSchedulingScreenWithBlocState
             }
             if (state is ScheduleProcedureErrorState &&
                 state.codeError != 1016) {
-              showFeedbackMessage(state.errorMessage);
+              showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
+                state.errorMessage,
+              );
             } else if (state is ScheduleProcedureDataLoadedSuccessfullyState) {
               scheduleProcedureUiModel = state.scheduleProcedureUiModel;
             }

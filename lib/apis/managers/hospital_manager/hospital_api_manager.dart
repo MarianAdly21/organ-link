@@ -130,28 +130,6 @@ class HospitalApiManager {
         });
   }
 
-  //  Future<void> getPatientsOrDonorsListApi(
-  //     int id,
-  //     void Function(PatientOrDonorListApiModel) success,
-  //     void Function(ErrorApiModel) fail,
-  //   ) async {
-  //     await dioApiManager.dio
-  //         .get(ApiKeys.getHospitalUrl(id))
-  //         .then((response) {
-  //           final Map<String, dynamic> extractedData =
-  //               response.data as Map<String, dynamic>;
-  //           final PatientOrDonorListApiModel patientOrDonorListApiModel =
-  //               PatientOrDonorListApiModel.formJson(extractedData);
-  //           success(patientOrDonorListApiModel);
-  //         })
-  //         .onError((DioException error, stackTrace) {
-  //           fail(ErrorApiModel.fromDioError(error));
-  //         })
-  //         .catchError((error) {
-  //           fail(ErrorApiModel.identifyError(error: error));
-  //         });
-  //   }
-
   Future<void> getSurgeriesDataApi(
     int id,
     void Function(SurgeryApiModel) success,

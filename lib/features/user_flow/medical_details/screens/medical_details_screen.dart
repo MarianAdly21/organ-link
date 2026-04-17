@@ -84,7 +84,11 @@ class _MedicalDetailsScreenWithBlocState
               medicalDetailsUiModel = state.medicalDetailsUiModel;
             } else if (state is MedicalDetailsErrorState &&
                 state.codeError != 1016) {
-              showFeedbackMessage(state.errorMessage);
+              showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
+                state.errorMessage,
+              );
             }
           },
           buildWhen: (previous, current) =>

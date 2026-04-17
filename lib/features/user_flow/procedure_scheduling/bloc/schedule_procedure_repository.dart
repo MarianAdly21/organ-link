@@ -20,11 +20,11 @@ class ScheduleProcedureRepository implements BaseScheduleProcedureRepository {
   Future<ScheduleProcedureState> getSurgeryData() async {
     late ScheduleProcedureState scheduleProcedureState;
     final int? id = await preferencesManager.getId();
-    await userApiManager.getUserDataApi(
+    await userApiManager.getScheduleProcedureDataApi(
       id!,
       (response) {
         final model = ScheduleProcedureUiModel.fromApiModel(
-          response.scheduledSurgery,
+          response,
         );
         scheduleProcedureState = ScheduleProcedureDataLoadedSuccessfullyState(
           scheduleProcedureUiModel: model,

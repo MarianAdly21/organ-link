@@ -72,7 +72,11 @@ class _MatchingDetailsScreenWithBlocState
             matchingDetailsUiModel = state.matchingDetailsUiModel;
           } else if (state is MatchingDetailsErrorState &&
               state.codeError != 1016) {
-            showFeedbackMessage(state.errorMessage);
+            showFeedbackMessage(
+              context: context,
+              feedbackStyle: FeedbackStyle.snackBar,
+              state.errorMessage,
+            );
           }
         },
         buildWhen: (previous, current) =>
@@ -204,6 +208,7 @@ class _MatchingDetailsScreenWithBlocState
   Widget _waitingAiResultContainer() {
     return ContainerWithShadow(
       height: 88.h,
+      width: double.infinity,
       background: AppColors.waitingAiResultBG,
       contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
       child: Text(
