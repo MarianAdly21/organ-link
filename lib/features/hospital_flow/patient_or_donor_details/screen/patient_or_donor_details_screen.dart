@@ -108,7 +108,11 @@ class _PatientOrDonorDetailsScreenWithBlocState
                       state.patientOrDonorDetailsUiModel;
                 } else if (state is PatientOrDonorDetailsErrorState &&
                     state.codeError != 1016) {
-                  showFeedbackMessage(state.errorMessage);
+                  showFeedbackMessage(
+                    context: context,
+                    feedbackStyle: FeedbackStyle.snackBar,
+                    state.errorMessage,
+                  );
                 }
               },
               buildWhen: (previous, current) =>

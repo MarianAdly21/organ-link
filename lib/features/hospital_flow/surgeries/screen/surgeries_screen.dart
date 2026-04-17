@@ -113,7 +113,11 @@ class _SurgeriesScreenWithBlocState
               _navToMatchingDetailsScreen(state);
             } else if (state is SurgeriesErrorState &&
                 state.codeError != 1016) {
-              showFeedbackMessage(state.errorMessage);
+              showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
+                state.errorMessage,
+              );
             }
           },
           buildWhen: (previous, current) =>
@@ -235,9 +239,10 @@ class _SurgeriesScreenWithBlocState
                           title: context.translate(LocalizationKeys.date),
                           subTitle: surgeryList[index].date,
                         ),
-                         DataRowWithDivider(
+                        DataRowWithDivider(
                           title: context.translate(LocalizationKeys.duration),
-                          subTitle: "${surgeryList[index].duration} ${context.translate(LocalizationKeys.hours)}",
+                          subTitle:
+                              "${surgeryList[index].duration} ${context.translate(LocalizationKeys.hours)}",
                         ),
                         CustomDividerWidget(indent: 24.w, endIndent: 24.w),
                         SizedBox(height: 16.h),
@@ -293,9 +298,9 @@ class _SurgeriesScreenWithBlocState
             surgeryList[index].surgeryState,
           ).badgeBackground,
           text: surgeryList[index].surgeryState,
-          textColor:mapOperationStatus(
+          textColor: mapOperationStatus(
             surgeryList[index].surgeryState,
-          ).textColor ,
+          ).textColor,
         ),
       ],
     );

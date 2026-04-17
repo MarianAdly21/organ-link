@@ -1,6 +1,6 @@
 import 'package:organ_link/apis/managers/user_manager/user_api_manager.dart';
 import 'package:organ_link/features/user_flow/hospital_information/bloc/hospital_information_bloc.dart';
-import 'package:organ_link/features/user_flow/hospital_information/models/hospital_information_ui_model.dart';
+import 'package:organ_link/features/user_flow/hospital_information/models/hospital_details_ui_model.dart';
 import 'package:organ_link/preferences/preferences_manager.dart';
 
 abstract class BaseHospitalInformationRepository {
@@ -20,13 +20,13 @@ class HospitalInformationRepository
   Future<HospitalInformationState> getHospitalInformationDetailsData() async {
     late HospitalInformationState hospitalInformationState;
     final int? id = await preferencesManager.getId();
-    await userApiManager.getUserDataApi(
+    await userApiManager.getHospitalDetailsDataApi(
       id!,
       (response) {
-        final model = HospitalInformationUiModel.fromApiModel(response);
+        final model = HospitalDetailsUiModel.fromApiModel(response);
         hospitalInformationState =
             HospitalInformationDataLoadedSuccessfullyState(
-              hospitalInformationUiModel: model,
+              hospitalDetailsUiModel: model,
             );
       },
       (error) {

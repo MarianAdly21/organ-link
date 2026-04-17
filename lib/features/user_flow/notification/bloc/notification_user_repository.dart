@@ -19,7 +19,7 @@ class NotificationUserRepository implements BaseNotificationUserRepository {
   Future<NotificationUserState> getNotificationUser() async {
     late NotificationUserState notificationUserState;
     final int? id = await preferencesManager.getId();
-    await userApiManager.getUserDataApi(
+    await userApiManager.getUserHomeDataApi(
       id!,
       (response) {
         final model = response.notificationList

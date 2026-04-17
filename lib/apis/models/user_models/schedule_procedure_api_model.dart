@@ -19,13 +19,13 @@ class ScheduleProcedureApiModel {
 
   factory ScheduleProcedureApiModel.formJson(Map<String, dynamic> json) {
     return ScheduleProcedureApiModel(
-      scheduledDate: DateTime.parse(json["scheduled_date"]),
-      scheduledTime: json["scheduled_time"],
-      duration: json["duration"],
-      operationRoom: json["operation_room"],
-      doctorSpecialty: json["doctor_detail"]["specialty"],
-      doctorName: json["doctor_detail"]["name"],
-      hospitalName: json["hospital_detail"]["name"],
+      scheduledDate: DateTime.parse(json["surgeries"]["scheduled_date"]),
+      scheduledTime: json["surgeries"]["scheduled_time"],
+      duration: json["surgeries"]["duration"],
+      operationRoom: json["surgeries"]["operation_room"],
+      doctorSpecialty: json["surgeries"]["doctor_detail"]["specialty"],
+      doctorName: json["surgeries"]["doctor_detail"]["name"],
+      hospitalName: json["surgeries"]["hospital_detail"]["name"],
     );
   }
 }

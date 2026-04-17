@@ -72,7 +72,11 @@ class _NotificationScreenWithBlocState
             }
             if (state is NotificationUserErrorState &&
                 state.codeError != 1016) {
-              showFeedbackMessage(state.errorMessage);
+              showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
+                state.errorMessage,
+              );
             } else if (state is NotificationUserDataLoadedSuccessfullyState) {
               notificationUserUiModel = state.notificationUserUiModel;
             }

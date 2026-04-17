@@ -9,7 +9,7 @@ import 'package:organ_link/apis/_base/dio_api_manager.dart';
 import 'package:organ_link/apis/managers/user_manager/user_api_manager.dart';
 import 'package:organ_link/features/user_flow/hospital_information/bloc/hospital_information_bloc.dart';
 import 'package:organ_link/features/user_flow/hospital_information/bloc/hospital_information_repository.dart';
-import 'package:organ_link/features/user_flow/hospital_information/models/hospital_information_ui_model.dart';
+import 'package:organ_link/features/user_flow/hospital_information/models/hospital_details_ui_model.dart';
 import 'package:organ_link/features/user_flow/widget/base_body_scaffold.dart';
 import 'package:organ_link/features/user_flow/widget/hospital_name_container.dart';
 import 'package:organ_link/features/widgets/data_row_with_divider.dart';
@@ -56,7 +56,7 @@ class _HospitalInformationScreenWithBlocState
     super.initState();
   }
 
-  late HospitalInformationUiModel hospitalInformationUiModel;
+  late HospitalDetailsUiModel hospitalDetailsUiModel;
   @override
   Widget baseScreenBuild(BuildContext context) {
     return Scaffold(
@@ -75,10 +75,14 @@ class _HospitalInformationScreenWithBlocState
             }
             if (state is HospitalInformationErrorState &&
                 state.codeError != 1016) {
-              showFeedbackMessage(state.errorMessage);
+              showFeedbackMessage(
+                context: context,
+                feedbackStyle: FeedbackStyle.snackBar,
+                state.errorMessage,
+              );
             } else if (state
                 is HospitalInformationDataLoadedSuccessfullyState) {
-              hospitalInformationUiModel = state.hospitalInformationUiModel;
+              hospitalDetailsUiModel = state.hospitalDetailsUiModel;
             }
           },
           buildWhen: (previous, current) =>
@@ -102,9 +106,8 @@ class _HospitalInformationScreenWithBlocState
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             HospitalNameContainer(
-              hospitalName:
-                  hospitalInformationUiModel.hospitalUiModel.hospitalName,
-              hospitalLocation: hospitalInformationUiModel.hospitalUiModel.city,
+              hospitalName: hospitalDetailsUiModel.hospitalName,
+              hospitalLocation: hospitalDetailsUiModel.city,
             ),
             DataSection(
               paddingAroundContainer: EdgeInsets.symmetric(vertical: 0),
@@ -112,7 +115,7 @@ class _HospitalInformationScreenWithBlocState
               titleOfButton: context.translate(LocalizationKeys.openInMaps),
               onTap: () {},
               body: Text(
-                hospitalInformationUiModel.hospitalUiModel.location,
+                hospitalDetailsUiModel.location,
                 style: context.textTheme.labelMedium!.copyWith(
                   color: AppColors.grayText,
                 ),
@@ -129,20 +132,17 @@ class _HospitalInformationScreenWithBlocState
                   DataRowWithDivider(
                     divider: true,
                     title: context.translate(LocalizationKeys.mainPhone),
-                    subTitle:
-                        hospitalInformationUiModel.hospitalUiModel.minaPhone,
+                    subTitle: hospitalDetailsUiModel.minaPhone,
                   ),
                   DataRowWithDivider(
                     isImportant: true,
                     divider: true,
                     title: context.translate(LocalizationKeys.emergency),
-                    subTitle: hospitalInformationUiModel
-                        .hospitalUiModel
-                        .emergencyPhone,
+                    subTitle: hospitalDetailsUiModel.emergencyPhone,
                   ),
                   DataRowWithDivider(
                     title: context.translate(LocalizationKeys.email),
-                    subTitle: hospitalInformationUiModel.hospitalUiModel.email,
+                    subTitle: hospitalDetailsUiModel.email,
                   ),
                 ],
               ),
@@ -158,24 +158,23 @@ class _HospitalInformationScreenWithBlocState
                   DataRowWithDivider(
                     divider: true,
                     title: context.translate(LocalizationKeys.name),
-                    subTitle: hospitalInformationUiModel
-                        .supervisorDoctorUiModel
+                    subTitle: hospitalDetailsUiModel
+                        .supervisorDoctorDetails
                         .doctorName,
                   ),
                   DataRowWithDivider(
                     divider: true,
                     title: context.translate(LocalizationKeys.specialty),
-                    subTitle: hospitalInformationUiModel
-                        .supervisorDoctorUiModel
+                    subTitle: hospitalDetailsUiModel
+                        .supervisorDoctorDetails
                         .specialty,
                   ),
                   DataRowWithDivider(
                     title: context.translate(
                       LocalizationKeys.clinicPhoneNumber,
                     ),
-                    subTitle: hospitalInformationUiModel
-                        .supervisorDoctorUiModel
-                        .phone,
+                    subTitle:
+                        hospitalDetailsUiModel.supervisorDoctorDetails.phone,
                   ),
                 ],
               ),
@@ -187,7 +186,7 @@ class _HospitalInformationScreenWithBlocState
                   CustomDividerWidget(verticalPadding: 8.h),
                   Center(
                     child: Text(
-                      hospitalInformationUiModel.hospitalUiModel.workingHours,
+                      hospitalDetailsUiModel.workingHours,
                       style: context.textTheme.bodyMedium!.copyWith(
                         color: AppColors.blackText,
                         fontWeight: FontWeight.w600,

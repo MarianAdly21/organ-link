@@ -86,7 +86,11 @@ class _ViewPatientOrDonorScreenWithBlocState
             _navToDetailsScreen(state.id);
           } else if (state is ViewPatientOrDonorErrorState &&
               state.codeError != 1016) {
-            showFeedbackMessage(state.errorMessage);
+            showFeedbackMessage(
+              context: context,
+              feedbackStyle: FeedbackStyle.snackBar,
+              state.errorMessage,
+            );
           }
         },
         buildWhen: (previous, current) =>
@@ -162,7 +166,7 @@ class _ViewPatientOrDonorScreenWithBlocState
             id: modelList[index].medicalRecordNumber,
           ),
           _infoRow(
-            age:"${modelList[index].age}",
+            age: "${modelList[index].age}",
             bloodType: modelList[index].bloodType,
             organ: modelList[index].organ,
           ),
@@ -274,8 +278,8 @@ class _ViewPatientOrDonorScreenWithBlocState
                 color: AppColors.blackText,
               ),
               items: [
-                CustomDropDownItem(value: "كلي يمنى", key: ""),
-                CustomDropDownItem(value: "كلي يسرى", key: ""),
+                CustomDropDownItem(value: "كلية يمنى", key: ""),
+                CustomDropDownItem(value: "كلية يسرى", key: ""),
                 CustomDropDownItem(value: "كبد", key: ""),
               ],
               onChanged: (value) {
@@ -348,22 +352,4 @@ class _ViewPatientOrDonorScreenWithBlocState
   void _getViewPatientOrDonorDataEvent() {
     _currentBloc.add(GetViewPatientOrDonorDataEvent(type: widget.type));
   }
-
-  //   void _search(String query) {
-  //   if (query.isEmpty) {
-  //     setState(() {
-  //       modelListSearch = modelList;
-  //     });
-  //     return;
-  //   }
-  //   final searchLower = query.toLowerCase();
-  //   final filtered =
-  //       modelList.where((item) {
-  //         return item.fullName.toLowerCase().contains(searchLower) ||
-  //             item.medicalRecordNumber.toLowerCase().contains(searchLower);
-  //       }).toList();
-  //   setState(() {
-  //     modelListSearch = filtered;
-  //   });
-  // }
 }

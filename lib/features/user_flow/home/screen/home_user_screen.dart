@@ -90,7 +90,11 @@ class _HomeUserScreenWithBlocState
           } else if (state is NavToMedicalDetailsScreenState) {
             Navigator.of(context).pushNamed(MedicalDetailsScreen.routeName);
           } else if (state is UserHomeErrorState && state.codeError != 1016) {
-            showFeedbackMessage(state.errorMessage);
+            showFeedbackMessage(
+              context: context,
+              feedbackStyle: FeedbackStyle.snackBar,
+              state.errorMessage,
+            );
           }
         },
         buildWhen: (previous, current) =>
