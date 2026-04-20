@@ -295,7 +295,7 @@ class _MedicalDetailsScreenWithBlocState
               ),
             ),
           ),
-          SizedBox(width: 9),
+          SizedBox(width: 9.w),
           Container(
             height: 26.h,
             width: 53.w,

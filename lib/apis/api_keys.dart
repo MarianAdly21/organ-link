@@ -1,4 +1,3 @@
-import 'package:organ_link/utils/build_type/build_type.dart';
 
 class ApiKeys {
   /// KEYs
@@ -36,6 +35,6 @@ class ApiKeys {
   static String ministryNotificationDetails(int id) =>
       "$baseUrl/ministry/dashboard?alert=$id";
 
-  static String get currentEnvironmentUrl =>
-      isDevMode() ? ApiKeys.baseUrlProduction : ApiKeys.baseUrlProduction;
+  // static String get currentEnvironmentUrl =>
+  //     isDevMode() ? ApiKeys.baseUrlProduction : ApiKeys.baseUrlProduction;
 }

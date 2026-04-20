@@ -15,10 +15,7 @@ class RefreshTokenApiManager {
     void Function(ErrorApiModel) fail,
   ) async {
     await dio
-        .post(
-          ApiKeys.currentEnvironmentUrl + ApiKeys.loginUrl,
-          data: refreshTokenSendModelApi.toMap(),
-        )
+        .post(ApiKeys.loginUrl, data: refreshTokenSendModelApi.toMap())
         .then((response) async {
           final Map<String, dynamic> extractedData =
               response.data as Map<String, dynamic>;

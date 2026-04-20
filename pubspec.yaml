@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.4
   dotted_border: ^3.1.0
   timelines_plus: ^1.0.8
   file_picker: ^10.3.7
