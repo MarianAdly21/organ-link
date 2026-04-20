@@ -191,23 +191,29 @@ class _PatientOrDonorDetailsScreenWithBlocState
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                test.testName,
-                style: context.textTheme.bodyMedium!.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    test.testName,
+                    style: context.textTheme.bodyMedium!.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: 13.h),
+                  Text(
+                    DateFormat('yyyy-MM-dd').format(test.date),
+                    style: context.textTheme.labelMedium,
+                  ),
+                ],
               ),
-              SizedBox(height: 13.h),
-              Text(
-                DateFormat('yyyy-MM-dd').format(test.date),
-                style: context.textTheme.labelMedium,
-              ),
-            ],
+            ),
           ),
+          SizedBox(width: 9.w),
           ContainerWithBackground(
             backgroundColor: mapMedicalTestStatus(
               test.testType,

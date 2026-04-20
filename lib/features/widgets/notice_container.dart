@@ -18,10 +18,11 @@ class NoticeContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding ?? EdgeInsetsDirectional.only(end: 6),
+      padding: padding ?? EdgeInsetsDirectional.only(end: 6,bottom: 8.h),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 26),
-        height: height ?? 75.h,
+        // height: height ?? 75.h,
+        constraints: BoxConstraints(minHeight: height ?? 75.h),
         decoration: BoxDecoration(
           color: AppColors.medicalTestContainerBG,
           gradient: LinearGradient(
@@ -40,13 +41,15 @@ class NoticeContainer extends StatelessWidget {
             ),
           ],
         ),
-        child: Center(
-          child: Text(
-            textAlign: TextAlign.center,
-            context.translate(notice),
-            style: context.textTheme.displayMedium!.copyWith(
-              fontSize: 16,
-              color: AppColors.hospitalInfoText,
+        child: IntrinsicHeight(
+          child: Center(
+            child: Text(
+              textAlign: TextAlign.center,
+              context.translate(notice),
+              style: context.textTheme.displayMedium!.copyWith(
+                fontSize: 16.sp,
+                color: AppColors.hospitalInfoText,
+              ),
             ),
           ),
         ),

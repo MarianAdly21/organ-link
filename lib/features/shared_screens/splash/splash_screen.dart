@@ -103,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // if(type !=null){
     // final userType = UserType.values.byName(type);
     // }
-    if (type == UserType.user.name ) {
+    if (type == UserType.user.name) {
       _navToHomeUserScreen();
     } else if (type == UserType.ministry.name) {
       _navToMinistryHomeScreen();
@@ -119,14 +119,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navToMinistryHomeScreen() {
-    Navigator.of(context).pushNamed(MinistryHomeScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(MinistryHomeScreen.routeName);
   }
 
   void _navToHomeUserScreen() {
-    Navigator.of(context).pushNamed(HomeUserScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(HomeUserScreen.routeName);
   }
 
   void _navigatorToLoginScreen() {
-    Navigator.of(context).pushNamed(LoginScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
   }
 }

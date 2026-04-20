@@ -146,7 +146,7 @@ class DioOptions extends BaseOptions {
   }
 
   @override
-  String get baseUrl => ApiKeys.currentEnvironmentUrl;
+  String get baseUrl => ApiKeys.baseUrl;
 
   static Dio? dio;
 

@@ -21,6 +21,7 @@ final List<OrganDistributionUiModel> organDistributionList;
             LegendItem(color: AppColors.alegend3, text: "${organDistributionList[1].organ} (${organDistributionList[1].percentage}%)"),
           ],
         ),
+        SizedBox(width: 8.w),
         SizedBox(
           height: 160.h,
           width: 160.w,

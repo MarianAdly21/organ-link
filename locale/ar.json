@@ -300,5 +300,6 @@
   "description": "الوصف",
   "hospital_notified_on_action": "سيتم إرسال إشعار للمستشفى عند اتخاذ أي إجراء بخصوص هذا التنبيه",
   "priority": "الأولوية",
-  "please_fill_in_all_required_fields": "يرجى ملء جميع الحقول المطلوبة"
+  "please_fill_in_all_required_fields": "يرجى ملء جميع الحقول المطلوبة",
+  "ai_waiting": "جارٍ تحليل البيانات بواسطة الذكاء الاصطناعي... النتيجة ستظهر خلال 24-48 ساعة"
 }

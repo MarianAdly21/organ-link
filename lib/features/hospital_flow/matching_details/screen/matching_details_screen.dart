@@ -206,16 +206,32 @@ class _MatchingDetailsScreenWithBlocState
   }
 
   Widget _waitingAiResultContainer() {
-    return ContainerWithShadow(
-      height: 88.h,
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 18.h),
+      constraints: BoxConstraints(minHeight: 88.h),
       width: double.infinity,
-      background: AppColors.waitingAiResultBG,
-      contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
-      child: Text(
-        textAlign: TextAlign.center,
-        "جارٍ تحليل البيانات بواسطة الذكاء الاصطناعي... النتيجة ستظهر خلال 24-48 ساعة",
-        style: context.textTheme.labelMedium!.copyWith(
-          color: AppColors.textColor,
+      decoration: BoxDecoration(
+        color: AppColors.waitingAiResultBG,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadowForContainerInfo.withValues(alpha: 0.25),
+            blurRadius: 4,
+          ),
+        ],
+      ),
+      child: IntrinsicHeight(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+            child: Text(
+              textAlign: TextAlign.center,
+              context.translate(LocalizationKeys.aiWaiting),
+              style: context.textTheme.labelMedium!.copyWith(
+                color: AppColors.textColor,
+              ),
+            ),
+          ),
         ),
       ),
     );

@@ -321,4 +321,5 @@ class LocalizationKeys {
   static const hospitalNotifiedOnAction = "hospital_notified_on_action";
   static const pleaseFillInAllRequiredFields =
       "please_fill_in_all_required_fields";
+  static const aiWaiting = "ai_waiting";
 }

@@ -67,7 +67,11 @@ class _LogOutConfirmationDialogScreenState
   }
 
   void _navToLoginScreen() {
-    Navigator.pushNamed(context, LoginScreen.routeName);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      LoginScreen.routeName,
+      (route) => false,
+    );
   }
 
   Widget _dialogBtn({
