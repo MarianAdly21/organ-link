@@ -148,94 +148,109 @@ class _MinistryNotificationScreenState
                 ],
               ),
               ListView.builder(
-                itemCount: ministryNotificationUiModel.alertList.length,
+                itemCount: ministryNotificationUiModel.alertList.isEmpty
+                    ? 1
+                    : ministryNotificationUiModel.alertList.length,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, index) {
-                  return ContainerWithBlackShadow(
-                    gradientBackgroundColor: getGradientByStatus(
-                      mapMinistryNotificationStatus(
-                        ministryNotificationUiModel.alertList[index].alertType,
-                      ),
-                    ),
-                    padding: EdgeInsets.only(bottom: 16.h),
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 16.h,
-                      horizontal: 16.w,
-                    ),
-                    body: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        InfoTileWithStatusCustomWidget(
-                          textColor: AppColors.textColor,
-                          textStatusColor: AppColors.statusTextInMinistryAlert,
-                          statusBGColor: mapMinistryNotificationStatus(
-                            ministryNotificationUiModel
-                                .alertList[index]
-                                .alertType,
-                          ).backgroundColor,
-                          title: ministryNotificationUiModel
-                              .alertList[index]
-                              .messageTitle,
-                          subtitle: ministryNotificationUiModel
-                              .alertList[index]
-                              .messageTitle,
-                          status: ministryNotificationUiModel
-                              .alertList[index]
-                              .alertType,
-                        ),
-                        CustomDividerWidget(),
-                        _hospitalNameAndDate(
-                          hospitalName: ministryNotificationUiModel
-                              .alertList[index]
-                              .hospitalName,
-                          date: ministryNotificationUiModel
-                              .alertList[index]
-                              .createdAt,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 16.h),
-                          child: Row(
+                  return ministryNotificationUiModel.alertList.isNotEmpty
+                      ? ContainerWithBlackShadow(
+                          gradientBackgroundColor: getGradientByStatus(
+                            mapMinistryNotificationStatus(
+                              ministryNotificationUiModel
+                                  .alertList[index]
+                                  .alertType,
+                            ),
+                          ),
+                          padding: EdgeInsets.only(bottom: 16.h),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 16.h,
+                            horizontal: 16.w,
+                          ),
+                          body: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Expanded(
-                                child: AppButtonWithGradientColors(
-                                  onTap: () {
-                                    _currentBloc.add(
-                                      NavToNotificationDetailsScreenEvent(
-                                        id: ministryNotificationUiModel
-                                            .alertList[index]
-                                            .id,
-                                      ),
-                                    );
-                                  },
-                                  text: context.translate(
-                                    LocalizationKeys.viewDetails,
-                                  ),
-                                ),
+                              InfoTileWithStatusCustomWidget(
+                                textColor: AppColors.textColor,
+                                textStatusColor:
+                                    AppColors.statusTextInMinistryAlert,
+                                statusBGColor: mapMinistryNotificationStatus(
+                                  ministryNotificationUiModel
+                                      .alertList[index]
+                                      .alertType,
+                                ).backgroundColor,
+                                title: ministryNotificationUiModel
+                                    .alertList[index]
+                                    .messageTitle,
+                                subtitle: ministryNotificationUiModel
+                                    .alertList[index]
+                                    .messageTitle,
+                                status: ministryNotificationUiModel
+                                    .alertList[index]
+                                    .alertType,
                               ),
-                              SizedBox(width: 16),
-                              Expanded(
-                                child: AppButtonWithGradientColors(
-                                  onTap: () {},
-                                  text: context.translate(
-                                    LocalizationKeys.investigationFollowUp,
-                                  ),
-                                  textColor: AppColors.blackText,
-                                  border: BoxBorder.all(
-                                    color: AppColors.backButtonBorder,
-                                  ),
-                                  colors: [
-                                    AppColors.followUpInvestigation,
-                                    AppColors.followUpInvestigation,
+                              CustomDividerWidget(),
+                              _hospitalNameAndDate(
+                                hospitalName: ministryNotificationUiModel
+                                    .alertList[index]
+                                    .hospitalName,
+                                date: ministryNotificationUiModel
+                                    .alertList[index]
+                                    .createdAt,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 16.h),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: AppButtonWithGradientColors(
+                                        onTap: () {
+                                          _currentBloc.add(
+                                            NavToNotificationDetailsScreenEvent(
+                                              id: ministryNotificationUiModel
+                                                  .alertList[index]
+                                                  .id,
+                                            ),
+                                          );
+                                        },
+                                        text: context.translate(
+                                          LocalizationKeys.viewDetails,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 16),
+                                    Expanded(
+                                      child: AppButtonWithGradientColors(
+                                        onTap: () {},
+                                        text: context.translate(
+                                          LocalizationKeys
+                                              .investigationFollowUp,
+                                        ),
+                                        textColor: AppColors.blackText,
+                                        border: BoxBorder.all(
+                                          color: AppColors.backButtonBorder,
+                                        ),
+                                        colors: [
+                                          AppColors.followUpInvestigation,
+                                          AppColors.followUpInvestigation,
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  );
+                        )
+                      : Center(
+                        child: Text(
+                            context.translate(
+                              LocalizationKeys.noNotificationsAtTheMoment,
+                            ),
+                            style: context.textTheme.bodyMedium,
+                          ),
+                      );
                 },
               ),
             ],

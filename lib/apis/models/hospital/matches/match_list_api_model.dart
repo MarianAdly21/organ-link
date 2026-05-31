@@ -9,7 +9,7 @@ class MatchListApiModel {
   final String matchingNumber;
   final String aiStatus;
   final String status;
-  final String aiResult;
+  final String? aiResult;
   final int matchId;
 
   MatchListApiModel({
@@ -38,7 +38,7 @@ class MatchListApiModel {
       matchingNumber: json["request_number"],
       aiStatus: json["status"],
       status: json["patient_detail"]["status"],
-      aiResult: json["ai_result"]?["result"] ?? "demo Ai result",
+      aiResult: json["ai_result"]?["result"],
     );
   }
 }

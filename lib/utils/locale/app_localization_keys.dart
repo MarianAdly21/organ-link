@@ -322,4 +322,6 @@ class LocalizationKeys {
   static const pleaseFillInAllRequiredFields =
       "please_fill_in_all_required_fields";
   static const aiWaiting = "ai_waiting";
+  static const noMedicalTestsRecorded = "no_medical_tests_recorded";
+  static const noNotificationsAtTheMoment = "no_notifications_at_the_moment";
 }

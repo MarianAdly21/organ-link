@@ -139,7 +139,8 @@ class _PatientOrDonorDetailsScreenWithBlocState
             _personalInfoSection(),
             _medicalInfoSection(),
             SizedBox(height: 24.h),
-            _vitalSigns(),
+            if (patientOrDonorDetailsUiModel.vitalSigns.isNotEmpty)
+              _vitalSigns(),
             _reportAndInvestigationsSection(),
             DataSection(
               paddingAroundContainer: EdgeInsets.only(bottom: 24.h),
@@ -518,14 +519,18 @@ class _PatientOrDonorDetailsScreenWithBlocState
                   vitalName: context.translate(
                     LocalizationKeys.respiratoryRate,
                   ),
-                  reading: "12 - 20 / دقيقة",
+                  reading:
+                      "${patientOrDonorDetailsUiModel.vitalSigns[0].respiratoryRate.toString()} /دقيقة",
                 ),
                 SizedBox(width: 16.w),
                 _vitalSignCard(
                   context,
                   icon: AppAssetPaths.injectionIcon,
                   vitalName: context.translate(LocalizationKeys.bloodPressure),
-                  reading: "120/80",
+                  reading: patientOrDonorDetailsUiModel
+                      .vitalSigns[0]
+                      .bloodPressure
+                      .toString(),
                 ),
               ],
             ),
@@ -535,7 +540,8 @@ class _PatientOrDonorDetailsScreenWithBlocState
                 context,
                 icon: AppAssetPaths.temperatureIcon,
                 vitalName: context.translate(LocalizationKeys.temperature),
-                reading: "37.0 C",
+                reading:
+                    "${patientOrDonorDetailsUiModel.vitalSigns[0].temperatureC.toString()} C",
               ),
             ),
             Row(
@@ -545,7 +551,8 @@ class _PatientOrDonorDetailsScreenWithBlocState
                   context,
                   icon: AppAssetPaths.scaleWeightIcon,
                   vitalName: context.translate(LocalizationKeys.heartRate),
-                  reading: "60 - 80 / دقيقة",
+                  reading:
+                      "${patientOrDonorDetailsUiModel.vitalSigns[0].heartRate.toString()} /دقيقة",
                 ),
                 SizedBox(width: 16.w),
                 _vitalSignCard(
@@ -554,7 +561,8 @@ class _PatientOrDonorDetailsScreenWithBlocState
                   vitalName: context.translate(
                     LocalizationKeys.oxygenSaturation,
                   ),
-                  reading: "95 - 100 %",
+                  reading:
+                      "${patientOrDonorDetailsUiModel.vitalSigns[0].respiratoryRate.toString()} %",
                 ),
               ],
             ),
