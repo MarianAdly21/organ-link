@@ -1,5 +1,6 @@
 import 'package:organ_link/apis/models/hospital/allergies_api_model.dart';
 import 'package:organ_link/apis/models/hospital/current_medications_api_model.dart';
+import 'package:organ_link/apis/models/hospital/vital_signs_api_model.dart';
 import 'package:organ_link/apis/models/shared_models/chronic_diseases_api_model.dart';
 import 'package:organ_link/apis/models/shared_models/medical_test_api_model.dart';
 
@@ -20,7 +21,7 @@ class PatientOrDonorDetailsApiModel {
   final List<ChronicDiseasesApiModel> medicalHistory;
   final List<AllergiesApiModel> allergies;
   final List<CurrentMedicationsApiModel> currentMedicationsList;
-  // final List<String> vitalSigns;
+  final List<VitalSignsApiModel> vitalSigns;
   final List<MedicalTestApiModel> reportAndInvestigations;
 
   PatientOrDonorDetailsApiModel({
@@ -40,7 +41,7 @@ class PatientOrDonorDetailsApiModel {
     required this.medicalHistory,
     required this.allergies,
     required this.currentMedicationsList,
-    required this.reportAndInvestigations,
+    required this.reportAndInvestigations, required this.vitalSigns,
   });
   factory PatientOrDonorDetailsApiModel.formJson(Map<String, dynamic> json) {
     return PatientOrDonorDetailsApiModel(
@@ -67,8 +68,12 @@ class PatientOrDonorDetailsApiModel {
           .map((x) => CurrentMedicationsApiModel.fromJson(x))
           .toList(),
       reportAndInvestigations: (json["user_reports"] as List? ?? [])
-          .map((x) => MedicalTestApiModel.formJson(x))
-          .toList(),
+          .map((x) => MedicalTestApiModel.fromJson(x))
+          .toList(), 
+          vitalSigns: (json["vital_signs"] as List? ?? [])
+          .map((x) => VitalSignsApiModel.fromJson(x))
+          .toList(), 
     );
+    
   }
 }

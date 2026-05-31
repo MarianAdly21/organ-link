@@ -10,7 +10,7 @@ class MatchListUiModel {
   final String matchingNumber;
   final String aiStatus;
   final String status;
-  final String aiResult;
+  final String? aiResult;
   final int matchId;
 
   MatchListUiModel({

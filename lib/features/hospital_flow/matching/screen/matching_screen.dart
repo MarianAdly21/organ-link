@@ -226,7 +226,7 @@ class _MatchingScreenWithBlocState
                     ),
 
                   /// notes: the divider and container appears based on condition
-                  if (matchUiModel.matchList[index].matchPercentage !=
+                  if (matchUiModel.matchList[index].aiResult !=
                       null) ...[
                     CustomDividerWidget(indent: 24.w, endIndent: 24.w),
                     _resultMatching(index),
@@ -276,7 +276,7 @@ class _MatchingScreenWithBlocState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            matchUiModel.matchList[index].aiResult,
+            matchUiModel.matchList[index].aiResult!,
             style: context.textTheme.bodyMedium!.copyWith(
               fontSize: 16,
               fontWeight: FontWeight.w600,

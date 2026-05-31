@@ -10,7 +10,7 @@ class MedicalTestApiModel {
     required this.date,
     required this.testType,
   });
-  factory MedicalTestApiModel.formJson(Map<String, dynamic> json) {
+  factory MedicalTestApiModel.fromJson(Map<String, dynamic> json) {
     return MedicalTestApiModel(
       testName: json["report_title"],
       status: json["state"],

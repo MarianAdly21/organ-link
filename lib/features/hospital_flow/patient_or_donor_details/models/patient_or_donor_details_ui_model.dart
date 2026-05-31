@@ -1,6 +1,7 @@
 import 'package:organ_link/apis/models/hospital/patient_or_donor_details_api_model.dart';
 import 'package:organ_link/features/hospital_flow/patient_or_donor_details/models/allergies_ui_model.dart';
 import 'package:organ_link/features/hospital_flow/patient_or_donor_details/models/current_medications_ui_model.dart';
+import 'package:organ_link/features/hospital_flow/patient_or_donor_details/models/vital_signs_ui_model.dart';
 import 'package:organ_link/features/shared_screens/method/calculate_age.dart';
 import 'package:organ_link/features/shared_models/chronic_diseases_ui_model.dart';
 import 'package:organ_link/features/shared_models/medical_test_ui_model.dart';
@@ -22,7 +23,7 @@ class PatientOrDonorDetailsUiModel {
   final List<ChronicDiseasesUiModel> medicalHistory;
   final List<AllergiesUiModel> allergiesList;
   final List<CurrentMedicationsUiModel> currentMedicationsList;
-  // final List<String> vitalSigns;
+ final List<VitalSignsUiModel> vitalSigns;
   final List<MedicalTestUiModel> reportAndInvestigations;
 
   PatientOrDonorDetailsUiModel({
@@ -42,7 +43,7 @@ class PatientOrDonorDetailsUiModel {
     required this.medicalHistory,
     required this.allergiesList,
     required this.currentMedicationsList,
-    required this.reportAndInvestigations,
+    required this.reportAndInvestigations, required this.vitalSigns,
   });
   factory PatientOrDonorDetailsUiModel.fromApiModel(
     PatientOrDonorDetailsApiModel e,
@@ -72,6 +73,9 @@ class PatientOrDonorDetailsUiModel {
           .toList(),
       reportAndInvestigations: e.reportAndInvestigations
           .map((x) => MedicalTestUiModel.fromApiModel(x))
+          .toList(), 
+          vitalSigns: e.vitalSigns
+          .map((x) => VitalSignsUiModel.fromApiModel(x))
           .toList(),
     );
   }

@@ -38,14 +38,14 @@ class MedicalDetailsApiModel {
       type: json["role"] as String,
       medicalFileNumber: json["medical_record_number"] as String,
       age: DateTime.parse(json["birthdate"]),
-      organ: json["organ_needed"] as String,
+      organ: json["organ_needed"] ?? json["organ_available"]  as String,
       bloodType: json["blood_type"] as String,
       upcomingAppointments: lastAppointmentDate,
       chronicDiseasesList: (json["chronic_diseases"] as List? ?? [])
           .map((x) => ChronicDiseasesApiModel.fromJson(x))
           .toList(),
       medicalTestList: (json["user_reports"] as List? ?? [])
-          .map((x) => MedicalTestApiModel.formJson(x))
+          .map((x) => MedicalTestApiModel.fromJson(x))
           .toList(),
     );
   }

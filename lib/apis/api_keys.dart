@@ -21,7 +21,7 @@ class ApiKeys {
   /// URLs
   static const baseUrlProduction = "";
 
-  static const baseUrl = "https://web-production-b0489.up.railway.app/api";
+  static const baseUrl = "https://web-production-e28a8.up.railway.app/api";
 
   static const loginUrl = '$baseUrl/login/';
   static String getUserDataUrl(int id) => '$baseUrl/users/$id';

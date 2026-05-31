@@ -109,7 +109,7 @@ class _MedicalDetailsScreenWithBlocState
         children: [
           _personalInfoCard(),
           _chronicDiseasesCard(),
-          if (medicalDetailsUiModel.medicalTestList.isNotEmpty)
+         // if (medicalDetailsUiModel.medicalTestList.isNotEmpty)
             _medicalTestCard(),
           _upcomingAppointmentCard(),
           Padding(
@@ -212,18 +212,20 @@ class _MedicalDetailsScreenWithBlocState
       body: Wrap(
         spacing: 16.w,
         runSpacing: 8.h,
-        children: List.generate(
-          medicalDetailsUiModel.chronicDiseasesList.length,
-          (index) => medicalDetailsUiModel.chronicDiseasesList.isNotEmpty
-              ? _diseaseCard(
+        children: medicalDetailsUiModel.chronicDiseasesList.isNotEmpty
+            ? List.generate(
+                medicalDetailsUiModel.chronicDiseasesList.length,
+                (index) => _diseaseCard(
                   disease:
                       medicalDetailsUiModel.chronicDiseasesList[index].name,
-                )
-              : Text(
+                ),
+              )
+            : [
+                Text(
                   context.translate(LocalizationKeys.noChronicDiseasesRecorded),
                   style: context.textTheme.labelLarge,
                 ),
-        ),
+              ],
       ),
     );
   }
@@ -249,11 +251,19 @@ class _MedicalDetailsScreenWithBlocState
       body: ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: medicalDetailsUiModel.medicalTestList.length,
+        itemCount:medicalDetailsUiModel.medicalTestList.isEmpty?1:
+         medicalDetailsUiModel.medicalTestList.length,
         itemBuilder: (context, index) {
-          return _medicalTest(
+          return
+          medicalDetailsUiModel.medicalTestList.isNotEmpty?
+           _medicalTest(
             model: medicalDetailsUiModel.medicalTestList[index],
-          );
+          ):
+                Text(
+                  context.translate(LocalizationKeys.noMedicalTestsRecorded),
+                  style: context.textTheme.labelLarge,
+                )
+              ;
         },
       ),
     );
