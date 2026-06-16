@@ -107,7 +107,9 @@ class _MatchingDetailsScreenWithBlocState
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _patientInfo(),
-              if (matchingDetailsUiModel.requestStatus != "لم يتم العثور") ...[
+              if (matchingDetailsUiModel.matchPercentage != null &&
+                  matchingDetailsUiModel.matchPercentage! >= 70.0 &&
+                  matchingDetailsUiModel.matchPercentage! <= 100.0) ...[
                 Text(
                   context.translate(LocalizationKeys.aiResult),
                   style: context.textTheme.bodyMedium!.copyWith(
@@ -115,10 +117,24 @@ class _MatchingDetailsScreenWithBlocState
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                matchingDetailsUiModel.requestStatus == "قيد التحليل"
+                matchingDetailsUiModel.matchPercentage! <= 75.0 &&
+                  matchingDetailsUiModel.matchPercentage! > 70.0
                     ? _waitingAiResultContainer()
                     : _matchingResultAi(),
               ],
+
+              // if (matchingDetailsUiModel.requestStatus != "لم يتم العثور") ...[
+              //   Text(
+              //     context.translate(LocalizationKeys.aiResult),
+              //     style: context.textTheme.bodyMedium!.copyWith(
+              //       fontSize: 16,
+              //       fontWeight: FontWeight.w600,
+              //     ),
+              //   ),
+              //   matchingDetailsUiModel.requestStatus == "قيد التحليل"
+              //       ? _waitingAiResultContainer()
+              //       : _matchingResultAi(),
+              // ],
             ],
           ),
         ),

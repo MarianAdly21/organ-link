@@ -41,7 +41,7 @@ class HospitalDetailsApiModel {
       totalPatients: json["patients_count"],
       totalDonors: json["donors_count"],
       totalSurgeries: json["successful_surgeries"],
-      successPercentage: json["success_percentage"],
+      successPercentage:( json["success_percentage"]as num).toDouble(),
       organNeeds: (json["organs_needed"] as List)
           .map((x) => OrganNeedsApiModel.fromJson(x))
           .toList(),

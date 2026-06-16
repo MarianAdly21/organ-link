@@ -226,18 +226,20 @@ class _MatchingScreenWithBlocState
                     ),
 
                   /// notes: the divider and container appears based on condition
-                  if (matchUiModel.matchList[index].aiResult !=
-                      null) ...[
+                  if (matchUiModel.matchList[index].aiResult != null) ...[
                     CustomDividerWidget(indent: 24.w, endIndent: 24.w),
-                    _resultMatching(index),
-                    if (matchUiModel.matchList[index].status ==
-                        "لم يتم العثور") ...[
+                    if ((matchUiModel.matchList[index].matchPercentage!) >=
+                        75.0)
+                      _resultMatching(index),
+                      
+                    if ((matchUiModel.matchList[index].matchPercentage!) <
+                        75.0) ...[
                       ContainerWithBackground(
                         isCentered: true,
                         width: context.width,
                         contentPadding: EdgeInsets.symmetric(vertical: 28.h),
                         backgroundColor: AppColors.notFoundBG,
-                        text: "لم يتم العثور علي متبرع متطابق",
+                        text: matchUiModel.matchList[index].aiResult!,
                         textStyle: context.textTheme.bodyMedium!.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.notFoundText,

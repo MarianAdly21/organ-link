@@ -278,9 +278,9 @@ class _ViewPatientOrDonorScreenWithBlocState
                 color: AppColors.blackText,
               ),
               items: [
-                CustomDropDownItem(value: "كلية يمنى", key: ""),
-                CustomDropDownItem(value: "كلية يسرى", key: ""),
-                CustomDropDownItem(value: "كبد", key: ""),
+                CustomDropDownItem(value: "kidney_right", key: ""),
+                CustomDropDownItem(value: "kidney_left", key: ""),
+                CustomDropDownItem(value: "liver", key: ""),
               ],
               onChanged: (value) {
                 _currentBloc.add(
@@ -297,9 +297,12 @@ class _ViewPatientOrDonorScreenWithBlocState
                 color: AppColors.blackText,
               ),
               items: [
-                CustomDropDownItem(value: "قيد المراجعه", key: ""),
                 CustomDropDownItem(value: "جاهز", key: ""),
-                CustomDropDownItem(value: "تمت المطابقة", key: ""),
+                CustomDropDownItem(value: "مرفوض", key: ""),
+                CustomDropDownItem(value: "قيد الانتظار", key: ""),
+                CustomDropDownItem(value: "قيد المراجعة", key: ""),
+                CustomDropDownItem(value: "تحت العمليه", key: ""),
+                CustomDropDownItem(value: "تحت المطابقه", key: ""),
               ],
               onChanged: (value) {
                 _currentBloc.add(

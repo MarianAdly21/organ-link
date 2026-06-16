@@ -1,4 +1,3 @@
-
 class MatchListApiModel {
   final String patientName;
   final String donorName;
@@ -38,7 +37,12 @@ class MatchListApiModel {
       matchingNumber: json["request_number"],
       aiStatus: json["status"],
       status: json["patient_detail"]["status"],
-      aiResult: json["ai_result"]?["result"],
+      aiResult: (json["ai_result"]?["score"] ?? 0.0) >= 75.0
+          ? "تم العثور علي متبرع متطابق"
+          : (json["ai_result"]?["score"] ?? 0.0) >= 70.0 &&
+                (json["ai_result"]?["score"] ?? 0.0) < 75.0
+          ? null
+          : "لم يتم العثور علي متبرع متطابق",
     );
   }
 }
