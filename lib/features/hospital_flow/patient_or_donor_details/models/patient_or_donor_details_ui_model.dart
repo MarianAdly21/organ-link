@@ -23,7 +23,7 @@ class PatientOrDonorDetailsUiModel {
   final List<ChronicDiseasesUiModel> medicalHistory;
   final List<AllergiesUiModel> allergiesList;
   final List<CurrentMedicationsUiModel> currentMedicationsList;
- final List<VitalSignsUiModel> vitalSigns;
+  final List<VitalSignsUiModel> vitalSigns;
   final List<MedicalTestUiModel> reportAndInvestigations;
 
   PatientOrDonorDetailsUiModel({
@@ -43,7 +43,8 @@ class PatientOrDonorDetailsUiModel {
     required this.medicalHistory,
     required this.allergiesList,
     required this.currentMedicationsList,
-    required this.reportAndInvestigations, required this.vitalSigns,
+    required this.reportAndInvestigations,
+    required this.vitalSigns,
   });
   factory PatientOrDonorDetailsUiModel.fromApiModel(
     PatientOrDonorDetailsApiModel e,
@@ -52,8 +53,10 @@ class PatientOrDonorDetailsUiModel {
       fullName: e.fullName,
       fileNumber: e.fileNumber,
       status: e.status,
-      priority: e.priority,
-      healthyStatus: e.healthyStatus,
+      priority: e.role == "patient" ? (e.priority ?? "أولوية منخفضة") : null,
+      healthyStatus: e.role != "patient"
+          ? (e.healthyStatus ?? "صحة جيدة")
+          : null,
       age: calculateAge(e.age),
       gender: e.gender,
       bloodType: e.bloodType,
@@ -73,10 +76,29 @@ class PatientOrDonorDetailsUiModel {
           .toList(),
       reportAndInvestigations: e.reportAndInvestigations
           .map((x) => MedicalTestUiModel.fromApiModel(x))
-          .toList(), 
-          vitalSigns: e.vitalSigns
+          .toList(),
+      vitalSigns: e.vitalSigns
           .map((x) => VitalSignsUiModel.fromApiModel(x))
           .toList(),
     );
   }
 }
+
+// String? getPriorityOrHealthStatus({
+//   required String role,
+//   required String? priorityApi,
+//   required String? healthStatusApi,
+// }) {
+//   final String? priority;
+//   final String? healthyStatus;
+
+//   if (role == "patient") {
+//     priority = priorityApi ?? "أولوية منخفضة";
+//     healthyStatus = null;
+//   } else {
+//     priority = null;
+//     healthyStatus = healthStatusApi ?? "صحة جيدة";
+//   }
+
+//   return priority;
+// }

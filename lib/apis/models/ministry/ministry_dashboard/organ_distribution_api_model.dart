@@ -7,7 +7,7 @@ class OrganDistributionApiModel {
   factory OrganDistributionApiModel.fromJson(Map<String, dynamic> json) {
     return OrganDistributionApiModel(
       organ: json["organ"] as String,
-      percentage: json["percentage"] as double,
+      percentage: (json["percentage"] as num).toDouble(),
     );
   }
 }

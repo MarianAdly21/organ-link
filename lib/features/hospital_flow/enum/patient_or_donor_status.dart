@@ -11,14 +11,14 @@ enum PatientOrDonorStatus {
   highPriority,
   lowPriority,
 }
-
+           
 PatientOrDonorStatus mapPatientOrDonorStatus(String status) {
   switch (status) {
     case "تمت العملية":
       return PatientOrDonorStatus.surgeryCompleted;
-    case "تحت المراجعة":
+    case "قيد المراجعة":
       return PatientOrDonorStatus.underReview;
-    case "تحت المطابقة":
+    case "تحت المطابقه":
       return PatientOrDonorStatus.underMatching;
     case "جاهز":
       return PatientOrDonorStatus.ready;

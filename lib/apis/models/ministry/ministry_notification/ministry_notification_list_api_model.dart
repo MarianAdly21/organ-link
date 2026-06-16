@@ -21,10 +21,10 @@ class MinistryNotificationListApiModel {
       messageTitle: json["message_title"],
       message: json["message"],
       alertType: json["alert_type"],
-      status: json["status"],
+      status: json["alert_status"],
       createdAt: json["created_at"],
       id: json["id"],
-      hospitalName: json["hospital"],
+      hospitalName: json["sender_hospital"],
     );
   }
 }
