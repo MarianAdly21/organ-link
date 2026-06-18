@@ -30,7 +30,7 @@ class PatientOrDonorApiModel {
       organ: json["organ_needed"] ?? json["organ_available"],
       status: json["status"],
       priority: json["priority"]?["level"],
-      healthStatus: json["health_status"]?["status"],
+      healthStatus: json["health_status"]?["status"], 
       id: json["id"],
       medicalRecordNumber: json["medical_record_number"],
       role: json["role"],

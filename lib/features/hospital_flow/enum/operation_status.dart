@@ -1,14 +1,14 @@
-enum OperationStatus { scheduled, completed, ongoing, underObservation }
+enum OperationStatus { scheduled, successful, ongoing, underObservation }
 
 OperationStatus mapOperationStatus(String status) {
   switch (status) {
-    case 'مجدولة':
+    case 'scheduled':
       return OperationStatus.scheduled;
-    case 'تمت بنجاح':
-      return OperationStatus.completed;
-    case "جاريه":
+    case "successful":
+      return OperationStatus.successful;
+    case "in_progress":
       return OperationStatus.ongoing;
-    case 'تحت المتابعة':
+    case "under_follow_up":
       return OperationStatus.underObservation;
     default:
       return OperationStatus.scheduled;

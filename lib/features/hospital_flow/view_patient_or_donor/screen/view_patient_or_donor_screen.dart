@@ -59,7 +59,6 @@ class ViewPatientOrDonorScreenWithBloc extends BaseStatefulScreenWidget {
 class _ViewPatientOrDonorScreenWithBlocState
     extends BaseScreenState<ViewPatientOrDonorScreenWithBloc> {
   late List<PatientOrDonorUiModel> modelList;
-  //late List<PatientOrDonorUiModel> modelListSearch;
   late bool isDonor;
   @override
   void initState() {
@@ -81,7 +80,6 @@ class _ViewPatientOrDonorScreenWithBlocState
           }
           if (state is ViewPatientOrDonorDataLoadedSuccessfullyState) {
             modelList = state.donorOrPatientList;
-            // modelListSearch=state.donorOrPatientList;
           } else if (state is NavToDetailsScreenState) {
             _navToDetailsScreen(state.id);
           } else if (state is ViewPatientOrDonorErrorState &&
@@ -214,9 +212,12 @@ class _ViewPatientOrDonorScreenWithBlocState
   }
 
   Widget _infoRowText({required String text}) {
-    return Text(
-      text,
-      style: context.textTheme.labelMedium!.copyWith(color: AppColors.grayText),
+    return Padding(
+      padding:EdgeInsetsDirectional.only(end: 8.w),
+      child: Text(
+        text,
+        style: context.textTheme.labelMedium!.copyWith(color: AppColors.grayText),
+      ),
     );
   }
 
@@ -321,12 +322,13 @@ class _ViewPatientOrDonorScreenWithBlocState
   Widget _shadowContainer({required Widget child}) {
     return Expanded(
       child: Container(
+        height: 56,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.15),
-              blurRadius: 4,
-              offset: Offset(0, 2),
+              blurRadius: 10,
+            //  offset: Offset(0, 0),
             ),
           ],
         ),
