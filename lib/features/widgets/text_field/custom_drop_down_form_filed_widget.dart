@@ -98,7 +98,7 @@ class _CustomDropDownFormFiledWidgetState
             fillColor: Colors.white,
             filled: true,
             contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
+              horizontal: 8.w,
               vertical: 9.h,
             ),
             enabledBorder: OutlineInputBorder(
@@ -118,9 +118,10 @@ class _CustomDropDownFormFiledWidgetState
           focusNode: widget.focusNode,
           isExpanded: true,
           hint: currentValue != null
-              ? Text(currentValue!.value)
+              ? Text(currentValue!.value, maxLines: 1)
               : Text(
                   widget.hintText ?? '',
+                  maxLines: 1,
                   style:
                       widget.hintTextStyle ??
                       context.textTheme.labelMedium!.copyWith(

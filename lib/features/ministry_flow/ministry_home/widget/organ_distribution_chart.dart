@@ -6,35 +6,59 @@ import 'package:organ_link/features/ministry_flow/ministry_home/widget/legend_it
 import 'package:organ_link/res/app_colors.dart';
 
 class OrganDistributionChart extends StatelessWidget {
-  const OrganDistributionChart({super.key, required this.organDistributionList});
-final List<OrganDistributionUiModel> organDistributionList;
+  const OrganDistributionChart({
+    super.key,
+    required this.organDistributionList,
+  });
+  final List<OrganDistributionUiModel> organDistributionList;
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+     mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            LegendItem(color: AppColors.alegend1, text: "${organDistributionList[2].organ} (${organDistributionList[2].percentage}%)"),
-            LegendItem(color: AppColors.alegend2, text: "${organDistributionList[0].organ} (${organDistributionList[0].percentage}%)"),
-            LegendItem(color: AppColors.alegend3, text: "${organDistributionList[1].organ} (${organDistributionList[1].percentage}%)"),
+            LegendItem(
+              color: AppColors.alegend1,
+              text:
+                  "${organDistributionList[2].organ} (${organDistributionList[2].percentage}%)",
+            ),
+            LegendItem(
+              color: AppColors.alegend2,
+              text:
+                  "${organDistributionList[0].organ} (${organDistributionList[0].percentage}%)",
+            ),
+            LegendItem(
+              color: AppColors.alegend3,
+              text:
+                  "${organDistributionList[1].organ} (${organDistributionList[1].percentage}%)",
+            ),
           ],
         ),
-        SizedBox(width: 8.w),
+        SizedBox(width: 10.w),
         SizedBox(
-          height: 160.h,
-          width: 160.w,
-          child: PieChart(
-            PieChartData(
-              centerSpaceRadius: 60.r,
-              sections: [
-                _pieChartData(value: organDistributionList[2].percentage, color: AppColors.alegend1),
-                _pieChartData(value:organDistributionList[0].percentage , color: AppColors.alegend2),
-                _pieChartData(value: organDistributionList[1].percentage, color: AppColors.alegend3),
-              ],
-            ),
+        height: 160.h,
+        width: 160.w,
+        child: PieChart(  
+          PieChartData(
+            centerSpaceRadius: 50.r,
+            sections: [
+              _pieChartData(
+                value: organDistributionList[2].percentage,
+                color: AppColors.alegend1,
+              ),
+              _pieChartData(
+                value: organDistributionList[0].percentage,
+                color: AppColors.alegend2,
+              ),
+              _pieChartData(
+                value: organDistributionList[1].percentage,
+                color: AppColors.alegend3,
+              ),
+            ],
           ),
+        ),
         ),
       ],
     );

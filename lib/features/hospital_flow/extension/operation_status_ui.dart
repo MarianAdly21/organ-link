@@ -6,7 +6,7 @@ extension OperationStatusUI on OperationStatus {
     switch (this) {
       case OperationStatus.scheduled:
         return Color(0xff870099);
-      case OperationStatus.completed:
+      case OperationStatus.successful:
         return Color(0xff008736);
       case OperationStatus.ongoing:
         return Color(0xff005FAB);
